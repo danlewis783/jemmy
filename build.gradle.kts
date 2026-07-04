@@ -23,32 +23,35 @@ repositories {
 
 testing {
     suites {
-        val test by getting(JvmTestSuite::class) {
+        named<JvmTestSuite>("test") {
             useJUnitJupiter(junitVersion)
             dependencies {
                 implementation("org.assertj:assertj-core:$assertjVersion")
             }
         }
-        val userInterfaceTest by registering(JvmTestSuite::class) {
+
+        register<JvmTestSuite>("userInterfaceTest") {
             useJUnitJupiter(junitVersion)
             dependencies {
                 implementation(project())
                 implementation("org.assertj:assertj-core:$assertjVersion")
             }
-            targets.all {
-                testTask.configure {
-                    // one JVM per test class, mirroring the jtreg othervm isolation
-                    // these tests relied on (UIManager L&F and JemmyProperties are global)
-                    maxParallelForks = 1
-                    forkEvery = 1
-                    shouldRunAfter(test)
+            targets {
+                all {
+                    testTask.configure {
+                        // one JVM per test class, mirroring the jtreg othervm isolation
+                        // these tests relied on (UIManager L&F and JemmyProperties are global)
+                        maxParallelForks = 1
+                        forkEvery = 1
+                        shouldRunAfter(tasks.test)
+                    }
                 }
             }
         }
     }
 }
 
-tasks.check {
+tasks.named("check") {
     dependsOn(testing.suites.named("userInterfaceTest"))
 }
 
