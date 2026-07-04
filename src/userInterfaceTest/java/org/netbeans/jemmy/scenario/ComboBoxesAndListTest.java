@@ -38,11 +38,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Logger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 // testEditableSelection, testEditable and testNonEditable used to declare
 // dependsOnMethods = "testEditableLookup" under TestNG; ordering keeps that
@@ -51,7 +49,6 @@ import static org.assertj.core.api.Assertions.fail;
 public class ComboBoxesAndListTest {
 
     private static JFrame win;
-    private static Logger logger = Logger.getLogger(ComboBoxesAndListTest.class.getName());
     private static JFrameOperator fo;
     private static JScrollPaneOperator scroller;
 
@@ -70,14 +67,8 @@ public class ComboBoxesAndListTest {
     public void testWindowLookup() {
         JFrameOperator fo2 = new JFrameOperator();
         FrameOperator fo3 = new FrameOperator();
-        if (fo2.getSource() != fo.getSource() ||
-                fo3.getSource() != fo.getSource()) {
-            logger.severe("Wrong component found:");
-            logger.severe(String.valueOf(fo.getSource()));
-            logger.severe(String.valueOf(fo2.getSource()));
-            logger.severe(String.valueOf(fo3.getSource()));
-            fail();
-        }
+        assertThat(fo2.getSource()).isSameAs(fo.getSource());
+        assertThat(fo3.getSource()).isSameAs(fo.getSource());
 
         Window window = new ComponentOperator(win).getWindow();
         assertThat(window).isSameAs(win);
@@ -85,7 +76,6 @@ public class ComboBoxesAndListTest {
     @Test
     @Order(2)
     public void testEditableLookup() {
-        logger.severe("test");
         JComboBoxOperator operator_1 = new JComboBoxOperator(JComboBoxOperator.
                 findJComboBox(win,
                         "editable_one",
@@ -94,16 +84,9 @@ public class ComboBoxesAndListTest {
         JComboBoxOperator operator_10 = new JComboBoxOperator(fo);
         JComboBoxOperator operator_11 = new JComboBoxOperator(fo, "editable_one");
         JComboBoxOperator operator_12 = new JComboBoxOperator(fo, new NameComponentChooser("editable"));
-        if(operator_10.getSource() != operator_1.getSource() ||
-                operator_11.getSource() != operator_1.getSource() ||
-                operator_12.getSource() != operator_1.getSource()) {
-            logger.severe("Wrong component found:");
-            logger.severe(String.valueOf(operator_1.getSource()));
-            logger.severe(String.valueOf(operator_10.getSource()));
-            logger.severe(String.valueOf(operator_11.getSource()));
-            logger.severe(String.valueOf(operator_12.getSource()));
-            fail();
-        }
+        assertThat(operator_10.getSource()).isSameAs(operator_1.getSource());
+        assertThat(operator_11.getSource()).isSameAs(operator_1.getSource());
+        assertThat(operator_12.getSource()).isSameAs(operator_1.getSource());
         assertThat(operator_1.getItemCount()).as("item count").isEqualTo(4);
     }
 
@@ -121,16 +104,9 @@ public class ComboBoxesAndListTest {
         JListOperator lo1 = new JListOperator(fo, "two", 1, 0);
         JListOperator lo2 = new JListOperator(fo, "two");
         JListOperator lo3 = new JListOperator(fo, new NameComponentChooser("list"));
-        if(lo1.getSource() != lo0.getSource() ||
-                lo2.getSource() != lo0.getSource() ||
-                lo3.getSource() != lo0.getSource()) {
-            logger.severe("Wrong component found:");
-            logger.severe(String.valueOf(lo0.getSource()));
-            logger.severe(String.valueOf(lo1.getSource()));
-            logger.severe(String.valueOf(lo2.getSource()));
-            logger.severe(String.valueOf(lo3.getSource()));
-            fail();
-        }
+        assertThat(lo1.getSource()).isSameAs(lo0.getSource());
+        assertThat(lo2.getSource()).isSameAs(lo0.getSource());
+        assertThat(lo3.getSource()).isSameAs(lo0.getSource());
     }
 
     @Test
@@ -188,13 +164,7 @@ public class ComboBoxesAndListTest {
 
         JComboBoxOperator operator_00 = new JComboBoxOperator(fo, new NameComponentChooser("non_editable"));
         JComboBoxOperator operator_01 = new JComboBoxOperator(fo, new NameComponentChooser("on_e", new Operator.DefaultStringComparator(false, false)));
-        if(operator_00.getSource() != operator_01.getSource()) {
-            logger.severe("Wrong component found:");
-            logger.severe("Wrong");
-            logger.severe(String.valueOf(operator_00.getSource()));
-            logger.severe(String.valueOf(operator_01.getSource()));
-            fail();
-        }
+        assertThat(operator_01.getSource()).isSameAs(operator_00.getSource());
 
         fo.getTimeouts().setTimeout("ComponentOperator.WaitComponentTimeout", 1000);
         assertThatThrownBy(() -> new JComboBoxOperator(fo, new NameComponentChooser("non_edit")))

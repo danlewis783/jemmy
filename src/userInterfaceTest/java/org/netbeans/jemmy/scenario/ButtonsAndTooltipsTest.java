@@ -35,13 +35,9 @@ import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
 
-import java.util.logging.Logger;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 public class ButtonsAndTooltipsTest {
-    private static Logger logger = Logger.getLogger(ButtonsAndTooltipsTest.class.getName());
     private static ButtonsAndTooltipsApp app;
     private static JFrameOperator wino;
     private static JFrame win;
@@ -73,20 +69,10 @@ public class ButtonsAndTooltipsTest {
                 JButtonOperator bo = new JButtonOperator((JButton)JButtonOperator.findJComponent(win, bText, false, true));
                 AbstractButtonOperator abo = new AbstractButtonOperator(wino, i*4 + j);
                 JButtonOperator bo2 = new JButtonOperator(wino, i*4 + j);
-                if (bo.getSource() != abo.getSource() ||
-                        bo.getSource() != bo2.getSource()) {
-                    logger.severe("Wrong component found:");
-                    logger.severe(String.valueOf(bo.getSource()));
-                    logger.severe(String.valueOf(abo.getSource()));
-                    logger.severe(String.valueOf(bo2.getSource()));
-                    fail();
-                }
+                assertThat(abo.getSource()).as("Wrong component found").isSameAs(bo.getSource());
+                assertThat(bo2.getSource()).as("Wrong component found").isSameAs(bo.getSource());
                 JToolTip tt = bo.showToolTip();
-                if(!tt.getTipText().equals(bText + " button")) {
-                    logger.severe("Wrong tip text: " + tt.getTipText());
-                    logger.severe("Expected      : " + bText + " button");
-                    fail();
-                }
+                assertThat(tt.getTipText()).isEqualTo(bText + " button");
                 bo.push();
                 lbo.waitText("Button \"" + bText + "\" has been pushed");
                 progress.waitValue(bText);

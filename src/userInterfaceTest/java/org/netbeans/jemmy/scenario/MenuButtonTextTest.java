@@ -46,14 +46,11 @@ import javax.swing.JRadioButtonMenuItem;
 import java.awt.Component;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Logger;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 public class MenuButtonTextTest {
 
-    private static Logger logger = Logger.getLogger(ComboBoxesAndListTest.class.getName());
     private static JFrameOperator wino;
     private static JTextFieldOperator tfo;
     private static JMenuBarOperator mbo;
@@ -84,12 +81,7 @@ public class MenuButtonTextTest {
     @Test
     public void testTextField() {
         JTextFieldOperator tf1 = new JTextFieldOperator(wino);
-        if (tf1.getSource() != tfo.getSource()) {
-            logger.severe("Wrong");
-            logger.severe(String.valueOf(tfo.getSource()));
-            logger.severe(String.valueOf(tf1.getSource()));
-            fail();
-        }
+        assertThat(tf1.getSource()).isSameAs(tfo.getSource());
 
         tfo.clearText();
         tfo.typeText("Text has been typed");

@@ -6,9 +6,6 @@ plugins {
 group = "io.github.danlewis783"
 version = "3.0.14-SNAPSHOT"
 
-val junitVersion = "5.14.4"
-val assertjVersion = "3.27.7"
-
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(8)
@@ -21,20 +18,24 @@ repositories {
     mavenCentral()
 }
 
+dependencies {
+    api(libs.jspecify)
+}
+
 testing {
     suites {
         named<JvmTestSuite>("test") {
-            useJUnitJupiter(junitVersion)
+            useJUnitJupiter(libs.versions.junit.jupiter.get())
             dependencies {
-                implementation("org.assertj:assertj-core:$assertjVersion")
+                implementation(libs.assertj)
             }
         }
 
         register<JvmTestSuite>("userInterfaceTest") {
-            useJUnitJupiter(junitVersion)
+            useJUnitJupiter(libs.versions.junit.jupiter.get())
             dependencies {
                 implementation(project())
-                implementation("org.assertj:assertj-core:$assertjVersion")
+                implementation(libs.assertj)
             }
             targets {
                 all {
