@@ -24,7 +24,7 @@
  */
 package org.netbeans.jemmy.operators;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.awt.Component;
 import java.awt.Container;
@@ -103,7 +103,7 @@ public class FileChooserTest {
     @MethodSource("org.netbeans.jemmy.LookAndFeelProvider#availableLookAndFeels")
     public void testCount(String lookAndFeel) throws Exception {
         showChooser(lookAndFeel);
-        assertTrue(fileChooser.getFileCount() >= 3);
+        assertThat(fileChooser.getFileCount()).isGreaterThanOrEqualTo(3);
     }
 
     @ParameterizedTest

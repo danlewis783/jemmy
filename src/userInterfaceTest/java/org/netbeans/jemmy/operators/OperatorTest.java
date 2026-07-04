@@ -24,8 +24,7 @@
  */
 package org.netbeans.jemmy.operators;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.awt.Checkbox;
 import java.awt.EventQueue;
@@ -78,7 +77,7 @@ public class OperatorTest {
             isWaitStateOnEDT.set(EventQueue.isDispatchThread());
             return ((Checkbox) comp).getState();
         });
-        assertFalse(isWaitStateOnEDT.get());
+        assertThat(isWaitStateOnEDT.get()).isFalse();
     }
 
     @Test
@@ -89,7 +88,7 @@ public class OperatorTest {
             isWaitStateOnEDT.set(EventQueue.isDispatchThread());
             return ((Checkbox) comp).getState();
         });
-        assertTrue(isWaitStateOnEDT.get());
+        assertThat(isWaitStateOnEDT.get()).isTrue();
     }
 
     private CheckboxOperator createCheckBox() {

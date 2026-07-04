@@ -25,7 +25,6 @@
 
 package org.netbeans.jemmy.operators;
 
-import static java.util.Arrays.stream;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -35,8 +34,8 @@ import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.TimeoutExpiredException;
 
 import static org.netbeans.jemmy.drivers.DriverManager.WINDOW_DRIVER_ID;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 import org.netbeans.jemmy.drivers.DriverManager;
 import org.netbeans.jemmy.drivers.WindowDriver;
@@ -117,20 +116,17 @@ public class JInternalFrameOperatorCloseTest {
     @MethodSource("org.netbeans.jemmy.LookAndFeelProvider#availableLookAndFeels")
     public void testClose(String lookAndFeel) throws Exception {
         setUp(lookAndFeel);
-        try {
-            //trying to close the uncloseable frame
-            //expected to fail by timeout, hence decreasing timeout
-            internalFrameOper.getTimeouts().setTimeout("ComponentOperator.WaitStateTimeout", 5000);
-            internalFrameOper.close();
-            //that would mean that the exception is not thrown
-            fail();
-        } catch (TimeoutExpiredException e) {
-            //make sure the exception is coming from the right place
-            assertTrue(stream(e.getStackTrace()).anyMatch(ste ->
-                    ste.getClassName().equals(JInternalFrameOperator.class.getName()) &&
-                    ste.getMethodName().equals("waitClosed")));
-            System.out.println("This exception has been caught, as expected:");
-            e.printStackTrace(System.out);
-        }
+        //trying to close the uncloseable frame
+        //expected to fail by timeout, hence decreasing timeout
+        internalFrameOper.getTimeouts().setTimeout("ComponentOperator.WaitStateTimeout", 5000);
+        TimeoutExpiredException e = catchThrowableOfType(TimeoutExpiredException.class,
+                internalFrameOper::close);
+        assertThat(e).as("close() of the uncloseable frame should have timed out").isNotNull();
+        //make sure the exception is coming from the right place
+        assertThat(e.getStackTrace()).anyMatch(ste ->
+                ste.getClassName().equals(JInternalFrameOperator.class.getName()) &&
+                ste.getMethodName().equals("waitClosed"));
+        System.out.println("This exception has been caught, as expected:");
+        e.printStackTrace(System.out);
     }
 }

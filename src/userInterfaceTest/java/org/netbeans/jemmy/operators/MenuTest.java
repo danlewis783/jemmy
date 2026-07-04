@@ -27,8 +27,7 @@ package org.netbeans.jemmy.operators;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class MenuTest {
 
@@ -40,8 +39,8 @@ public class MenuTest {
         try {
             JMenuBarOperator menu = new JMenuBarOperator(frame.getJMenuBar());
             JMenuItemOperator item = menu.showMenuItem("menu|submenu|subsubmenu|item");
-            assertEquals("item", item.getText());
-            assertTrue(item.isShowing());
+            assertThat(item.getText()).isEqualTo("item");
+            assertThat(item.isShowing()).isTrue();
         } finally {
             frame.dispose();
             frame.waitClosed();

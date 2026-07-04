@@ -28,8 +28,8 @@ package org.netbeans.jemmy.operators;
 import static org.netbeans.jemmy.operators.JInternalFrameOperator.CLOSE_BUTTON_TOOLTIP;
 import static org.netbeans.jemmy.operators.JInternalFrameOperator.MAXIMIZE_BUTTON_TOOLTIP;
 import static org.netbeans.jemmy.operators.JInternalFrameOperator.MINIMIZE_BUTTON_TOOLTIP;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -164,24 +164,15 @@ public class JInternalFrameOperatorTest {
             interanlFrame.setVisible(true);
             desktop.add(interanlFrame);
             JInternalFrameOperator interanlFrameOper = new JInternalFrameOperator(interanlFrame);
-            try {
-                interanlFrameOper.getMaximizeButton();
-                fail();
-            } catch (UnsupportedOperationException e) {
-                assertEquals(OSX_EXCEPT_MESSAGE, e.getMessage());
-            }
-            try {
-                interanlFrameOper.getMinimizeButton();
-                fail();
-            } catch (UnsupportedOperationException e) {
-                assertEquals(OSX_EXCEPT_MESSAGE, e.getMessage());
-            }
-            try {
-                interanlFrameOper.getCloseButton();
-                fail();
-            } catch (UnsupportedOperationException e) {
-                assertEquals(OSX_EXCEPT_MESSAGE, e.getMessage());
-            }
+            assertThatThrownBy(interanlFrameOper::getMaximizeButton)
+                    .isInstanceOf(UnsupportedOperationException.class)
+                    .hasMessage(OSX_EXCEPT_MESSAGE);
+            assertThatThrownBy(interanlFrameOper::getMinimizeButton)
+                    .isInstanceOf(UnsupportedOperationException.class)
+                    .hasMessage(OSX_EXCEPT_MESSAGE);
+            assertThatThrownBy(interanlFrameOper::getCloseButton)
+                    .isInstanceOf(UnsupportedOperationException.class)
+                    .hasMessage(OSX_EXCEPT_MESSAGE);
         }
     }
 
@@ -192,12 +183,12 @@ public class JInternalFrameOperatorTest {
         JInternalFrameOperator interanlFrameOper = new JInternalFrameOperator(interanlFrame);
 
         // Verify title buttons tooltip texts
-        assertEquals(CLOSE_BUTTON_TOOLTIP,
-                interanlFrameOper.getCloseButton().getToolTipText());
-        assertEquals(MAXIMIZE_BUTTON_TOOLTIP,
-                interanlFrameOper.getMaximizeButton().getToolTipText());
-        assertEquals(MINIMIZE_BUTTON_TOOLTIP,
-                interanlFrameOper.getMinimizeButton().getToolTipText());
+        assertThat(interanlFrameOper.getCloseButton().getToolTipText())
+                .isEqualTo(CLOSE_BUTTON_TOOLTIP);
+        assertThat(interanlFrameOper.getMaximizeButton().getToolTipText())
+                .isEqualTo(MAXIMIZE_BUTTON_TOOLTIP);
+        assertThat(interanlFrameOper.getMinimizeButton().getToolTipText())
+                .isEqualTo(MINIMIZE_BUTTON_TOOLTIP);
 
         // Verify different actions using title buttons
         interanlFrameOper.getMaximizeButton().push();

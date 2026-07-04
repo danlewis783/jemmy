@@ -29,17 +29,17 @@ import org.junit.jupiter.api.Test;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class JTextComponentOperatorTest {
     @Test
     public void selection() {
         JTextComponent text = new JTextField("0123456789");
         JTextComponentOperator textOper = new JTextComponentOperator(text);
-        assertEquals("", textOper.getDump().get(JTextComponentOperator.SELECTED_TEXT_DPROP));
+        assertThat(textOper.getDump().get(JTextComponentOperator.SELECTED_TEXT_DPROP)).isEqualTo("");
         text.select(1,1);
-        assertEquals("", textOper.getDump().get(JTextComponentOperator.SELECTED_TEXT_DPROP));
+        assertThat(textOper.getDump().get(JTextComponentOperator.SELECTED_TEXT_DPROP)).isEqualTo("");
         text.select(1,2);
-        assertEquals("1", textOper.getDump().get(JTextComponentOperator.SELECTED_TEXT_DPROP));
+        assertThat(textOper.getDump().get(JTextComponentOperator.SELECTED_TEXT_DPROP)).isEqualTo("1");
     }
 }

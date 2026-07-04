@@ -36,7 +36,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class JToolTipOperatorTest {
@@ -84,11 +84,8 @@ public class JToolTipOperatorTest {
         new JToolTipOperator(labelOperator, chooser);
 
         labelOperator.clickMouse();
-        try {
-            JToolTipOperator.waitJToolTip();
-            fail();
-        } catch (TimeoutExpiredException e) {
-        }
+        assertThatThrownBy(JToolTipOperator::waitJToolTip)
+                .isInstanceOf(TimeoutExpiredException.class);
     }
 
     @Test
@@ -97,35 +94,19 @@ public class JToolTipOperatorTest {
         JLabelOperator dummyLabel = new JLabelOperator(new JLabel());
         ComponentChooser chooser = comp -> ((JLabel)((JToolTip)comp).
                 getComponent()).getText().equals(LABEL_TEXT);
-        try {
-            new JToolTipOperator(dummyLabel);
-            fail();
-        } catch (TimeoutExpiredException e) {
-        }
+        assertThatThrownBy(() -> new JToolTipOperator(dummyLabel))
+                .isInstanceOf(TimeoutExpiredException.class);
 
-        try {
-            new JToolTipOperator(LABEL_TEXT);
-            fail();
-        } catch (TimeoutExpiredException e) {
-        }
+        assertThatThrownBy(() -> new JToolTipOperator(LABEL_TEXT))
+                .isInstanceOf(TimeoutExpiredException.class);
 
-        try {
+        assertThatThrownBy(() -> new JToolTipOperator(chooser))
+                .isInstanceOf(TimeoutExpiredException.class);
 
-            new JToolTipOperator(chooser);
-            fail();
-        } catch (TimeoutExpiredException e) {
-        }
+        assertThatThrownBy(() -> new JToolTipOperator(dummyLabel, LABEL_TEXT))
+                .isInstanceOf(TimeoutExpiredException.class);
 
-        try {
-            new JToolTipOperator(dummyLabel, LABEL_TEXT);
-            fail();
-        } catch (TimeoutExpiredException e) {
-        }
-
-        try {
-            new JToolTipOperator(dummyLabel, chooser);
-            fail();
-        } catch (TimeoutExpiredException e) {
-        }
+        assertThatThrownBy(() -> new JToolTipOperator(dummyLabel, chooser))
+                .isInstanceOf(TimeoutExpiredException.class);
     }
 }

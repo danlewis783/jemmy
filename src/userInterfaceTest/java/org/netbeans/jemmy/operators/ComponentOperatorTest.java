@@ -35,7 +35,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ComponentOperatorTest {
@@ -74,10 +74,7 @@ public class ComponentOperatorTest {
         labelOperator.waitComponentLocationOnScreen(newScreenLocation);
 
         // Negative scenario
-        try {
-            labelOperator.waitComponentLocationOnScreen(new Point(0, 0));
-            fail();
-        } catch (TimeoutExpiredException e) {
-        }
+        assertThatThrownBy(() -> labelOperator.waitComponentLocationOnScreen(new Point(0, 0)))
+                .isInstanceOf(TimeoutExpiredException.class);
     }
 }

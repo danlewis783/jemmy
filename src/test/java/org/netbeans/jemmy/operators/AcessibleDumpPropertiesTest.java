@@ -32,8 +32,7 @@ import javax.swing.JButton;
 
 import java.util.Hashtable;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AcessibleDumpPropertiesTest {
@@ -49,13 +48,13 @@ public class AcessibleDumpPropertiesTest {
     @Test
     public void testPropeties() {
         Hashtable<String, Object> dump = accessible_button.getDump();
-        assertEquals("name", dump.get(ComponentOperator.ACCESSIBLE_NAME_DPROP));
-        assertEquals("description", dump.get(ComponentOperator.ACCESSIBLE_DESCRIPTION_DPROP));
+        assertThat(dump.get(ComponentOperator.ACCESSIBLE_NAME_DPROP)).isEqualTo("name");
+        assertThat(dump.get(ComponentOperator.ACCESSIBLE_DESCRIPTION_DPROP)).isEqualTo("description");
     }
     @Test
     public void testNoPropeties() {
         Hashtable<String, Object> dump = a_button.getDump();
-        assertFalse(dump.contains(ComponentOperator.ACCESSIBLE_NAME_DPROP));
-        assertFalse(dump.contains(ComponentOperator.ACCESSIBLE_DESCRIPTION_DPROP));
+        assertThat(dump).doesNotContainValue(ComponentOperator.ACCESSIBLE_NAME_DPROP);
+        assertThat(dump).doesNotContainValue(ComponentOperator.ACCESSIBLE_DESCRIPTION_DPROP);
     }
 }

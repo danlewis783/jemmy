@@ -24,7 +24,7 @@
  */
 package org.netbeans.jemmy.operators;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.awt.Component;
 
@@ -48,7 +48,8 @@ public class ComponentChooserTest {
                 return testString;
             }
         };
-        assertEquals(testString, componentChooser.getDescription(),
-                "Default value of getDescription() is not equal to return value of toString()");
+        assertThat(componentChooser.getDescription())
+                .as("Default value of getDescription() is not equal to return value of toString()")
+                .isEqualTo(testString);
     }
 }

@@ -48,7 +48,8 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Logger;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 public class MenuButtonTextTest {
 
@@ -110,12 +111,12 @@ public class MenuButtonTextTest {
         JRadioButtonMenuItemOperator radio1 =
                 new JRadioButtonMenuItemOperator(popup, "radio");
 
-        assertFalse(radio.isSelected(), "Radio should not be selected");
+        assertThat(radio.isSelected()).as("Radio should not be selected").isFalse();
 
         Thread.sleep(100); //CODETOOLS-7902051
         mbo.pushMenu("menu0|submenu|radio");
 
-        assertTrue(radio.isSelected(), "Radio should be selected");
+        assertThat(radio.isSelected()).as("Radio should be selected").isTrue();
     }
 
 
@@ -139,19 +140,19 @@ public class MenuButtonTextTest {
     //@Test
     public void testShowMenus() {
 
-        assertEquals(3, mbo.showMenuItems("menu0|submenu").length);
+        assertThat(mbo.showMenuItems("menu0|submenu")).hasSize(3);
 
         ComponentChooser[] choosers1 = {
                 new MenuItemChooser("menu0"),
                 new MenuItemChooser("submenu")};
 
-        assertEquals(3, mbo.showMenuItems(choosers1).length);
+        assertThat(mbo.showMenuItems(choosers1)).hasSize(3);
 
-        assertEquals("submenu", mbo.showMenuItem(choosers1).getText());
+        assertThat(mbo.showMenuItem(choosers1).getText()).isEqualTo("submenu");
 
-        assertEquals("menu", mbo.showMenuItem("menu").getText());
+        assertThat(mbo.showMenuItem("menu").getText()).isEqualTo("menu");
 
-        assertEquals("menuitem", mbo.showMenuItem("menu0|submenu|subsubmenu|subsubsubmenuitem").getText());
+        assertThat(mbo.showMenuItem("menu0|submenu|subsubmenu|subsubsubmenuitem").getText()).isEqualTo("menuitem");
     }
 
     public static class MenuItemChooser implements ComponentChooser {

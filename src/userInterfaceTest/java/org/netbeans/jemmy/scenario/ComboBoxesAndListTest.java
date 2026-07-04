@@ -40,9 +40,9 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Logger;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
 
 // testEditableSelection, testEditable and testNonEditable used to declare
 // dependsOnMethods = "testEditableLookup" under TestNG; ordering keeps that
@@ -80,7 +80,7 @@ public class ComboBoxesAndListTest {
         }
 
         Window window = new ComponentOperator(win).getWindow();
-        assertSame(win, window);
+        assertThat(window).isSameAs(win);
     }
     @Test
     @Order(2)
@@ -104,7 +104,7 @@ public class ComboBoxesAndListTest {
             logger.severe(String.valueOf(operator_12.getSource()));
             fail();
         }
-        assertEquals(4, operator_1.getItemCount(), "item count");
+        assertThat(operator_1.getItemCount()).as("item count").isEqualTo(4);
     }
 
     @Test
@@ -145,9 +145,9 @@ public class ComboBoxesAndListTest {
 
         JComboBoxOperator.waitJComboBox(win, "editable_two", true, true, -1);
 
-        assertEquals(1, operator_1.getSelectedIndex(), "getSelectedIndex");
-        assertEquals("editable_two", operator_1.getSelectedItem(), "getSelectedItem");
-        assertEquals("editable_two", operator_1.getItemAt(1), "getItemAt(1)");
+        assertThat(operator_1.getSelectedIndex()).as("getSelectedIndex").isEqualTo(1);
+        assertThat(operator_1.getSelectedItem()).as("getSelectedItem").isEqualTo("editable_two");
+        assertThat(operator_1.getItemAt(1)).as("getItemAt(1)").isEqualTo("editable_two");
     }
 
     @Test
@@ -197,12 +197,9 @@ public class ComboBoxesAndListTest {
         }
 
         fo.getTimeouts().setTimeout("ComponentOperator.WaitComponentTimeout", 1000);
-        try {
-            new JComboBoxOperator(fo, new NameComponentChooser("non_edit"));
-            logger.severe("Found by subname!");
-            fail();
-        } catch(Exception ee) {
-        }
+        assertThatThrownBy(() -> new JComboBoxOperator(fo, new NameComponentChooser("non_edit")))
+                .as("Found by subname!")
+                .isInstanceOf(Exception.class);
     }
 
     @AfterAll

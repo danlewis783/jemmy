@@ -41,7 +41,7 @@ import java.awt.Point;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class UIStatusTest {
     private static JFrameOperator fo;
@@ -68,7 +68,7 @@ public class UIStatusTest {
         setDriver(driver);
         JComboBoxOperator combo = new JComboBoxOperator(fo);
         combo.clickMouse();
-        assertEquals(new Point(combo.getCenterXForClick(), combo.getCenterYForClick()), UIStatus.lastMouseMove());
+        assertThat(UIStatus.lastMouseMove()).isEqualTo(new Point(combo.getCenterXForClick(), combo.getCenterYForClick()));
     }
 
     @ParameterizedTest
@@ -77,7 +77,7 @@ public class UIStatusTest {
         setDriver(driver);
         JListOperator list = new JListOperator(fo);
         list.clickMouse();
-        assertEquals(new Point(list.getCenterXForClick(), list.getCenterYForClick()), UIStatus.lastMouseMove());
+        assertThat(UIStatus.lastMouseMove()).isEqualTo(new Point(list.getCenterXForClick(), list.getCenterYForClick()));
     }
 
     @ParameterizedTest
@@ -86,7 +86,7 @@ public class UIStatusTest {
         setDriver(driver);
         JComboBoxOperator combo = new JComboBoxOperator(fo, 1);
         combo.moveMouse(1, 1);
-        assertEquals(new Point(1, 1), UIStatus.lastMouseMove());
+        assertThat(UIStatus.lastMouseMove()).isEqualTo(new Point(1, 1));
     }
 
     @ParameterizedTest
@@ -95,7 +95,7 @@ public class UIStatusTest {
         setDriver(driver);
         JListOperator list = new JListOperator(fo);
         list.dragNDrop(10, 10, 20, 20);
-        assertEquals(new Point(20, 20), UIStatus.lastMouseMove());
+        assertThat(UIStatus.lastMouseMove()).isEqualTo(new Point(20, 20));
     }
 
 }

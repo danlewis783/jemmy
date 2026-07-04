@@ -25,8 +25,7 @@
 
 package org.netbeans.jemmy.operators;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -101,15 +100,9 @@ public class JEditorPaneOperatorTest {
         checkPageLoaded(editorPaneOperator, PAGE1, PAGE1_TEXT);
 
         // Testing reference which doesn't exist
-        String excepMessage = "";
-        try {
-            editorPaneOperator.clickOnReference(PAGE1);
-            fail();
-        } catch (IllegalArgumentException e) {
-            excepMessage = e.getMessage();
-        }
-        assertTrue(excepMessage.contains(
-                "Reference page1 doesn't exist in the document"));
+        assertThatThrownBy(() -> editorPaneOperator.clickOnReference(PAGE1))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Reference page1 doesn't exist in the document");
         try {
             editorPaneOperator.addHyperlinkListener(listener);
             // Testing on a short text page
@@ -143,15 +136,10 @@ public class JEditorPaneOperatorTest {
             checkPageLoaded(editorPaneOperator, PAGE2, PAGE2_TEXT);
 
             // Testing reference on the non-visible area
-            String excepMessage = "";
-            try {
-                editorPaneOperator.clickOnReference(PAGE1);
-                fail();
-            } catch (IllegalComponentStateException e) {
-                excepMessage = e.getMessage();
-            }
-            assertTrue(excepMessage.equals("Component doesn't contain"
-                    + " JScrollPane and Reference is out of visible area"));
+            assertThatThrownBy(() -> editorPaneOperator.clickOnReference(PAGE1))
+                    .isInstanceOf(IllegalComponentStateException.class)
+                    .hasMessage("Component doesn't contain"
+                            + " JScrollPane and Reference is out of visible area");
         } finally {
             editorPaneOperator.removeHyperlinkListener(listener);
             frame.getContentPane().remove(editorPane);

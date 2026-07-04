@@ -7,6 +7,7 @@ group = "io.github.danlewis783"
 version = "3.0.14-SNAPSHOT"
 
 val junitVersion = "5.14.4"
+val assertjVersion = "3.27.7"
 
 java {
     toolchain {
@@ -24,11 +25,15 @@ testing {
     suites {
         val test by getting(JvmTestSuite::class) {
             useJUnitJupiter(junitVersion)
+            dependencies {
+                implementation("org.assertj:assertj-core:$assertjVersion")
+            }
         }
         val userInterfaceTest by registering(JvmTestSuite::class) {
             useJUnitJupiter(junitVersion)
             dependencies {
                 implementation(project())
+                implementation("org.assertj:assertj-core:$assertjVersion")
             }
             targets.all {
                 testTask.configure {

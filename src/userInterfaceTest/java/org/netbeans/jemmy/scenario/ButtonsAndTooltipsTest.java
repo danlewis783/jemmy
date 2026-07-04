@@ -37,8 +37,8 @@ import javax.swing.*;
 
 import java.util.logging.Logger;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 public class ButtonsAndTooltipsTest {
     private static Logger logger = Logger.getLogger(ButtonsAndTooltipsTest.class.getName());
@@ -111,9 +111,9 @@ public class ButtonsAndTooltipsTest {
             }
         }).start();
         bbo.waitText("New Text");
-        assertEquals(bbo.getSource(),
-                wino.findSubComponent(new AbstractButtonOperator.
-                        AbstractButtonByLabelFinder("New Text")),
-                "Wrong button found");
+        assertThat(wino.findSubComponent(new AbstractButtonOperator.
+                        AbstractButtonByLabelFinder("New Text")))
+                .as("Wrong button found")
+                .isSameAs(bbo.getSource());
     }
 }

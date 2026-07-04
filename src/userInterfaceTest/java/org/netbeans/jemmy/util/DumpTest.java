@@ -37,7 +37,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class DumpTest {
     private static JFrameOperator fo;
@@ -55,9 +55,8 @@ public class DumpTest {
         Point point = new Point(1, 2);
         UIStatus.mouseMoved(fo, point);
         Dumper.dumpAll(new PrintWriter(out));
-        assertTrue(out.toString()
-                .contains("<property name=\"" + UIStatus.LAST_MOUSE_MOVE_DPROP + "\" value=\""+point+"\"/>"));
-        assertTrue(out.toString()
-                .contains("<property name=\"" + UIStatus.LAST_MOUSE_MOVE_OPERATOR_DPROP + "\" value=\""+fo+"\"/>"));
+        assertThat(out.toString())
+                .contains("<property name=\"" + UIStatus.LAST_MOUSE_MOVE_DPROP + "\" value=\""+point+"\"/>")
+                .contains("<property name=\"" + UIStatus.LAST_MOUSE_MOVE_OPERATOR_DPROP + "\" value=\""+fo+"\"/>");
     }
 }
