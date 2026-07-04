@@ -1,4 +1,5 @@
 build
+.gradle
 .idea
 jemmy-v2.iml
 out
