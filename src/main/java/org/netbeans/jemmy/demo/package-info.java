@@ -24,7 +24,8 @@
  */
 /**
  * <h1>Demo package</h1>
- * Contains classes alowing to create automated application demoes.<br>
+ * Contains classes alowing to create automated application demoes.
+ *
  * @since 9 Nov 2002
  * <hr>
  */

@@ -27,16 +27,16 @@ package org.netbeans.jemmy;
 import java.util.Optional;
 
 /**
- *
  * Runs actions with or without waiting.
- *
- * <BR><BR>Timeouts used: <BR>
- * ActionProducer.MaxActionTime - time action should be finished in. <BR>
+ * <p>
+ * Timeouts used:
+ * <ul>
+ * <li>ActionProducer.MaxActionTime - time action should be finished in.</li>
+ * </ul>
  *
  * @see Action
  * @see Timeouts
  *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class ActionProducer<R, P> extends Thread implements Action<R, P>, Waitable<Optional<R>, P>, Timeoutable {
 
@@ -52,11 +52,6 @@ public class ActionProducer<R, P> extends Thread implements Action<R, P>, Waitab
     private TestOut output;
     private Throwable exception;
 
-    /**
-     * Creates a producer for an action.
-     *
-     * @param a Action implementation.
-     */
     public ActionProducer(Action<R, P> a) {
         super();
         waiter = new Waiter<>(this);
@@ -70,7 +65,6 @@ public class ActionProducer<R, P> extends Thread implements Action<R, P>, Waitab
     /**
      * Creates a producer for an action.
      *
-     * @param a Action implementation.
      * @param nw Defines if {@code produceAction} method should wait for
      * the end of action.
      */
@@ -121,7 +115,6 @@ public class ActionProducer<R, P> extends Thread implements Action<R, P>, Waitab
      * Set all the time outs used by sleeps or waits used by the launched
      * action.
      *
-     * @param ts An object containing timeout information.
      * @see org.netbeans.jemmy.Timeouts
      * @see org.netbeans.jemmy.Timeoutable
      * @see #getTimeouts
@@ -171,8 +164,6 @@ public class ActionProducer<R, P> extends Thread implements Action<R, P>, Waitab
      * Defines action priority in terms of thread priority. Increase (decrease)
      * parameter value to Thread.MIN_PRIORITY(MAX_PRIORITY) in case if it is
      * less(more) then it.
-     *
-     * @param newPriority New thread priority.
      */
     public void setActionPriority(int newPriority) {
         int priority;
@@ -247,9 +238,7 @@ public class ActionProducer<R, P> extends Thread implements Action<R, P>, Waitab
      * {@code launch(Object)} method. This parameter might be a
      * {@code java.lang.String[]} that lists a test's command line
      * arguments.
-     * @param actionTimeOrigin is used for timeout reporting, if non-null.
      * @return        {@code launch(Object)} result.
-     * @throws TimeoutExpiredException
      * @exception InterruptedException
      */
     public R produceAction(P obj, String actionTimeOrigin) throws InterruptedException {
@@ -298,7 +287,6 @@ public class ActionProducer<R, P> extends Thread implements Action<R, P>, Waitab
     /**
      * Inquire for a reference to the object returned by a launched action.
      *
-     * @param obj Not used.
      * @return the result returned when a launched action finishes normally.
      * @see org.netbeans.jemmy.Waitable
      */

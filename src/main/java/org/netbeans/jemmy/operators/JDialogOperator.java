@@ -37,93 +37,52 @@ import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.DialogWaiter;
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.TestOut;
-import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.Timeouts;
 
 /**
- * <BR><BR>Timeouts used: <BR>
- * DialogWaiter.WaitDialogTimeout - time to wait dialog displayed <BR>
- * DialogWaiter.AfterDialogTimeout - time to sleep after dialog has been
- * dispayed <BR>.
+ * Timeouts used:
+ * <ul>
+ * <li>DialogWaiter.WaitDialogTimeout - time to wait dialog displayed</li>
+ * <li>DialogWaiter.AfterDialogTimeout - time to sleep after dialog has been dispayed</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
 public class JDialogOperator extends DialogOperator {
 
-    /**
-     * Constructor.
-     *
-     * @param w a component
-     */
     public JDialogOperator(JDialog w) {
         super(w);
     }
 
-    /**
-     * Constructs a JDialogOperator object.
-     *
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     * @param env an operator to copy environment from.
-     */
     public JDialogOperator(ComponentChooser chooser, int index, Operator env) {
         this(waitJDialog(new JDialogFinder(chooser), index, env.getTimeouts(), env.getOutput()));
         copyEnvironment(env);
     }
 
-    /**
-     * Constructs a JDialogOperator object.
-     *
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public JDialogOperator(ComponentChooser chooser, int index) {
         this(chooser, index, Operator.getEnvironmentOperator());
     }
 
-    /**
-     * Constructs a JDialogOperator object.
-     *
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public JDialogOperator(ComponentChooser chooser) {
         this(chooser, 0);
     }
 
-    /**
-     * Constructs a JDialogOperator object.
-     *
-     * @param owner window - owner
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public JDialogOperator(WindowOperator owner, ComponentChooser chooser, int index) {
         this((JDialog) owner.waitSubWindow(new JDialogFinder(chooser), index));
         copyEnvironment(owner);
     }
 
-    /**
-     * Constructs a JDialogOperator object.
-     *
-     * @param owner window - owner
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public JDialogOperator(WindowOperator owner, ComponentChooser chooser) {
         this(owner, chooser, 0);
     }
 
     /**
-     * Constructor. Waits for the dialog with "title" subtitle. Uses owner's
+     * Waits for the dialog with "title" subtitle. Uses owner's
      * timeout and output for waiting and to init operator.
      *
-     * @param owner Operator pointing to a window owner.
-     * @param title The desired title.
      * @param index Ordinal index. The first dialog has {@code index} 0.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     *
      */
     public JDialogOperator(WindowOperator owner, String title, int index) {
         this(waitJDialog(owner, new JDialogFinder(new DialogByTitleFinder(title, owner.getComparator())), index));
@@ -131,25 +90,18 @@ public class JDialogOperator extends DialogOperator {
     }
 
     /**
-     * Constructor. Waits for the dialog with "title" subtitle. Uses owner's
+     * Waits for the dialog with "title" subtitle. Uses owner's
      * timeout and output for waiting and to init operator.
      *
-     * @param owner Operator pointing to a window owner.
-     * @param title The desired title.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     *
      */
     public JDialogOperator(WindowOperator owner, String title) {
         this(owner, title, 0);
     }
 
     /**
-     * Constructor. Waits for the index'th dialog between owner's children. Uses
+     * Waits for the index'th dialog between owner's children. Uses
      * owner'th timeout and output for waiting and to init operator.
-     *
-     * @param owner Operator pointing to a window owner.
-     * @param index Ordinal component index.
-     *
      */
     public JDialogOperator(WindowOperator owner, int index) {
         this(waitJDialog(owner, new JDialogFinder(), index));
@@ -157,66 +109,51 @@ public class JDialogOperator extends DialogOperator {
     }
 
     /**
-     * Constructor. Waits for the first dialog between owner's children. Uses
+     * Waits for the first dialog between owner's children. Uses
      * owner'th timeout and output for waiting and to init operator.
-     *
-     * @param owner Operator pointing to a window owner.
-     *
      */
     public JDialogOperator(WindowOperator owner) {
         this(owner, 0);
     }
 
     /**
-     * Constructor. Waits for the dialog with "title" subtitle. Constructor can
+     * Waits for the dialog with "title" subtitle. Constructor can
      * be used in complicated cases when output or timeouts should differ from
      * default.
      *
-     * @param title a window title
-     * @param index Ordinal component index.
-     * @param env an operator to copy environment from.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     *
      */
     public JDialogOperator(String title, int index, Operator env) {
         this(new JDialogFinder(new DialogByTitleFinder(title, env.getComparator())), index, env);
     }
 
     /**
-     * Constructor. Waits for the dialog with "title" subtitle. Uses current
+     * Waits for the dialog with "title" subtitle. Uses current
      * timeouts and output values.
      *
-     * @param title a window title
-     * @param index Ordinal component index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @see JemmyProperties#getCurrentTimeouts()
      * @see JemmyProperties#getCurrentOutput()
-     *
      */
     public JDialogOperator(String title, int index) {
         this(title, index, ComponentOperator.getEnvironmentOperator());
     }
 
     /**
-     * Constructor. Waits for the dialog with "title" subtitle. Uses current
+     * Waits for the dialog with "title" subtitle. Uses current
      * timeouts and output values.
      *
-     * @param title a window title
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @see JemmyProperties#getCurrentTimeouts()
      * @see JemmyProperties#getCurrentOutput()
-     *
      */
     public JDialogOperator(String title) {
         this(title, 0);
     }
 
     /**
-     * Constructor. Waits for the index'th dialog. Uses current timeout and
+     * Waits for the index'th dialog. Uses current timeout and
      * output for waiting and to init operator.
-     *
-     * @param index Ordinal component index.
-     *
      */
     public JDialogOperator(int index) {
         this(waitJDialog(
@@ -228,9 +165,8 @@ public class JDialogOperator extends DialogOperator {
     }
 
     /**
-     * Constructor. Waits for the first dialog. Uses current timeout and output
+     * Waits for the first dialog. Uses current timeout and output
      * for waiting and to init operator.
-     *
      */
     public JDialogOperator() {
         this(0);
@@ -239,8 +175,6 @@ public class JDialogOperator extends DialogOperator {
     /**
      * Searches an index'th dialog.
      *
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
      * @return JDialog instance or null if component was not found.
      */
     public static JDialog findJDialog(ComponentChooser chooser, int index) {
@@ -250,7 +184,6 @@ public class JDialogOperator extends DialogOperator {
     /**
      * Searches a dialog.
      *
-     * @param chooser a component chooser specifying searching criteria.
      * @return JDialog instance or null if component was not found.
      */
     public static JDialog findJDialog(ComponentChooser chooser) {
@@ -260,10 +193,8 @@ public class JDialogOperator extends DialogOperator {
     /**
      * Searches an index'th dialog by title.
      *
-     * @param title Dialog title
      * @param ce Compare exactly. If true, text can be a substring of caption.
      * @param cc Compare case sensitively. If true, both text and caption are
-     * @param index an index between appropriate ones.
      * @return JDialog instance or null if component was not found.
      */
     public static JDialog findJDialog(String title, boolean ce, boolean cc, int index) {
@@ -274,7 +205,6 @@ public class JDialogOperator extends DialogOperator {
     /**
      * Searches a dialog by title.
      *
-     * @param title Dialog title
      * @param ce Compare exactly. If true, text can be a substring of caption.
      * @param cc Compare case sensitively. If true, both text and caption are
      * @return JDialog instance or null if component was not found.
@@ -286,9 +216,6 @@ public class JDialogOperator extends DialogOperator {
     /**
      * Searches an index'th dialog between owner's owned windows.
      *
-     * @param owner Window - dialog owner.
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
      * @return JDialog instance or null if component was not found.
      */
     public static JDialog findJDialog(Window owner, ComponentChooser chooser, int index) {
@@ -298,8 +225,6 @@ public class JDialogOperator extends DialogOperator {
     /**
      * Searches a dialog between owner's owned windows.
      *
-     * @param owner Window - dialog owner.
-     * @param chooser a component chooser specifying searching criteria.
      * @return JDialog instance or null if component was not found.
      */
     public static JDialog findJDialog(Window owner, ComponentChooser chooser) {
@@ -309,11 +234,8 @@ public class JDialogOperator extends DialogOperator {
     /**
      * Searches an index'th dialog by title between owner's owned windows.
      *
-     * @param owner Window - dialog owner.
-     * @param title Dialog title
      * @param ce Compare exactly. If true, text can be a substring of caption.
      * @param cc Compare case sensitively. If true, both text and caption are
-     * @param index an index between appropriate ones.
      * @return JDialog instance or null if component was not found.
      */
     public static JDialog findJDialog(Window owner, String title, boolean ce, boolean cc, int index) {
@@ -324,8 +246,6 @@ public class JDialogOperator extends DialogOperator {
     /**
      * Searches a dialog by title between owner's owned windows.
      *
-     * @param owner Window - dialog owner.
-     * @param title Dialog title
      * @param ce Compare exactly. If true, text can be a substring of caption.
      * @param cc Compare case sensitively. If true, both text and caption are
      * @return JDialog instance or null if component was not found.
@@ -337,10 +257,7 @@ public class JDialogOperator extends DialogOperator {
     /**
      * Waits an index'th dialog.
      *
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
      * @return JDialog instance or null if component was not found.
-     *
      */
     public static JDialog waitJDialog(ComponentChooser chooser, int index) {
         return (waitJDialog(chooser, index, JemmyProperties.getCurrentTimeouts(), JemmyProperties.getCurrentOutput()));
@@ -349,9 +266,7 @@ public class JDialogOperator extends DialogOperator {
     /**
      * Waits a dialog.
      *
-     * @param chooser a component chooser specifying searching criteria.
      * @return JDialog instance or null if component was not found.
-     *
      */
     public static JDialog waitJDialog(ComponentChooser chooser) {
         return waitJDialog(chooser, 0);
@@ -360,12 +275,9 @@ public class JDialogOperator extends DialogOperator {
     /**
      * Waits an index'th dialog by title.
      *
-     * @param title Dialog title
      * @param ce Compare exactly. If true, text can be a substring of caption.
      * @param cc Compare case sensitively. If true, both text and caption are
-     * @param index an index between appropriate ones.
      * @return JDialog instance or null if component was not found.
-     *
      */
     public static JDialog waitJDialog(String title, boolean ce, boolean cc, int index) {
         return (waitJDialog(
@@ -375,11 +287,9 @@ public class JDialogOperator extends DialogOperator {
     /**
      * Waits a dialog by title.
      *
-     * @param title Dialog title
      * @param ce Compare exactly. If true, text can be a substring of caption.
      * @param cc Compare case sensitively. If true, both text and caption are
      * @return JDialog instance or null if component was not found.
-     *
      */
     public static JDialog waitJDialog(String title, boolean ce, boolean cc) {
         return waitJDialog(title, ce, cc, 0);
@@ -388,11 +298,7 @@ public class JDialogOperator extends DialogOperator {
     /**
      * Waits an index'th dialog between owner's owned windows.
      *
-     * @param owner Window - dialog owner.
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
      * @return JDialog instance or null if component was not found.
-     *
      */
     public static JDialog waitJDialog(Window owner, ComponentChooser chooser, int index) {
         return (waitJDialog(
@@ -402,10 +308,7 @@ public class JDialogOperator extends DialogOperator {
     /**
      * Waits a dialog between owner's owned windows.
      *
-     * @param owner Window - dialog owner.
-     * @param chooser a component chooser specifying searching criteria.
      * @return JDialog instance or null if component was not found.
-     *
      */
     public static JDialog waitJDialog(Window owner, ComponentChooser chooser) {
         return waitJDialog(owner, chooser, 0);
@@ -414,13 +317,9 @@ public class JDialogOperator extends DialogOperator {
     /**
      * Waits an index'th dialog by title between owner's owned windows.
      *
-     * @param owner Window - dialog owner.
-     * @param title Dialog title
      * @param ce Compare exactly. If true, text can be a substring of caption.
      * @param cc Compare case sensitively. If true, both text and caption are
-     * @param index an index between appropriate ones.
      * @return JDialog instance or null if component was not found.
-     *
      */
     public static JDialog waitJDialog(Window owner, String title, boolean ce, boolean cc, int index) {
         return (waitJDialog(
@@ -430,12 +329,9 @@ public class JDialogOperator extends DialogOperator {
     /**
      * Waits a dialog by title between owner's owned windows.
      *
-     * @param owner Window - dialog owner.
-     * @param title Dialog title
      * @param ce Compare exactly. If true, text can be a substring of caption.
      * @param cc Compare case sensitively. If true, both text and caption are
      * @return JDialog instance or null if component was not found.
-     *
      */
     public static JDialog waitJDialog(Window owner, String title, boolean ce, boolean cc) {
         return waitJDialog(owner, title, ce, cc, 0);
@@ -479,9 +375,6 @@ public class JDialogOperator extends DialogOperator {
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code JDialog.getAccessibleContext()} through queue
-     */
     public AccessibleContext getAccessibleContext() {
         return (runMapping(new MapAction<AccessibleContext>("getAccessibleContext") {
             @Override
@@ -491,9 +384,6 @@ public class JDialogOperator extends DialogOperator {
         }));
     }
 
-    /**
-     * Maps {@code JDialog.getContentPane()} through queue
-     */
     public Container getContentPane() {
         return (runMapping(new MapAction<Container>("getContentPane") {
             @Override
@@ -503,9 +393,6 @@ public class JDialogOperator extends DialogOperator {
         }));
     }
 
-    /**
-     * Maps {@code JDialog.getDefaultCloseOperation()} through queue
-     */
     public int getDefaultCloseOperation() {
         return (runMapping(new MapIntegerAction("getDefaultCloseOperation") {
             @Override
@@ -515,9 +402,6 @@ public class JDialogOperator extends DialogOperator {
         }));
     }
 
-    /**
-     * Maps {@code JDialog.getGlassPane()} through queue
-     */
     public Component getGlassPane() {
         return (runMapping(new MapAction<Component>("getGlassPane") {
             @Override
@@ -527,9 +411,6 @@ public class JDialogOperator extends DialogOperator {
         }));
     }
 
-    /**
-     * Maps {@code JDialog.getJMenuBar()} through queue
-     */
     public JMenuBar getJMenuBar() {
         return (runMapping(new MapAction<JMenuBar>("getJMenuBar") {
             @Override
@@ -539,9 +420,6 @@ public class JDialogOperator extends DialogOperator {
         }));
     }
 
-    /**
-     * Maps {@code JDialog.getLayeredPane()} through queue
-     */
     public JLayeredPane getLayeredPane() {
         return (runMapping(new MapAction<JLayeredPane>("getLayeredPane") {
             @Override
@@ -551,9 +429,6 @@ public class JDialogOperator extends DialogOperator {
         }));
     }
 
-    /**
-     * Maps {@code JDialog.getRootPane()} through queue
-     */
     public JRootPane getRootPane() {
         return (runMapping(new MapAction<JRootPane>("getRootPane") {
             @Override
@@ -563,9 +438,6 @@ public class JDialogOperator extends DialogOperator {
         }));
     }
 
-    /**
-     * Maps {@code JDialog.setContentPane(Container)} through queue
-     */
     public void setContentPane(final Container container) {
         runMapping(new MapVoidAction("setContentPane") {
             @Override
@@ -575,9 +447,6 @@ public class JDialogOperator extends DialogOperator {
         });
     }
 
-    /**
-     * Maps {@code JDialog.setDefaultCloseOperation(int)} through queue
-     */
     public void setDefaultCloseOperation(final int i) {
         runMapping(new MapVoidAction("setDefaultCloseOperation") {
             @Override
@@ -587,9 +456,6 @@ public class JDialogOperator extends DialogOperator {
         });
     }
 
-    /**
-     * Maps {@code JDialog.setGlassPane(Component)} through queue
-     */
     public void setGlassPane(final Component component) {
         runMapping(new MapVoidAction("setGlassPane") {
             @Override
@@ -599,9 +465,6 @@ public class JDialogOperator extends DialogOperator {
         });
     }
 
-    /**
-     * Maps {@code JDialog.setJMenuBar(JMenuBar)} through queue
-     */
     public void setJMenuBar(final JMenuBar jMenuBar) {
         runMapping(new MapVoidAction("setJMenuBar") {
             @Override
@@ -611,9 +474,6 @@ public class JDialogOperator extends DialogOperator {
         });
     }
 
-    /**
-     * Maps {@code JDialog.setLayeredPane(JLayeredPane)} through queue
-     */
     public void setLayeredPane(final JLayeredPane jLayeredPane) {
         runMapping(new MapVoidAction("setLayeredPane") {
             @Override
@@ -623,9 +483,6 @@ public class JDialogOperator extends DialogOperator {
         });
     }
 
-    /**
-     * Maps {@code JDialog.setLocationRelativeTo(Component)} through queue
-     */
     public void setLocationRelativeTo(final Component component) {
         runMapping(new MapVoidAction("setLocationRelativeTo") {
             @Override
@@ -641,10 +498,6 @@ public class JDialogOperator extends DialogOperator {
      * A method to be used from subclasses. Uses timeouts and output passed as
      * parameters during the waiting.
      *
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
-     * @param timeouts timeouts to be used during the waiting.
-     * @param output an output to be used during the waiting.
      * @return Component instance or null if component was not found.
      */
     protected static JDialog waitJDialog(ComponentChooser chooser, int index, Timeouts timeouts, TestOut output) {
@@ -663,11 +516,7 @@ public class JDialogOperator extends DialogOperator {
      * A method to be used from subclasses. Uses {@code owner}'s timeouts
      * and output during the waiting.
      *
-     * @param owner a window - dialog owner.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return Component instance or null if component was not found.
-     * @throws TimeoutExpiredException
      */
     protected static JDialog waitJDialog(WindowOperator owner, ComponentChooser chooser, int index) {
         return (waitJDialog((Window) owner.getSource(), chooser, index, owner.getTimeouts(), owner.getOutput()));
@@ -677,11 +526,6 @@ public class JDialogOperator extends DialogOperator {
      * A method to be used from subclasses. Uses timeouts and output passed as
      * parameters during the waiting.
      *
-     * @param owner a window - dialog owner.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
-     * @param timeouts timeouts to be used during the waiting.
-     * @param output an output to be used during the waiting.
      * @return Component instance or null if component was not found.
      */
     protected static JDialog waitJDialog(
@@ -704,8 +548,6 @@ public class JDialogOperator extends DialogOperator {
 
         /**
          * Constructs JDialogFinder.
-         *
-         * @param sf other searching criteria.
          */
         public JDialogFinder(ComponentChooser sf) {
             super(JDialog.class, sf);

@@ -37,21 +37,16 @@ import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
 /**
- *
  * Load string resources from file. Resources should be stored in
  * {@code name=value} format.
  *
  * @see org.netbeans.jemmy.BundleManager
  *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class Bundle extends Object {
 
     private Properties resources;
 
-    /**
-     * Bunble constructor.
-     */
     public Bundle() {
         resources = new Properties();
     }
@@ -59,7 +54,6 @@ public class Bundle extends Object {
     /**
      * Loads resources from an input stream.
      *
-     * @param stream Stream to load resources from.
      * @exception IOException
      */
     public void load(InputStream stream) throws IOException {
@@ -69,7 +63,6 @@ public class Bundle extends Object {
     /**
      * Loads resources from a simple file.
      *
-     * @param fileName Name of the file to load resources from.
      * @exception IOException
      * @exception FileNotFoundException
      */
@@ -82,7 +75,6 @@ public class Bundle extends Object {
     /**
      * Loads resources from a file in a jar archive.
      *
-     * @param fileName Name of the jar archive.
      * @param entryName ?enryName? Name of the file to load resources from.
      * @exception IOException
      * @exception FileNotFoundException
@@ -97,7 +89,6 @@ public class Bundle extends Object {
     /**
      * Loads resources from a file in a zip archive.
      *
-     * @param fileName Name of the zip archive.
      * @param entryName ?enryName? Name of the file to load resources from.
      * @exception ZipException
      * @exception IOException
@@ -110,11 +101,6 @@ public class Bundle extends Object {
         }
     }
 
-    /**
-     * Prints bundle contents.
-     *
-     * @param writer Writer to print data in.
-     */
     public void print(PrintWriter writer) {
         Enumeration<Object> keys = resources.keys();
         while (keys.hasMoreElements()) {
@@ -123,11 +109,6 @@ public class Bundle extends Object {
         }
     }
 
-    /**
-     * Prints bundle contents.
-     *
-     * @param stream Stream to print data in.
-     */
     public void print(PrintStream stream) {
         print(new PrintWriter(stream));
     }
@@ -135,7 +116,6 @@ public class Bundle extends Object {
     /**
      * Gets resource by key.
      *
-     * @param key Resource key
      * @return Resource value or null if resource was not found.
      */
     public String getResource(String key) {

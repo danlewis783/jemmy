@@ -32,21 +32,16 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 /**
- *
  * Default implementation of CharBindingMap interface. Provides a mapping for
- * the following symbols:<BR>
+ * the following symbols:
  *
  * @see org.netbeans.jemmy.CharBindingMap
  *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class DefaultCharBindingMap implements CharBindingMap {
 
     private Hashtable<Character, CharKey> chars;
 
-    /**
-     * Constructor.
-     */
     public DefaultCharBindingMap() {
         initMap();
     }
@@ -54,7 +49,6 @@ public class DefaultCharBindingMap implements CharBindingMap {
     /**
      * Returns the code of the primary key used to type a symbol.
      *
-     * @param c Symbol code.
      * @return a key code.
      * @see CharBindingMap#getCharKey(char)
      * @see java.awt.event.InputEvent
@@ -67,7 +61,6 @@ public class DefaultCharBindingMap implements CharBindingMap {
     /**
      * Returns the modifiers that should be pressed to type a symbol.
      *
-     * @param c Symbol code.
      * @return a combination of InputEvent MASK fields.
      * @see CharBindingMap#getCharModifiers(char)
      * @see java.awt.event.InputEvent
@@ -80,7 +73,6 @@ public class DefaultCharBindingMap implements CharBindingMap {
     /**
      * Returns key + modifiers pair.
      *
-     * @param c Symbol code.
      * @return an array of two elements: key code and modifiers mask - a
      * combination of InputEvent MASK fields.
      */
@@ -110,8 +102,6 @@ public class DefaultCharBindingMap implements CharBindingMap {
 
     /**
      * Removes a char from supported.
-     *
-     * @param c Symbol code.
      */
     public void removeChar(char c) {
         chars.remove(c);
@@ -119,10 +109,6 @@ public class DefaultCharBindingMap implements CharBindingMap {
 
     /**
      * Adds a char to supported.
-     *
-     * @param c Symbol code.
-     * @param key key code.
-     * @param modifiers a combination of InputEvent MASK fields.
      */
     public void addChar(char c, int key, int modifiers) {
         chars.put(c, new CharKey(key, modifiers));

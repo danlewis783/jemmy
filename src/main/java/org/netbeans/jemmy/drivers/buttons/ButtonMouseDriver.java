@@ -33,8 +33,6 @@ import org.netbeans.jemmy.operators.Operator;
 
 /**
  * Driver to push a button by mouse click.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class ButtonMouseDriver extends LightSupportiveDriver implements ButtonDriver {
 

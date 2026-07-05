@@ -34,14 +34,9 @@ import org.netbeans.jemmy.operators.ListOperator;
 
 /**
  * List driver for java.awt.List component type. Uses keyboard and mouse.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class ListKeyboardDriver extends ListAPIDriver implements MultiSelListDriver {
 
-    /**
-     * Constructs a ListKeyboardDriver.
-     */
     public ListKeyboardDriver() {
         super();
     }

@@ -27,64 +27,38 @@ package org.netbeans.jemmy.operators;
 import java.awt.Container;
 import javax.swing.JRadioButton;
 import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.TimeoutExpiredException;
 
 /**
- *
- * <BR><BR>Timeouts used: <BR>
- * AbstractButtonOperator.PushButtonTimeout - time between button pressing and
- * releasing<BR>
- * ComponentOperator.WaitComponentTimeout - time to wait button displayed <BR>
- * ComponentOperator.WaitComponentEnabledTimeout - time to wait button enabled
- * <BR>.
+ * Timeouts used:
+ * <ul>
+ * <li>AbstractButtonOperator.PushButtonTimeout - time between button pressing and releasing</li>
+ * <li>ComponentOperator.WaitComponentTimeout - time to wait button displayed</li>
+ * <li>ComponentOperator.WaitComponentEnabledTimeout - time to wait button enabled</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
 public class JRadioButtonOperator extends JToggleButtonOperator {
 
-    /**
-     * Constructor.
-     *
-     * @param b a component
-     */
     public JRadioButtonOperator(JRadioButton b) {
         super(b);
     }
 
-    /**
-     * Constructs a JRadioButtonOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public JRadioButtonOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((JRadioButton) cont.waitSubComponent(new JRadioButtonFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a JRadioButtonOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public JRadioButtonOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Button text.
-     * @param index Ordinal component index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public JRadioButtonOperator(ContainerOperator<?> cont, String text, int index) {
         this((JRadioButton) waitComponent(
@@ -96,25 +70,18 @@ public class JRadioButtonOperator extends JToggleButtonOperator {
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Button text.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public JRadioButtonOperator(ContainerOperator<?> cont, String text) {
         this(cont, text, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     * @param index Ordinal component index.
-     * @throws TimeoutExpiredException
      */
     public JRadioButtonOperator(ContainerOperator<?> cont, int index) {
         this((JRadioButton) waitComponent(cont, new JRadioButtonFinder(), index));
@@ -122,11 +89,8 @@ public class JRadioButtonOperator extends JToggleButtonOperator {
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     * @throws TimeoutExpiredException
      */
     public JRadioButtonOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -135,9 +99,6 @@ public class JRadioButtonOperator extends JToggleButtonOperator {
     /**
      * Searches JRadioButton in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JRadioButton instance or null if component was not found.
      */
     public static JRadioButton findJRadioButton(Container cont, ComponentChooser chooser, int index) {
@@ -147,8 +108,6 @@ public class JRadioButtonOperator extends JToggleButtonOperator {
     /**
      * Searches 0'th JRadioButton in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JRadioButton instance or null if component was not found.
      */
     public static JRadioButton findJRadioButton(Container cont, ComponentChooser chooser) {
@@ -158,11 +117,6 @@ public class JRadioButtonOperator extends JToggleButtonOperator {
     /**
      * Searches JRadioButton by text.
      *
-     * @param cont Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return JRadioButton instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -177,10 +131,6 @@ public class JRadioButtonOperator extends JToggleButtonOperator {
     /**
      * Searches JRadioButton by text.
      *
-     * @param cont Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return JRadioButton instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -191,11 +141,7 @@ public class JRadioButtonOperator extends JToggleButtonOperator {
     /**
      * Waits JRadioButton in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JRadioButton instance.
-     * @throws TimeoutExpiredException
      */
     public static JRadioButton waitJRadioButton(Container cont, ComponentChooser chooser, int index) {
         return (JRadioButton) waitJToggleButton(cont, new JRadioButtonFinder(chooser), index);
@@ -204,10 +150,7 @@ public class JRadioButtonOperator extends JToggleButtonOperator {
     /**
      * Waits 0'th JRadioButton in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JRadioButton instance.
-     * @throws TimeoutExpiredException
      */
     public static JRadioButton waitJRadioButton(Container cont, ComponentChooser chooser) {
         return waitJRadioButton(cont, chooser, 0);
@@ -216,14 +159,8 @@ public class JRadioButtonOperator extends JToggleButtonOperator {
     /**
      * Waits JRadioButton by text.
      *
-     * @param cont Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return JRadioButton instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static JRadioButton waitJRadioButton(Container cont, String text, boolean ce, boolean ccs, int index) {
         return (waitJRadioButton(
@@ -236,13 +173,8 @@ public class JRadioButtonOperator extends JToggleButtonOperator {
     /**
      * Waits JRadioButton by text.
      *
-     * @param cont Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return JRadioButton instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static JRadioButton waitJRadioButton(Container cont, String text, boolean ce, boolean ccs) {
         return waitJRadioButton(cont, text, ce, ccs, 0);
@@ -255,8 +187,6 @@ public class JRadioButtonOperator extends JToggleButtonOperator {
 
         /**
          * Constructs JRadioButtonFinder.
-         *
-         * @param sf other searching criteria.
          */
         public JRadioButtonFinder(ComponentChooser sf) {
             super(JRadioButton.class, sf);

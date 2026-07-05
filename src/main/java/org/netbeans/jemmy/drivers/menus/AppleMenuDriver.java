@@ -40,15 +40,8 @@ import org.netbeans.jemmy.drivers.input.RobotDriver;
 import org.netbeans.jemmy.operators.ComponentOperator;
 import org.netbeans.jemmy.operators.Operator;
 
-/**
- *
- * @author shura
- */
 public class AppleMenuDriver extends RobotDriver implements MenuDriver {
 
-    /**
-     * Creates a new instance of AppleMenuDriver
-     */
     public AppleMenuDriver() {
         super(new Timeout("apple.system.menu.delay", 100), new String[] {"org.netbeans.jemmy.operators.JMenuBarOperator"
         });

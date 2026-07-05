@@ -48,7 +48,6 @@ import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
-import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.Timeoutable;
 import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.Waiter;
@@ -58,31 +57,22 @@ import org.netbeans.jemmy.drivers.ListDriver;
 import org.netbeans.jemmy.util.EmptyVisualizer;
 
 /**
- * <BR><BR>Timeouts used: <BR>
- * JComboBoxOperator.BeforeSelectingTimeout - time to sleep after list opened
- * and before item selected <BR>
- * JComboBoxOperator.WaitListTimeout - time to wait list opened <BR>
- * ComponentOperator.WaitComponentTimeout - time to wait component displayed
- * <BR>
- * ComponentOperator.WaitComponentEnabledTimeout - time to wait component
- * enabled <BR>
- * ComponentOperator.WaitStateTimeout - time to wait for item to be selected
- * <BR>
- * AbstractButtonOperator.PushButtonTimeout - time between combo button pressing
- * and releasing<BR>
- * ComponentOperator.MouseClickTimeout - time between mouse pressing and
- * releasing during item selecting<BR>
- * JTextComponentOperator.PushKeyTimeout - time between key pressing and
- * releasing during text typing <BR>
- * JTextComponentOperator.BetweenKeysTimeout - time to sleep between two chars
- * typing <BR>
- * JTextComponentOperator.ChangeCaretPositionTimeout - maximum time to chenge
- * caret position <BR>
- * JTextComponentOperator.TypeTextTimeout - maximum time to type text <BR>.
+ * Timeouts used:
+ * <ul>
+ * <li>JComboBoxOperator.BeforeSelectingTimeout - time to sleep after list opened and before item selected</li>
+ * <li>JComboBoxOperator.WaitListTimeout - time to wait list opened</li>
+ * <li>ComponentOperator.WaitComponentTimeout - time to wait component displayed</li>
+ * <li>ComponentOperator.WaitComponentEnabledTimeout - time to wait component enabled</li>
+ * <li>ComponentOperator.WaitStateTimeout - time to wait for item to be selected</li>
+ * <li>AbstractButtonOperator.PushButtonTimeout - time between combo button pressing and releasing</li>
+ * <li>ComponentOperator.MouseClickTimeout - time between mouse pressing and releasing during item selecting</li>
+ * <li>JTextComponentOperator.PushKeyTimeout - time between key pressing and releasing during text typing</li>
+ * <li>JTextComponentOperator.BetweenKeysTimeout - time to sleep between two chars typing</li>
+ * <li>JTextComponentOperator.ChangeCaretPositionTimeout - maximum time to chenge caret position</li>
+ * <li>JTextComponentOperator.TypeTextTimeout - maximum time to type text</li>
+ * </ul>
  *
  * @see Timeouts
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
 public class JComboBoxOperator extends JComponentOperator implements Timeoutable, Outputable {
@@ -112,47 +102,25 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
 
     ListDriver driver;
 
-    /**
-     * Constructs a JComboBoxOperator object.
-     *
-     * @param b a component
-     */
     public JComboBoxOperator(JComboBox<?> b) {
         super(b);
         driver = DriverManager.getListDriver(getClass());
     }
 
-    /**
-     * Constructs a JComboBoxOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public JComboBoxOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((JComboBox) cont.waitSubComponent(new JComboBoxFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a JComboBoxOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public JComboBoxOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Text of item which is currently selected.
-     * @param index Ordinal component index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public JComboBoxOperator(ContainerOperator<?> cont, String text, int index) {
         this((JComboBox) waitComponent(cont, new JComboBoxByItemFinder(text, -1, cont.getComparator()), index));
@@ -160,25 +128,18 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Text of item which is currently selected.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public JComboBoxOperator(ContainerOperator<?> cont, String text) {
         this(cont, text, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     * @param index Ordinal component index.
-     * @throws TimeoutExpiredException
      */
     public JComboBoxOperator(ContainerOperator<?> cont, int index) {
         this((JComboBox) waitComponent(cont, new JComboBoxFinder(), index));
@@ -186,11 +147,8 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     * @throws TimeoutExpiredException
      */
     public JComboBoxOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -199,9 +157,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
     /**
      * Searches JComboBox in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JComboBox instance or null if component was not found.
      */
     public static JComboBox<?> findJComboBox(Container cont, ComponentChooser chooser, int index) {
@@ -211,8 +166,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
     /**
      * Searches 0'th JComboBox in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JComboBox instance or null if component was not found.
      */
     public static JComboBox<?> findJComboBox(Container cont, ComponentChooser chooser) {
@@ -222,13 +175,8 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
     /**
      * Searches JComboBox by item.
      *
-     * @param cont Container to search component in.
-     * @param text Item text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @param itemIndex Index of item to compare text. If -1, selected item is
      * checked.
-     * @param index Ordinal component index.
      * @return JComboBox instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -241,10 +189,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
     /**
      * Searches JComboBox by item.
      *
-     * @param cont Container to search component in.
-     * @param text Item text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @param itemIndex Index of item to compare text. If -1, selected item is
      * checked.
      * @return JComboBox instance or null if component was not found.
@@ -257,11 +201,7 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
     /**
      * Waits JComboBox in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JComboBox instance or null if component was not found.
-     * @throws TimeoutExpiredException
      */
     public static JComboBox<?> waitJComboBox(Container cont, ComponentChooser chooser, int index) {
         return (JComboBox) waitComponent(cont, new JComboBoxFinder(chooser), index);
@@ -270,10 +210,7 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
     /**
      * Waits 0'th JComboBox in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JComboBox instance or null if component was not found.
-     * @throws TimeoutExpiredException
      */
     public static JComboBox<?> waitJComboBox(Container cont, ComponentChooser chooser) {
         return waitJComboBox(cont, chooser, 0);
@@ -282,16 +219,10 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
     /**
      * Waits JComboBox by item.
      *
-     * @param cont Container to search component in.
-     * @param text Item text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @param itemIndex Index of item to compare text. If -1, selected item is
      * checked.
-     * @param index Ordinal component index.
      * @return JComboBox instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static JComboBox<?> waitJComboBox(
             Container cont, String text, boolean ce, boolean ccs, int itemIndex, int index) {
@@ -302,15 +233,10 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
     /**
      * Waits JComboBox by item.
      *
-     * @param cont Container to search component in.
-     * @param text Item text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @param itemIndex Index of item to compare text. If -1, selected item is
      * checked.
      * @return JComboBox instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static JComboBox<?> waitJComboBox(Container cont, String text, boolean ce, boolean ccs, int itemIndex) {
         return waitJComboBox(cont, text, ce, ccs, itemIndex, 0);
@@ -433,7 +359,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
      *
      * @return JList object if it was displayed in
      * JComboBoxOperator.WaitListTimeout milliseconds, null otherwise.
-     * @throws TimeoutExpiredException
      */
     public JList<?> waitList() {
         ListWater pw = new ListWater();
@@ -449,8 +374,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
 
     /**
      * Push combobox's button to expand or collapse combobox.
-     *
-     * @throws TimeoutExpiredException
      */
     public void pushComboButton() {
         makeComponentVisible();
@@ -460,8 +383,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
     /**
      * Finds an item between list items.
      *
-     * @param item a text pattern.
-     * @param comparator a searching criteria.
      * @return an item index.
      */
     public int findItemIndex(String item, StringComparator comparator) {
@@ -477,8 +398,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
     /**
      * Waits for an item available between list items.
      *
-     * @param item a text pattern.
-     * @param comparator a searching criteria.
      * @return an item index or throws TimeoutExpiredException if item not
      * found.
      */
@@ -507,7 +426,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
     /**
      * Waits for an item of given index available between list items.
      *
-     * @param itemIndex index of desired item
      * @return an item index or throws TimeoutExpiredException if item not
      * found.
      */
@@ -538,9 +456,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
 
     /**
      * Selects an item by text.
-     *
-     * @param item a text pattern.
-     * @param comparator a searching criteria.
      */
     public void selectItem(String item, StringComparator comparator) {
         output.printLine("Select \"" + item + "\" item in combobox\n    : " + toStringSource());
@@ -551,11 +466,7 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
     /**
      * Selects combobox item.
      *
-     * @param item Item text.
-     * @param ce Compare exactly.
-     * @param cc Compare case sensitivelly.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      * @deprecated Use selectItem(String) or selectItem(String,
      * StringComparator)
      */
@@ -566,9 +477,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
 
     /**
      * Selects combobox item. Uses StringComparator assigned to this object.
-     *
-     * @param item Item text.
-     * @throws TimeoutExpiredException
      */
     public void selectItem(String item) {
         selectItem(item, getComparator());
@@ -577,9 +485,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
     /**
      * Selects combobox item. If verification mode is on, checks that right item
      * has been selected.
-     *
-     * @param index Item index.
-     * @throws TimeoutExpiredException
      */
     public void selectItem(int index) {
         output.printLine("Select " + Integer.toString(index) + "\'th item in combobox\n    : " + toStringSource());
@@ -600,9 +505,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
     /**
      * Types text in the editable combobox. If combobox has no focus, does
      * simple mouse click on it first.
-     *
-     * @param text text to type.
-     * @throws TimeoutExpiredException
      */
     public void typeText(String text) {
         makeComponentVisible();
@@ -615,8 +517,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
     /**
      * Clears text in the editable combobox using left-arrow and delete keys. If
      * combobox has no focus, does simple mouse click on it first.
-     *
-     * @throws TimeoutExpiredException
      */
     public void clearText() {
         makeComponentVisible();
@@ -628,9 +528,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
 
     /**
      * Requests a focus, clears text, types new one and pushes Enter.
-     *
-     * @param text New text value. Shouln't include final '\n'.
-     * @throws TimeoutExpiredException
      */
     public void enterText(String text) {
         makeComponentVisible();
@@ -640,11 +537,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         tfo.enterText(text);
     }
 
-    /**
-     * Waits for item to be selected.
-     *
-     * @param index Item index.
-     */
     public void waitItemSelected(final int index) {
         getOutput()
                 .printLine("Wait " + Integer.toString(index)
@@ -671,8 +563,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
 
     /**
      * Waits for item to be selected. Uses getComparator() comparator.
-     *
-     * @param item wait an item to be selected.
      */
     public void waitItemSelected(final String item) {
         getOutput().printLine("Wait \"" + item + "\" item to be selected in component \n    : " + toStringSource());
@@ -704,9 +594,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code JComboBox.actionPerformed(ActionEvent)} through queue
-     */
     public void actionPerformed(final ActionEvent actionEvent) {
         runMapping(new MapVoidAction("actionPerformed") {
             @Override
@@ -716,9 +603,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.addActionListener(ActionListener)} through queue
-     */
     public void addActionListener(final ActionListener actionListener) {
         runMapping(new MapVoidAction("addActionListener") {
             @Override
@@ -728,9 +612,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.addItem(Object)} through queue
-     */
     @SuppressWarnings(value = "unchecked")
     public void addItem(final Object object) {
         runMapping(new MapVoidAction("addItem") {
@@ -741,9 +622,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.addItemListener(ItemListener)} through queue
-     */
     public void addItemListener(final ItemListener itemListener) {
         runMapping(new MapVoidAction("addItemListener") {
             @Override
@@ -753,10 +631,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.configureEditor(ComboBoxEditor, Object)}
-     * through queue
-     */
     public void configureEditor(final ComboBoxEditor comboBoxEditor, final Object object) {
         runMapping(new MapVoidAction("configureEditor") {
             @Override
@@ -766,9 +640,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.contentsChanged(ListDataEvent)} through queue
-     */
     public void contentsChanged(final ListDataEvent listDataEvent) {
         runMapping(new MapVoidAction("contentsChanged") {
             @Override
@@ -778,9 +649,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.getActionCommand()} through queue
-     */
     public String getActionCommand() {
         return (runMapping(new MapAction<String>("getActionCommand") {
             @Override
@@ -790,9 +658,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         }));
     }
 
-    /**
-     * Maps {@code JComboBox.getEditor()} through queue
-     */
     public ComboBoxEditor getEditor() {
         return (runMapping(new MapAction<ComboBoxEditor>("getEditor") {
             @Override
@@ -802,9 +667,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         }));
     }
 
-    /**
-     * Maps {@code JComboBox.getItemAt(int)} through queue
-     */
     public Object getItemAt(final int i) {
         return (runMapping(new MapAction<Object>("getItemAt") {
             @Override
@@ -814,9 +676,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         }));
     }
 
-    /**
-     * Maps {@code JComboBox.getItemCount()} through queue
-     */
     public int getItemCount() {
         return (runMapping(new MapIntegerAction("getItemCount") {
             @Override
@@ -826,9 +685,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         }));
     }
 
-    /**
-     * Maps {@code JComboBox.getKeySelectionManager()} through queue
-     */
     public KeySelectionManager getKeySelectionManager() {
         return (runMapping(new MapAction<KeySelectionManager>("getKeySelectionManager") {
             @Override
@@ -838,9 +694,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         }));
     }
 
-    /**
-     * Maps {@code JComboBox.getMaximumRowCount()} through queue
-     */
     public int getMaximumRowCount() {
         return (runMapping(new MapIntegerAction("getMaximumRowCount") {
             @Override
@@ -850,9 +703,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         }));
     }
 
-    /**
-     * Maps {@code JComboBox.getModel()} through queue
-     */
     public ComboBoxModel<?> getModel() {
         return (runMapping(new MapAction<ComboBoxModel<?>>("getModel") {
             @Override
@@ -862,9 +712,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         }));
     }
 
-    /**
-     * Maps {@code JComboBox.getRenderer()} through queue
-     */
     public ListCellRenderer<?> getRenderer() {
         return (runMapping(new MapAction<ListCellRenderer<?>>("getRenderer") {
             @Override
@@ -874,9 +721,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         }));
     }
 
-    /**
-     * Maps {@code JComboBox.getSelectedIndex()} through queue
-     */
     public int getSelectedIndex() {
         return (runMapping(new MapIntegerAction("getSelectedIndex") {
             @Override
@@ -886,9 +730,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         }));
     }
 
-    /**
-     * Maps {@code JComboBox.getSelectedItem()} through queue
-     */
     public Object getSelectedItem() {
         return (runMapping(new MapAction<Object>("getSelectedItem") {
             @Override
@@ -898,9 +739,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         }));
     }
 
-    /**
-     * Maps {@code JComboBox.getSelectedObjects()} through queue
-     */
     public Object[] getSelectedObjects() {
         return ((Object[]) runMapping(new MapAction<Object>("getSelectedObjects") {
             @Override
@@ -910,9 +748,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         }));
     }
 
-    /**
-     * Maps {@code JComboBox.getUI()} through queue
-     */
     public ComboBoxUI getUI() {
         return (runMapping(new MapAction<ComboBoxUI>("getUI") {
             @Override
@@ -922,9 +757,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         }));
     }
 
-    /**
-     * Maps {@code JComboBox.hidePopup()} through queue
-     */
     public void hidePopup() {
         runMapping(new MapVoidAction("hidePopup") {
             @Override
@@ -934,9 +766,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.insertItemAt(Object, int)} through queue
-     */
     @SuppressWarnings(value = "unchecked")
     public void insertItemAt(final Object object, final int i) {
         runMapping(new MapVoidAction("insertItemAt") {
@@ -947,9 +776,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.intervalAdded(ListDataEvent)} through queue
-     */
     public void intervalAdded(final ListDataEvent listDataEvent) {
         runMapping(new MapVoidAction("intervalAdded") {
             @Override
@@ -959,9 +785,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.intervalRemoved(ListDataEvent)} through queue
-     */
     public void intervalRemoved(final ListDataEvent listDataEvent) {
         runMapping(new MapVoidAction("intervalRemoved") {
             @Override
@@ -971,9 +794,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.isEditable()} through queue
-     */
     public boolean isEditable() {
         return (runMapping(new MapBooleanAction("isEditable") {
             @Override
@@ -983,9 +803,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         }));
     }
 
-    /**
-     * Maps {@code JComboBox.isLightWeightPopupEnabled()} through queue
-     */
     public boolean isLightWeightPopupEnabled() {
         return (runMapping(new MapBooleanAction("isLightWeightPopupEnabled") {
             @Override
@@ -995,9 +812,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         }));
     }
 
-    /**
-     * Maps {@code JComboBox.isPopupVisible()} through queue
-     */
     public boolean isPopupVisible() {
         return (runMapping(new MapBooleanAction("isPopupVisible") {
             @Override
@@ -1007,9 +821,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         }));
     }
 
-    /**
-     * Maps {@code JComboBox.processKeyEvent(KeyEvent)} through queue
-     */
     public void processKeyEvent(final KeyEvent keyEvent) {
         runMapping(new MapVoidAction("processKeyEvent") {
             @Override
@@ -1019,9 +830,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.removeActionListener(ActionListener)} through queue
-     */
     public void removeActionListener(final ActionListener actionListener) {
         runMapping(new MapVoidAction("removeActionListener") {
             @Override
@@ -1031,9 +839,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.removeAllItems()} through queue
-     */
     public void removeAllItems() {
         runMapping(new MapVoidAction("removeAllItems") {
             @Override
@@ -1043,9 +848,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.removeItem(Object)} through queue
-     */
     public void removeItem(final Object object) {
         runMapping(new MapVoidAction("removeItem") {
             @Override
@@ -1055,9 +857,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.removeItemAt(int)} through queue
-     */
     public void removeItemAt(final int i) {
         runMapping(new MapVoidAction("removeItemAt") {
             @Override
@@ -1067,9 +866,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.removeItemListener(ItemListener)} through queue
-     */
     public void removeItemListener(final ItemListener itemListener) {
         runMapping(new MapVoidAction("removeItemListener") {
             @Override
@@ -1079,9 +875,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.selectWithKeyChar(char)} through queue
-     */
     public boolean selectWithKeyChar(final char c) {
         return (runMapping(new MapBooleanAction("selectWithKeyChar") {
             @Override
@@ -1091,9 +884,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         }));
     }
 
-    /**
-     * Maps {@code JComboBox.setActionCommand(String)} through queue
-     */
     public void setActionCommand(final String string) {
         runMapping(new MapVoidAction("setActionCommand") {
             @Override
@@ -1103,9 +893,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.setEditable(boolean)} through queue
-     */
     public void setEditable(final boolean b) {
         runMapping(new MapVoidAction("setEditable") {
             @Override
@@ -1115,9 +902,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.setEditor(ComboBoxEditor)} through queue
-     */
     public void setEditor(final ComboBoxEditor comboBoxEditor) {
         runMapping(new MapVoidAction("setEditor") {
             @Override
@@ -1127,10 +911,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.setKeySelectionManager(KeySelectionManager)}
-     * through queue
-     */
     public void setKeySelectionManager(final KeySelectionManager keySelectionManager) {
         runMapping(new MapVoidAction("setKeySelectionManager") {
             @Override
@@ -1140,9 +920,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.setLightWeightPopupEnabled(boolean)} through queue
-     */
     public void setLightWeightPopupEnabled(final boolean b) {
         runMapping(new MapVoidAction("setLightWeightPopupEnabled") {
             @Override
@@ -1152,9 +929,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.setMaximumRowCount(int)} through queue
-     */
     public void setMaximumRowCount(final int i) {
         runMapping(new MapVoidAction("setMaximumRowCount") {
             @Override
@@ -1164,9 +938,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.setModel(ComboBoxModel)} through queue
-     */
     @SuppressWarnings(value = "unchecked")
     public void setModel(final ComboBoxModel<?> comboBoxModel) {
         runMapping(new MapVoidAction("setModel") {
@@ -1177,9 +948,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.setPopupVisible(boolean)} through queue
-     */
     public void setPopupVisible(final boolean b) {
         runMapping(new MapVoidAction("setPopupVisible") {
             @Override
@@ -1189,9 +957,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.setRenderer(ListCellRenderer)} through queue
-     */
     @SuppressWarnings(value = "unchecked")
     public void setRenderer(final ListCellRenderer<?> listCellRenderer) {
         runMapping(new MapVoidAction("setRenderer") {
@@ -1202,9 +967,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.setSelectedIndex(int)} through queue
-     */
     public void setSelectedIndex(final int i) {
         runMapping(new MapVoidAction("setSelectedIndex") {
             @Override
@@ -1214,9 +976,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.setSelectedItem(Object)} through queue
-     */
     public void setSelectedItem(final Object object) {
         runMapping(new MapVoidAction("setSelectedItem") {
             @Override
@@ -1226,9 +985,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.setUI(ComboBoxUI)} through queue
-     */
     public void setUI(final ComboBoxUI comboBoxUI) {
         runMapping(new MapVoidAction("setUI") {
             @Override
@@ -1238,9 +994,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         });
     }
 
-    /**
-     * Maps {@code JComboBox.showPopup()} through queue
-     */
     public void showPopup() {
         runMapping(new MapVoidAction("showPopup") {
             @Override
@@ -1264,10 +1017,8 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         /**
          * Constructs JComboBoxByItemFinder.
          *
-         * @param lb a text pattern
          * @param ii item index to check. If equal to -1, selected item is
          * checked.
-         * @param comparator specifies string comparision algorithm.
          */
         public JComboBoxByItemFinder(String lb, int ii, StringComparator comparator) {
             label = lb;
@@ -1278,7 +1029,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         /**
          * Constructs JComboBoxByItemFinder.
          *
-         * @param lb a text pattern
          * @param ii item index to check. If equal to -1, selected item is
          * checked.
          */
@@ -1326,8 +1076,6 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
 
         /**
          * Constructs JComboBoxFinder.
-         *
-         * @param sf other searching criteria.
          */
         public JComboBoxFinder(ComponentChooser sf) {
             super(JComboBox.class, sf);

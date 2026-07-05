@@ -42,12 +42,11 @@ import org.netbeans.jemmy.Waitable;
 import org.netbeans.jemmy.Waiter;
 
 /**
- * <BR>
- * <BR>
- * Timeouts used: <BR>
- * {@code ComponentOperator.WaitComponentTimeout} - time to wait component
- * displayed.<BR>
- * {@code ComponentOperator.WaitStateTimeout} - time to wait for tip text. <BR>
+ * Timeouts used:
+ * <ul>
+ * <li>{@code ComponentOperator.WaitComponentTimeout} - time to wait component displayed.</li>
+ * <li>{@code ComponentOperator.WaitStateTimeout} - time to wait for tip text.</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
  */
@@ -75,9 +74,6 @@ public class JToolTipOperator extends JComponentOperator {
 
     /**
      * Constructs a JToolTipOperator object for a given JToolTip component.
-     *
-     * @param toolTip
-     *            a component
      */
     public JToolTipOperator(JToolTip toolTip) {
         super(toolTip);
@@ -87,8 +83,6 @@ public class JToolTipOperator extends JComponentOperator {
      * Constructs a JToolTipOperator object waiting for the JToolTip having a
      * given tip text (compared using default string comparator).
      *
-     * @param tipText
-     *            tip text.
      * @see #getDefaultStringComparator()
      */
     public JToolTipOperator(String tipText) {
@@ -100,8 +94,6 @@ public class JToolTipOperator extends JComponentOperator {
      * associated with the given component. Uses {@code comp}'s timeout and
      * output for waiting. Copies environment from {@code comp}.
      *
-     * @param comp
-     *            component on which tool tip associated
      * @see #copyEnvironment(org.netbeans.jemmy.operators.Operator)
      */
     public JToolTipOperator(ComponentOperator comp) {
@@ -111,9 +103,6 @@ public class JToolTipOperator extends JComponentOperator {
     /**
      * Constructs a JToolTipOperator object waiting for the JToolTip
      * conforming to the given component chooser.
-     *
-     * @param chooser
-     *            a component chooser specifying searching criteria.
      */
     public JToolTipOperator(ComponentChooser chooser) {
         this(null, chooser);
@@ -125,10 +114,6 @@ public class JToolTipOperator extends JComponentOperator {
      * component chooser. Uses {@code comp}'s timeout and output for waiting.
      * Copies environment from {@code comp}.
      *
-     * @param comp
-     *            component on which tool tip associated
-     * @param chooser
-     *            a component chooser specifying searching criteria.
      * @see #copyEnvironment(org.netbeans.jemmy.operators.Operator)
      */
     public JToolTipOperator(ComponentOperator comp, ComponentChooser chooser) {
@@ -144,10 +129,6 @@ public class JToolTipOperator extends JComponentOperator {
      * Uses {@code comp}'s string comparator for tip text comparison, timeout
      * and output for waiting. Copies environment from {@code comp}.
      *
-     * @param comp
-     *            component on which tool tip associated
-     * @param tipText
-     *            tip text
      * @see #getComparator()
      * @see #copyEnvironment(org.netbeans.jemmy.operators.Operator)
      */
@@ -161,10 +142,6 @@ public class JToolTipOperator extends JComponentOperator {
      * conforming to the given component chooser. Uses {@code comp}'s timeout
      * and output for waiting.
      *
-     * @param comp
-     *            component on which tool tip associated
-     * @param chooser
-     *            a component chooser specifying searching criteria.
      * @return JToolTip instance or null if component was not found.
      */
     public static JToolTip findJToolTip(ComponentOperator comp, ComponentChooser chooser) {
@@ -205,8 +182,6 @@ public class JToolTipOperator extends JComponentOperator {
      * Searches for the JToolTip associated with the given component. Uses
      * {@code comp}'s timeout and output for waiting.
      *
-     * @param comp
-     *            component on which tool tip associated
      * @return JToolTip instance or null if component was not found.
      */
     public static JToolTip findJToolTip(ComponentOperator comp) {
@@ -218,14 +193,6 @@ public class JToolTipOperator extends JComponentOperator {
      * looking for given tip text using specified string comparator options.
      * Uses {@code comp}'s timeout and output for waiting.
      *
-     * @param comp
-     *            component on which tool tip associated
-     * @param tipText
-     *            Tip text.
-     * @param ce
-     *            Compare text exactly.
-     * @param ccs
-     *            Compare text case sensitively.
      * @return JToolTip instance or null if component was not found.
      * @see DefaultStringComparator
      * @see JToolTipByTipTextFinder
@@ -247,8 +214,6 @@ public class JToolTipOperator extends JComponentOperator {
     /**
      * Waits for the first JToolTip associated with the given component.
      *
-     * @param comp
-     *            component on which tool tip associated
      * @return JToolTip instance.
      * @see TimeoutExpiredException
      */
@@ -260,8 +225,6 @@ public class JToolTipOperator extends JComponentOperator {
      * Waits for the JToolTip conforming to the given component
      * chooser.
      *
-     * @param chooser
-     *            a component chooser specifying searching criteria.
      * @return JToolTip instance.
      * @see TimeoutExpiredException
      */
@@ -273,10 +236,6 @@ public class JToolTipOperator extends JComponentOperator {
      * Waits for the JToolTip associated with the given component and
      * conforming to the specified component chooser.
      *
-     * @param comp
-     *            component on which tool tip associated
-     * @param chooser
-     *            a component chooser specifying searching criteria.
      * @return JToolTip instance.
      * @see TimeoutExpiredException
      */
@@ -312,14 +271,6 @@ public class JToolTipOperator extends JComponentOperator {
      * Waits for the JToolTip associated with the given component and having
      * the given tip text compared using given string comparator options.
      *
-     * @param comp
-     *            component on which tool tip associated
-     * @param tipText
-     *            Tip text.
-     * @param ce
-     *            Compare text exactly.
-     * @param ccs
-     *            Compare text case sensitively.
      * @return JToolTip instance.
      * @see TimeoutExpiredException
      */
@@ -331,8 +282,6 @@ public class JToolTipOperator extends JComponentOperator {
      * Waits for the given tip text. Uses {@linkplain #getComparator()}
      * comparator.
      *
-     * @param tipText
-     *            Tip text to wait for.
      * @see TimeoutExpiredException
      */
     public void waitTipText(String tipText) {
@@ -405,8 +354,6 @@ public class JToolTipOperator extends JComponentOperator {
 
     /**
      * Maps {@linkplain JToolTip#setTipText(String)} through queue
-     *
-     * @param tipText
      */
     public void setTipText(final String tipText) {
         runMapping(new MapVoidAction("setTipText") {
@@ -419,8 +366,6 @@ public class JToolTipOperator extends JComponentOperator {
 
     /**
      * Maps {@linkplain JToolTip#setComponent(JComponent)} through queue
-     *
-     * @param component
      */
     public void setComponent(final JComponent component) {
         runMapping(new MapVoidAction("setComponent") {
@@ -443,11 +388,6 @@ public class JToolTipOperator extends JComponentOperator {
 
         /**
          * Constructs JToolTipByTipTextFinder.
-         *
-         * @param tipText
-         *            a tip text pattern
-         * @param comparator
-         *            specifies string comparison algorithm.
          */
         public JToolTipByTipTextFinder(String tipText, StringComparator comparator) {
             this.tipText = tipText;
@@ -456,9 +396,6 @@ public class JToolTipOperator extends JComponentOperator {
 
         /**
          * Constructs JToolTipByTipTextFinder.
-         *
-         * @param tipText
-         *            a tip text pattern
          */
         public JToolTipByTipTextFinder(String tipText) {
             this(tipText, Operator.getDefaultStringComparator());
@@ -492,9 +429,6 @@ public class JToolTipOperator extends JComponentOperator {
 
         /**
          * Constructs JToolTipFinder chaining another component chooser.
-         *
-         * @param sf
-         *            other searching criteria.
          */
         public JToolTipFinder(ComponentChooser sf) {
             super(JToolTip.class, sf);

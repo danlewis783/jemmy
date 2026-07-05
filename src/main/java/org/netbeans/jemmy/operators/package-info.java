@@ -23,23 +23,21 @@
  * questions.
  */
 /**
- * <h1>Operators package</h1>
- * Contains so called "operators".<br><br>
- * <i>Operator</i> is a <i>test-side representation</i> for a component. Each
- * particular operator class provides all the functionality to work with one
- * component type. For example {@code JButtonOperator} covers
- * {@code javax.swing.JButton}.<br><br>
- * Operators inheritance tree exactly matches component types inheritance:
- * {@code AbstractButton} extending {@code JComponent} means that
- * {@code AbstractBittonOperator} extends
- * {@code JComponentOperator}.<br><br>
- * Every operator provides, basicly, all the methods to reproduce user actions
- * which can be performed on a component type covered by operator.<br><br>
- * Every operator also provides <i>mapping</i> functionality: API to invoke
- * component method during the event queue. For example,
- * {@code AbstractButtonOperator} has {@code getText()} method which
- * simply invokes {@code AbstractButton.getText()} through the
- * queue.<br><br>
+ * <h1>Operators package</h1> Contains so called "operators".
+ * <p>
+ * <i>Operator</i> is a <i>test-side representation</i> for a component. Each particular operator class provides all the
+ * functionality to work with one component type. For example {@code JButtonOperator} covers {@code
+ * javax.swing.JButton}.
+ * <p>
+ * Operators inheritance tree exactly matches component types inheritance: {@code AbstractButton} extending {@code
+ * JComponent} means that {@code AbstractBittonOperator} extends {@code JComponentOperator}.
+ * <p>
+ * Every operator provides, basicly, all the methods to reproduce user actions which can be performed on a component
+ * type covered by operator.
+ * <p>
+ * Every operator also provides <i>mapping</i> functionality: API to invoke component method during the event queue. For
+ * example, {@code AbstractButtonOperator} has {@code getText()} method which simply invokes {@code
+ * AbstractButton.getText()} through the queue.
  *
  * @since 23 Feb 2002
  * <hr>

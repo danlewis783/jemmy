@@ -25,19 +25,15 @@
 package org.netbeans.jemmy;
 
 /**
- *
  * Any class which contains methods requiring waiting or sleeping should
  * implement this interface. Waiting and sleeping operations have time limits
  * that can be set or returned using the methods of this interface.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public interface Timeoutable {
 
     /**
      * Defines current timeouts.
      *
-     * @param t A collection of timeout assignments.
      * @see #getTimeouts
      */
     public void setTimeouts(Timeouts t);

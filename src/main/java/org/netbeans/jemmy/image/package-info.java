@@ -25,7 +25,7 @@
 /**
  * <h1>Image library</h1>
  * Contains classes allowing to compare two images and to find one image inside
- * another.<br><br>
+ * another.
  *
  * @since 9 Nov 2002
  * <hr>

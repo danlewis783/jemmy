@@ -29,12 +29,10 @@ import org.netbeans.jemmy.Action;
 import org.netbeans.jemmy.ComponentChooser;
 
 /**
- *
  * Supposed to be used to perform some periodical job.
  *
  * @see WindowManager
  *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public interface WindowJob<R, P> extends ComponentChooser, Action<R, P> {
 
@@ -50,9 +48,6 @@ public interface WindowJob<R, P> extends ComponentChooser, Action<R, P> {
     @Override
     public boolean checkComponent(Component comp);
 
-    /**
-     * Job description.
-     */
     @Override
     public String getDescription();
 }

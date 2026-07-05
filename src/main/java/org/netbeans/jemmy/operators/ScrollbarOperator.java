@@ -32,7 +32,6 @@ import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
-import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.Timeoutable;
 import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.Waitable;
@@ -41,14 +40,13 @@ import org.netbeans.jemmy.drivers.ScrollDriver;
 import org.netbeans.jemmy.drivers.scrolling.ScrollAdjuster;
 
 /**
- * <BR><BR>Timeouts used: <BR>
- * ScrollbarOperator.WholeScrollTimeout - time for one scroll click <BR>
- * ComponentOperator.WaitComponentTimeout - time to wait component displayed
- * <BR>.
+ * Timeouts used:
+ * <ul>
+ * <li>ScrollbarOperator.WholeScrollTimeout - time for one scroll click</li>
+ * <li>ComponentOperator.WaitComponentTimeout - time to wait component displayed</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
 public class ScrollbarOperator extends ComponentOperator implements Timeoutable, Outputable {
@@ -63,54 +61,25 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
 
     private ScrollDriver driver;
 
-    /**
-     * Constructs a ScrollbarOperator object.
-     *
-     * @param b a component
-     */
     public ScrollbarOperator(Scrollbar b) {
         super(b);
         driver = DriverManager.getScrollDriver(getClass());
     }
 
-    /**
-     * Constructs a ScrollbarOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public ScrollbarOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((Scrollbar) cont.waitSubComponent(new ScrollbarFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a ScrollbarOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public ScrollbarOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
-    /**
-     * Constructs a ScrollbarOperator object.
-     *
-     * @param cont a container
-     * @param index an index between appropriate ones.
-     */
     public ScrollbarOperator(ContainerOperator<?> cont, int index) {
         this((Scrollbar) waitComponent(cont, new ScrollbarFinder(), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a ScrollbarOperator object.
-     *
-     * @param cont a container
-     */
     public ScrollbarOperator(ContainerOperator<?> cont) {
         this(cont, 0);
     }
@@ -118,9 +87,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
     /**
      * Finds a scrollbar.
      *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
      * @return the scrollbar fitting searching criteria
      */
     public static Scrollbar findScrollbar(Container cont, ComponentChooser chooser, int index) {
@@ -130,8 +96,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
     /**
      * Finds a scrollbar.
      *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
      * @return the scrollbar fitting searching criteria
      */
     public static Scrollbar findScrollbar(Container cont, ComponentChooser chooser) {
@@ -141,8 +105,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
     /**
      * Finds a scrollbar.
      *
-     * @param cont a container
-     * @param index an index between appropriate ones.
      * @return the scrollbar fitting searching criteria
      */
     public static Scrollbar findScrollbar(Container cont, int index) {
@@ -153,7 +115,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
     /**
      * Finds a scrollbar.
      *
-     * @param cont a container
      * @return the scrollbar fitting searching criteria
      */
     public static Scrollbar findScrollbar(Container cont) {
@@ -163,9 +124,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
     /**
      * Waits a scrollbar.
      *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
      * @return the scrollbar fitting searching criteria
      */
     public static Scrollbar waitScrollbar(Container cont, ComponentChooser chooser, int index) {
@@ -175,8 +133,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
     /**
      * Waits a scrollbar.
      *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
      * @return the scrollbar fitting searching criteria
      */
     public static Scrollbar waitScrollbar(Container cont, ComponentChooser chooser) {
@@ -186,8 +142,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
     /**
      * Waits a scrollbar.
      *
-     * @param cont a container
-     * @param index an index between appropriate ones.
      * @return the scrollbar fitting searching criteria
      */
     public static Scrollbar waitScrollbar(Container cont, int index) {
@@ -198,7 +152,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
     /**
      * Waits a scrollbar.
      *
-     * @param cont a container
      * @return the scrollbar fitting searching criteria
      */
     public static Scrollbar waitScrollbar(Container cont) {
@@ -244,11 +197,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
     /**
      * Scrolls scrollbar to the position defined by w parameter. Uses
      * ScrollDriver registered to this operator type.
-     *
-     * @param w Scrolling is stopped when w.actionProduced(waiterParam) != null
-     * @param waiterParam a waiting parameter.
-     * @param increase a scrolling direction.
-     * @throws TimeoutExpiredException
      */
     public <P> void scrollTo(Waitable<?, P> w, P waiterParam, boolean increase) {
         scrollTo(new WaitableChecker<>(w, waiterParam, increase, this));
@@ -257,9 +205,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
     /**
      * Scrolls scrollbar to the position defined by a ScrollAdjuster
      * implementation.
-     *
-     * @param adj defines scrolling direction, and so on.
-     * @throws TimeoutExpiredException
      */
     public void scrollTo(final ScrollAdjuster adj) {
         produceTimeRestricted(
@@ -285,9 +230,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
 
     /**
      * Scrolls scroll bar to necessary value.
-     *
-     * @param value Scroll bar value to scroll to.
-     * @throws TimeoutExpiredException
      */
     public void scrollToValue(int value) {
         output.printTrace("Scroll Scrollbar to " + Integer.toString(value) + " value\n" + toStringSource());
@@ -299,7 +241,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
      * Scrolls scroll bar to necessary proportional value.
      *
      * @param proportionalValue Proportional scroll to. Must be >= 0 and <= 1.
-     * @throws TimeoutExpiredException
      */
     public void scrollToValue(double proportionalValue) {
         output.printTrace("Scroll Scrollbar to " + Double.toString(proportionalValue) + " proportional value\n"
@@ -309,11 +250,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
                 (int) (getMinimum() + (getMaximum() - getVisibleAmount() - getMinimum()) * proportionalValue)));
     }
 
-    /**
-     * Scrolls to minimum value.
-     *
-     * @throws TimeoutExpiredException
-     */
     public void scrollToMinimum() {
         output.printTrace("Scroll Scrollbar to minimum value\n" + toStringSource());
         output.printGolden("Scroll Scrollbar to minimum value");
@@ -338,11 +274,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
                 "ScrollbarOperator.WholeScrollTimeout");
     }
 
-    /**
-     * Scrolls to maximum value.
-     *
-     * @throws TimeoutExpiredException
-     */
     public void scrollToMaximum() {
         output.printTrace("Scroll Scrollbar to maximum value\n" + toStringSource());
         output.printGolden("Scroll Scrollbar to maximum value");
@@ -369,10 +300,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
     ////////////////////////////////////////////////////////
     // Mapping                                             //
 
-    /**
-     * Maps {@code Scrollbar.addAdjustmentListener(AdjustmentListener)}
-     * through queue
-     */
     public void addAdjustmentListener(final AdjustmentListener adjustmentListener) {
         runMapping(new MapVoidAction("addAdjustmentListener") {
             @Override
@@ -382,9 +309,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
         });
     }
 
-    /**
-     * Maps {@code Scrollbar.getBlockIncrement()} through queue
-     */
     public int getBlockIncrement() {
         return (runMapping(new MapIntegerAction("getBlockIncrement") {
             @Override
@@ -394,9 +318,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
         }));
     }
 
-    /**
-     * Maps {@code Scrollbar.getMaximum()} through queue
-     */
     public int getMaximum() {
         return (runMapping(new MapIntegerAction("getMaximum") {
             @Override
@@ -406,9 +327,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
         }));
     }
 
-    /**
-     * Maps {@code Scrollbar.getMinimum()} through queue
-     */
     public int getMinimum() {
         return (runMapping(new MapIntegerAction("getMinimum") {
             @Override
@@ -418,9 +336,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
         }));
     }
 
-    /**
-     * Maps {@code Scrollbar.getOrientation()} through queue
-     */
     public int getOrientation() {
         return (runMapping(new MapIntegerAction("getOrientation") {
             @Override
@@ -430,9 +345,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
         }));
     }
 
-    /**
-     * Maps {@code Scrollbar.getUnitIncrement()} through queue
-     */
     public int getUnitIncrement() {
         return (runMapping(new MapIntegerAction("getUnitIncrement") {
             @Override
@@ -442,9 +354,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
         }));
     }
 
-    /**
-     * Maps {@code Scrollbar.getValue()} through queue
-     */
     public int getValue() {
         return (runMapping(new MapIntegerAction("getValue") {
             @Override
@@ -454,9 +363,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
         }));
     }
 
-    /**
-     * Maps {@code Scrollbar.getVisibleAmount()} through queue
-     */
     public int getVisibleAmount() {
         return (runMapping(new MapIntegerAction("getVisibleAmount") {
             @Override
@@ -466,10 +372,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
         }));
     }
 
-    /**
-     * Maps {@code Scrollbar.removeAdjustmentListener(AdjustmentListener)}
-     * through queue
-     */
     public void removeAdjustmentListener(final AdjustmentListener adjustmentListener) {
         runMapping(new MapVoidAction("removeAdjustmentListener") {
             @Override
@@ -479,9 +381,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
         });
     }
 
-    /**
-     * Maps {@code Scrollbar.setBlockIncrement(int)} through queue
-     */
     public void setBlockIncrement(final int i) {
         runMapping(new MapVoidAction("setBlockIncrement") {
             @Override
@@ -491,9 +390,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
         });
     }
 
-    /**
-     * Maps {@code Scrollbar.setMaximum(int)} through queue
-     */
     public void setMaximum(final int i) {
         runMapping(new MapVoidAction("setMaximum") {
             @Override
@@ -503,9 +399,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
         });
     }
 
-    /**
-     * Maps {@code Scrollbar.setMinimum(int)} through queue
-     */
     public void setMinimum(final int i) {
         runMapping(new MapVoidAction("setMinimum") {
             @Override
@@ -515,9 +408,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
         });
     }
 
-    /**
-     * Maps {@code Scrollbar.setOrientation(int)} through queue
-     */
     public void setOrientation(final int i) {
         runMapping(new MapVoidAction("setOrientation") {
             @Override
@@ -527,9 +417,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
         });
     }
 
-    /**
-     * Maps {@code Scrollbar.setUnitIncrement(int)} through queue
-     */
     public void setUnitIncrement(final int i) {
         runMapping(new MapVoidAction("setUnitIncrement") {
             @Override
@@ -539,9 +426,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
         });
     }
 
-    /**
-     * Maps {@code Scrollbar.setValue(int)} through queue
-     */
     public void setValue(final int i) {
         runMapping(new MapVoidAction("setValue") {
             @Override
@@ -551,9 +435,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
         });
     }
 
-    /**
-     * Maps {@code Scrollbar.setValues(int, int, int, int)} through queue
-     */
     public void setValues(final int i, final int i1, final int i2, final int i3) {
         runMapping(new MapVoidAction("setValues") {
             @Override
@@ -563,9 +444,6 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
         });
     }
 
-    /**
-     * Maps {@code Scrollbar.setVisibleAmount(int)} through queue
-     */
     public void setVisibleAmount(final int i) {
         runMapping(new MapVoidAction("setVisibleAmount") {
             @Override
@@ -659,18 +537,10 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
      */
     public static class ScrollbarFinder extends Finder {
 
-        /**
-         * Constructs ScrollbarFinder.
-         *
-         * @param sf other searching criteria.
-         */
         public ScrollbarFinder(ComponentChooser sf) {
             super(Scrollbar.class, sf);
         }
 
-        /**
-         * Constructs ScrollbarFinder.
-         */
         public ScrollbarFinder() {
             super(Scrollbar.class);
         }

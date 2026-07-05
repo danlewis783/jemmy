@@ -26,10 +26,6 @@ package org.netbeans.jemmy.util;
 
 import java.awt.Component;
 
-/**
- *
- * @author shura
- */
 public interface DumpController {
 
     public boolean onComponentDump(Component comp);

@@ -31,20 +31,12 @@ import org.netbeans.jemmy.JemmyException;
 /**
  * Allowes compares images in memory to ones stored in files and compare such
  * images one with another.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class FileImageComparator {
 
     ImageLoader loader;
     ImageComparator comparator;
 
-    /**
-     * Constructs a FileImageComparator object.
-     *
-     * @param comparator - ImageComparator to be used for image comparision.
-     * @param loader - ImageLoader to be used for image loading.
-     */
     public FileImageComparator(ImageComparator comparator, ImageLoader loader) {
         this.loader = loader;
         this.comparator = comparator;
@@ -55,8 +47,6 @@ public class FileImageComparator {
      * ImageComparator passed into constructor. Image is loaded by ImageLoader
      * passed into constructor.
      *
-     * @param image an image to compare.
-     * @param fileName a file containing an image to compare.
      * @return true if images match each other.
      */
     public boolean compare(BufferedImage image, String fileName) {
@@ -72,8 +62,6 @@ public class FileImageComparator {
      * ImageComparator passed into constructor. Images are loaded by ImageLoader
      * passed into constructor.
      *
-     * @param fileName1 a file containing an image to compare.
-     * @param fileName2 a file containing an image to compare.
      * @return true if images match each other.
      */
     public boolean compare(String fileName1, String fileName2) {

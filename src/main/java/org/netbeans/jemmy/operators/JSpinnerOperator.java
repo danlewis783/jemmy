@@ -45,7 +45,6 @@ import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
-import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.Timeoutable;
 import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.drivers.DriverManager;
@@ -54,13 +53,11 @@ import org.netbeans.jemmy.drivers.scrolling.ScrollAdjuster;
 
 /**
  * Provides methods to work with {@code javax.swing.JSpinner} component
- * <br>
  *
  * @see NumberSpinnerOperator
  * @see ListSpinnerOperator
  * @see DateSpinnerOperator
  *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class JSpinnerOperator extends JComponentOperator implements Timeoutable, Outputable {
 
@@ -81,49 +78,25 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
     private JButtonOperator increaseOperator = null;
     private JButtonOperator decreaseOperator = null;
 
-    /**
-     * Constructor.
-     *
-     * @param b JSpinner component.
-     */
     public JSpinnerOperator(JSpinner b) {
         super(b);
         driver = DriverManager.getScrollDriver(getClass());
     }
 
-    /**
-     * Constructs a JSpinnerOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     * @throws TimeoutExpiredException
-     */
     public JSpinnerOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((JSpinner) cont.waitSubComponent(new JSpinnerFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a JSpinnerOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @throws TimeoutExpiredException
-     */
     public JSpinnerOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructs a JSpinnerOperator object.
-     *
      * @param cont The operator for a container containing the sought for
      * button.
-     * @param text toString() representation of the current spinner value.
      * @param index Ordinal component index. The first component has
      * {@code index} 0.
-     * @throws TimeoutExpiredException
      */
     public JSpinnerOperator(ContainerOperator<?> cont, String text, int index) {
         this((JSpinner) waitComponent(cont, new JSpinnerByTextFinder(text, cont.getComparator()), index));
@@ -131,24 +104,16 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
     }
 
     /**
-     * Constructs a JSpinnerOperator object.
-     *
      * @param cont The operator for a container containing the sought for
      * button.
-     * @param text toString() representation of the current spinner value.
-     * @throws TimeoutExpiredException
      */
     public JSpinnerOperator(ContainerOperator<?> cont, String text) {
         this(cont, text, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont Operator pointing a container to search component in.
-     * @param index Ordinal component index.
-     * @throws TimeoutExpiredException
      */
     public JSpinnerOperator(ContainerOperator<?> cont, int index) {
         this((JSpinner) waitComponent(cont, new JSpinnerFinder(), index));
@@ -156,11 +121,8 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont Operator pointing a container to search component in.
-     * @throws TimeoutExpiredException
      */
     public JSpinnerOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -169,9 +131,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
     /**
      * Searches JSpinner in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JSpinner instance or null if component was not found.
      */
     public static JSpinner findJSpinner(Container cont, ComponentChooser chooser, int index) {
@@ -181,8 +140,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
     /**
      * Searches 0'th JSpinner in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JSpinner instance or null if component was not found.
      */
     public static JSpinner findJSpinner(Container cont, ComponentChooser chooser) {
@@ -192,8 +149,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
     /**
      * Searches JSpinner in container.
      *
-     * @param cont Container to search component in.
-     * @param index Ordinal component index.
      * @return JSpinner instance or null if component was not found.
      */
     public static JSpinner findJSpinner(Container cont, int index) {
@@ -204,7 +159,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
     /**
      * Searches 0'th JSpinner in container.
      *
-     * @param cont Container to search component in.
      * @return JSpinner instance or null if component was not found.
      */
     public static JSpinner findJSpinner(Container cont) {
@@ -214,11 +168,7 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
     /**
      * Waits JSpinner in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JSpinner instance or null if component was not displayed.
-     * @throws TimeoutExpiredException
      */
     public static JSpinner waitJSpinner(Container cont, ComponentChooser chooser, int index) {
         return (JSpinner) waitComponent(cont, new JSpinnerFinder(chooser), index);
@@ -227,10 +177,7 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
     /**
      * Waits 0'th JSpinner in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JSpinner instance or null if component was not displayed.
-     * @throws TimeoutExpiredException
      */
     public static JSpinner waitJSpinner(Container cont, ComponentChooser chooser) {
         return waitJSpinner(cont, chooser, 0);
@@ -239,10 +186,7 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
     /**
      * Waits JSpinner in container.
      *
-     * @param cont Container to search component in.
-     * @param index Ordinal component index.
      * @return JSpinner instance or null if component was not displayed.
-     * @throws TimeoutExpiredException
      */
     public static JSpinner waitJSpinner(Container cont, int index) {
         return waitJSpinner(
@@ -252,9 +196,7 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
     /**
      * Waits 0'th JSpinner in container.
      *
-     * @param cont Container to search component in.
      * @return JSpinner instance or null if component was not displayed.
-     * @throws TimeoutExpiredException
      */
     public static JSpinner waitJSpinner(Container cont) {
         return waitJSpinner(cont, 0);
@@ -263,8 +205,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
     /**
      * Checks operator's model type.
      *
-     * @param oper an operator to check model
-     * @param modelClass a model class.
      * @throws SpinnerModelException if an operator's model is not an instance
      * of specified class.
      */
@@ -344,8 +284,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
 
     /**
      * Scrolls to reach a condition specified by {@code ScrollAdjuster}
-     *
-     * @param adj scrolling criteria.
      */
     public void scrollTo(final ScrollAdjuster adj) {
         produceTimeRestricted(
@@ -428,7 +366,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
     /**
      * Scrolls to exact match of a spinner value to the specified value.
      *
-     * @param value an value to scroll to.
      * @param direction a scrolling direction - one of
      * {@code ScrollAdjuster.*_SCROLL_DIRECTION} fields.
      */
@@ -439,8 +376,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
     /**
      * Scrolls to matching of <code>getValue().toString() with the pattern.
      *
-     * @param pattern a pattern to compare with
-     * @param comparator a string comparision criteria
      * @param direction a scrolling direction - one of
      * {@code ScrollAdjuster.*_SCROLL_DIRECTION} fields.
      */
@@ -452,7 +387,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
      * Scrolls to matching of {@code getValue().toString()} with the
      * pattern. Uses {@code StringComparator} assigned to the operator.
      *
-     * @param pattern a pattern to compare with
      * @param direction a scrolling direction - one of
      * {@code ScrollAdjuster.*_SCROLL_DIRECTION} fields.
      */
@@ -543,9 +477,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code JSpinner.getValue()} through queue
-     */
     public Object getValue() {
         return (runMapping(new MapAction<Object>("getValue") {
             @Override
@@ -555,9 +486,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
         }));
     }
 
-    /**
-     * Maps {@code JSpinner.setValue(Object)} through queue
-     */
     public void setValue(final Object object) {
         runMapping(new MapVoidAction("setValue") {
             @Override
@@ -567,9 +495,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
         });
     }
 
-    /**
-     * Maps {@code JSpinner.getUI()} through queue
-     */
     public SpinnerUI getUI() {
         return (runMapping(new MapAction<SpinnerUI>("getUI") {
             @Override
@@ -579,9 +504,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
         }));
     }
 
-    /**
-     * Maps {@code JSpinner.setUI(SpinnerUI)} through queue
-     */
     public void setUI(final SpinnerUI spinnerUI) {
         runMapping(new MapVoidAction("setUI") {
             @Override
@@ -591,9 +513,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
         });
     }
 
-    /**
-     * Maps {@code JSpinner.setModel(SpinnerModel)} through queue
-     */
     public void setModel(final SpinnerModel spinnerModel) {
         runMapping(new MapVoidAction("setModel") {
             @Override
@@ -603,9 +522,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
         });
     }
 
-    /**
-     * Maps {@code JSpinner.getModel()} through queue
-     */
     public SpinnerModel getModel() {
         return (runMapping(new MapAction<SpinnerModel>("getModel") {
             @Override
@@ -615,9 +531,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
         }));
     }
 
-    /**
-     * Maps {@code JSpinner.getNextValue()} through queue
-     */
     public Object getNextValue() {
         return (runMapping(new MapAction<Object>("getNextValue") {
             @Override
@@ -627,9 +540,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
         }));
     }
 
-    /**
-     * Maps {@code JSpinner.addChangeListener(ChangeListener)} through queue
-     */
     public void addChangeListener(final ChangeListener changeListener) {
         runMapping(new MapVoidAction("addChangeListener") {
             @Override
@@ -639,9 +549,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
         });
     }
 
-    /**
-     * Maps {@code JSpinner.removeChangeListener(ChangeListener)} through queue
-     */
     public void removeChangeListener(final ChangeListener changeListener) {
         runMapping(new MapVoidAction("removeChangeListener") {
             @Override
@@ -651,9 +558,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
         });
     }
 
-    /**
-     * Maps {@code JSpinner.getChangeListeners()} through queue
-     */
     public ChangeListener[] getChangeListeners() {
         return ((ChangeListener[]) runMapping(new MapAction<Object>("getChangeListeners") {
             @Override
@@ -663,9 +567,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
         }));
     }
 
-    /**
-     * Maps {@code JSpinner.getPreviousValue()} through queue
-     */
     public Object getPreviousValue() {
         return (runMapping(new MapAction<Object>("getPreviousValue") {
             @Override
@@ -675,9 +576,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
         }));
     }
 
-    /**
-     * Maps {@code JSpinner.setEditor(JComponent)} through queue
-     */
     public void setEditor(final JComponent jComponent) {
         runMapping(new MapVoidAction("setEditor") {
             @Override
@@ -687,9 +585,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
         });
     }
 
-    /**
-     * Maps {@code JSpinner.getEditor()} through queue
-     */
     public JComponent getEditor() {
         return (runMapping(new MapAction<JComponent>("getEditor") {
             @Override
@@ -699,9 +594,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
         }));
     }
 
-    /**
-     * Maps {@code JSpinner.commitEdit()} through queue
-     */
     public void commitEdit() {
         runMapping(new MapVoidAction("commitEdit") {
             @Override
@@ -723,9 +615,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
 
         /**
          * Constructs JSpinnerByTextFinder.
-         *
-         * @param lb a text pattern
-         * @param comparator specifies string comparision algorithm.
          */
         public JSpinnerByTextFinder(String lb, StringComparator comparator) {
             label = lb;
@@ -734,8 +623,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
 
         /**
          * Constructs JSpinnerByTextFinder.
-         *
-         * @param lb a text pattern
          */
         public JSpinnerByTextFinder(String lb) {
             this(lb, Operator.getDefaultStringComparator());
@@ -769,8 +656,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
 
         /**
          * Constructs JSpinnerFinder.
-         *
-         * @param sf other searching criteria.
          */
         public JSpinnerFinder(ComponentChooser sf) {
             super(JSpinner.class, sf);
@@ -797,9 +682,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
 
         /**
          * Constructs a {@code NumberScrollAdjuster} object.
-         *
-         * @param oper an operator to work with.
-         * @param value a value to scroll to.
          */
         public NumberScrollAdjuster(JSpinnerOperator oper, double value) {
             this.value = value;
@@ -809,9 +691,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
 
         /**
          * Constructs a {@code NumberScrollAdjuster} object.
-         *
-         * @param oper an operator to work with.
-         * @param value a value to scroll to.
          */
         public NumberScrollAdjuster(JSpinnerOperator oper, Number value) {
             this(oper, value.doubleValue());
@@ -864,9 +743,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
 
         /**
          * Constructs a {@code ListScrollAdjuster} object.
-         *
-         * @param oper an operator to work with.
-         * @param value a value to scroll to.
          */
         public ListScrollAdjuster(JSpinnerOperator oper, Object value) {
             this(oper);
@@ -875,9 +751,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
 
         /**
          * Constructs a {@code ListScrollAdjuster} object.
-         *
-         * @param oper an operator to work with.
-         * @param itemIndex an item index to scroll to.
          */
         public ListScrollAdjuster(JSpinnerOperator oper, int itemIndex) {
             this(oper);
@@ -926,9 +799,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
 
         /**
          * Constructs a {@code DateScrollAdjuster} object.
-         *
-         * @param oper an operator to work with.
-         * @param date a date to scroll to.
          */
         public DateScrollAdjuster(JSpinnerOperator oper, Date date) {
             this.date = date;
@@ -976,7 +846,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
         /**
          * Constructs a {@code ObjectScrollAdjuster} object.
          *
-         * @param oper an operator to work with.
          * @param direction a scrolling direction - one of
          * {@code ScrollAdjuster.*_SCROLL_DIRECTION} fields.
          */
@@ -1016,7 +885,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
         /**
          * Constructs a {@code ExactScrollAdjuster} object.
          *
-         * @param oper an operator to work with.
          * @param direction a scrolling direction - one of
          * {@code ScrollAdjuster.*_SCROLL_DIRECTION} fields.
          */
@@ -1058,9 +926,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
         /**
          * Constructs a {@code ToStringScrollAdjuster} object.
          *
-         * @param oper an operator to work with.
-         * @param pattern a pattern to compare with
-         * @param comparator specifies string comparision algorithm.
          * @param direction a scrolling direction - one of
          * {@code ScrollAdjuster.*_SCROLL_DIRECTION} fields.
          */
@@ -1075,8 +940,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
          * Constructs a {@code ToStringScrollAdjuster} object. Uses
          * {@code StringComparator} assigned to the operator.
          *
-         * @param oper an operator to work with.
-         * @param pattern a pattern to compare with
          * @param direction a scrolling direction - one of
          * {@code ScrollAdjuster.*_SCROLL_DIRECTION} fields.
          */
@@ -1130,20 +993,10 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
             return (SpinnerNumberModel) getModel();
         }
 
-        /**
-         * Scrolls to a double value.
-         *
-         * @param value a value to scroll to.
-         */
         public void scrollToValue(double value) {
             scrollTo(new NumberScrollAdjuster(this, value));
         }
 
-        /**
-         * Scrolls to a number value.
-         *
-         * @param value a value to scroll to.
-         */
         public void scrollToValue(Number value) {
             scrollTo(new NumberScrollAdjuster(this, value));
         }
@@ -1177,9 +1030,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
         /**
          * Looks for an index of an item having {@code toString()} matching
          * a specified pattern.
-         *
-         * @param pattern a string pattern
-         * @param comparator a string comparision criteria.
          */
         public int findItem(String pattern, StringComparator comparator) {
             List<?> list = getListModel().getList();
@@ -1195,8 +1045,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
          * Looks for an index of an item having {@code toString()} matching
          * a specified pattern. Uses a {@code StringComparator} assigned to
          * the operator.
-         *
-         * @param pattern a string pattern
          */
         public int findItem(String pattern) {
             return findItem(pattern, getComparator());
@@ -1204,8 +1052,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
 
         /**
          * Scrolls to an item having specified instance.
-         *
-         * @param index an index to scroll to.
          */
         public void scrollToIndex(int index) {
             scrollTo(new ListScrollAdjuster(this, index));
@@ -1214,9 +1060,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
         /**
          * Scrolls to {@code getValue().toString()} match a specified
          * pattern.
-         *
-         * @param pattern a string pattern
-         * @param comparator a string comparision criteria.
          */
         public void scrollToString(String pattern, StringComparator comparator) {
             int index = findItem(pattern, comparator);
@@ -1231,8 +1074,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
          * Scrolls to {@code getValue().toString()} match a specified
          * pattern. Uses a {@code StringComparator} assigned to the
          * operator.
-         *
-         * @param pattern a string pattern
          */
         public void scrollToString(String pattern) {
             scrollToString(pattern, getComparator());
@@ -1264,11 +1105,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
             return (SpinnerDateModel) getModel();
         }
 
-        /**
-         * Scrolls to a date.
-         *
-         * @param date a date to scroll to.
-         */
         public void scrollToDate(Date date) {
             scrollTo(new DateScrollAdjuster(this, date));
         }
@@ -1283,9 +1119,6 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
 
         /**
          * Constructs a {@code SpinnerModelException} object.
-         *
-         * @param message error message.
-         * @param comp a spinner which model cased the exception.
          */
         public SpinnerModelException(String message, Component comp) {
             super(message, comp);

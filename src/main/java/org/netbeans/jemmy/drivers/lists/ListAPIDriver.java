@@ -31,14 +31,9 @@ import org.netbeans.jemmy.operators.ListOperator;
 
 /**
  * List driver for java.awt.List component type. Uses API calls.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class ListAPIDriver extends LightSupportiveDriver implements MultiSelListDriver {
 
-    /**
-     * Constructs a ListAPIDriver.
-     */
     public ListAPIDriver() {
         super(new String[] {"org.netbeans.jemmy.operators.ListOperator"});
     }

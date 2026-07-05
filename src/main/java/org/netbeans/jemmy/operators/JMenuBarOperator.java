@@ -43,22 +43,20 @@ import org.netbeans.jemmy.Action;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
-import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.Timeoutable;
 import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.drivers.DriverManager;
 import org.netbeans.jemmy.drivers.MenuDriver;
 
 /**
- * <BR><BR>Timeouts used: <BR>
- * JMenuOperator.WaitBeforePopupTimeout - time to sleep before popup expanding
- * <BR>
- * JMenuOperator.WaitPopupTimeout - time to wait popup displayed <BR>
- * ComponentOperator.WaitComponentTimeout - time to wait button displayed <BR>.
+ * Timeouts used:
+ * <ul>
+ * <li>JMenuOperator.WaitBeforePopupTimeout - time to sleep before popup expanding</li>
+ * <li>JMenuOperator.WaitPopupTimeout - time to wait popup displayed</li>
+ * <li>ComponentOperator.WaitComponentTimeout - time to wait button displayed</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
- * @author Alexandre Iline (alexandre.iline@oracle.com)
- *
  */
 public class JMenuBarOperator extends JComponentOperator implements Outputable, Timeoutable {
 
@@ -73,44 +71,23 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
     private Timeouts timeouts;
     private MenuDriver driver;
 
-    /**
-     * Constructor.
-     *
-     * @param b a component
-     */
     public JMenuBarOperator(JMenuBar b) {
         super(b);
         driver = DriverManager.getMenuDriver(getClass());
     }
 
-    /**
-     * Constructs a JMenuBarOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public JMenuBarOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((JMenuBar) cont.waitSubComponent(new JMenuBarFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a JMenuBarOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public JMenuBarOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont Operator pointing a container to search component in.
-     * @throws TimeoutExpiredException
      */
     public JMenuBarOperator(ContainerOperator<?> cont) {
         this((JMenuBar) waitComponent(cont, new JMenuBarFinder(), 0));
@@ -120,7 +97,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
     /**
      * Searches JMenuBar in frame.
      *
-     * @param frame a container
      * @return found JMenuBar
      */
     public static JMenuBar findJMenuBar(JFrame frame) {
@@ -130,7 +106,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
     /**
      * Searches JMenuBar in dialog.
      *
-     * @param dialog a container
      * @return found JMenuBar
      */
     public static JMenuBar findJMenuBar(JDialog dialog) {
@@ -140,9 +115,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
     /**
      * Searches JMenuBar in container.
      *
-     * @param cont a container
      * @return found JMenuBar
-     * @throws TimeoutExpiredException
      */
     public static JMenuBar waitJMenuBar(Container cont) {
         return (JMenuBar) waitComponent(cont, new JMenuBarFinder());
@@ -151,9 +124,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
     /**
      * Waits JMenuBar in frame.
      *
-     * @param frame a container
      * @return found JMenuBar
-     * @throws TimeoutExpiredException
      */
     public static JMenuBar waitJMenuBar(JFrame frame) {
         return waitJMenuBar((Container) frame);
@@ -162,9 +133,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
     /**
      * Waits JMenuBar in dialog.
      *
-     * @param dialog a container
      * @return found JMenuBar
-     * @throws TimeoutExpiredException
      */
     public static JMenuBar waitJMenuBar(JDialog dialog) {
         return waitJMenuBar((Container) dialog);
@@ -173,7 +142,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
     /**
      * Waits JMenuBar in container.
      *
-     * @param cont a container
      * @return found JMenuBar
      */
     public static JMenuBar findJMenuBar(Container cont) {
@@ -216,9 +184,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
     /**
      * Pushes menu.
      *
-     * @param choosers Array of choosers to find menuItems to push.
      * @return Last pushed JMenuItem.
-     * @throws TimeoutExpiredException
      */
     public JMenuItem pushMenu(final ComponentChooser[] choosers) {
         makeComponentVisible();
@@ -249,7 +215,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
     /**
      * Executes {@code pushMenu(choosers)} in a separate thread.
      *
-     * @param choosers Array of choosers to find menuItems to push.
      * @see #pushMenu(ComponentChooser[])
      */
     public void pushMenuNoBlock(final ComponentChooser[] choosers) {
@@ -269,10 +234,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
     /**
      * Pushes menu.
      *
-     * @param names an array of menu texts.
-     * @param comparator a string comparision algorithm
      * @return Last pushed JMenuItem.
-     * @throws TimeoutExpiredException
      */
     public JMenuItem pushMenu(String[] names, StringComparator comparator) {
         return pushMenu(JMenuItemOperator.createChoosers(names, comparator));
@@ -281,12 +243,8 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
     /**
      * Pushes menu.
      *
-     * @param names Menu items texts.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @return Last pushed JMenuItem.
-     * @throws TimeoutExpiredException
      * @deprecated Use pushMenu(String[]) or pushMenu(String[],
      * StringComparator)
      */
@@ -297,9 +255,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
 
     /**
      * Executes {@code pushMenu(names, ce, ccs)} in a separate thread.
-     *
-     * @param names an array of menu texts.
-     * @param comparator a string comparision algorithm
      */
     public void pushMenuNoBlock(String[] names, StringComparator comparator) {
         pushMenuNoBlock(JMenuItemOperator.createChoosers(names, comparator));
@@ -308,9 +263,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
     /**
      * Executes {@code pushMenu(names, ce, ccs)} in a separate thread.
      *
-     * @param names Menu items texts.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @see #pushMenu(String[], boolean,boolean)
      * @deprecated Use pushMenuNoBlock(String[]) or pushMenuNoBlock(String[],
      * StringComparator)
@@ -323,9 +275,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
     /**
      * Pushes menu.
      *
-     * @param names Menu items texts.
      * @return Last pushed JMenuItem.
-     * @throws TimeoutExpiredException
      */
     public JMenuItem pushMenu(String[] names) {
         return pushMenu(names, getComparator());
@@ -334,7 +284,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
     /**
      * Executes {@code pushMenu(names)} in a separate thread.
      *
-     * @param names Menu items texts.
      * @see #pushMenu(String[])
      */
     public void pushMenuNoBlock(String[] names) {
@@ -344,11 +293,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
     /**
      * Pushes menu.
      *
-     * @param path a menu path.
-     * @param delim a path delimiter.
-     * @param comparator a string comparision algorithm
      * @return Last pushed JMenuItem.
-     * @throws TimeoutExpiredException
      */
     public JMenuItem pushMenu(String path, String delim, StringComparator comparator) {
         return pushMenu(parseString(path, delim), comparator);
@@ -357,10 +302,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
     /**
      * Pushes menu. Uses PathParser assigned to this operator.
      *
-     * @param path a menu path.
-     * @param comparator a string comparision algorithm
      * @return Last pushed JMenuItem.
-     * @throws TimeoutExpiredException
      */
     public JMenuItem pushMenu(String path, StringComparator comparator) {
         return pushMenu(parseString(path), comparator);
@@ -369,13 +311,8 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
     /**
      * Pushes menu.
      *
-     * @param path String menupath representation ("File/New", for example).
-     * @param delim String menupath divider ("/").
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @return Last pushed JMenuItem.
-     * @throws TimeoutExpiredException
      * @deprecated Use pushMenu(String, String) or pushMenu(String, String,
      * StringComparator)
      */
@@ -387,10 +324,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
     /**
      * Executes {@code pushMenu(names, delim, comparator)} in a separate
      * thread.
-     *
-     * @param path a menu path.
-     * @param delim a path delimiter.
-     * @param comparator a string comparision algorithm
      */
     public void pushMenuNoBlock(String path, String delim, StringComparator comparator) {
         pushMenuNoBlock(parseString(path, delim), comparator);
@@ -399,9 +332,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
     /**
      * Executes {@code pushMenu(names, comparator)} in a separate thread.
      * Uses PathParser assigned to this operator.
-     *
-     * @param path a menu path.
-     * @param comparator a string comparision algorithm
      */
     public void pushMenuNoBlock(String path, StringComparator comparator) {
         pushMenuNoBlock(parseString(path), comparator);
@@ -411,10 +341,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
      * Executes {@code pushMenu(path, delim, ce, ccs)} in a separate
      * thread.
      *
-     * @param path String menupath representation ("File/New", for example).
-     * @param delim String menupath divider ("/").
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @see #pushMenu
      * @deprecated Use pushMenuNoBlock(String, String) or
      * pushMenuNoBlock(String, String, StringComparator)
@@ -427,10 +353,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
     /**
      * Pushes menu.
      *
-     * @param path String menupath representation ("File/New", for example).
-     * @param delim String menupath divider ("/").
      * @return Last pushed JMenuItem.
-     * @throws TimeoutExpiredException
      */
     public JMenuItem pushMenu(String path, String delim) {
         return pushMenu(parseString(path, delim));
@@ -439,9 +362,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
     /**
      * Pushes menu. Uses PathParser assigned to this operator.
      *
-     * @param path String menupath representation ("File/New", for example).
      * @return Last pushed JMenuItem.
-     * @throws TimeoutExpiredException
      */
     public JMenuItem pushMenu(String path) {
         return pushMenu(parseString(path));
@@ -449,9 +370,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
 
     /**
      * Executes {@code pushMenu(path, delim)} in a separate thread.
-     *
-     * @param path String menupath representation ("File/New", for example).
-     * @param delim String menupath divider ("/").
      */
     public void pushMenuNoBlock(String path, String delim) {
         pushMenuNoBlock(parseString(path, delim));
@@ -459,8 +377,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
 
     /**
      * Executes {@code pushMenu(path)} in a separate thread.
-     *
-     * @param path String menupath representation ("File/New", for example).
      */
     public void pushMenuNoBlock(String path) {
         pushMenuNoBlock(parseString(path));
@@ -477,10 +393,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
     /**
      * Shows submenu of menu specified by a {@code path} parameter.
      *
-     * @param path an array of menu texts.
-     * @param comparator a string comparision algorithm
      * @return an array of operators created tor items from the submenu.
-     * @throws TimeoutExpiredException
      */
     public JMenuItemOperator[] showMenuItems(String[] path, StringComparator comparator) {
         if (path == null || path.length == 0) {
@@ -494,9 +407,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
      * Shows submenu of menu specified by a {@code path} parameter. Uses
      * StringComparator assigned to the operator.
      *
-     * @param path an array of menu texts.
      * @return an array of operators created tor items from the submenu.
-     * @throws TimeoutExpiredException
      */
     public JMenuItemOperator[] showMenuItems(String[] path) {
         return showMenuItems(path, getComparator());
@@ -505,11 +416,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
     /**
      * Shows submenu of menu specified by a {@code path} parameter.
      *
-     * @param path a string identifying the menu path.
-     * @param delim a path delimiter.
-     * @param comparator a string comparision algorithm
      * @return an array of operators created tor items from the submenu.
-     * @throws TimeoutExpiredException
      */
     public JMenuItemOperator[] showMenuItems(String path, String delim, StringComparator comparator) {
         return showMenuItems(parseString(path, delim), comparator);
@@ -519,10 +426,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
      * Shows submenu of menu specified by a {@code path} parameter. Uses
      * PathParser assigned to this operator.
      *
-     * @param path a string identifying the menu path.
-     * @param comparator a string comparision algorithm
      * @return an array of operators created tor items from the submenu.
-     * @throws TimeoutExpiredException
      */
     public JMenuItemOperator[] showMenuItems(String path, StringComparator comparator) {
         return showMenuItems(parseString(path), comparator);
@@ -532,10 +436,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
      * Shows submenu of menu specified by a {@code path} parameter. Uses
      * StringComparator assigned to the operator.
      *
-     * @param path a string identifying the menu path.
-     * @param delim a path delimiter.
      * @return an array of operators created tor items from the submenu.
-     * @throws TimeoutExpiredException
      */
     public JMenuItemOperator[] showMenuItems(String path, String delim) {
         return showMenuItems(path, delim, getComparator());
@@ -546,9 +447,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
      * PathParser assigned to this operator. Uses StringComparator assigned to
      * the operator.
      *
-     * @param path a string identifying the menu path.
      * @return an array of operators created tor items from the submenu.
-     * @throws TimeoutExpiredException
      */
     public JMenuItemOperator[] showMenuItems(String path) {
         return showMenuItems(path, getComparator());
@@ -574,10 +473,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
      * Expends all menus to show menu item specified by a {@code path}
      * parameter.
      *
-     * @param path an array of menu texts.
-     * @param comparator a string comparision algorithm
      * @return an operator for the last menu item in path.
-     * @throws TimeoutExpiredException
      */
     public JMenuItemOperator showMenuItem(String[] path, StringComparator comparator) {
         String[] parentPath = getParentPath(path);
@@ -600,9 +496,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
      * Expands all menus to show menu item specified by a {@code path}
      * parameter.
      *
-     * @param path an array of menu texts.
      * @return an operator for the last menu item in path.
-     * @throws TimeoutExpiredException
      */
     public JMenuItemOperator showMenuItem(String[] path) {
         return showMenuItem(path, getComparator());
@@ -612,11 +506,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
      * Expands all menus to show menu item specified by a {@code path}
      * parameter.
      *
-     * @param path a string identifying the menu path.
-     * @param delim a path delimiter.
-     * @param comparator a string comparision algorithm
      * @return an operator for the last menu item in path.
-     * @throws TimeoutExpiredException
      */
     public JMenuItemOperator showMenuItem(String path, String delim, StringComparator comparator) {
         return showMenuItem(parseString(path, delim), comparator);
@@ -626,10 +516,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
      * Expands all menus to show menu item specified by a {@code path}
      * parameter. Uses PathParser assigned to this operator.
      *
-     * @param path a string identifying the menu path.
-     * @param comparator a string comparision algorithm
      * @return an operator for the last menu item in path.
-     * @throws TimeoutExpiredException
      */
     public JMenuItemOperator showMenuItem(String path, StringComparator comparator) {
         return showMenuItem(parseString(path), comparator);
@@ -639,10 +526,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
      * Expands all menus to show menu item specified by a {@code path}
      * parameter. Uses StringComparator assigned to the operator.
      *
-     * @param path a string identifying the menu path.
-     * @param delim a path delimiter.
      * @return an operator for the last menu item in path.
-     * @throws TimeoutExpiredException
      */
     public JMenuItemOperator showMenuItem(String path, String delim) {
         return showMenuItem(path, delim, getComparator());
@@ -653,9 +537,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
      * parameter. Uses PathParser assigned to this operator. Uses
      * StringComparator assigned to the operator.
      *
-     * @param path a string identifying the menu path.
      * @return an array of operators created tor items from the submenu.
-     * @throws TimeoutExpiredException
      */
     public JMenuItemOperator showMenuItem(String path) {
         return showMenuItem(path, getComparator());
@@ -705,9 +587,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code JMenuBar.add(JMenu)} through queue
-     */
     public JMenu add(final JMenu jMenu) {
         return (runMapping(new MapAction<JMenu>("add") {
             @Override
@@ -717,9 +596,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
         }));
     }
 
-    /**
-     * Maps {@code JMenuBar.getComponentIndex(Component)} through queue
-     */
     public int getComponentIndex(final Component component) {
         return (runMapping(new MapIntegerAction("getComponentIndex") {
             @Override
@@ -729,9 +605,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
         }));
     }
 
-    /**
-     * Maps {@code JMenuBar.getHelpMenu()} through queue
-     */
     public JMenu getHelpMenu() {
         return (runMapping(new MapAction<JMenu>("getHelpMenu") {
             @Override
@@ -741,9 +614,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
         }));
     }
 
-    /**
-     * Maps {@code JMenuBar.getMargin()} through queue
-     */
     public Insets getMargin() {
         return (runMapping(new MapAction<Insets>("getMargin") {
             @Override
@@ -753,9 +623,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
         }));
     }
 
-    /**
-     * Maps {@code JMenuBar.getMenu(int)} through queue
-     */
     public JMenu getMenu(final int i) {
         return (runMapping(new MapAction<JMenu>("getMenu") {
             @Override
@@ -765,9 +632,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
         }));
     }
 
-    /**
-     * Maps {@code JMenuBar.getMenuCount()} through queue
-     */
     public int getMenuCount() {
         return (runMapping(new MapIntegerAction("getMenuCount") {
             @Override
@@ -777,9 +641,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
         }));
     }
 
-    /**
-     * Maps {@code JMenuBar.getSelectionModel()} through queue
-     */
     public SingleSelectionModel getSelectionModel() {
         return (runMapping(new MapAction<SingleSelectionModel>("getSelectionModel") {
             @Override
@@ -789,9 +650,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
         }));
     }
 
-    /**
-     * Maps {@code JMenuBar.getSubElements()} through queue
-     */
     public MenuElement[] getSubElements() {
         return ((MenuElement[]) runMapping(new MapAction<Object>("getSubElements") {
             @Override
@@ -801,9 +659,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
         }));
     }
 
-    /**
-     * Maps {@code JMenuBar.getUI()} through queue
-     */
     public MenuBarUI getUI() {
         return (runMapping(new MapAction<MenuBarUI>("getUI") {
             @Override
@@ -813,9 +668,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
         }));
     }
 
-    /**
-     * Maps {@code JMenuBar.isBorderPainted()} through queue
-     */
     public boolean isBorderPainted() {
         return (runMapping(new MapBooleanAction("isBorderPainted") {
             @Override
@@ -825,9 +677,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
         }));
     }
 
-    /**
-     * Maps {@code JMenuBar.isSelected()} through queue
-     */
     public boolean isSelected() {
         return (runMapping(new MapBooleanAction("isSelected") {
             @Override
@@ -837,9 +686,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
         }));
     }
 
-    /**
-     * Maps {@code JMenuBar.menuSelectionChanged(boolean)} through queue
-     */
     public void menuSelectionChanged(final boolean b) {
         runMapping(new MapVoidAction("menuSelectionChanged") {
             @Override
@@ -849,11 +695,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
         });
     }
 
-    /**
-     * Maps
-     * {@code JMenuBar.processKeyEvent(KeyEvent, MenuElement[], MenuSelectionManager)}
-     * through queue
-     */
     public void processKeyEvent(
             final KeyEvent keyEvent, final MenuElement[] menuElement, final MenuSelectionManager menuSelectionManager) {
         runMapping(new MapVoidAction("processKeyEvent") {
@@ -864,11 +705,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
         });
     }
 
-    /**
-     * Maps
-     * {@code JMenuBar.processMouseEvent(MouseEvent, MenuElement[], MenuSelectionManager)}
-     * through queue
-     */
     public void processMouseEvent(
             final MouseEvent mouseEvent,
             final MenuElement[] menuElement,
@@ -881,9 +717,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
         });
     }
 
-    /**
-     * Maps {@code JMenuBar.setBorderPainted(boolean)} through queue
-     */
     public void setBorderPainted(final boolean b) {
         runMapping(new MapVoidAction("setBorderPainted") {
             @Override
@@ -893,9 +726,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
         });
     }
 
-    /**
-     * Maps {@code JMenuBar.setHelpMenu(JMenu)} through queue
-     */
     public void setHelpMenu(final JMenu jMenu) {
         runMapping(new MapVoidAction("setHelpMenu") {
             @Override
@@ -905,9 +735,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
         });
     }
 
-    /**
-     * Maps {@code JMenuBar.setMargin(Insets)} through queue
-     */
     public void setMargin(final Insets insets) {
         runMapping(new MapVoidAction("setMargin") {
             @Override
@@ -917,9 +744,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
         });
     }
 
-    /**
-     * Maps {@code JMenuBar.setSelected(Component)} through queue
-     */
     public void setSelected(final Component component) {
         runMapping(new MapVoidAction("setSelected") {
             @Override
@@ -929,10 +753,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
         });
     }
 
-    /**
-     * Maps {@code JMenuBar.setSelectionModel(SingleSelectionModel)}
-     * through queue
-     */
     public void setSelectionModel(final SingleSelectionModel singleSelectionModel) {
         runMapping(new MapVoidAction("setSelectionModel") {
             @Override
@@ -942,9 +762,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
         });
     }
 
-    /**
-     * Maps {@code JMenuBar.setUI(MenuBarUI)} through queue
-     */
     public void setUI(final MenuBarUI menuBarUI) {
         runMapping(new MapVoidAction("setUI") {
             @Override
@@ -963,8 +780,6 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
 
         /**
          * Constructs JMenuBarFinder.
-         *
-         * @param sf other searching criteria.
          */
         public JMenuBarFinder(ComponentChooser sf) {
             super(JMenuBar.class, sf);

@@ -28,16 +28,11 @@ import org.netbeans.jemmy.operators.ComponentOperator;
 
 /**
  * Interface of objects to be used for value changing (editing).
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public interface EditorDriver {
 
     /**
      * Changes value.
-     *
-     * @param oper Operator to change value for.
-     * @param newValue a new value.
      */
     public void enterNewValue(ComponentOperator oper, Object newValue);
 }

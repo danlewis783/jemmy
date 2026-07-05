@@ -40,8 +40,6 @@ import org.netbeans.jemmy.Timeouts;
  *
  * @see org.netbeans.jemmy.Timeouts
  *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
- *
  */
 public class TextAreaOperator extends TextComponentOperator implements Timeoutable, Outputable {
 
@@ -61,38 +59,23 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
     private TestOut output;
 
     /**
-     * Constructor.
-     *
      * @param b The {@code java.awt.TextArea} managed by this instance.
      */
     public TextAreaOperator(TextArea b) {
         super(b);
     }
 
-    /**
-     * Constructs a TextAreaOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public TextAreaOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((TextArea) cont.waitSubComponent(new TextAreaFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a TextAreaOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public TextAreaOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits for a component in a container to show. The component
+     * Waits for a component in a container to show. The component
      * is identified as the {@code index+1}'th
      * {@code java.awt.TextArea} that shows, lies below the container in
      * the display containment hierarchy, and that has the desired text. Uses
@@ -100,7 +83,6 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
      *
      * @param cont The operator for a container containing the sought for
      * textArea.
-     * @param text TextArea text.
      * @param index Ordinal component index. The first component has
      * {@code index} 0.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
@@ -111,7 +93,7 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
     }
 
     /**
-     * Constructor. Waits for a component in a container to show. The component
+     * Waits for a component in a container to show. The component
      * is identified as the first {@code java.awt.TextArea} that shows,
      * lies below the container in the display containment hierarchy, and that
      * has the desired text. Uses cont's timeout and output for waiting and to
@@ -119,7 +101,6 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
      *
      * @param cont The operator for a container containing the sought for
      * textArea.
-     * @param text TextArea text.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public TextAreaOperator(ContainerOperator<?> cont, String text) {
@@ -127,12 +108,11 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
      * @param cont The operator for a container containing the sought for
      * textArea.
-     * @param index Ordinal component index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public TextAreaOperator(ContainerOperator<?> cont, int index) {
@@ -141,7 +121,7 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
      * @param cont The operator for a container containing the sought for
@@ -158,8 +138,6 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
      * @param cont Container in which to search for the component. The container
      * lies above the component in the display containment hierarchy. The
      * containment need not be direct.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation,
-     * defining and applying search criteria.
      * @param index Ordinal component index. The first {@code index} is 0.
      * @return TextArea instance or null if component was not found.
      */
@@ -173,8 +151,6 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
      * @param cont Container in which to search for the component. The container
      * lies above the component in the display containment hierarchy. The
      * containment need not be direct.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation,
-     * defining and applying search criteria.
      * @return TextArea instance or null if component was not found.
      */
     public static TextArea findTextArea(Container cont, ComponentChooser chooser) {
@@ -184,11 +160,6 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
     /**
      * Searches TextArea by text.
      *
-     * @param cont Container to search component in.
-     * @param text TextArea text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return TextArea instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -199,10 +170,6 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
     /**
      * Searches TextArea by text.
      *
-     * @param cont Container to search component in.
-     * @param text TextArea text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return TextArea instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -213,9 +180,6 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
     /**
      * Waits TextArea in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return TextArea instance.
      */
     public static TextArea waitTextArea(Container cont, ComponentChooser chooser, int index) {
@@ -225,8 +189,6 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
     /**
      * Waits 0'th TextArea in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return TextArea instance.
      */
     public static TextArea waitTextArea(Container cont, ComponentChooser chooser) {
@@ -236,11 +198,6 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
     /**
      * Waits TextArea by text.
      *
-     * @param cont Container to search component in.
-     * @param text TextArea text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return TextArea instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -251,10 +208,6 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
     /**
      * Waits TextArea by text.
      *
-     * @param cont Container to search component in.
-     * @param text TextArea text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return TextArea instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -300,9 +253,6 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code TextArea.getColumns()} through queue
-     */
     public int getColumns() {
         return (runMapping(new MapIntegerAction("getColumns") {
             @Override
@@ -312,9 +262,6 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
         }));
     }
 
-    /**
-     * Maps {@code TextArea.getMinimumSize(int, int)} through queue
-     */
     public Dimension getMinimumSize(final int i, final int i1) {
         return (runMapping(new MapAction<Dimension>("getMinimumSize") {
             @Override
@@ -324,9 +271,6 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
         }));
     }
 
-    /**
-     * Maps {@code TextArea.getPreferredSize(int, int)} through queue
-     */
     public Dimension getPreferredSize(final int i, final int i1) {
         return (runMapping(new MapAction<Dimension>("getPreferredSize") {
             @Override
@@ -336,9 +280,6 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
         }));
     }
 
-    /**
-     * Maps {@code TextArea.getRows()} through queue
-     */
     public int getRows() {
         return (runMapping(new MapIntegerAction("getRows") {
             @Override
@@ -348,9 +289,6 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
         }));
     }
 
-    /**
-     * Maps {@code TextArea.getScrollbarVisibility()} through queue
-     */
     public int getScrollbarVisibility() {
         return (runMapping(new MapIntegerAction("getScrollbarVisibility") {
             @Override
@@ -360,9 +298,6 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
         }));
     }
 
-    /**
-     * Maps {@code TextArea.replaceRange(String, int, int)} through queue
-     */
     public void replaceRange(final String string, final int i, final int i1) {
         runMapping(new MapVoidAction("replaceRange") {
             @Override
@@ -372,9 +307,6 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
         });
     }
 
-    /**
-     * Maps {@code TextArea.setColumns(int)} through queue
-     */
     public void setColumns(final int i) {
         runMapping(new MapVoidAction("setColumns") {
             @Override
@@ -384,9 +316,6 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
         });
     }
 
-    /**
-     * Maps {@code TextArea.setRows(int)} through queue
-     */
     public void setRows(final int i) {
         runMapping(new MapVoidAction("setRows") {
             @Override
@@ -406,22 +335,11 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
         String label;
         StringComparator comparator;
 
-        /**
-         * Constructs TextAreaByTextFinder.
-         *
-         * @param lb a text pattern
-         * @param comparator specifies string comparision algorithm.
-         */
         public TextAreaByTextFinder(String lb, StringComparator comparator) {
             label = lb;
             this.comparator = comparator;
         }
 
-        /**
-         * Constructs TextAreaByTextFinder.
-         *
-         * @param lb a text pattern
-         */
         public TextAreaByTextFinder(String lb) {
             this(lb, Operator.getDefaultStringComparator());
         }
@@ -447,18 +365,10 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
      */
     public static class TextAreaFinder extends Finder {
 
-        /**
-         * Constructs TextAreaFinder.
-         *
-         * @param sf other searching criteria.
-         */
         public TextAreaFinder(ComponentChooser sf) {
             super(TextArea.class, sf);
         }
 
-        /**
-         * Constructs TextAreaFinder.
-         */
         public TextAreaFinder() {
             super(TextArea.class);
         }

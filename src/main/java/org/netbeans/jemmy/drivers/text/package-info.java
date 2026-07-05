@@ -24,7 +24,7 @@
  */
 /**
  * <h1>Text drivers</h1>
- * Different drivers to perform a text operations.<br>
+ * Different drivers to perform a text operations.
  *
  * @since 17 Apr 2002
  * <hr>

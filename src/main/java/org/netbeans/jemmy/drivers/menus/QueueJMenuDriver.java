@@ -47,19 +47,17 @@ import org.netbeans.jemmy.operators.JMenuOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 
 /**
- *
- * 100% stable menu driver. Tries to do next steps during one action executed
- * through EventQueue:<br>
- * find showing window containing popup<br>
- * find showing popup<br>
- * find showing menuitem<br>
- * enter mouse into it<br>
- *
- * Repeats this action as many times as "JMenuOperator.WaitPopupTimeout" timeout
- * allows.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
- *
+ * 100% stable menu driver. Tries to do next steps during one action executed through EventQueue:
+ * <p>
+ * find showing window containing popup
+ * <p>
+ * find showing popup
+ * <p>
+ * find showing menuitem
+ * <p>
+ * enter mouse into it
+ * <p>
+ * Repeats this action as many times as "JMenuOperator.WaitPopupTimeout" timeout allows.
  */
 public class QueueJMenuDriver extends LightSupportiveDriver implements MenuDriver {
 

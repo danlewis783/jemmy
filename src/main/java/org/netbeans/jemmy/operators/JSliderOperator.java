@@ -36,7 +36,6 @@ import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
-import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.Timeoutable;
 import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.drivers.DriverManager;
@@ -45,13 +44,12 @@ import org.netbeans.jemmy.drivers.scrolling.ScrollAdjuster;
 
 /**
  * Covers {@code javax.swing.JSlider} component.
- *
- * <BR><BR>Timeouts used: <BR>
- * JSliderOperator.WholeScrollTimeout - time for the whole scrolling. <BR>
- * JSliderOperator.ScrollingDelta - time delta to verify result durong
- * scrolling. <BR>
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
+ * <p>
+ * Timeouts used:
+ * <ul>
+ * <li>JSliderOperator.WholeScrollTimeout - time for the whole scrolling.</li>
+ * <li>JSliderOperator.ScrollingDelta - time delta to verify result durong scrolling.</li>
+ * </ul>
  */
 public class JSliderOperator extends JComponentOperator implements Timeoutable, Outputable {
 
@@ -103,9 +101,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
      */
     public static final String VERTICAL_ORIENTATION_DPROP_VALUE = "VERTICAL";
 
-    /**
-     * Identifier for a "inverted" property.
-     */
     public static final String IS_INVERTED_DPROP = "Inverted";
 
     /**
@@ -133,45 +128,23 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
     private TestOut output;
     private int scrollModel = CLICK_SCROLL_MODEL;
 
-    /**
-     * Constructor.
-     *
-     * @param b JSlider component.
-     */
     public JSliderOperator(JSlider b) {
         super(b);
         driver = DriverManager.getScrollDriver(getClass());
     }
 
-    /**
-     * Constructs a JSliderOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public JSliderOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((JSlider) cont.waitSubComponent(new JSliderFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a JSliderOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public JSliderOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont Operator pointing a container to search component in.
-     * @param index Ordinal component index.
-     * @throws TimeoutExpiredException
      */
     public JSliderOperator(ContainerOperator<?> cont, int index) {
         this((JSlider) waitComponent(cont, new JSliderFinder(), index));
@@ -179,11 +152,8 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont Operator pointing a container to search component in.
-     * @throws TimeoutExpiredException
      */
     public JSliderOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -192,9 +162,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
     /**
      * Searches JSlider in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JSlider instance or null if component was not found.
      */
     public static JSlider findJSlider(Container cont, ComponentChooser chooser, int index) {
@@ -204,8 +171,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
     /**
      * Searches 0'th JSlider in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JSlider instance or null if component was not found.
      */
     public static JSlider findJSlider(Container cont, ComponentChooser chooser) {
@@ -215,8 +180,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
     /**
      * Searches JSlider in container.
      *
-     * @param cont Container to search component in.
-     * @param index Ordinal component index.
      * @return JSlider instance or null if component was not found.
      */
     public static JSlider findJSlider(Container cont, int index) {
@@ -227,7 +190,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
     /**
      * Searches 0'th JSlider in container.
      *
-     * @param cont Container to search component in.
      * @return JSlider instance or null if component was not found.
      */
     public static JSlider findJSlider(Container cont) {
@@ -237,11 +199,7 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
     /**
      * Waits JSlider in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JSlider instance or null if component was not displayed.
-     * @throws TimeoutExpiredException
      */
     public static JSlider waitJSlider(Container cont, ComponentChooser chooser, int index) {
         return (JSlider) waitComponent(cont, new JSliderFinder(chooser), index);
@@ -250,10 +208,7 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
     /**
      * Waits 0'th JSlider in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JSlider instance or null if component was not displayed.
-     * @throws TimeoutExpiredException
      */
     public static JSlider waitJSlider(Container cont, ComponentChooser chooser) {
         return waitJSlider(cont, chooser, 0);
@@ -262,10 +217,7 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
     /**
      * Waits JSlider in container.
      *
-     * @param cont Container to search component in.
-     * @param index Ordinal component index.
      * @return JSlider instance or null if component was not displayed.
-     * @throws TimeoutExpiredException
      */
     public static JSlider waitJSlider(Container cont, int index) {
         return waitJSlider(
@@ -275,9 +227,7 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
     /**
      * Waits 0'th JSlider in container.
      *
-     * @param cont Container to search component in.
      * @return JSlider instance or null if component was not displayed.
-     * @throws TimeoutExpiredException
      */
     public static JSlider waitJSlider(Container cont) {
         return waitJSlider(cont, 0);
@@ -292,7 +242,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
     /**
      * Defines scroll model. Default model value - CLICK_SCROLL_MODEL.
      *
-     * @param model New scroll model value.
      * @see #CLICK_SCROLL_MODEL
      * @see #PUSH_AND_WAIT_SCROLL_MODEL
      * @see #getScrollModel()
@@ -344,9 +293,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
     /**
      * Scrolls slider to the position defined by a ScrollAdjuster
      * implementation.
-     *
-     * @param adj defines scrolling direction, and so on.
-     * @throws TimeoutExpiredException
      */
     public void scrollTo(final ScrollAdjuster adj) {
         makeComponentVisible();
@@ -373,9 +319,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
 
     /**
      * Moves slider to the necessary value.
-     *
-     * @param value Value to move slider to.
-     * @throws TimeoutExpiredException
      */
     public void scrollToValue(int value) {
         output.printTrace("Move JSlider to " + Integer.toString(value) + " value\n" + toStringSource());
@@ -385,8 +328,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
 
     /**
      * Moves slider to the maximal value.
-     *
-     * @throws TimeoutExpiredException
      */
     public void scrollToMaximum() {
         output.printTrace("Move JSlider to maximum value\n" + toStringSource());
@@ -396,8 +337,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
 
     /**
      * Moves slider to the minimal value.
-     *
-     * @throws TimeoutExpiredException
      */
     public void scrollToMinimum() {
         output.printTrace("Move JSlider to minimum value\n" + toStringSource());
@@ -422,9 +361,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code JSlider.addChangeListener(ChangeListener)} through queue
-     */
     public void addChangeListener(final ChangeListener changeListener) {
         runMapping(new MapVoidAction("addChangeListener") {
             @Override
@@ -434,9 +370,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         });
     }
 
-    /**
-     * Maps {@code JSlider.createStandardLabels(int)} through queue
-     */
     public Hashtable<?, ?> createStandardLabels(final int i) {
         return ((Hashtable<?, ?>) runMapping(new MapAction<Object>("createStandardLabels") {
             @Override
@@ -446,9 +379,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         }));
     }
 
-    /**
-     * Maps {@code JSlider.createStandardLabels(int, int)} through queue
-     */
     public Hashtable<?, ?> createStandardLabels(final int i, final int i1) {
         return ((Hashtable<?, ?>) runMapping(new MapAction<Object>("createStandardLabels") {
             @Override
@@ -458,9 +388,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         }));
     }
 
-    /**
-     * Maps {@code JSlider.getExtent()} through queue
-     */
     public int getExtent() {
         return (runMapping(new MapIntegerAction("getExtent") {
             @Override
@@ -470,9 +397,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         }));
     }
 
-    /**
-     * Maps {@code JSlider.getInverted()} through queue
-     */
     public boolean getInverted() {
         return (runMapping(new MapBooleanAction("getInverted") {
             @Override
@@ -482,9 +406,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         }));
     }
 
-    /**
-     * Maps {@code JSlider.getLabelTable()} through queue
-     */
     public Dictionary<?, ?> getLabelTable() {
         return (runMapping(new MapAction<Dictionary<?, ?>>("getLabelTable") {
             @Override
@@ -494,9 +415,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         }));
     }
 
-    /**
-     * Maps {@code JSlider.getMajorTickSpacing()} through queue
-     */
     public int getMajorTickSpacing() {
         return (runMapping(new MapIntegerAction("getMajorTickSpacing") {
             @Override
@@ -506,9 +424,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         }));
     }
 
-    /**
-     * Maps {@code JSlider.getMaximum()} through queue
-     */
     public int getMaximum() {
         return (runMapping(new MapIntegerAction("getMaximum") {
             @Override
@@ -518,9 +433,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         }));
     }
 
-    /**
-     * Maps {@code JSlider.getMinimum()} through queue
-     */
     public int getMinimum() {
         return (runMapping(new MapIntegerAction("getMinimum") {
             @Override
@@ -530,9 +442,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         }));
     }
 
-    /**
-     * Maps {@code JSlider.getMinorTickSpacing()} through queue
-     */
     public int getMinorTickSpacing() {
         return (runMapping(new MapIntegerAction("getMinorTickSpacing") {
             @Override
@@ -542,9 +451,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         }));
     }
 
-    /**
-     * Maps {@code JSlider.getModel()} through queue
-     */
     public BoundedRangeModel getModel() {
         return (runMapping(new MapAction<BoundedRangeModel>("getModel") {
             @Override
@@ -554,9 +460,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         }));
     }
 
-    /**
-     * Maps {@code JSlider.getOrientation()} through queue
-     */
     public int getOrientation() {
         return (runMapping(new MapIntegerAction("getOrientation") {
             @Override
@@ -566,9 +469,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         }));
     }
 
-    /**
-     * Maps {@code JSlider.getPaintLabels()} through queue
-     */
     public boolean getPaintLabels() {
         return (runMapping(new MapBooleanAction("getPaintLabels") {
             @Override
@@ -578,9 +478,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         }));
     }
 
-    /**
-     * Maps {@code JSlider.getPaintTicks()} through queue
-     */
     public boolean getPaintTicks() {
         return (runMapping(new MapBooleanAction("getPaintTicks") {
             @Override
@@ -590,9 +487,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         }));
     }
 
-    /**
-     * Maps {@code JSlider.getPaintTrack()} through queue
-     */
     public boolean getPaintTrack() {
         return (runMapping(new MapBooleanAction("getPaintTrack") {
             @Override
@@ -602,9 +496,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         }));
     }
 
-    /**
-     * Maps {@code JSlider.getSnapToTicks()} through queue
-     */
     public boolean getSnapToTicks() {
         return (runMapping(new MapBooleanAction("getSnapToTicks") {
             @Override
@@ -614,9 +505,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         }));
     }
 
-    /**
-     * Maps {@code JSlider.getUI()} through queue
-     */
     public SliderUI getUI() {
         return (runMapping(new MapAction<SliderUI>("getUI") {
             @Override
@@ -626,9 +514,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         }));
     }
 
-    /**
-     * Maps {@code JSlider.getValue()} through queue
-     */
     public int getValue() {
         return (runMapping(new MapIntegerAction("getValue") {
             @Override
@@ -638,9 +523,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         }));
     }
 
-    /**
-     * Maps {@code JSlider.getValueIsAdjusting()} through queue
-     */
     public boolean getValueIsAdjusting() {
         return (runMapping(new MapBooleanAction("getValueIsAdjusting") {
             @Override
@@ -650,9 +532,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         }));
     }
 
-    /**
-     * Maps {@code JSlider.removeChangeListener(ChangeListener)} through queue
-     */
     public void removeChangeListener(final ChangeListener changeListener) {
         runMapping(new MapVoidAction("removeChangeListener") {
             @Override
@@ -662,9 +541,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         });
     }
 
-    /**
-     * Maps {@code JSlider.setExtent(int)} through queue
-     */
     public void setExtent(final int i) {
         runMapping(new MapVoidAction("setExtent") {
             @Override
@@ -674,9 +550,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         });
     }
 
-    /**
-     * Maps {@code JSlider.setInverted(boolean)} through queue
-     */
     public void setInverted(final boolean b) {
         runMapping(new MapVoidAction("setInverted") {
             @Override
@@ -686,9 +559,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         });
     }
 
-    /**
-     * Maps {@code JSlider.setLabelTable(Dictionary)} through queue
-     */
     public void setLabelTable(final Dictionary<?, ?> dictionary) {
         runMapping(new MapVoidAction("setLabelTable") {
             @Override
@@ -698,9 +568,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         });
     }
 
-    /**
-     * Maps {@code JSlider.setMajorTickSpacing(int)} through queue
-     */
     public void setMajorTickSpacing(final int i) {
         runMapping(new MapVoidAction("setMajorTickSpacing") {
             @Override
@@ -710,9 +577,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         });
     }
 
-    /**
-     * Maps {@code JSlider.setMaximum(int)} through queue
-     */
     public void setMaximum(final int i) {
         runMapping(new MapVoidAction("setMaximum") {
             @Override
@@ -722,9 +586,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         });
     }
 
-    /**
-     * Maps {@code JSlider.setMinimum(int)} through queue
-     */
     public void setMinimum(final int i) {
         runMapping(new MapVoidAction("setMinimum") {
             @Override
@@ -734,9 +595,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         });
     }
 
-    /**
-     * Maps {@code JSlider.setMinorTickSpacing(int)} through queue
-     */
     public void setMinorTickSpacing(final int i) {
         runMapping(new MapVoidAction("setMinorTickSpacing") {
             @Override
@@ -746,9 +604,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         });
     }
 
-    /**
-     * Maps {@code JSlider.setModel(BoundedRangeModel)} through queue
-     */
     public void setModel(final BoundedRangeModel boundedRangeModel) {
         runMapping(new MapVoidAction("setModel") {
             @Override
@@ -758,9 +613,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         });
     }
 
-    /**
-     * Maps {@code JSlider.setOrientation(int)} through queue
-     */
     public void setOrientation(final int i) {
         runMapping(new MapVoidAction("setOrientation") {
             @Override
@@ -770,9 +622,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         });
     }
 
-    /**
-     * Maps {@code JSlider.setPaintLabels(boolean)} through queue
-     */
     public void setPaintLabels(final boolean b) {
         runMapping(new MapVoidAction("setPaintLabels") {
             @Override
@@ -782,9 +631,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         });
     }
 
-    /**
-     * Maps {@code JSlider.setPaintTicks(boolean)} through queue
-     */
     public void setPaintTicks(final boolean b) {
         runMapping(new MapVoidAction("setPaintTicks") {
             @Override
@@ -794,9 +640,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         });
     }
 
-    /**
-     * Maps {@code JSlider.setPaintTrack(boolean)} through queue
-     */
     public void setPaintTrack(final boolean b) {
         runMapping(new MapVoidAction("setPaintTrack") {
             @Override
@@ -806,9 +649,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         });
     }
 
-    /**
-     * Maps {@code JSlider.setSnapToTicks(boolean)} through queue
-     */
     public void setSnapToTicks(final boolean b) {
         runMapping(new MapVoidAction("setSnapToTicks") {
             @Override
@@ -818,9 +658,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         });
     }
 
-    /**
-     * Maps {@code JSlider.setUI(SliderUI)} through queue
-     */
     public void setUI(final SliderUI sliderUI) {
         runMapping(new MapVoidAction("setUI") {
             @Override
@@ -830,9 +667,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         });
     }
 
-    /**
-     * Maps {@code JSlider.setValue(int)} through queue
-     */
     public void setValue(final int i) {
         runMapping(new MapVoidAction("setValue") {
             @Override
@@ -842,9 +676,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
         });
     }
 
-    /**
-     * Maps {@code JSlider.setValueIsAdjusting(boolean)} through queue
-     */
     public void setValueIsAdjusting(final boolean b) {
         runMapping(new MapVoidAction("setValueIsAdjusting") {
             @Override
@@ -863,8 +694,6 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
 
         /**
          * Constructs JSliderFinder.
-         *
-         * @param sf other searching criteria.
          */
         public JSliderFinder(ComponentChooser sf) {
             super(JSlider.class, sf);

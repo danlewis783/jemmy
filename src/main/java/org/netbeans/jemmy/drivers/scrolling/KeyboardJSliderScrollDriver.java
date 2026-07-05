@@ -28,10 +28,6 @@ import java.awt.Adjustable;
 import java.awt.event.KeyEvent;
 import org.netbeans.jemmy.operators.ComponentOperator;
 
-/**
- *
- * @author shura
- */
 public class KeyboardJSliderScrollDriver extends JSliderDriver {
 
     private static int getButton(int direction, int orientation) {

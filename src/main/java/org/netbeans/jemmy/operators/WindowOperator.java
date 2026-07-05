@@ -37,21 +37,19 @@ import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.TestOut;
-import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.WindowWaiter;
 import org.netbeans.jemmy.drivers.DriverManager;
 import org.netbeans.jemmy.drivers.WindowDriver;
 
 /**
- * <BR><BR>Timeouts used: <BR>
- * WindowWaiter.WaitWindowTimeout - time to wait window displayed <BR>
- * WindowWaiter.AfterWindowTimeout - time to sleep after window has been
- * dispayed <BR>.
+ * Timeouts used:
+ * <ul>
+ * <li>WindowWaiter.WaitWindowTimeout - time to wait window displayed</li>
+ * <li>WindowWaiter.AfterWindowTimeout - time to sleep after window has been dispayed</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
 public class WindowOperator extends ContainerOperator<Window> implements Outputable {
@@ -59,45 +57,23 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
     TestOut output;
     WindowDriver driver;
 
-    /**
-     * Constructor.
-     *
-     * @param w a component
-     */
     public WindowOperator(Window w) {
         super(w);
         driver = DriverManager.getWindowDriver(getClass());
     }
 
-    /**
-     * Constructs a DialogOperator object.
-     *
-     * @param owner window - owner
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public WindowOperator(WindowOperator owner, ComponentChooser chooser, int index) {
         this(owner.waitSubWindow(chooser, index));
         copyEnvironment(owner);
     }
 
-    /**
-     * Constructs a DialogOperator object.
-     *
-     * @param owner window - owner
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public WindowOperator(WindowOperator owner, ComponentChooser chooser) {
         this(owner, chooser, 0);
     }
 
     /**
-     * Constructor. Waits for the index'th displayed owner's child. Uses owner's
+     * Waits for the index'th displayed owner's child. Uses owner's
      * timeout and output for waiting and to init operator.
-     *
-     * @param owner Operator pointing on a window owner.
-     * @param index an index between appropriate ones.
-     * @throws TimeoutExpiredException
      */
     public WindowOperator(WindowOperator owner, int index) {
         this(waitWindow(owner, ComponentSearcher.getTrueChooser("Any Window"), index));
@@ -105,24 +81,17 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
     }
 
     /**
-     * Constructor. Waits for the first displayed owner's child. Uses owner's
+     * Waits for the first displayed owner's child. Uses owner's
      * timeout and output for waiting and to init operator.
-     *
-     * @param owner Operator pointing on a window owner.
-     * @throws TimeoutExpiredException
      */
     public WindowOperator(WindowOperator owner) {
         this(owner, 0);
     }
 
     /**
-     * Constructor. Waits for the index'th displayed window. Constructor can be
+     * Waits for the index'th displayed window. Constructor can be
      * used in complicated cases when output or timeouts should differ from
      * default.
-     *
-     * @param index an index between appropriate ones.
-     * @param env an operator to copy environment from.
-     * @throws TimeoutExpiredException
      */
     public WindowOperator(int index, Operator env) {
         this(waitWindow(ComponentSearcher.getTrueChooser("Any Window"), index, env.getTimeouts(), env.getOutput()));
@@ -130,25 +99,22 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
     }
 
     /**
-     * Constructor. Waits for the index'th displayed window. Uses current
+     * Waits for the index'th displayed window. Uses current
      * timeouts and output values.
      *
      * @see JemmyProperties#getCurrentTimeouts()
      * @see JemmyProperties#getCurrentOutput()
-     * @param index an index between appropriate ones.
-     * @throws TimeoutExpiredException
      */
     public WindowOperator(int index) {
         this(index, getEnvironmentOperator());
     }
 
     /**
-     * Constructor. Waits for the first displayed window. Uses current timeouts
+     * Waits for the first displayed window. Uses current timeouts
      * and output values.
      *
      * @see JemmyProperties#getCurrentTimeouts()
      * @see JemmyProperties#getCurrentOutput()
-     * @throws TimeoutExpiredException
      */
     public WindowOperator() {
         this(0);
@@ -157,8 +123,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
     /**
      * Searches an index'th window.
      *
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
      * @return a window
      */
     public static Window findWindow(ComponentChooser chooser, int index) {
@@ -168,7 +132,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
     /**
      * Searches a window.
      *
-     * @param chooser a component chooser specifying searching criteria.
      * @return a window
      */
     public static Window findWindow(ComponentChooser chooser) {
@@ -178,9 +141,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
     /**
      * Searches an index'th window.
      *
-     * @param owner Window - owner.
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
      * @return a window
      */
     public static Window findWindow(Window owner, ComponentChooser chooser, int index) {
@@ -190,8 +150,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
     /**
      * Searches a window.
      *
-     * @param owner Window - owner.
-     * @param chooser a component chooser specifying searching criteria.
      * @return a window
      */
     public static Window findWindow(Window owner, ComponentChooser chooser) {
@@ -201,9 +159,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
     /**
      * Waits an index'th window.
      *
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     * @throws TimeoutExpiredException
      * @return a window
      */
     public static Window waitWindow(ComponentChooser chooser, int index) {
@@ -213,8 +168,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
     /**
      * Waits a window.
      *
-     * @param chooser a component chooser specifying searching criteria.
-     * @throws TimeoutExpiredException
      * @return a window
      */
     public static Window waitWindow(ComponentChooser chooser) {
@@ -224,10 +177,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
     /**
      * Waits an index'th window.
      *
-     * @param owner Window - owner.
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     * @throws TimeoutExpiredException
      * @return a window
      */
     public static Window waitWindow(Window owner, ComponentChooser chooser, int index) {
@@ -238,9 +187,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
     /**
      * Waits a window.
      *
-     * @param owner Window - owner.
-     * @param chooser a component chooser specifying searching criteria.
-     * @throws TimeoutExpiredException
      * @return a window
      */
     public static Window waitWindow(Window owner, ComponentChooser chooser) {
@@ -323,9 +269,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
     /**
      * Moves the window to another location. Uses WindowDriver registered for
      * the operator type.
-     *
-     * @param x coordinate in screen coordinate system
-     * @param y coordinate in screen coordinate system
      */
     public void move(int x, int y) {
         output.printLine("Moving frame\n    " + getSource().toString());
@@ -335,9 +278,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
 
     /**
      * Resizes the window. Uses WindowDriver registered for the operator type.
-     *
-     * @param width new width
-     * @param height new height
      */
     public void resize(int width, int height) {
         output.printLine("Resizing frame\n    " + getSource().toString());
@@ -348,8 +288,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
     /**
      * Searches an index'th window between windows owned by this window.
      *
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
      * @return a subwindow
      */
     public Window findSubWindow(ComponentChooser chooser, int index) {
@@ -360,7 +298,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
     /**
      * Searches a window between windows owned by this window.
      *
-     * @param chooser a component chooser specifying searching criteria.
      * @return a subwindow
      */
     public Window findSubWindow(ComponentChooser chooser) {
@@ -370,8 +307,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
     /**
      * Waits an index'th window between windows owned by this window.
      *
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
      * @return a subwindow
      */
     public Window waitSubWindow(ComponentChooser chooser, int index) {
@@ -390,16 +325,12 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
     /**
      * Waits a window between windows owned by this window.
      *
-     * @param chooser a component chooser specifying searching criteria.
      * @return a subwindow
      */
     public Window waitSubWindow(ComponentChooser chooser) {
         return waitSubWindow(chooser, 0);
     }
 
-    /**
-     * Waits the window to be closed.
-     */
     public void waitClosed() {
         getOutput().printLine("Wait window to be closed \n    : " + getSource().toString());
         getOutput().printGolden("Wait window to be closed");
@@ -423,9 +354,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code Window.addWindowListener(WindowListener)} through queue
-     */
     public void addWindowListener(final WindowListener windowListener) {
         runMapping(new MapVoidAction("addWindowListener") {
             @Override
@@ -435,9 +363,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
         });
     }
 
-    /**
-     * Maps {@code Window.applyResourceBundle(String)} through queue
-     */
     @Deprecated
     public void applyResourceBundle(final String string) {
         runMapping(new MapVoidAction("applyResourceBundle") {
@@ -448,9 +373,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
         });
     }
 
-    /**
-     * Maps {@code Window.applyResourceBundle(ResourceBundle)} through queue
-     */
     @Deprecated
     public void applyResourceBundle(final ResourceBundle resourceBundle) {
         runMapping(new MapVoidAction("applyResourceBundle") {
@@ -461,9 +383,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
         });
     }
 
-    /**
-     * Maps {@code Window.dispose()} through queue
-     */
     public void dispose() {
         runMapping(new MapVoidAction("dispose") {
             @Override
@@ -473,9 +392,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
         });
     }
 
-    /**
-     * Maps {@code Window.getFocusOwner()} through queue
-     */
     public Component getFocusOwner() {
         return (runMapping(new MapAction<Component>("getFocusOwner") {
             @Override
@@ -485,9 +401,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
         }));
     }
 
-    /**
-     * Maps {@code Window.getOwnedWindows()} through queue
-     */
     public Window[] getOwnedWindows() {
         return ((Window[]) runMapping(new MapAction<Object>("getOwnedWindows") {
             @Override
@@ -497,9 +410,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
         }));
     }
 
-    /**
-     * Maps {@code Window.getOwner()} through queue
-     */
     public Window getOwner() {
         return (runMapping(new MapAction<Window>("getOwner") {
             @Override
@@ -509,9 +419,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
         }));
     }
 
-    /**
-     * Maps {@code Window.getWarningString()} through queue
-     */
     public String getWarningString() {
         return (runMapping(new MapAction<String>("getWarningString") {
             @Override
@@ -521,9 +428,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
         }));
     }
 
-    /**
-     * Maps {@code Window.pack()} through queue
-     */
     public void pack() {
         runMapping(new MapVoidAction("pack") {
             @Override
@@ -533,9 +437,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
         });
     }
 
-    /**
-     * Maps {@code Window.removeWindowListener(WindowListener)} through queue
-     */
     public void removeWindowListener(final WindowListener windowListener) {
         runMapping(new MapVoidAction("removeWindowListener") {
             @Override
@@ -545,9 +446,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
         });
     }
 
-    /**
-     * Maps {@code Window.toBack()} through queue
-     */
     public void toBack() {
         runMapping(new MapVoidAction("toBack") {
             @Override
@@ -557,9 +455,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
         });
     }
 
-    /**
-     * Maps {@code Window.toFront()} through queue
-     */
     public void toFront() {
         runMapping(new MapVoidAction("toFront") {
             @Override
@@ -647,10 +542,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
      * A method to be used from subclasses. Uses timeouts and output passed as
      * parameters during the waiting.
      *
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
-     * @param timeouts timeouts to be used during the waiting.
-     * @param output an output to be used during the waiting.
      * @return Component instance or null if component was not found.
      */
     protected static Window waitWindow(ComponentChooser chooser, int index, Timeouts timeouts, TestOut output) {
@@ -669,9 +560,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
      * A method to be used from subclasses. Uses {@code owner}'s timeouts
      * and output during the waiting.
      *
-     * @param owner a window - dialog owner.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return Component instance or null if component was not found.
      */
     protected static Window waitWindow(WindowOperator owner, ComponentChooser chooser, int index) {
@@ -682,11 +570,6 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
      * A method to be used from subclasses. Uses timeouts and output passed as
      * parameters during the waiting.
      *
-     * @param owner a window - dialog owner.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
-     * @param timeouts timeouts to be used during the waiting.
-     * @param output an output to be used during the waiting.
      * @return Component instance or null if component was not found.
      */
     protected static Window waitWindow(

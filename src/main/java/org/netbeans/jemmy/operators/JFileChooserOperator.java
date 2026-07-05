@@ -61,12 +61,8 @@ import org.netbeans.jemmy.Waiter;
 import org.netbeans.jemmy.util.LookAndFeel;
 
 /**
- *
  * Class provides methods to cover main JFileChooser component functionality.
  * Supports choosers using either JList or JTable as the component showing files.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
- *
  */
 public class JFileChooserOperator extends JComponentOperator implements Timeoutable, Outputable {
 
@@ -76,11 +72,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
     private TestOut output;
     private ComponentSearcher innerSearcher;
 
-    /**
-     * Constructor.
-     *
-     * @param comp a component
-     */
     public JFileChooserOperator(JFileChooser comp) {
         super(comp);
         innerSearcher = new ComponentSearcher(comp);
@@ -89,10 +80,8 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
     }
 
     /**
-     * Constructor. Waits component first. Constructor can be used in
+     * Waits component first. Constructor can be used in
      * complicated cases when output or timeouts should differ from default.
-     *
-     * @param env an operator to get environment from.
      */
     public JFileChooserOperator(Operator env) {
         this((JFileChooser) waitComponent(
@@ -106,7 +95,7 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
     }
 
     /**
-     * Constructor. Waits component first.
+     * Waits component first.
      */
     public JFileChooserOperator() {
         this(getEnvironmentOperator());
@@ -133,7 +122,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
     /**
      * Searches JFileChooser in container.
      *
-     * @param cont a container
      * @return a component instance
      */
     public static JFileChooser findJFileChooser(Container cont) {
@@ -143,7 +131,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
     /**
      * Searches JFileChooser in container.
      *
-     * @param cont a container
      * @return a component instance
      */
     public static JFileChooser waitJFileChooser(Container cont) {
@@ -383,8 +370,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
 
     /**
      * Types file name into text field and pushes approve button.
-     *
-     * @param fileName a file to choose.
      */
     public void chooseFile(String fileName) {
         getQueueTool().waitEmpty();
@@ -444,9 +429,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
 
     /**
      * Clicks on file in the list.
-     *
-     * @param index Ordinal file index.
-     * @param clickCount click count
      */
     public void clickOnFile(int index, int clickCount) {
         getQueueTool().waitEmpty();
@@ -473,8 +455,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
      * Clicks on file in the list.
      *
      * @param file File name (foo.c). Do not use full path (/tmp/foo.c) here.
-     * @param comparator a comparator defining string comparision criteria
-     * @param clickCount click count
      */
     public void clickOnFile(String file, StringComparator comparator, int clickCount) {
         output.printTrace("Click " + Integer.toString(clickCount)
@@ -490,7 +470,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
      * @param file File name (foo.c). Do not use full path (/tmp/foo.c) here.
      * @param ce Compare exactly. If true, text can be a substring of caption.
      * @param cc Compare case sensitively. If true, both text and caption are
-     * @param clickCount click count
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @deprecated Use clickOnFile(String, int) or clickOnFile(String,
      * StringComparator, int)
@@ -504,7 +483,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
      * Clicks on file in the list.
      *
      * @param file File name (foo.c). Do not use full path (/tmp/foo.c) here.
-     * @param clickCount click count
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public void clickOnFile(String file, int clickCount) {
@@ -515,7 +493,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
      * Clicks on file in the list.
      *
      * @param file File name (foo.c). Do not use full path (/tmp/foo.c) here.
-     * @param comparator a comparator defining string comparision criteria
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public void clickOnFile(String file, StringComparator comparator) {
@@ -552,8 +529,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
     /**
      * Enters into subdirectory.
      *
-     * @param dir A directory to enter into.
-     * @param comparator a comparator defining string comparision criteria
      * @return new current directory
      */
     public File enterSubDir(String dir, StringComparator comparator) {
@@ -597,7 +572,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
      * Selects a file curently in the list.
      *
      * @param file File name (foo.c). Do not use full path (/tmp/foo.c) here.
-     * @param comparator a comparator defining string comparision criteria
      * @see #clickOnFile
      */
     public void selectFile(String file, StringComparator comparator) {
@@ -646,7 +620,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
      * Selects directory from the combo box above.
      *
      * @param dir Directory name (tmp1). Do not use full path (/tmp/tmp1) here.
-     * @param comparator a comparator defining string comparision criteria
      */
     public void selectPathDirectory(String dir, StringComparator comparator) {
         getQueueTool().waitEmpty();
@@ -685,9 +658,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
 
     /**
      * Selects file type from the combo box below.
-     *
-     * @param filter a pattern for choosing a file type.
-     * @param comparator a comparator defining string comparision criteria
      */
     public void selectFileType(String filter, StringComparator comparator) {
         getQueueTool().waitEmpty();
@@ -704,7 +674,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
     /**
      * Selects file type from the combo box below.
      *
-     * @param filter a pattern for choosing a file type.
      * @param ce Compare exactly. If true, text can be a substring of caption.
      * @param cc Compare case sensitively. If true, both text and caption are
      * @deprecated Use selectFileType(String) or selectFileType(String,
@@ -717,8 +686,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
 
     /**
      * Selects file type from the combo box below.
-     *
-     * @param filter a pattern for choosing a file type.
      */
     public void selectFileType(String filter) {
         selectFileType(filter, getComparator());
@@ -728,7 +695,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
      * Checks if file is currently displayed in the list.
      *
      * @param file File name (foo.c). Do not use full path (/tmp/foo.c) here.
-     * @param comparator a comparator defining string comparision criteria
      * @return true if file is displayed.
      */
     public boolean checkFileDisplayed(String file, StringComparator comparator) {
@@ -801,8 +767,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
 
     /**
      * Waits for the file list to have required number of items.
-     *
-     * @param count Number of files to wait.
      */
     public void waitFileCount(final int count) {
         waitState(new ComponentChooser() {
@@ -825,8 +789,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
 
     /**
      * Waits for a file to be displayed in the file list.
-     *
-     * @param fileName a file to wait.
      */
     public void waitFileDisplayed(final String fileName) {
         waitState(new ComponentChooser() {
@@ -850,9 +812,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code JFileChooser.accept(File)} through queue
-     */
     public boolean accept(final File file) {
         return (runMapping(new MapBooleanAction("accept") {
             @Override
@@ -862,9 +821,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.addActionListener(ActionListener)} through queue
-     */
     public void addActionListener(final ActionListener actionListener) {
         runMapping(new MapVoidAction("addActionListener") {
             @Override
@@ -874,9 +830,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JFileChooser.addChoosableFileFilter(FileFilter)} through queue
-     */
     public void addChoosableFileFilter(final FileFilter fileFilter) {
         runMapping(new MapVoidAction("addChoosableFileFilter") {
             @Override
@@ -886,9 +839,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JFileChooser.approveSelection()} through queue
-     */
     public void approveSelection() {
         runMapping(new MapVoidAction("approveSelection") {
             @Override
@@ -898,9 +848,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JFileChooser.cancelSelection()} through queue
-     */
     public void cancelSelection() {
         runMapping(new MapVoidAction("cancelSelection") {
             @Override
@@ -910,9 +857,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JFileChooser.changeToParentDirectory()} through queue
-     */
     public void changeToParentDirectory() {
         runMapping(new MapVoidAction("changeToParentDirectory") {
             @Override
@@ -922,9 +866,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JFileChooser.ensureFileIsVisible(File)} through queue
-     */
     public void ensureFileIsVisible(final File file) {
         runMapping(new MapVoidAction("ensureFileIsVisible") {
             @Override
@@ -934,9 +875,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JFileChooser.getAcceptAllFileFilter()} through queue
-     */
     public FileFilter getAcceptAllFileFilter() {
         return (runMapping(new MapAction<FileFilter>("getAcceptAllFileFilter") {
             @Override
@@ -946,9 +884,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.getAccessory()} through queue
-     */
     public JComponent getAccessory() {
         return (runMapping(new MapAction<JComponent>("getAccessory") {
             @Override
@@ -958,9 +893,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.getApproveButtonMnemonic()} through queue
-     */
     public int getApproveButtonMnemonic() {
         return (runMapping(new MapIntegerAction("getApproveButtonMnemonic") {
             @Override
@@ -970,9 +902,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.getApproveButtonText()} through queue
-     */
     public String getApproveButtonText() {
         return (runMapping(new MapAction<String>("getApproveButtonText") {
             @Override
@@ -982,9 +911,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.getApproveButtonToolTipText()} through queue
-     */
     public String getApproveButtonToolTipText() {
         return (runMapping(new MapAction<String>("getApproveButtonToolTipText") {
             @Override
@@ -994,9 +920,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.getChoosableFileFilters()} through queue
-     */
     public FileFilter[] getChoosableFileFilters() {
         return ((FileFilter[]) runMapping(new MapAction<Object>("getChoosableFileFilters") {
             @Override
@@ -1006,9 +929,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.getCurrentDirectory()} through queue
-     */
     public File getCurrentDirectory() {
         return (runMapping(new MapAction<File>("getCurrentDirectory") {
             @Override
@@ -1018,9 +938,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.getDescription(File)} through queue
-     */
     public String getDescription(final File file) {
         return (runMapping(new MapAction<String>("getDescription") {
             @Override
@@ -1030,9 +947,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.getDialogTitle()} through queue
-     */
     public String getDialogTitle() {
         return (runMapping(new MapAction<String>("getDialogTitle") {
             @Override
@@ -1042,9 +956,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.getDialogType()} through queue
-     */
     public int getDialogType() {
         return (runMapping(new MapIntegerAction("getDialogType") {
             @Override
@@ -1054,9 +965,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.getFileFilter()} through queue
-     */
     public FileFilter getFileFilter() {
         return (runMapping(new MapAction<FileFilter>("getFileFilter") {
             @Override
@@ -1066,9 +974,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.getFileSelectionMode()} through queue
-     */
     public int getFileSelectionMode() {
         return (runMapping(new MapIntegerAction("getFileSelectionMode") {
             @Override
@@ -1078,9 +983,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.getFileSystemView()} through queue
-     */
     public FileSystemView getFileSystemView() {
         return (runMapping(new MapAction<FileSystemView>("getFileSystemView") {
             @Override
@@ -1090,9 +992,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.getFileView()} through queue
-     */
     public FileView getFileView() {
         return (runMapping(new MapAction<FileView>("getFileView") {
             @Override
@@ -1102,9 +1001,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.getIcon(File)} through queue
-     */
     public Icon getIcon(final File file) {
         return (runMapping(new MapAction<Icon>("getIcon") {
             @Override
@@ -1114,9 +1010,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.getName(File)} through queue
-     */
     public String getName(final File file) {
         return (runMapping(new MapAction<String>("getName") {
             @Override
@@ -1126,9 +1019,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.getSelectedFile()} through queue
-     */
     public File getSelectedFile() {
         return (runMapping(new MapAction<File>("getSelectedFile") {
             @Override
@@ -1138,9 +1028,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.getSelectedFiles()} through queue
-     */
     public File[] getSelectedFiles() {
         return ((File[]) runMapping(new MapAction<Object>("getSelectedFiles") {
             @Override
@@ -1150,9 +1037,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.getTypeDescription(File)} through queue
-     */
     public String getTypeDescription(final File file) {
         return (runMapping(new MapAction<String>("getTypeDescription") {
             @Override
@@ -1162,9 +1046,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.getUI()} through queue
-     */
     public FileChooserUI getUI() {
         return (runMapping(new MapAction<FileChooserUI>("getUI") {
             @Override
@@ -1174,9 +1055,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.isDirectorySelectionEnabled()} through queue
-     */
     public boolean isDirectorySelectionEnabled() {
         return (runMapping(new MapBooleanAction("isDirectorySelectionEnabled") {
             @Override
@@ -1186,9 +1064,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.isFileHidingEnabled()} through queue
-     */
     public boolean isFileHidingEnabled() {
         return (runMapping(new MapBooleanAction("isFileHidingEnabled") {
             @Override
@@ -1198,9 +1073,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.isFileSelectionEnabled()} through queue
-     */
     public boolean isFileSelectionEnabled() {
         return (runMapping(new MapBooleanAction("isFileSelectionEnabled") {
             @Override
@@ -1210,9 +1082,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.isMultiSelectionEnabled()} through queue
-     */
     public boolean isMultiSelectionEnabled() {
         return (runMapping(new MapBooleanAction("isMultiSelectionEnabled") {
             @Override
@@ -1222,9 +1091,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.isTraversable(File)} through queue
-     */
     public boolean isTraversable(final File file) {
         return (runMapping(new MapBooleanAction("isTraversable") {
             @Override
@@ -1234,10 +1100,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.removeActionListener(ActionListener)}
-     * through queue
-     */
     public void removeActionListener(final ActionListener actionListener) {
         runMapping(new MapVoidAction("removeActionListener") {
             @Override
@@ -1247,10 +1109,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JFileChooser.removeChoosableFileFilter(FileFilter)}
-     * through queue
-     */
     public boolean removeChoosableFileFilter(final FileFilter fileFilter) {
         return (runMapping(new MapBooleanAction("removeChoosableFileFilter") {
             @Override
@@ -1260,9 +1118,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.rescanCurrentDirectory()} through queue
-     */
     public void rescanCurrentDirectory() {
         runMapping(new MapVoidAction("rescanCurrentDirectory") {
             @Override
@@ -1272,9 +1127,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JFileChooser.resetChoosableFileFilters()} through queue
-     */
     public void resetChoosableFileFilters() {
         runMapping(new MapVoidAction("resetChoosableFileFilters") {
             @Override
@@ -1284,9 +1136,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JFileChooser.setAccessory(JComponent)} through queue
-     */
     public void setAccessory(final JComponent jComponent) {
         runMapping(new MapVoidAction("setAccessory") {
             @Override
@@ -1296,9 +1145,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JFileChooser.setApproveButtonMnemonic(char)} through queue
-     */
     public void setApproveButtonMnemonic(final char c) {
         runMapping(new MapVoidAction("setApproveButtonMnemonic") {
             @Override
@@ -1308,9 +1154,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JFileChooser.setApproveButtonMnemonic(int)} through queue
-     */
     public void setApproveButtonMnemonic(final int i) {
         runMapping(new MapVoidAction("setApproveButtonMnemonic") {
             @Override
@@ -1320,9 +1163,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JFileChooser.setApproveButtonText(String)} through queue
-     */
     public void setApproveButtonText(final String string) {
         runMapping(new MapVoidAction("setApproveButtonText") {
             @Override
@@ -1332,10 +1172,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JFileChooser.setApproveButtonToolTipText(String)}
-     * through queue
-     */
     public void setApproveButtonToolTipText(final String string) {
         runMapping(new MapVoidAction("setApproveButtonToolTipText") {
             @Override
@@ -1345,9 +1181,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JFileChooser.setCurrentDirectory(File)} through queue
-     */
     public void setCurrentDirectory(final File file) {
         runMapping(new MapVoidAction("setCurrentDirectory") {
             @Override
@@ -1357,9 +1190,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JFileChooser.setDialogTitle(String)} through queue
-     */
     public void setDialogTitle(final String string) {
         runMapping(new MapVoidAction("setDialogTitle") {
             @Override
@@ -1369,9 +1199,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JFileChooser.setDialogType(int)} through queue
-     */
     public void setDialogType(final int i) {
         runMapping(new MapVoidAction("setDialogType") {
             @Override
@@ -1381,9 +1208,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JFileChooser.setFileFilter(FileFilter)} through queue
-     */
     public void setFileFilter(final FileFilter fileFilter) {
         runMapping(new MapVoidAction("setFileFilter") {
             @Override
@@ -1393,9 +1217,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JFileChooser.setFileHidingEnabled(boolean)} through queue
-     */
     public void setFileHidingEnabled(final boolean b) {
         runMapping(new MapVoidAction("setFileHidingEnabled") {
             @Override
@@ -1405,9 +1226,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JFileChooser.setFileSelectionMode(int)} through queue
-     */
     public void setFileSelectionMode(final int i) {
         runMapping(new MapVoidAction("setFileSelectionMode") {
             @Override
@@ -1417,9 +1235,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JFileChooser.setFileSystemView(FileSystemView)} through queue
-     */
     public void setFileSystemView(final FileSystemView fileSystemView) {
         runMapping(new MapVoidAction("setFileSystemView") {
             @Override
@@ -1429,9 +1244,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JFileChooser.setFileView(FileView)} through queue
-     */
     public void setFileView(final FileView fileView) {
         runMapping(new MapVoidAction("setFileView") {
             @Override
@@ -1441,9 +1253,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JFileChooser.setMultiSelectionEnabled(boolean)} through queue
-     */
     public void setMultiSelectionEnabled(final boolean b) {
         runMapping(new MapVoidAction("setMultiSelectionEnabled") {
             @Override
@@ -1453,9 +1262,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JFileChooser.setSelectedFile(File)} through queue
-     */
     public void setSelectedFile(final File file) {
         runMapping(new MapVoidAction("setSelectedFile") {
             @Override
@@ -1465,9 +1271,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JFileChooser.setSelectedFiles(File[])} through queue
-     */
     public void setSelectedFiles(final File[] file) {
         runMapping(new MapVoidAction("setSelectedFiles") {
             @Override
@@ -1477,9 +1280,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JFileChooser.showDialog(Component, String)} through queue
-     */
     public int showDialog(final Component component, final String string) {
         return (runMapping(new MapIntegerAction("showDialog") {
             @Override
@@ -1489,9 +1289,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.showOpenDialog(Component)} through queue
-     */
     public int showOpenDialog(final Component component) {
         return (runMapping(new MapIntegerAction("showOpenDialog") {
             @Override
@@ -1501,9 +1298,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JFileChooser.showSaveDialog(Component)} through queue
-     */
     public int showSaveDialog(final Component component) {
         return (runMapping(new MapIntegerAction("showSaveDialog") {
             @Override
@@ -1695,8 +1489,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
 
         /**
          * Constructs JFileChooserJDialogFinder.
-         *
-         * @param output an output to put searching message into.
          */
         public JFileChooserJDialogFinder(TestOut output) {
             this.output = output;
@@ -1732,8 +1524,6 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
 
         /**
          * Constructs JFileChooserFinder.
-         *
-         * @param sf other searching criteria.
          */
         public JFileChooserFinder(ComponentChooser sf) {
             super(JFileChooser.class, sf);

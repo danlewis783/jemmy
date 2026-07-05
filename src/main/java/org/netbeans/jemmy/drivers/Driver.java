@@ -30,7 +30,6 @@ package org.netbeans.jemmy.drivers;
  *
  * @see LightDriver
  *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public interface Driver {
 

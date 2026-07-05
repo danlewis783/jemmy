@@ -42,16 +42,11 @@ import org.netbeans.jemmy.operators.Operator;
 
 /**
  * TreeDriver for javax.swing.JTree component type. Uses mouse operations.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class JTreeMouseDriver extends LightSupportiveDriver implements TreeDriver {
 
     QueueTool queueTool;
 
-    /**
-     * Constructs a JTreeMouseDriver.
-     */
     public JTreeMouseDriver() {
         super(new String[] {"org.netbeans.jemmy.operators.JTreeOperator"});
         queueTool = new QueueTool();

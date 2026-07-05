@@ -28,8 +28,6 @@ import java.awt.image.BufferedImage;
 
 /**
  * Compares two images roughly (i.e. not all of the pixel colors should match).
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class RoughImageComparator implements ImageComparator {
 
@@ -37,8 +35,6 @@ public class RoughImageComparator implements ImageComparator {
 
     /**
      * Creates a comparator with {@code roughness} allowed roughness.
-     *
-     * @param roughness Allowed comparision roughness.
      */
     public RoughImageComparator(double roughness) {
         this.roughness = roughness;
@@ -47,8 +43,6 @@ public class RoughImageComparator implements ImageComparator {
     /**
      * Compares two images with allowed roughness.
      *
-     * @param image1 an image to compare.
-     * @param image2 an image to compare.
      * @return true if images have the same sizes and number of unmatching
      * pixels less or equal to      <code>image1.getWidth() * image1.getHeight() * roughness<code>
      */

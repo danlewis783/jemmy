@@ -51,7 +51,6 @@ import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.JemmyInputException;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
-import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.Timeoutable;
 import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.drivers.DriverManager;
@@ -59,28 +58,23 @@ import org.netbeans.jemmy.drivers.TextDriver;
 import org.netbeans.jemmy.util.EmptyVisualizer;
 
 /**
- *
- * Class provides basic functions to operate with JTextComponent (selection,
- * typing, deleting)
- *
- * <BR><BR>Timeouts used: <BR>
- * JTextComponentOperator.PushKeyTimeout - time between key pressing and
- * releasing during text typing <BR>
- * JTextComponentOperator.BetweenKeysTimeout - time to sleep between two chars
- * typing <BR>
- * JTextComponentOperator.ChangeCaretPositionTimeout - maximum time to chenge
- * caret position <BR>
- * JTextComponentOperator.TypeTextTimeout - maximum time to type text <BR>
- * ComponentOperator.WaitComponentTimeout - time to wait component displayed
- * <BR>
- * ComponentOperator.WaitFocusTimeout - time to wait component focus <BR>
- * ComponentOperator.WaitStateTimeout - time to wait for text <BR>
- * JScrollBarOperator.OneScrollClickTimeout - time for one scroll click <BR>
- * JScrollBarOperator.WholeScrollTimeout - time for the whole scrolling <BR>.
+ * Class provides basic functions to operate with JTextComponent (selection, typing, deleting)
+ * <p>
+ * Timeouts used:
+ * <ul>
+ * <li>JTextComponentOperator.PushKeyTimeout - time between key pressing and releasing during text typing</li>
+ * <li>JTextComponentOperator.BetweenKeysTimeout - time to sleep between two chars typing</li>
+ * <li>JTextComponentOperator.ChangeCaretPositionTimeout - maximum time to chenge caret position</li>
+ * <li>JTextComponentOperator.TypeTextTimeout - maximum time to type text</li>
+ * <li>ComponentOperator.WaitComponentTimeout - time to wait component displayed</li>
+ * <li>ComponentOperator.WaitFocusTimeout - time to wait component focus</li>
+ * <li>ComponentOperator.WaitStateTimeout - time to wait for text</li>
+ * <li>JScrollBarOperator.OneScrollClickTimeout - time for one scroll click</li>
+ * <li>JScrollBarOperator.WholeScrollTimeout - time for the whole scrolling</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
  *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class JTextComponentOperator extends JComponentOperator implements Timeoutable, Outputable {
 
@@ -124,47 +118,25 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
 
     private TextDriver driver;
 
-    /**
-     * Constructor.
-     *
-     * @param b Component to operate with.
-     */
     public JTextComponentOperator(JTextComponent b) {
         super(b);
         driver = DriverManager.getTextDriver(getClass());
     }
 
-    /**
-     * Constructs a JTextComponentOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public JTextComponentOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((JTextComponent) cont.waitSubComponent(new JTextComponentFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a JTextComponentOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public JTextComponentOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Button text.
-     * @param index Ordinal component index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public JTextComponentOperator(ContainerOperator<?> cont, String text, int index) {
         this((JTextComponent) waitComponent(cont, new JTextComponentByTextFinder(text, cont.getComparator()), index));
@@ -172,25 +144,18 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Button text.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public JTextComponentOperator(ContainerOperator<?> cont, String text) {
         this(cont, text, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     * @param index Ordinal component index.
-     * @throws TimeoutExpiredException
      */
     public JTextComponentOperator(ContainerOperator<?> cont, int index) {
         this((JTextComponent) waitComponent(cont, new JTextComponentFinder(), index));
@@ -198,11 +163,8 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     * @throws TimeoutExpiredException
      */
     public JTextComponentOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -218,9 +180,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
     /**
      * Searches JTextComponent in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index Ordinal component index.
      * @return JTextComponent instance or null if component was not found.
      */
     public static JTextComponent findJTextComponent(Container cont, ComponentChooser chooser, int index) {
@@ -230,8 +189,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
     /**
      * Searches JTextComponent in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser a component chooser specifying searching criteria.
      * @return JTextComponent instance or null if component was not found.
      */
     public static JTextComponent findJTextComponent(Container cont, ComponentChooser chooser) {
@@ -241,11 +198,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
     /**
      * Searches JTextComponent by text.
      *
-     * @param cont Container to search component in.
-     * @param text Component text.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return JTextComponent instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -257,10 +209,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
     /**
      * Searches JTextComponent by text.
      *
-     * @param cont Container to search component in.
-     * @param text Component text.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return JTextComponent instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -271,11 +219,7 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
     /**
      * Waits JTextComponent in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index Ordinal component index.
      * @return JTextComponent instance.
-     * @throws TimeoutExpiredException
      */
     public static JTextComponent waitJTextComponent(
             final Container cont, final ComponentChooser chooser, final int index) {
@@ -285,10 +229,7 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
     /**
      * Waits JTextComponent in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser a component chooser specifying searching criteria.
      * @return JTextComponent instance.
-     * @throws TimeoutExpiredException
      */
     public static JTextComponent waitJTextComponent(Container cont, ComponentChooser chooser) {
         return waitJTextComponent(cont, chooser, 0);
@@ -297,14 +238,8 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
     /**
      * Waits JTextComponent by text.
      *
-     * @param cont Container to search component in.
-     * @param text Component text.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return JTextComponent instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static JTextComponent waitJTextComponent(Container cont, String text, boolean ce, boolean ccs, int index) {
         return waitJTextComponent(
@@ -314,13 +249,8 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
     /**
      * Waits JTextComponent by text.
      *
-     * @param cont Container to search component in.
-     * @param text Component text.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return JTextComponent instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static JTextComponent waitJTextComponent(Container cont, String text, boolean ce, boolean ccs) {
         return waitJTextComponent(cont, text, ce, ccs, 0);
@@ -360,8 +290,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
     /**
      * Finds start text position.
      *
-     * @param text Text to be searched.
-     * @param tChooser Additional search criteria.
      * @param index Index of text instance (first instance has index 0)
      * @return Caret position correspondent to text start.
      * @see JTextComponentOperator.TextChooser
@@ -391,8 +319,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
     /**
      * Finds start text position.
      *
-     * @param text Text to be searched.
-     * @param tChooser Additional search criteria.
      * @return Caret position correspondent to text start.
      */
     public int getPositionByText(String text, TextChooser tChooser) {
@@ -402,7 +328,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
     /**
      * Finds start text position.
      *
-     * @param text Text to be searched.
      * @param index Index of text instance (first instance has index 0)
      * @return Caret position correspondent to text start.
      */
@@ -432,7 +357,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
     /**
      * Finds start text position.
      *
-     * @param text Text to be searched.
      * @return Caret position correspondent to text start.
      */
     public int getPositionByText(String text) {
@@ -441,9 +365,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
 
     /**
      * Requests a focus, clears text, types new one and pushes Enter.
-     *
-     * @param text New text value. Shouldn't include final '\n'.
-     * @throws TimeoutExpiredException
      */
     public void enterText(final String text) {
         makeComponentVisible();
@@ -471,9 +392,7 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
     /**
      * Changes caret position.
      *
-     * @param position Position to move caret to.
      * @see #changeCaretPosition(String, int, boolean)
-     * @throws TimeoutExpiredException
      */
     public void changeCaretPosition(final int position) {
         output.printLine("Change caret position to " + Integer.toString(position));
@@ -506,12 +425,9 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
     /**
      * Puts caret before or after text.
      *
-     * @param text Text to be searched.
      * @param index Index of text instance (first instance has index 0)
-     * @param before If true put caret before text, otherwise after.
      * @see #changeCaretPosition(int)
      * @see #getPositionByText(String, int)
-     * @throws TimeoutExpiredException
      * @throws NoSuchTextException
      */
     public void changeCaretPosition(String text, int index, boolean before) {
@@ -531,11 +447,8 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
     /**
      * Puts caret before or after text.
      *
-     * @param text Text to be searched.
-     * @param before If true put caret before text, otherwise after.
      * @see #changeCaretPosition(int)
      * @see #getPositionByText(String, int)
-     * @throws TimeoutExpiredException
      * @throws NoSuchTextException
      */
     public void changeCaretPosition(String text, boolean before) {
@@ -547,10 +460,7 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
      * checks that right text has been typed and caret has been moved to right
      * position.
      *
-     * @param text Text to be typed.
-     * @param caretPosition Position to start type text
      * @see #typeText(String)
-     * @throws TimeoutExpiredException
      * @throws NoSuchTextException
      */
     public void typeText(final String text, final int caretPosition) {
@@ -587,9 +497,7 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
     /**
      * Types text starting from the current position.
      *
-     * @param text Text to be typed.
      * @see #typeText(String, int)
-     * @throws TimeoutExpiredException
      */
     public void typeText(String text) {
         typeText(text, getCaretPosition());
@@ -598,11 +506,8 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
     /**
      * Selects a part of text.
      *
-     * @param startPosition Start caret position
-     * @param finalPosition Final caret position
      * @see #selectText(String, int)
      * @see #selectText(String)
-     * @throws TimeoutExpiredException
      */
     public void selectText(final int startPosition, final int finalPosition) {
         output.printLine("Select text from "
@@ -635,12 +540,10 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
     /**
      * Selects a part of text.
      *
-     * @param text Text to be selected
      * @param index Index of text instance (first instance has index 0)
      * @see #selectText(int, int)
      * @see #selectText(String)
      * @see #getPositionByText(String, int)
-     * @throws TimeoutExpiredException
      * @throws NoSuchTextException
      */
     public void selectText(String text, int index) {
@@ -659,21 +562,14 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
     /**
      * Selects a part of text.
      *
-     * @param text Text to be selected
      * @see #selectText(String, int)
      * @see #selectText(int, int)
-     * @throws TimeoutExpiredException
      * @throws NoSuchTextException
      */
     public void selectText(String text) {
         selectText(text, 0);
     }
 
-    /**
-     * Clears text.
-     *
-     * @throws TimeoutExpiredException
-     */
     public void clearText() {
         output.printLine("Clearing text in text component\n    : " + toStringSource());
         output.printGolden("Clearing text in text component");
@@ -701,9 +597,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
 
     /**
      * Scrolls to a text poistion.
-     *
-     * @param position a position to scroll.
-     * @throws TimeoutExpiredException
      */
     public void scrollToPosition(int position) {
         output.printTrace(
@@ -743,9 +636,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
 
     /**
      * Wait for text to be displayed starting from certain position.
-     *
-     * @param text text to wait.
-     * @param position starting text position.
      */
     public void waitText(final String text, final int position) {
         getOutput()
@@ -783,8 +673,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
 
     /**
      * Waits for certain text.
-     *
-     * @param text Text to be compared by getComparator() comparator.
      */
     public void waitText(String text) {
         getOutput().printLine("Wait \"" + text + "\" text in component \n    : " + toStringSource());
@@ -834,9 +722,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code JTextComponent.addCaretListener(CaretListener)} through queue
-     */
     public void addCaretListener(final CaretListener caretListener) {
         runMapping(new MapVoidAction("addCaretListener") {
             @Override
@@ -846,9 +731,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code JTextComponent.copy()} through queue
-     */
     public void copy() {
         runMapping(new MapVoidAction("copy") {
             @Override
@@ -858,9 +740,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code JTextComponent.cut()} through queue
-     */
     public void cut() {
         runMapping(new MapVoidAction("cut") {
             @Override
@@ -870,9 +749,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code JTextComponent.getActions()} through queue
-     */
     public javax.swing.Action[] getActions() {
         return ((javax.swing.Action[]) runMapping(new MapAction<Object>("getActions") {
             @Override
@@ -882,9 +758,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code JTextComponent.getCaret()} through queue
-     */
     public Caret getCaret() {
         return (runMapping(new MapAction<Caret>("getCaret") {
             @Override
@@ -894,9 +767,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code JTextComponent.getCaretColor()} through queue
-     */
     public Color getCaretColor() {
         return (runMapping(new MapAction<Color>("getCaretColor") {
             @Override
@@ -906,9 +776,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code JTextComponent.getCaretPosition()} through queue
-     */
     public int getCaretPosition() {
         return (runMapping(new MapIntegerAction("getCaretPosition") {
             @Override
@@ -918,9 +785,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code JTextComponent.getDisabledTextColor()} through queue
-     */
     public Color getDisabledTextColor() {
         return (runMapping(new MapAction<Color>("getDisabledTextColor") {
             @Override
@@ -930,9 +794,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code JTextComponent.getDocument()} through queue
-     */
     public Document getDocument() {
         return (runMapping(new MapAction<Document>("getDocument") {
             @Override
@@ -942,9 +803,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code JTextComponent.getFocusAccelerator()} through queue
-     */
     public char getFocusAccelerator() {
         return (runMapping(new MapCharacterAction("getFocusAccelerator") {
             @Override
@@ -954,9 +812,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code JTextComponent.getHighlighter()} through queue
-     */
     public Highlighter getHighlighter() {
         return (runMapping(new MapAction<Highlighter>("getHighlighter") {
             @Override
@@ -966,9 +821,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code JTextComponent.getKeymap()} through queue
-     */
     public Keymap getKeymap() {
         return (runMapping(new MapAction<Keymap>("getKeymap") {
             @Override
@@ -978,9 +830,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code JTextComponent.getMargin()} through queue
-     */
     public Insets getMargin() {
         return (runMapping(new MapAction<Insets>("getMargin") {
             @Override
@@ -990,10 +839,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code JTextComponent.getPreferredScrollableViewportSize()}
-     * through queue
-     */
     public Dimension getPreferredScrollableViewportSize() {
         return (runMapping(new MapAction<Dimension>("getPreferredScrollableViewportSize") {
             @Override
@@ -1003,11 +848,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps
-     * {@code JTextComponent.getScrollableBlockIncrement(Rectangle, int, int)}
-     * through queue
-     */
     public int getScrollableBlockIncrement(final Rectangle rectangle, final int i, final int i1) {
         return (runMapping(new MapIntegerAction("getScrollableBlockIncrement") {
             @Override
@@ -1017,10 +857,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code JTextComponent.getScrollableTracksViewportHeight()}
-     * through queue
-     */
     public boolean getScrollableTracksViewportHeight() {
         return (runMapping(new MapBooleanAction("getScrollableTracksViewportHeight") {
             @Override
@@ -1030,10 +866,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code JTextComponent.getScrollableTracksViewportWidth()}
-     * through queue
-     */
     public boolean getScrollableTracksViewportWidth() {
         return (runMapping(new MapBooleanAction("getScrollableTracksViewportWidth") {
             @Override
@@ -1043,11 +875,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps
-     * {@code JTextComponent.getScrollableUnitIncrement(Rectangle, int, int)}
-     * through queue
-     */
     public int getScrollableUnitIncrement(final Rectangle rectangle, final int i, final int i1) {
         return (runMapping(new MapIntegerAction("getScrollableUnitIncrement") {
             @Override
@@ -1057,9 +884,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code JTextComponent.getSelectedText()} through queue
-     */
     public String getSelectedText() {
         return (runMapping(new MapAction<String>("getSelectedText") {
             @Override
@@ -1069,9 +893,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code JTextComponent.getSelectedTextColor()} through queue
-     */
     public Color getSelectedTextColor() {
         return (runMapping(new MapAction<Color>("getSelectedTextColor") {
             @Override
@@ -1081,9 +902,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code JTextComponent.getSelectionColor()} through queue
-     */
     public Color getSelectionColor() {
         return (runMapping(new MapAction<Color>("getSelectionColor") {
             @Override
@@ -1093,9 +911,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code JTextComponent.getSelectionEnd()} through queue
-     */
     public int getSelectionEnd() {
         return (runMapping(new MapIntegerAction("getSelectionEnd") {
             @Override
@@ -1105,9 +920,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code JTextComponent.getSelectionStart()} through queue
-     */
     public int getSelectionStart() {
         return (runMapping(new MapIntegerAction("getSelectionStart") {
             @Override
@@ -1117,9 +929,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code JTextComponent.getText()} through queue
-     */
     public String getText() {
         return (runMapping(new MapAction<String>("getText") {
             @Override
@@ -1129,9 +938,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code JTextComponent.getText(int, int)} through queue
-     */
     public String getText(final int i, final int i1) {
         return (runMapping(new MapAction<String>("getText") {
             @Override
@@ -1141,9 +947,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code JTextComponent.getUI()} through queue
-     */
     public TextUI getUI() {
         return (runMapping(new MapAction<TextUI>("getUI") {
             @Override
@@ -1153,9 +956,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code JTextComponent.isEditable()} through queue
-     */
     public boolean isEditable() {
         return (runMapping(new MapBooleanAction("isEditable") {
             @Override
@@ -1165,9 +965,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code JTextComponent.modelToView(int)} through queue
-     */
     public Rectangle modelToView(final int i) {
         return (runMapping(new MapAction<Rectangle>("modelToView") {
             @Override
@@ -1177,9 +974,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code JTextComponent.moveCaretPosition(int)} through queue
-     */
     public void moveCaretPosition(final int i) {
         runMapping(new MapVoidAction("moveCaretPosition") {
             @Override
@@ -1189,9 +983,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code JTextComponent.paste()} through queue
-     */
     public void paste() {
         runMapping(new MapVoidAction("paste") {
             @Override
@@ -1201,9 +992,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code JTextComponent.read(Reader, Object)} through queue
-     */
     public void read(final Reader reader, final Object object) {
         runMapping(new MapVoidAction("read") {
             @Override
@@ -1213,10 +1001,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code JTextComponent.removeCaretListener(CaretListener)}
-     * through queue
-     */
     public void removeCaretListener(final CaretListener caretListener) {
         runMapping(new MapVoidAction("removeCaretListener") {
             @Override
@@ -1226,9 +1010,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code JTextComponent.replaceSelection(String)} through queue
-     */
     public void replaceSelection(final String string) {
         runMapping(new MapVoidAction("replaceSelection") {
             @Override
@@ -1238,9 +1019,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code JTextComponent.select(int, int)} through queue
-     */
     public void select(final int i, final int i1) {
         runMapping(new MapVoidAction("select") {
             @Override
@@ -1250,9 +1028,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code JTextComponent.selectAll()} through queue
-     */
     public void selectAll() {
         runMapping(new MapVoidAction("selectAll") {
             @Override
@@ -1262,9 +1037,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code JTextComponent.setCaret(Caret)} through queue
-     */
     public void setCaret(final Caret caret) {
         runMapping(new MapVoidAction("setCaret") {
             @Override
@@ -1274,9 +1046,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code JTextComponent.setCaretColor(Color)} through queue
-     */
     public void setCaretColor(final Color color) {
         runMapping(new MapVoidAction("setCaretColor") {
             @Override
@@ -1286,9 +1055,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code JTextComponent.setCaretPosition(int)} through queue
-     */
     public void setCaretPosition(final int i) {
         runMapping(new MapVoidAction("setCaretPosition") {
             @Override
@@ -1298,9 +1064,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code JTextComponent.setDisabledTextColor(Color)} through queue
-     */
     public void setDisabledTextColor(final Color color) {
         runMapping(new MapVoidAction("setDisabledTextColor") {
             @Override
@@ -1310,9 +1073,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code JTextComponent.setDocument(Document)} through queue
-     */
     public void setDocument(final Document document) {
         runMapping(new MapVoidAction("setDocument") {
             @Override
@@ -1322,9 +1082,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code JTextComponent.setEditable(boolean)} through queue
-     */
     public void setEditable(final boolean b) {
         runMapping(new MapVoidAction("setEditable") {
             @Override
@@ -1334,9 +1091,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code JTextComponent.setFocusAccelerator(char)} through queue
-     */
     public void setFocusAccelerator(final char c) {
         runMapping(new MapVoidAction("setFocusAccelerator") {
             @Override
@@ -1346,9 +1100,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code JTextComponent.setHighlighter(Highlighter)} through queue
-     */
     public void setHighlighter(final Highlighter highlighter) {
         runMapping(new MapVoidAction("setHighlighter") {
             @Override
@@ -1358,9 +1109,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code JTextComponent.setKeymap(Keymap)} through queue
-     */
     public void setKeymap(final Keymap keymap) {
         runMapping(new MapVoidAction("setKeymap") {
             @Override
@@ -1370,9 +1118,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code JTextComponent.setMargin(Insets)} through queue
-     */
     public void setMargin(final Insets insets) {
         runMapping(new MapVoidAction("setMargin") {
             @Override
@@ -1382,9 +1127,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code JTextComponent.setSelectedTextColor(Color)} through queue
-     */
     public void setSelectedTextColor(final Color color) {
         runMapping(new MapVoidAction("setSelectedTextColor") {
             @Override
@@ -1394,9 +1136,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code JTextComponent.setSelectionColor(Color)} through queue
-     */
     public void setSelectionColor(final Color color) {
         runMapping(new MapVoidAction("setSelectionColor") {
             @Override
@@ -1406,9 +1145,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code JTextComponent.setSelectionEnd(int)} through queue
-     */
     public void setSelectionEnd(final int i) {
         runMapping(new MapVoidAction("setSelectionEnd") {
             @Override
@@ -1418,9 +1154,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code JTextComponent.setSelectionStart(int)} through queue
-     */
     public void setSelectionStart(final int i) {
         runMapping(new MapVoidAction("setSelectionStart") {
             @Override
@@ -1430,9 +1163,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code JTextComponent.setText(String)} through queue
-     */
     public void setText(final String string) {
         runMapping(new MapVoidAction("setText") {
             @Override
@@ -1442,9 +1172,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code JTextComponent.setUI(TextUI)} through queue
-     */
     public void setUI(final TextUI textUI) {
         runMapping(new MapVoidAction("setUI") {
             @Override
@@ -1454,9 +1181,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code JTextComponent.viewToModel(Point)} through queue
-     */
     public int viewToModel(final Point point) {
         return (runMapping(new MapIntegerAction("viewToModel") {
             @Override
@@ -1466,9 +1190,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code JTextComponent.write(Writer)} through queue
-     */
     public void write(final Writer writer) {
         runMapping(new MapVoidAction("write") {
             @Override
@@ -1488,11 +1209,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
 
         private static final long serialVersionUID = 42L;
 
-        /**
-         * Constructor.
-         *
-         * @param text a nonexistent text.
-         */
         public NoSuchTextException(String text) {
             super("No such text as \"" + text + "\"", getSource());
         }
@@ -1509,8 +1225,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
         /**
          * Checkes if position fits the criteria.
          *
-         * @param document a document to be checked.
-         * @param offset a checked position
          * @return true if the position fits the criteria.
          */
         public boolean checkPosition(Document document, int offset);
@@ -1533,9 +1247,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
 
         /**
          * Constructs JTextComponentByTextFinder.
-         *
-         * @param lb a text pattern
-         * @param comparator specifies string comparision algorithm.
          */
         public JTextComponentByTextFinder(String lb, StringComparator comparator) {
             label = lb;
@@ -1544,8 +1255,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
 
         /**
          * Constructs JTextComponentByTextFinder.
-         *
-         * @param lb a text pattern
          */
         public JTextComponentByTextFinder(String lb) {
             this(lb, Operator.getDefaultStringComparator());
@@ -1579,8 +1288,6 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
 
         /**
          * Constructs JTextComponentFinder.
-         *
-         * @param sf other searching criteria.
          */
         public JTextComponentFinder(ComponentChooser sf) {
             super(JTextComponent.class, sf);

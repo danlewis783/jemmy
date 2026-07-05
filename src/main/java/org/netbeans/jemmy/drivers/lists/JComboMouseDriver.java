@@ -36,14 +36,9 @@ import org.netbeans.jemmy.util.EmptyVisualizer;
 
 /**
  * List driver for javax.swing.JCompoBox component type.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class JComboMouseDriver extends LightSupportiveDriver implements ListDriver {
 
-    /**
-     * Constructs a JComboMouseDriver.
-     */
     QueueTool queueTool;
 
     public JComboMouseDriver() {

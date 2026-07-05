@@ -37,22 +37,17 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 /**
- * Provides low level functions for reproducing user actions. One dispatch model
- * uses the managed component's event queue to dispatch events. The other
- * dispatch model uses {@code java.awt.Robot} to generate native events. It
- * is an option in the Robot dispatch model to wait for the managed component's
- * event queue to empty before dispatching events.
- *
- * Timeouts used: <BR>
- * EventDispatcher.WaitQueueEmptyTimeout - to wait event queue empty. <BR>
- * EventDispatcher.RobotAutoDelay - param for java.awt.Robot.setAutoDelay
- * method. <BR>
- * EventDispatcher.WaitComponentUnderMouseTimeout - time to wait component under
- * mouse. <BR>
+ * Provides low level functions for reproducing user actions. One dispatch model uses the managed component's event
+ * queue to dispatch events. The other dispatch model uses {@code java.awt.Robot} to generate native events. It is an
+ * option in the Robot dispatch model to wait for the managed component's event queue to empty before dispatching
+ * events. Timeouts used:
+ * <ul>
+ * <li>EventDispatcher.WaitQueueEmptyTimeout - to wait event queue empty.</li>
+ * <li>EventDispatcher.RobotAutoDelay - param for java.awt.Robot.setAutoDelay method.</li>
+ * <li>EventDispatcher.WaitComponentUnderMouseTimeout - time to wait component under mouse.</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
 public class EventDispatcher implements Outputable, Timeoutable {
@@ -64,9 +59,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
     private static Field[] keyFields;
     private static volatile MotionListener motionListener = null;
 
-    /**
-     * Component to dispatch events to.
-     */
     protected Component component;
 
     private TestOut output;
@@ -77,11 +69,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
     private boolean outsider = false;
     private final QueueTool queueTool;
 
-    /**
-     * Constructor.
-     *
-     * @param comp Component to operate with.
-     */
     public EventDispatcher(Component comp) {
         super();
         component = comp;
@@ -97,9 +84,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * empty. The timeout for this wait is
      * EventDispatcher.WaitQueueEmptyTimeout.
      *
-     * @param output Output to print exception into.
-     * @param timeouts A collection of timeout assignments.
-     * @throws TimeoutExpiredException
      * @see org.netbeans.jemmy.QueueTool
      */
     public static void waitQueueEmpty(TestOut output, Timeouts timeouts) {
@@ -119,7 +103,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * EventDispatcher.WaitQueueEmptyTimeout.
      *
      * @see QueueTool
-     * @throws TimeoutExpiredException
      */
     public static void waitQueueEmpty() {
         waitQueueEmpty(JemmyProperties.getCurrentOutput(), JemmyProperties.getCurrentTimeouts());
@@ -132,9 +115,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
      *
      * @param emptyTime The time that the event queue has to stay empty to avoid
      * a TimeoutExpiredException.
-     * @param output Output to print exception into
-     * @param timeouts A collection of timeout assignments.
-     * @throws TimeoutExpiredException
      * @see org.netbeans.jemmy.QueueTool
      */
     public static void waitQueueEmpty(long emptyTime, TestOut output, Timeouts timeouts) {
@@ -155,7 +135,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
      *
      * @param emptyTime The time that the event queue has to stay empty to avoid
      * a TimeoutExpiredException.
-     * @throws TimeoutExpiredException
      * @see org.netbeans.jemmy.QueueTool
      */
     public static void waitQueueEmpty(long emptyTime) {
@@ -165,7 +144,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
     /**
      * Get a string representation for key modifiers. Used to print trace.
      *
-     * @param modifiers Bit mask of keyboard event modifiers.
      * @return a string representation for the keyboard event modifiers.
      */
     public static String getModifiersString(int modifiers) {
@@ -293,7 +271,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
     /**
      * Defines current timeouts.
      *
-     * @param timeouts A collection of timeout assignments.
      * @see org.netbeans.jemmy.Timeoutable
      * @see org.netbeans.jemmy.Timeouts
      * @see #getTimeouts
@@ -337,7 +314,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
     /**
      * Defines dispatching model.
      *
-     * @param m New model value.
      * @see #getDispatchingModel()
      * @see org.netbeans.jemmy.JemmyProperties#QUEUE_MODEL_MASK
      * @see org.netbeans.jemmy.JemmyProperties#ROBOT_MODEL_MASK
@@ -385,9 +361,8 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * Dispatches {@code AWTEvent} to component passed in constructor. If
      * {@code (getDispatchingModel & JemmyProperties.QUEUE_MODEL_MASK) == 0}
      * dispatched event directly, otherwise uses
-     * {@code javax.swing.SwingUtilities.invokeAndWait(Runnable)}<BR>
+     * {@code javax.swing.SwingUtilities.invokeAndWait(Runnable)}
      *
-     * @param event AWTEvent instance to be dispatched.
      * @throws ComponentIsNotVisibleException
      * @throws ComponentIsNotFocusedException
      */
@@ -411,10 +386,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * @see #dispatchEvent(AWTEvent)
      * @param id {@code MouseEvent.MOUSE_*} value
      * @param mods {@code InputEvent.MOUSE1/2/3_BUTTON} | (modifiers value)
-     * @param clickCount Click count
-     * @param x Horizontal click point coordinate.
-     * @param y vertical click point coordinate.
-     * @param popup Defines if mouse event is a popup event.
      */
     public void dispatchMouseEvent(int id, int mods, int clickCount, int x, int y, boolean popup) {
         MouseEvent event = new MouseEvent(component, id, System.currentTimeMillis(), mods, x, y, clickCount, popup);
@@ -427,8 +398,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * @see #dispatchEvent(AWTEvent)
      * @param id {@code MouseEvent.MOUSE_*} value
      * @param mods {@code InputEvent.MOUSE1/2/3_BUTTON} | (modiviers value)
-     * @param clickCount Click count
-     * @param popup Difines if mouse event is popup event.
      */
     public void dispatchMouseEvent(int id, int mods, int clickCount, boolean popup) {
         int x = component.getWidth() / 2;
@@ -453,8 +422,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * @see #dispatchEvent(AWTEvent)
      * @param id {@code KeyEvent.KEY_PRESSED} or
      * {@code KeyEvent.KEY_RELEASED} value.
-     * @param mods Modifiers.
-     * @param keyCode Key code,
      */
     @Deprecated
     public void dispatchKeyEvent(int id, int mods, int keyCode) {
@@ -467,9 +434,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
      *
      * @see #dispatchEvent(AWTEvent)
      * @param id {@code KeyEvent.KEY_TYPED} value.
-     * @param mods Modifiers.
-     * @param keyCode Key code,
-     * @param keyChar Char to be tiped
      */
     public void dispatchKeyEvent(int id, int mods, int keyCode, char keyChar) {
         KeyEvent event = new KeyEvent(component, id, System.currentTimeMillis(), mods, keyCode, keyChar);
@@ -486,7 +450,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
     /**
      * Bind horizontal relative cursor coordinate to screen coordinate.
      *
-     * @param x Relative coordinate
      * @return Absolute coordinate
      */
     protected int getAbsoluteX(int x) {
@@ -496,18 +459,12 @@ public class EventDispatcher implements Outputable, Timeoutable {
     /**
      * Bind vertical relative cursor coordinate to screen coordinate.
      *
-     * @param y Relative coordinate
      * @return Absolute coordinate
      */
     protected int getAbsoluteY(int y) {
         return (int) component.getLocationOnScreen().getY() + y;
     }
 
-    /**
-     * Delays robot.
-     *
-     * @param time Time to dalay robot for.
-     */
     public void delayRobot(long time) {
         Object[] params = {(int) time};
         Class<?>[] paramClasses = {Integer.TYPE};
@@ -517,8 +474,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
     /**
      * Moves mouse by robot.
      *
-     * @param x Component relative horizontal coordinate.
-     * @param y Component relative vertical coordinate.
      * @throws ComponentIsNotVisibleException
      */
     public void robotMoveMouse(int x, int y) {
@@ -534,8 +489,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
     /**
      * Press mouse button by robot.
      *
-     * @param button Mouse button (InputEvent.MOUSE1/2/3_BUTTON value)
-     * @param modifiers Modifiers
      * @throws ComponentIsNotVisibleException
      */
     public void robotPressMouse(int button, int modifiers) {
@@ -565,7 +518,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
      *
      * @param button Mouse button ({@code InputEvent.MOUSE1/2/3_BUTTON}
      * value)
-     * @param modifiers Modifiers
      * @throws ComponentIsNotVisibleException
      */
     public void robotReleaseMouse(int button, int modifiers) {
@@ -591,7 +543,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * Press a key using {@code java.awt.Robot}.
      *
      * @param keyCode Key ({@code KeyEvent.VK_*} value)
-     * @param modifiers Mask of KeyEvent modifiers.
      * @throws ComponentIsNotVisibleException
      * @throws ComponentIsNotFocusedException
      */
@@ -617,7 +568,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * Releases key by robot.
      *
      * @param keyCode Key ({@code KeyEvent.VK_*} value)
-     * @param modifiers Mask of KeyEvent modifiers.
      * @throws ComponentIsNotVisibleException
      * @throws ComponentIsNotFocusedException
      */
@@ -643,9 +593,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * Invokes component method through
      * {@code SwingUtilities.invokeAndWait(Runnable)}.
      *
-     * @param method_name Name of a method to be invoked
-     * @param params Method params
-     * @param params_classes Method params' classes
      * @return an Object - methods result.
      * @see org.netbeans.jemmy.ClassReference
      * @exception IllegalAccessException
@@ -689,7 +636,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * Gets component field value through
      * {@code SwingUtilities.invokeAndWait(Runnable)}.
      *
-     * @param field_name Name of a field
      * @see #setField(String, Object)
      * @see org.netbeans.jemmy.ClassReference
      * @return an Object - field value
@@ -734,8 +680,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * Sets component field value through
      * {@code SwingUtilities.invokeAndWait(Runnable)}.
      *
-     * @param field_name Name of a field
-     * @param newValue New field value
      * @see #getField(String)
      * @see org.netbeans.jemmy.ClassReference
      * @exception IllegalAccessException
@@ -780,10 +724,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * {@code SwingUtilities.invokeAndWait(Runnable)}. and catch all
      * exceptions.
      *
-     * @param method_name Name of a method to be invoked
-     * @param params Method params
-     * @param params_classes Method params' classes
-     * @param out TestOut instance to print exceptions stack trace to.
      * @return an Object - method result
      * @see #invokeMethod(String, Object[], Class[])
      * @see org.netbeans.jemmy.ClassReference
@@ -802,8 +742,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * {@code SwingUtilities.invokeAndWait(Runnable)}. and catch all
      * exceptions.
      *
-     * @param field_name Name of a field
-     * @param out TestOut instance to print exceptions stack trace to.
      * @return an Object - fields value
      * @see #getField(String)
      * @see #setExistingField(String, Object, TestOut)
@@ -823,9 +761,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * {@code SwingUtilities.invokeAndWait(Runnable)}. and catch all
      * exceptions.
      *
-     * @param field_name Name of a field
-     * @param newValue New field value
-     * @param out TestOut instance to print exceptions stack trace to.
      * @see #setField(String, Object)
      * @see #getExistingField(String, TestOut)
      * @see org.netbeans.jemmy.ClassReference
@@ -844,9 +779,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * exceptions. Exceptions are printed into TestOut object defined by
      * setOutput(TestOut) method.
      *
-     * @param method_name Name of a method to be invoked
-     * @param params Method params
-     * @param params_classes Method params' classes
      * @return an Object - method result
      * @see #invokeExistingMethod(String, Object[], Class[], TestOut)
      * @see org.netbeans.jemmy.ClassReference
@@ -861,7 +793,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * exceptions. Exceptions are printed into TestOut object defined by
      * setOutput(TestOut) method.
      *
-     * @param field_name Name of a field
      * @return an Object - fields value
      * @see #getExistingField(String, TestOut)
      * @see #setExistingField(String, Object)
@@ -877,8 +808,6 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * exceptions. Exceptions are printed into TestOut object defined by
      * setOutput(TestOut) method.
      *
-     * @param field_name Name of a field
-     * @param newValue New field value
      * @see #setExistingField(String, Object, TestOut)
      * @see #getExistingField(String)
      * @see org.netbeans.jemmy.ClassReference

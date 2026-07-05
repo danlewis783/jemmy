@@ -39,16 +39,11 @@ import org.netbeans.jemmy.operators.Operator;
 
 /**
  * TableDriver for javax.swing.JTableDriver component type.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class JTableMouseDriver extends LightSupportiveDriver implements TableDriver {
 
     QueueTool queueTool;
 
-    /**
-     * Constructs a JTableMouseDriver.
-     */
     public JTableMouseDriver() {
         super(new String[] {"org.netbeans.jemmy.operators.JTableOperator"});
         queueTool = new QueueTool();
@@ -77,11 +72,6 @@ public class JTableMouseDriver extends LightSupportiveDriver implements TableDri
 
     /**
      * Clicks on JTable cell.
-     *
-     * @param oper Table operator.
-     * @param row Cell row index.
-     * @param column Cell column index.
-     * @param clickCount Count to click.
      */
     protected void clickOnCell(final JTableOperator oper, final int row, final int column, final int clickCount) {
         queueTool.invokeSmoothly(new QueueTool.QueueAction<Void>("Path selecting") {

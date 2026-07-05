@@ -25,19 +25,16 @@
 package org.netbeans.jemmy;
 
 /**
- *
  * Defines criteria for waiting.
  *
  * @see org.netbeans.jemmy.Waiter
  *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public interface Waitable<R, P> {
 
     /**
      * Checks if wait criteria have been met.
      *
-     * @param obj optional waiting parameter.
      * @return null is criteria have not been met.
      */
     public R actionProduced(P obj);

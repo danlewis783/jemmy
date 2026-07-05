@@ -31,7 +31,6 @@ package org.netbeans.jemmy;
  *
  * @see org.netbeans.jemmy.TestOut
  *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public interface Outputable {
 

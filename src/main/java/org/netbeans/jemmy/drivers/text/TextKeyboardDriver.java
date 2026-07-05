@@ -37,16 +37,9 @@ import org.netbeans.jemmy.operators.ComponentOperator;
 
 /**
  * Superclass for all TextDrivers using keyboard.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public abstract class TextKeyboardDriver extends LightSupportiveDriver implements TextDriver {
 
-    /**
-     * Constructs a TextKeyboardDriver.
-     *
-     * @param supported an array of supported class names
-     */
     public TextKeyboardDriver(String[] supported) {
         super(supported);
     }
@@ -112,7 +105,6 @@ public abstract class TextKeyboardDriver extends LightSupportiveDriver implement
     /**
      * Returns operator's text.
      *
-     * @param oper an operator.
      * @return string representing component text.
      */
     public abstract String getText(ComponentOperator oper);
@@ -120,7 +112,6 @@ public abstract class TextKeyboardDriver extends LightSupportiveDriver implement
     /**
      * Returns current caret position.
      *
-     * @param oper an operator.
      * @return int represnting current operator's caret position.
      */
     public abstract int getCaretPosition(ComponentOperator oper);
@@ -128,7 +119,6 @@ public abstract class TextKeyboardDriver extends LightSupportiveDriver implement
     /**
      * Returns a caret position of selection start.
      *
-     * @param oper an operator.
      * @return int represnting index of operator's selection start.
      */
     public abstract int getSelectionStart(ComponentOperator oper);
@@ -136,7 +126,6 @@ public abstract class TextKeyboardDriver extends LightSupportiveDriver implement
     /**
      * Returns a caret position of selection end.
      *
-     * @param oper an operator.
      * @return int represnting index of operator's selection end.
      */
     public abstract int getSelectionEnd(ComponentOperator oper);
@@ -144,7 +133,6 @@ public abstract class TextKeyboardDriver extends LightSupportiveDriver implement
     /**
      * Returns an array of navigation keys.
      *
-     * @param oper an operator.
      * @return an array on NavigationKey instances.
      */
     public abstract NavigationKey[] getKeys(ComponentOperator oper);
@@ -152,7 +140,6 @@ public abstract class TextKeyboardDriver extends LightSupportiveDriver implement
     /**
      * Returns a timeout to sleep between text typing and caret operations.
      *
-     * @param oper an operator.
      * @return a Timeout instance.
      */
     public abstract Timeout getBetweenTimeout(ComponentOperator oper);
@@ -160,8 +147,6 @@ public abstract class TextKeyboardDriver extends LightSupportiveDriver implement
     /**
      * Changes current caret position to specifyed.
      *
-     * @param oper an operator.
-     * @param position new caret position
      * @param preModifiers a modifiers (combination of
      * {@code InputEvent.*_MASK} fields) pushed before caret moving (like
      * shift during text selection).

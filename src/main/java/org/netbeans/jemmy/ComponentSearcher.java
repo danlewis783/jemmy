@@ -29,14 +29,12 @@ import java.awt.Container;
 import java.util.Vector;
 
 /**
- *
  * Contains methods to search for components below a a given
  * {@code java.awt.Container} in the display containment hierarchy. Uses a
  * {@code ComponentChooser} interface implementation to find a component.
  *
  * @see ComponentChooser
  *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class ComponentSearcher implements Outputable {
 
@@ -49,8 +47,6 @@ public class ComponentSearcher implements Outputable {
     /**
      * Contructor. The search is constrained so that only components that lie
      * below the given container in the containment hierarchy are considered.
-     *
-     * @param c Container to find components in.
      */
     public ComponentSearcher(Container c) {
         super();
@@ -64,7 +60,6 @@ public class ComponentSearcher implements Outputable {
      * {@code checkComponent(Component)} method returns {@code true}
      * for any component.
      *
-     * @param description Component description.
      * @return ComponentChooser instance.
      */
     public static ComponentChooser getTrueChooser(String description) {
@@ -146,9 +141,6 @@ public class ComponentSearcher implements Outputable {
      * recursively in the component hierarchy rooted in this
      * {@code ComponentChooser}'s container.
      *
-     * @param chooser ComponentChooser instance, defining and applying the
-     * search criteria.
-     * @param index Ordinal component index. Indices start at 0.
      * @return the {@code index}'th component from among those components
      * for which the chooser's {@code checkComponent(Component)} method
      * returns {@code true}. A {@code null} reference is returned if
@@ -184,8 +176,6 @@ public class ComponentSearcher implements Outputable {
      * recursively in the component hierarchy rooted in this
      * {@code ComponentChooser}'s container.
      *
-     * @param chooser ComponentChooser instance, defining and applying the
-     * search criteria.
      * @return the first component for which the chooser's
      * {@code checkComponent(Component)} method returns {@code true}.
      * A {@code null} reference is returned if no component meeting the
@@ -201,8 +191,6 @@ public class ComponentSearcher implements Outputable {
      * recursively in the component hierarchy rooted in this
      * {@code ComponentChooser}'s container.
      *
-     * @param chooser ComponentChooser instance, defining and applying the
-     * search criteria.
      * @return the components for which the chooser's
      * {@code checkComponent(Component)} method returns {@code true}.
      * An empty array is returned if no component meeting the search criteria

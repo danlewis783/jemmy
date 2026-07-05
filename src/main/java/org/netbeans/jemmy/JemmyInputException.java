@@ -27,30 +27,16 @@ package org.netbeans.jemmy;
 import java.awt.Component;
 
 /**
- *
  * Exception can be thrown as a result of incorrect input operations.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class JemmyInputException extends JemmyException {
 
     private static final long serialVersionUID = 42L;
 
-    /**
-     * Constructor.
-     *
-     * @param comp Component regarding which exception is thrown.
-     */
     public JemmyInputException(Component comp) {
         super("Input exception", comp);
     }
 
-    /**
-     * Constructor.
-     *
-     * @param message A descriptive message.
-     * @param comp Component regarding which exception is thrown.
-     */
     public JemmyInputException(String message, Component comp) {
         super(message, comp);
     }

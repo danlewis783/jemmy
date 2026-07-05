@@ -68,7 +68,6 @@ import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.TestOut;
-import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.Timeoutable;
 import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.Waitable;
@@ -79,38 +78,30 @@ import org.netbeans.jemmy.drivers.KeyDriver;
 import org.netbeans.jemmy.drivers.MouseDriver;
 
 /**
- * Root class for all component operators.
- *
- * Provides basic methods to operate with mouse and keyboard.<BR>
- * <BR>
- * Almost all input methods can throw JemmyInputException or its subclass.<BR>
- *
- * ComponentOperator and its subclasses has a lot of methods which name and
- * parameters just like consistent component has. In this case operator class
- * just invokes consistent component method through AWT Event Queue
- * (invokeAndWait method).
- *
- * <BR><BR>Timeouts used: <BR>
- * ComponentOperator.PushKeyTimeout - time between key pressing and releasing
- * <BR>
- * ComponentOperator.MouseClickTimeout - time between mouse pressing and
- * releasing <BR>
- * ComponentOperator.WaitComponentTimeout - time to wait component displayed
- * <BR>
- * ComponentOperator.WaitComponentEnabledTimeout - time to wait component
- * enabled <BR>
- * ComponentOperator.BeforeDragTimeout - time to sleep before grag'n'drop
- * operations <BR>
- * ComponentOperator.AfterDragTimeout - time to sleep after grag'n'drop
- * operations <BR>
- * ComponentOperator.WaitFocusTimeout - time to wait component focus <BR>
- * ComponentOperator.WaitStateTimeout- time to wait component to be in some
- * state. Typically used from methods like
- * {@code Operator.wait"something happened"(*)}<br>.
+ * Root class for all component operators. Provides basic methods to operate with mouse and keyboard.
+ * <p>
+ * Almost all input methods can throw JemmyInputException or its subclass.
+ * <p>
+ * ComponentOperator and its subclasses has a lot of methods which name and parameters just like consistent component
+ * has. In this case operator class just invokes consistent component method through AWT Event Queue (invokeAndWait
+ * method).
+ * <p>
+ * Timeouts used:
+ * <ul>
+ * <li>ComponentOperator.PushKeyTimeout - time between key pressing and releasing</li>
+ * <li>ComponentOperator.MouseClickTimeout - time between mouse pressing and releasing</li>
+ * <li>ComponentOperator.WaitComponentTimeout - time to wait component displayed</li>
+ * <li>ComponentOperator.WaitComponentEnabledTimeout - time to wait component enabled</li>
+ * <li>ComponentOperator.BeforeDragTimeout - time to sleep before grag'n'drop operations</li>
+ * <li>ComponentOperator.AfterDragTimeout - time to sleep after grag'n'drop operations</li>
+ * <li>ComponentOperator.WaitFocusTimeout - time to wait component focus</li>
+ * </ul>
+ * <p>
+ * ComponentOperator.WaitStateTimeout- time to wait component to be in some state. Typically used from methods like
+ * {@code Operator.wait"something happened"(*)}
  *
  * @see org.netbeans.jemmy.Timeouts
  *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class ComponentOperator extends Operator implements Timeoutable, Outputable {
 
@@ -201,11 +192,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
     private MouseDriver mDriver;
     private FocusDriver fDriver;
 
-    /**
-     * Constructor.
-     *
-     * @param comp a component
-     */
     public ComponentOperator(Component comp) {
         super();
         source = comp;
@@ -215,51 +201,31 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         setEventDispatcher(new EventDispatcher(comp));
     }
 
-    /**
-     * Constructs a ComponentOperator object.
-     *
-     * @param cont container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public ComponentOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this(waitComponent((Container) cont.getSource(), chooser, index, cont.getTimeouts(), cont.getOutput()));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a ComponentOperator object.
-     *
-     * @param cont container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public ComponentOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits for a component in a container to show. The component
+     * Waits for a component in a container to show. The component
      * is iis the {@code index+1}'th {@code java.awt.Component} that
      * shows and that lies below the container in the display containment
      * hierarchy. Uses cont's timeout and output for waiting and to init
      * operator.
-     *
-     * @param cont Operator for a java.awt.Container.
-     * @param index an index between appropriate ones.
-     * @throws TimeoutExpiredException
      */
     public ComponentOperator(ContainerOperator<?> cont, int index) {
         this(cont, ComponentSearcher.getTrueChooser("Any component"), index);
     }
 
     /**
-     * Constructor. Waits for a component in a container to show. The component
+     * Waits for a component in a container to show. The component
      * is is the first {@code java.awt.Component} that shows and that lies
      * below the container in the display containment hierarchy. Uses cont's
      * timeout and output for waiting and to init operator.
-     *
-     * @param cont Operator for a java.awt.Container.
-     * @throws TimeoutExpiredException
      */
     public ComponentOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -268,9 +234,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
     /**
      * Searches Component in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return Component instance or null if component was not found.
      */
     public static Component findComponent(Container cont, ComponentChooser chooser, int index) {
@@ -280,8 +243,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
     /**
      * Searches Component in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return Component instance or null if component was not found.
      */
     public static Component findComponent(Container cont, ComponentChooser chooser) {
@@ -291,11 +252,7 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
     /**
      * Waits Component in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return Component instance or null if component was not found.
-     * @throws TimeoutExpiredException
      */
     public static Component waitComponent(Container cont, ComponentChooser chooser, int index) {
         return (waitComponent(
@@ -305,10 +262,7 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
     /**
      * Waits Component in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return Component instance or null if component was not found.
-     * @throws TimeoutExpiredException
      */
     public static Component waitComponent(Container cont, ComponentChooser chooser) {
         return waitComponent(cont, chooser, 0);
@@ -318,11 +272,7 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
      * A method to be used from subclasses. Uses {@code contOper}'s
      * timeouts and output during the waiting.
      *
-     * @param contOper Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return Component instance or null if component was not found.
-     * @throws TimeoutExpiredException
      */
     protected static Component waitComponent(ContainerOperator<?> contOper, ComponentChooser chooser, int index) {
         return (waitComponent(
@@ -333,13 +283,7 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
      * A method to be used from subclasses. Uses timeouts and output passed as
      * parameters during the waiting.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
-     * @param timeouts timeouts to be used during the waiting.
-     * @param output an output to be used during the waiting.
      * @return Component instance or null if component was not found.
-     * @throws TimeoutExpiredException
      */
     protected static Component waitComponent(
             final Container cont,
@@ -375,8 +319,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
     /**
      * Searches Components in container.
      *
-     * @param cont Container to search components in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return Component array or empty array if component was not found.
      */
     public static Component[] findComponents(Container cont, ComponentChooser chooser) {
@@ -406,9 +348,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         Timeouts.initDefault("ComponentOperator.WaitFocusTimeout", WAIT_FOCUS_TIMEOUT);
     }
 
-    /**
-     * Returns component.
-     */
     @Override
     public Component getSource() {
         return source;
@@ -472,13 +411,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
     ////////////////////////////////////////////////////////
     /**
      * Makes mouse click.
-     *
-     * @param x Horizontal click coordinate
-     * @param y Vertical click coordinate
-     * @param clickCount Click count
-     * @param mouseButton Mouse button (InputEvent.BUTTON1/2/3_MASK value)
-     * @param modifiers Modifiers (combination of InputEvent.*_MASK values)
-     * @param forPopup signals that click is intended to call popup.
      */
     public void clickMouse(
             final int x,
@@ -506,11 +438,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
     /**
      * Makes mouse click.
      *
-     * @param x Horizontal click coordinate
-     * @param y Vertical click coordinate
-     * @param clickCount Click count
-     * @param mouseButton Mouse button (InputEvent.BUTTON1/2/3_MASK value)
-     * @param modifiers Modifiers (combination of InputEvent.*_MASK values)
      * @see #clickMouse(int, int, int, int, int, boolean)
      */
     public void clickMouse(int x, int y, int clickCount, int mouseButton, int modifiers) {
@@ -520,10 +447,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
     /**
      * Makes mouse click with 0 modifiers.
      *
-     * @param x Horizontal click coordinate
-     * @param y Vertical click coordinate
-     * @param clickCount Click count
-     * @param mouseButton Mouse button (InputEvent.BUTTON1/2/3_MASK value)
      * @see #clickMouse(int, int, int, int, int)
      */
     public void clickMouse(int x, int y, int clickCount, int mouseButton) {
@@ -533,9 +456,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
     /**
      * Makes mouse click by default mouse button with 0 modifiers.
      *
-     * @param x Horizontal click coordinate
-     * @param y Vertical click coordinate
-     * @param clickCount Click count
      * @see #clickMouse(int, int, int, int)
      * @see #getDefaultMouseButton()
      */
@@ -543,31 +463,16 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         clickMouse(x, y, clickCount, getDefaultMouseButton());
     }
 
-    /**
-     * Press mouse.
-     *
-     * @param x Horizontal click coordinate
-     * @param y Vertical click coordinate
-     */
     public void pressMouse(int x, int y) {
         mDriver.pressMouse(this, x, y, getDefaultMouseButton(), 0);
     }
 
-    /**
-     * Releases mouse.
-     *
-     * @param x Horizontal click coordinate
-     * @param y Vertical click coordinate
-     */
     public void releaseMouse(int x, int y) {
         mDriver.releaseMouse(this, x, y, getDefaultMouseButton(), 0);
     }
 
     /**
      * Move mouse over the component.
-     *
-     * @param x Horisontal destination coordinate.
-     * @param y Vertical destination coordinate.
      */
     public void moveMouse(int x, int y) {
         mDriver.moveMouse(this, x, y);
@@ -575,11 +480,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
 
     /**
      * Drag mouse over the component.
-     *
-     * @param x Horisontal destination coordinate.
-     * @param y Vertical destination coordinate.
-     * @param mouseButton Mouse button
-     * @param modifiers Modifiers
      */
     public void dragMouse(int x, int y, int mouseButton, int modifiers) {
         mDriver.dragMouse(this, x, y, getDefaultMouseButton(), 0);
@@ -588,9 +488,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
     /**
      * Drag mouse over the component with 0 modifiers.
      *
-     * @param x Horisontal destination coordinate.
-     * @param y Vertical destination coordinate.
-     * @param mouseButton Mouse button
      * @see #dragMouse(int, int, int, int)
      */
     public void dragMouse(int x, int y, int mouseButton) {
@@ -601,8 +498,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
      * Drag mouse over the component with 0 modifiers and default mose button
      * pressed.
      *
-     * @param x Horisontal destination coordinate.
-     * @param y Vertical destination coordinate.
      * @see #dragMouse(int, int, int)
      * @see #getDefaultMouseButton()
      */
@@ -612,13 +507,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
 
     /**
      * Makes drag'n'drop operation.
-     *
-     * @param start_x Start horizontal coordinate
-     * @param start_y Start vertical coordinate
-     * @param end_x End horizontal coordinate
-     * @param end_y End vertical coordinate
-     * @param mouseButton Mouse button
-     * @param modifiers Modifiers
      */
     public void dragNDrop(int start_x, int start_y, int end_x, int end_y, int mouseButton, int modifiers) {
         mDriver.dragNDrop(
@@ -636,11 +524,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
     /**
      * Makes drag'n'drop operation with 0 modifiers.
      *
-     * @param start_x Start horizontal coordinate
-     * @param start_y Start vertical coordinate
-     * @param end_x End horizontal coordinate
-     * @param end_y End vertical coordinate
-     * @param mouseButton Mouse button
      * @see #dragNDrop(int, int, int, int, int, int)
      */
     public void dragNDrop(int start_x, int start_y, int end_x, int end_y, int mouseButton) {
@@ -650,10 +533,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
     /**
      * Makes drag'n'drop operation by default mouse buttons with 0 modifiers.
      *
-     * @param start_x Start horizontal coordinate
-     * @param start_y Start vertical coordinate
-     * @param end_x End horizontal coordinate
-     * @param end_y End vertical coordinate
      * @see #dragNDrop(int, int, int, int, int)
      * @see #getDefaultMouseButton()
      */
@@ -664,9 +543,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
     /**
      * Clicks for popup.
      *
-     * @param x Horizontal click coordinate.
-     * @param y Vertical click coordinate.
-     * @param mouseButton Mouse button.
      * @see #clickMouse(int, int, int, int, int, boolean)
      */
     public void clickForPopup(int x, int y, int mouseButton) {
@@ -677,8 +553,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
     /**
      * Clicks for popup by popup mouse button.
      *
-     * @param x Horizontal click coordinate.
-     * @param y Vertical click coordinate.
      * @see #clickForPopup(int, int, int)
      * @see #getPopupMouseButton()
      */
@@ -689,8 +563,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
     /**
      * Makes mouse click on the component center with 0 modifiers.
      *
-     * @param clickCount Click count
-     * @param mouseButton Mouse button (InputEvent.BUTTON1/2/3_MASK value)
      * @see #clickMouse(int, int, int, int)
      */
     public void clickMouse(final int clickCount, final int mouseButton) {
@@ -707,7 +579,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
      * Makes mouse click on the component center by default mouse button with 0
      * modifiers.
      *
-     * @param clickCount Click count
      * @see #clickMouse(int, int)
      * @see #getDefaultMouseButton()
      */
@@ -740,9 +611,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         mDriver.exitMouse(this);
     }
 
-    /**
-     * Press mouse.
-     */
     public void pressMouse() {
         getQueueTool().invokeSmoothly(new QueueTool.QueueAction<Void>("Pressing the mouse button") {
             @Override
@@ -753,9 +621,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Releases mouse.
-     */
     public void releaseMouse() {
         getQueueTool().invokeSmoothly(new QueueTool.QueueAction<Void>("Releasing the mouse button") {
             @Override
@@ -769,7 +634,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
     /**
      * Clicks for popup at the component center.
      *
-     * @param mouseButton Mouse button.
      * @see #clickForPopup(int, int)
      */
     public void clickForPopup(int mouseButton) {
@@ -789,80 +653,40 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
     ////////////////////////////////////////////////////////
     // Keyboard operations
     ////////////////////////////////////////////////////////
-    /**
-     * Press key.
-     *
-     * @param keyCode Key code (KeyEvent.VK_* value)
-     * @param modifiers Modifiers (combination of InputEvent.*_MASK fields)
-     */
     public void pressKey(int keyCode, int modifiers) {
         kDriver.pressKey(this, keyCode, modifiers);
     }
 
     /**
      * Press key with no modifiers.
-     *
-     * @param keyCode Key code (KeyEvent.VK_* value)
      */
     public void pressKey(int keyCode) {
         pressKey(keyCode, 0);
     }
 
-    /**
-     * Typed key.
-     *
-     * @param keyChar Char to be typed.
-     * @param modifiers Modifiers (combination of InputEvent.*_MASK fields)
-     */
     public void typedKey(char keyChar, int modifiers) {
         kDriver.typedKey(this, getCharBindingMap().getCharKey(keyChar), keyChar, modifiers);
     }
 
-    /**
-     * Releases key.
-     *
-     * @param keyCode Key code (KeyEvent.VK_* value)
-     * @param modifiers Modifiers (combination of InputEvent.*_MASK fields)
-     */
     public void releaseKey(int keyCode, int modifiers) {
         kDriver.releaseKey(this, keyCode, modifiers);
     }
 
     /**
      * Releases key with no modifiers.
-     *
-     * @param keyCode Key code (KeyEvent.VK_* value)
      */
     public void releaseKey(int keyCode) {
         releaseKey(keyCode, 0);
     }
 
-    /**
-     * Pushs key.
-     *
-     * @param keyCode Key code (KeyEvent.VK_* value)
-     * @param modifiers Modifiers (combination of InputEvent.*_MASK fields)
-     */
     public void pushKey(int keyCode, int modifiers) {
         kDriver.pushKey(this, keyCode, modifiers, timeouts.create("ComponentOperator.PushKeyTimeout"));
     }
 
-    /**
-     * Pushs key.
-     *
-     * @param keyCode Key code (KeyEvent.VK_* value)
-     */
     public void pushKey(int keyCode) {
         pushKey(keyCode, 0);
     }
 
-    /**
-     * Types one char.
-     *
-     * @param keyCode Key code (KeyEvent.VK_* value)
-     * @param keyChar Char to be typed.
-     * @param modifiers Modifiers (combination of InputEvent.*_MASK fields)
-     */
     public void typeKey(int keyCode, char keyChar, int modifiers) {
         kDriver.typeKey(this, keyCode, keyChar, modifiers, timeouts.create("ComponentOperator.PushKeyTimeout"));
     }
@@ -871,8 +695,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
      * Types one char. Uses map defined by setCharBindingMap(CharBindingMap)
      * method to find a key should be pressed.
      *
-     * @param keyChar Char to be typed.
-     * @param modifiers Modifiers (combination of InputEvent.*_MASK fields)
      * @see org.netbeans.jemmy.CharBindingMap
      * @see #setCharBindingMap(CharBindingMap)
      * @see #typeKey(int, char, int)
@@ -885,7 +707,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
      * Types one char. Uses map defined by setCharBindingMap(CharBindingMap)
      * method to find a key and modifiers should be pressed.
      *
-     * @param keyChar Char to be typed.
      * @see #setCharBindingMap(CharBindingMap)
      * @see #typeKey(char, int)
      */
@@ -971,7 +792,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
     /**
      * Waits for the component to be enabled.
      *
-     * @throws TimeoutExpiredException
      * @throws InterruptedException
      */
     public void waitComponentEnabled() throws InterruptedException {
@@ -1002,8 +822,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
 
     /**
      * Waits for the component to be enabled. per request: 37831
-     *
-     * @throws TimeoutExpiredException
      */
     public void wtComponentEnabled() {
         try {
@@ -1040,7 +858,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
     /**
      * Searches a container.
      *
-     * @param chooser a chooser specifying the searching criteria.
      * @return a containers specified by searching criteria.
      */
     public Container getContainer(ComponentChooser chooser) {
@@ -1092,8 +909,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
 
     /**
      * Waits for this Component has the keyboard focus.
-     *
-     * @throws TimeoutExpiredException
      */
     public void waitHasFocus() {
         Waiter<String, Void> focusWaiter = new Waiter<>(new Waitable<String, Void>() {
@@ -1123,9 +938,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
 
     /**
      * Waits for the component to be visible or unvisible.
-     *
-     * @param visibility required visiblity.
-     * @throws TimeoutExpiredException
      */
     public void waitComponentVisible(final boolean visibility) {
         waitState(new ComponentChooser() {
@@ -1169,8 +981,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
 
     /**
      * Wait till the Size of the component becomes as expected.
-     *
-     * @param exactSize the exact expected size.
      */
     public void waitComponentSize(Dimension exactSize) {
         waitComponentSize(exactSize, exactSize);
@@ -1178,9 +988,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
 
     /**
      * Wait till the Size of the component becomes between minSize and maxSize.
-     *
-     * @param minSize the minimum allowed size.
-     * @param maxSize the maximum allowed size.
      */
     public void waitComponentSize(Dimension minSize, Dimension maxSize) {
         waitState(new ComponentChooser() {
@@ -1207,8 +1014,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
 
     /**
      * Wait till the component reaches exact location.
-     *
-     * @param exactlocation exact expected location.
      */
     public void waitComponentLocation(Point exactlocation) {
         waitComponentLocation(exactlocation, exactlocation);
@@ -1217,9 +1022,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
     /**
      * Wait till the component reaches location between minLocation and
      * maxLocation
-     *
-     * @param minLocation minimum expected location.
-     * @param maxLocation maximum expected location.
      */
     public void waitComponentLocation(Point minLocation, Point maxLocation) {
         waitState(new ComponentChooser() {
@@ -1246,8 +1048,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
 
     /**
      * Wait till the component reaches exact location on screen.
-     *
-     * @param exactlocation exact expected screen location.
      */
     public void waitComponentLocationOnScreen(Point exactlocation) {
         waitComponentLocationOnScreen(exactlocation, exactlocation);
@@ -1256,9 +1056,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
     /**
      * Wait till the component location on screen reaches between minLocation
      * and maxLocation
-     *
-     * @param minLocation minimum expected location on screen.
-     * @param maxLocation maximum expected location on screen.
      */
     public void waitComponentLocationOnScreen(final Point minLocation, final Point maxLocation) {
         waitState(new ComponentChooser() {
@@ -1314,9 +1111,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code Component.add(PopupMenu)} through queue
-     */
     public void add(final PopupMenu popupMenu) {
         runMapping(new MapVoidAction("add") {
             @Override
@@ -1326,10 +1120,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.addComponentListener(ComponentListener)}
-     * through queue
-     */
     public void addComponentListener(final ComponentListener componentListener) {
         runMapping(new MapVoidAction("addComponentListener") {
             @Override
@@ -1339,9 +1129,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.addFocusListener(FocusListener)} through queue
-     */
     public void addFocusListener(final FocusListener focusListener) {
         runMapping(new MapVoidAction("addFocusListener") {
             @Override
@@ -1351,10 +1138,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.addInputMethodListener(InputMethodListener)}
-     * through queue
-     */
     public void addInputMethodListener(final InputMethodListener inputMethodListener) {
         runMapping(new MapVoidAction("addInputMethodListener") {
             @Override
@@ -1364,9 +1147,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.addKeyListener(KeyListener)} through queue
-     */
     public void addKeyListener(final KeyListener keyListener) {
         runMapping(new MapVoidAction("addKeyListener") {
             @Override
@@ -1376,9 +1156,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.addMouseListener(MouseListener)} through queue
-     */
     public void addMouseListener(final MouseListener mouseListener) {
         runMapping(new MapVoidAction("addMouseListener") {
             @Override
@@ -1388,10 +1165,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.addMouseMotionListener(MouseMotionListener)}
-     * through queue
-     */
     public void addMouseMotionListener(final MouseMotionListener mouseMotionListener) {
         runMapping(new MapVoidAction("addMouseMotionListener") {
             @Override
@@ -1401,9 +1174,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.addNotify()} through queue
-     */
     public void addNotify() {
         runMapping(new MapVoidAction("addNotify") {
             @Override
@@ -1413,11 +1183,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps
-     * {@code Component.addPropertyChangeListener(PropertyChangeListener)}
-     * through queue
-     */
     public void addPropertyChangeListener(final PropertyChangeListener propertyChangeListener) {
         runMapping(new MapVoidAction("addPropertyChangeListener") {
             @Override
@@ -1427,11 +1192,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps
-     * {@code Component.addPropertyChangeListener(String, PropertyChangeListener)}
-     * through queue
-     */
     public void addPropertyChangeListener(final String string, final PropertyChangeListener propertyChangeListener) {
         runMapping(new MapVoidAction("addPropertyChangeListener") {
             @Override
@@ -1441,10 +1201,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.checkImage(Image, int, int, ImageObserver)}
-     * through queue
-     */
     public int checkImage(final Image image, final int i, final int i1, final ImageObserver imageObserver) {
         return (runMapping(new MapIntegerAction("checkImage") {
             @Override
@@ -1454,9 +1210,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.checkImage(Image, ImageObserver)} through queue
-     */
     public int checkImage(final Image image, final ImageObserver imageObserver) {
         return (runMapping(new MapIntegerAction("checkImage") {
             @Override
@@ -1466,9 +1219,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.contains(int, int)} through queue
-     */
     public boolean contains(final int i, final int i1) {
         return (runMapping(new MapBooleanAction("contains") {
             @Override
@@ -1478,9 +1228,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.contains(Point)} through queue
-     */
     public boolean contains(final Point point) {
         return (runMapping(new MapBooleanAction("contains") {
             @Override
@@ -1490,9 +1237,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.createImage(int, int)} through queue
-     */
     public Image createImage(final int i, final int i1) {
         return (runMapping(new MapAction<Image>("createImage") {
             @Override
@@ -1502,9 +1246,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.createImage(ImageProducer)} through queue
-     */
     public Image createImage(final ImageProducer imageProducer) {
         return (runMapping(new MapAction<Image>("createImage") {
             @Override
@@ -1514,9 +1255,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.dispatchEvent(AWTEvent)} through queue
-     */
     public void dispatchEvent(final AWTEvent aWTEvent) {
         runMapping(new MapVoidAction("dispatchEvent") {
             @Override
@@ -1526,9 +1264,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.doLayout()} through queue
-     */
     public void doLayout() {
         runMapping(new MapVoidAction("doLayout") {
             @Override
@@ -1538,9 +1273,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.enableInputMethods(boolean)} through queue
-     */
     public void enableInputMethods(final boolean b) {
         runMapping(new MapVoidAction("enableInputMethods") {
             @Override
@@ -1550,9 +1282,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.getAlignmentX()} through queue
-     */
     public float getAlignmentX() {
         return (runMapping(new MapFloatAction("getAlignmentX") {
             @Override
@@ -1562,9 +1291,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getAlignmentY()} through queue
-     */
     public float getAlignmentY() {
         return (runMapping(new MapFloatAction("getAlignmentY") {
             @Override
@@ -1574,9 +1300,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getBackground()} through queue
-     */
     public Color getBackground() {
         return (runMapping(new MapAction<Color>("getBackground") {
             @Override
@@ -1586,9 +1309,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getBounds()} through queue
-     */
     public Rectangle getBounds() {
         return (runMapping(new MapAction<Rectangle>("getBounds") {
             @Override
@@ -1598,9 +1318,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getBounds(Rectangle)} through queue
-     */
     public Rectangle getBounds(final Rectangle rectangle) {
         return (runMapping(new MapAction<Rectangle>("getBounds") {
             @Override
@@ -1610,9 +1327,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getColorModel()} through queue
-     */
     public ColorModel getColorModel() {
         return (runMapping(new MapAction<ColorModel>("getColorModel") {
             @Override
@@ -1622,9 +1336,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getComponentAt(int, int)} through queue
-     */
     public Component getComponentAt(final int i, final int i1) {
         return (runMapping(new MapAction<Component>("getComponentAt") {
             @Override
@@ -1634,9 +1345,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getComponentAt(Point)} through queue
-     */
     public Component getComponentAt(final Point point) {
         return (runMapping(new MapAction<Component>("getComponentAt") {
             @Override
@@ -1646,9 +1354,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getComponentOrientation()} through queue
-     */
     public ComponentOrientation getComponentOrientation() {
         return (runMapping(new MapAction<ComponentOrientation>("getComponentOrientation") {
             @Override
@@ -1658,9 +1363,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getCursor()} through queue
-     */
     public Cursor getCursor() {
         return (runMapping(new MapAction<Cursor>("getCursor") {
             @Override
@@ -1670,9 +1372,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getDropTarget()} through queue
-     */
     public DropTarget getDropTarget() {
         return (runMapping(new MapAction<DropTarget>("getDropTarget") {
             @Override
@@ -1682,9 +1381,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getFont()} through queue
-     */
     public Font getFont() {
         return (runMapping(new MapAction<Font>("getFont") {
             @Override
@@ -1694,9 +1390,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getFontMetrics(Font)} through queue
-     */
     public FontMetrics getFontMetrics(final Font font) {
         return (runMapping(new MapAction<FontMetrics>("getFontMetrics") {
             @Override
@@ -1706,9 +1399,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getForeground()} through queue
-     */
     public Color getForeground() {
         return (runMapping(new MapAction<Color>("getForeground") {
             @Override
@@ -1718,9 +1408,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getGraphics()} through queue
-     */
     public Graphics getGraphics() {
         return (runMapping(new MapAction<Graphics>("getGraphics") {
             @Override
@@ -1730,9 +1417,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getHeight()} through queue
-     */
     public int getHeight() {
         return (runMapping(new MapIntegerAction("getHeight") {
             @Override
@@ -1742,9 +1426,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getInputContext()} through queue
-     */
     public InputContext getInputContext() {
         return (runMapping(new MapAction<InputContext>("getInputContext") {
             @Override
@@ -1754,9 +1435,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getInputMethodRequests()} through queue
-     */
     public InputMethodRequests getInputMethodRequests() {
         return (runMapping(new MapAction<InputMethodRequests>("getInputMethodRequests") {
             @Override
@@ -1766,9 +1444,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getLocale()} through queue
-     */
     public Locale getLocale() {
         return (runMapping(new MapAction<Locale>("getLocale") {
             @Override
@@ -1778,9 +1453,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getLocation()} through queue
-     */
     public Point getLocation() {
         return (runMapping(new MapAction<Point>("getLocation") {
             @Override
@@ -1790,9 +1462,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getLocation(Point)} through queue
-     */
     public Point getLocation(final Point point) {
         return (runMapping(new MapAction<Point>("getLocation") {
             @Override
@@ -1802,9 +1471,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getLocationOnScreen()} through queue
-     */
     public Point getLocationOnScreen() {
         return (runMapping(new MapAction<Point>("getLocationOnScreen") {
             @Override
@@ -1814,9 +1480,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getMaximumSize()} through queue
-     */
     public Dimension getMaximumSize() {
         return (runMapping(new MapAction<Dimension>("getMaximumSize") {
             @Override
@@ -1826,9 +1489,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getMinimumSize()} through queue
-     */
     public Dimension getMinimumSize() {
         return (runMapping(new MapAction<Dimension>("getMinimumSize") {
             @Override
@@ -1838,9 +1498,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getName()} through queue
-     */
     public String getName() {
         return (runMapping(new MapAction<String>("getName") {
             @Override
@@ -1850,9 +1507,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getParent()} through queue
-     */
     public Container getParent() {
         return (runMapping(new MapAction<Container>("getParent") {
             @Override
@@ -1862,9 +1516,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getPreferredSize()} through queue
-     */
     public Dimension getPreferredSize() {
         return (runMapping(new MapAction<Dimension>("getPreferredSize") {
             @Override
@@ -1874,9 +1525,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getSize()} through queue
-     */
     public Dimension getSize() {
         return (runMapping(new MapAction<Dimension>("getSize") {
             @Override
@@ -1886,9 +1534,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getSize(Dimension)} through queue
-     */
     public Dimension getSize(final Dimension dimension) {
         return (runMapping(new MapAction<Dimension>("getSize") {
             @Override
@@ -1898,9 +1543,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getToolkit()} through queue
-     */
     public Toolkit getToolkit() {
         return (runMapping(new MapAction<Toolkit>("getToolkit") {
             @Override
@@ -1910,9 +1552,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getTreeLock()} through queue
-     */
     public Object getTreeLock() {
         return (runMapping(new MapAction<Object>("getTreeLock") {
             @Override
@@ -1922,9 +1561,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getWidth()} through queue
-     */
     public int getWidth() {
         return (runMapping(new MapIntegerAction("getWidth") {
             @Override
@@ -1934,9 +1570,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getX()} through queue
-     */
     public int getX() {
         return (runMapping(new MapIntegerAction("getX") {
             @Override
@@ -1946,9 +1579,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.getY()} through queue
-     */
     public int getY() {
         return (runMapping(new MapIntegerAction("getY") {
             @Override
@@ -1958,9 +1588,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.hasFocus()} through queue
-     */
     public boolean hasFocus() {
         return (runMapping(new MapBooleanAction("hasFocus") {
             @Override
@@ -1970,10 +1597,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.imageUpdate(Image, int, int, int, int, int)}
-     * through queue
-     */
     public boolean imageUpdate(final Image image, final int i, final int i1, final int i2, final int i3, final int i4) {
         return (runMapping(new MapBooleanAction("imageUpdate") {
             @Override
@@ -1983,9 +1606,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.invalidate()} through queue
-     */
     public void invalidate() {
         runMapping(new MapVoidAction("invalidate") {
             @Override
@@ -1995,9 +1615,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.isDisplayable()} through queue
-     */
     public boolean isDisplayable() {
         return (runMapping(new MapBooleanAction("isDisplayable") {
             @Override
@@ -2007,9 +1624,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.isDoubleBuffered()} through queue
-     */
     public boolean isDoubleBuffered() {
         return (runMapping(new MapBooleanAction("isDoubleBuffered") {
             @Override
@@ -2019,9 +1633,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.isEnabled()} through queue
-     */
     public boolean isEnabled() {
         return (runMapping(new MapBooleanAction("isEnabled") {
             @Override
@@ -2031,9 +1642,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.isFocusTraversable()} through queue
-     */
     @Deprecated
     public boolean isFocusTraversable() {
         return (runMapping(new MapBooleanAction("isFocusTraversable") {
@@ -2044,9 +1652,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.isLightweight()} through queue
-     */
     public boolean isLightweight() {
         return (runMapping(new MapBooleanAction("isLightweight") {
             @Override
@@ -2056,9 +1661,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.isOpaque()} through queue
-     */
     public boolean isOpaque() {
         return (runMapping(new MapBooleanAction("isOpaque") {
             @Override
@@ -2068,9 +1670,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.isShowing()} through queue
-     */
     public boolean isShowing() {
         return (runMapping(new MapBooleanAction("isShowing") {
             @Override
@@ -2080,9 +1679,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.isValid()} through queue
-     */
     public boolean isValid() {
         return (runMapping(new MapBooleanAction("isValid") {
             @Override
@@ -2092,9 +1688,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.isVisible()} through queue
-     */
     public boolean isVisible() {
         return (runMapping(new MapBooleanAction("isVisible") {
             @Override
@@ -2104,9 +1697,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.list()} through queue
-     */
     public void list() {
         runMapping(new MapVoidAction("list") {
             @Override
@@ -2116,9 +1706,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.list(PrintStream)} through queue
-     */
     public void list(final PrintStream printStream) {
         runMapping(new MapVoidAction("list") {
             @Override
@@ -2128,9 +1715,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.list(PrintStream, int)} through queue
-     */
     public void list(final PrintStream printStream, final int i) {
         runMapping(new MapVoidAction("list") {
             @Override
@@ -2140,9 +1724,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.list(PrintWriter)} through queue
-     */
     public void list(final PrintWriter printWriter) {
         runMapping(new MapVoidAction("list") {
             @Override
@@ -2152,9 +1733,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.list(PrintWriter, int)} through queue
-     */
     public void list(final PrintWriter printWriter, final int i) {
         runMapping(new MapVoidAction("list") {
             @Override
@@ -2164,9 +1742,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.paint(Graphics)} through queue
-     */
     public void paint(final Graphics graphics) {
         runMapping(new MapVoidAction("paint") {
             @Override
@@ -2176,9 +1751,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.paintAll(Graphics)} through queue
-     */
     public void paintAll(final Graphics graphics) {
         runMapping(new MapVoidAction("paintAll") {
             @Override
@@ -2188,10 +1760,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.prepareImage(Image, int, int, ImageObserver)}
-     * through queue
-     */
     public boolean prepareImage(final Image image, final int i, final int i1, final ImageObserver imageObserver) {
         return (runMapping(new MapBooleanAction("prepareImage") {
             @Override
@@ -2201,9 +1769,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.prepareImage(Image, ImageObserver)} through queue
-     */
     public boolean prepareImage(final Image image, final ImageObserver imageObserver) {
         return (runMapping(new MapBooleanAction("prepareImage") {
             @Override
@@ -2213,9 +1778,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         }));
     }
 
-    /**
-     * Maps {@code Component.print(Graphics)} through queue
-     */
     public void print(final Graphics graphics) {
         runMapping(new MapVoidAction("print") {
             @Override
@@ -2225,9 +1787,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.printAll(Graphics)} through queue
-     */
     public void printAll(final Graphics graphics) {
         runMapping(new MapVoidAction("printAll") {
             @Override
@@ -2237,9 +1796,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.remove(MenuComponent)} through queue
-     */
     public void remove(final MenuComponent menuComponent) {
         runMapping(new MapVoidAction("remove") {
             @Override
@@ -2249,10 +1805,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.removeComponentListener(ComponentListener)}
-     * through queue
-     */
     public void removeComponentListener(final ComponentListener componentListener) {
         runMapping(new MapVoidAction("removeComponentListener") {
             @Override
@@ -2262,9 +1814,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.removeFocusListener(FocusListener)} through queue
-     */
     public void removeFocusListener(final FocusListener focusListener) {
         runMapping(new MapVoidAction("removeFocusListener") {
             @Override
@@ -2274,11 +1823,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps
-     * {@code Component.removeInputMethodListener(InputMethodListener)}
-     * through queue
-     */
     public void removeInputMethodListener(final InputMethodListener inputMethodListener) {
         runMapping(new MapVoidAction("removeInputMethodListener") {
             @Override
@@ -2288,9 +1832,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.removeKeyListener(KeyListener)} through queue
-     */
     public void removeKeyListener(final KeyListener keyListener) {
         runMapping(new MapVoidAction("removeKeyListener") {
             @Override
@@ -2300,9 +1841,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.removeMouseListener(MouseListener)} through queue
-     */
     public void removeMouseListener(final MouseListener mouseListener) {
         runMapping(new MapVoidAction("removeMouseListener") {
             @Override
@@ -2312,11 +1850,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps
-     * {@code Component.removeMouseMotionListener(MouseMotionListener)}
-     * through queue
-     */
     public void removeMouseMotionListener(final MouseMotionListener mouseMotionListener) {
         runMapping(new MapVoidAction("removeMouseMotionListener") {
             @Override
@@ -2326,9 +1859,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.removeNotify()} through queue
-     */
     public void removeNotify() {
         runMapping(new MapVoidAction("removeNotify") {
             @Override
@@ -2338,11 +1868,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps
-     * {@code Component.removePropertyChangeListener(PropertyChangeListener)}
-     * through queue
-     */
     public void removePropertyChangeListener(final PropertyChangeListener propertyChangeListener) {
         runMapping(new MapVoidAction("removePropertyChangeListener") {
             @Override
@@ -2352,11 +1877,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps
-     * {@code Component.removePropertyChangeListener(String, PropertyChangeListener)}
-     * through queue
-     */
     public void removePropertyChangeListener(final String string, final PropertyChangeListener propertyChangeListener) {
         runMapping(new MapVoidAction("removePropertyChangeListener") {
             @Override
@@ -2366,9 +1886,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.repaint()} through queue
-     */
     public void repaint() {
         runMapping(new MapVoidAction("repaint") {
             @Override
@@ -2378,9 +1895,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.repaint(int, int, int, int)} through queue
-     */
     public void repaint(final int i, final int i1, final int i2, final int i3) {
         runMapping(new MapVoidAction("repaint") {
             @Override
@@ -2390,9 +1904,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.repaint(long)} through queue
-     */
     public void repaint(final long l) {
         runMapping(new MapVoidAction("repaint") {
             @Override
@@ -2402,9 +1913,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.repaint(long, int, int, int, int)} through queue
-     */
     public void repaint(final long l, final int i, final int i1, final int i2, final int i3) {
         runMapping(new MapVoidAction("repaint") {
             @Override
@@ -2414,9 +1922,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.requestFocus()} through queue
-     */
     public void requestFocus() {
         runMapping(new MapVoidAction("requestFocus") {
             @Override
@@ -2426,9 +1931,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.setBackground(Color)} through queue
-     */
     public void setBackground(final Color color) {
         runMapping(new MapVoidAction("setBackground") {
             @Override
@@ -2438,9 +1940,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.setBounds(int, int, int, int)} through queue
-     */
     public void setBounds(final int i, final int i1, final int i2, final int i3) {
         runMapping(new MapVoidAction("setBounds") {
             @Override
@@ -2450,9 +1949,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.setBounds(Rectangle)} through queue
-     */
     public void setBounds(final Rectangle rectangle) {
         runMapping(new MapVoidAction("setBounds") {
             @Override
@@ -2462,10 +1958,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.setComponentOrientation(ComponentOrientation)}
-     * through queue
-     */
     public void setComponentOrientation(final ComponentOrientation componentOrientation) {
         runMapping(new MapVoidAction("setComponentOrientation") {
             @Override
@@ -2475,9 +1967,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.setCursor(Cursor)} through queue
-     */
     public void setCursor(final Cursor cursor) {
         runMapping(new MapVoidAction("setCursor") {
             @Override
@@ -2487,9 +1976,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.setDropTarget(DropTarget)} through queue
-     */
     public void setDropTarget(final DropTarget dropTarget) {
         runMapping(new MapVoidAction("setDropTarget") {
             @Override
@@ -2499,9 +1985,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.setEnabled(boolean)} through queue
-     */
     public void setEnabled(final boolean b) {
         runMapping(new MapVoidAction("setEnabled") {
             @Override
@@ -2511,9 +1994,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.setFont(Font)} through queue
-     */
     public void setFont(final Font font) {
         runMapping(new MapVoidAction("setFont") {
             @Override
@@ -2523,9 +2003,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.setForeground(Color)} through queue
-     */
     public void setForeground(final Color color) {
         runMapping(new MapVoidAction("setForeground") {
             @Override
@@ -2535,9 +2012,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.setLocale(Locale)} through queue
-     */
     public void setLocale(final Locale locale) {
         runMapping(new MapVoidAction("setLocale") {
             @Override
@@ -2547,9 +2021,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.setLocation(int, int)} through queue
-     */
     public void setLocation(final int i, final int i1) {
         runMapping(new MapVoidAction("setLocation") {
             @Override
@@ -2559,9 +2030,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.setLocation(Point)} through queue
-     */
     public void setLocation(final Point point) {
         runMapping(new MapVoidAction("setLocation") {
             @Override
@@ -2571,9 +2039,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.setName(String)} through queue
-     */
     public void setName(final String string) {
         runMapping(new MapVoidAction("setName") {
             @Override
@@ -2583,9 +2048,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.setSize(int, int)} through queue
-     */
     public void setSize(final int i, final int i1) {
         runMapping(new MapVoidAction("setSize") {
             @Override
@@ -2595,9 +2057,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.setSize(Dimension)} through queue
-     */
     public void setSize(final Dimension dimension) {
         runMapping(new MapVoidAction("setSize") {
             @Override
@@ -2607,9 +2066,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.setVisible(boolean)} through queue
-     */
     public void setVisible(final boolean b) {
         runMapping(new MapVoidAction("setVisible") {
             @Override
@@ -2619,9 +2075,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.transferFocus()} through queue
-     */
     public void transferFocus() {
         runMapping(new MapVoidAction("transferFocus") {
             @Override
@@ -2631,9 +2084,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.update(Graphics)} through queue
-     */
     public void update(final Graphics graphics) {
         runMapping(new MapVoidAction("update") {
             @Override
@@ -2643,9 +2093,6 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         });
     }
 
-    /**
-     * Maps {@code Component.validate()} through queue
-     */
     public void validate() {
         runMapping(new MapVoidAction("validate") {
             @Override

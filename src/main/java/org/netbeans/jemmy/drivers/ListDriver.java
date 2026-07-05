@@ -31,11 +31,5 @@ import org.netbeans.jemmy.operators.ComponentOperator;
  */
 public interface ListDriver {
 
-    /**
-     * Selects an item.
-     *
-     * @param oper List operator.
-     * @param index Item index.
-     */
     public void selectItem(ComponentOperator oper, int index);
 }

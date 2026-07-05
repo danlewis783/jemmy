@@ -35,21 +35,19 @@ import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
-import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.drivers.DriverManager;
 import org.netbeans.jemmy.drivers.FrameDriver;
 
 /**
- * <BR><BR>Timeouts used: <BR>
- * FrameWaiter.WaitFrameTimeout - time to wait frame displayed <BR>
- * FrameWaiter.AfterFrameTimeout - time to sleep after frame has been dispayed
- * <BR>
- * ComponentOperator.WaitStateTimeout - time to wait for text <BR>.
+ * Timeouts used:
+ * <ul>
+ * <li>FrameWaiter.WaitFrameTimeout - time to wait frame displayed</li>
+ * <li>FrameWaiter.AfterFrameTimeout - time to sleep after frame has been dispayed</li>
+ * <li>ComponentOperator.WaitStateTimeout - time to wait for text</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
 public class FrameOperator extends WindowOperator implements Outputable {
@@ -92,57 +90,30 @@ public class FrameOperator extends WindowOperator implements Outputable {
     TestOut output;
     FrameDriver driver;
 
-    /**
-     * Constructs a FrameOperator object.
-     *
-     * @param w window
-     */
     public FrameOperator(Frame w) {
         super(w);
         driver = DriverManager.getFrameDriver(getClass());
     }
 
-    /**
-     * Constructs a FrameOperator object.
-     *
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     * @param env an operator to copy environment from.
-     */
     public FrameOperator(ComponentChooser chooser, int index, Operator env) {
         this(waitFrame(new FrameFinder(chooser), index, env.getTimeouts(), env.getOutput()));
         copyEnvironment(env);
     }
 
-    /**
-     * Constructs a FrameOperator object.
-     *
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public FrameOperator(ComponentChooser chooser, int index) {
         this(chooser, index, Operator.getEnvironmentOperator());
     }
 
-    /**
-     * Constructs a FrameOperator object.
-     *
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public FrameOperator(ComponentChooser chooser) {
         this(chooser, 0);
     }
 
     /**
-     * Constructor. Waits for the frame with "title" subtitle. Constructor can
+     * Waits for the frame with "title" subtitle. Constructor can
      * be used in complicated cases when output or timeouts should differ from
      * default.
      *
-     * @param title a window title
-     * @param index Ordinal component index.
-     * @param env an operator to copy environment from.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public FrameOperator(String title, int index, Operator env) {
         this(waitFrame(new FrameByTitleFinder(title, env.getComparator()), index, env.getTimeouts(), env.getOutput()));
@@ -150,40 +121,32 @@ public class FrameOperator extends WindowOperator implements Outputable {
     }
 
     /**
-     * Constructor. Waits for the frame with "title" subtitle. Uses current
+     * Waits for the frame with "title" subtitle. Uses current
      * timeouts and output values.
      *
-     * @param title a window title
-     * @param index Ordinal component index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @see JemmyProperties#getCurrentTimeouts()
      * @see JemmyProperties#getCurrentOutput()
-     * @throws TimeoutExpiredException
      */
     public FrameOperator(String title, int index) {
         this(title, index, ComponentOperator.getEnvironmentOperator());
     }
 
     /**
-     * Constructor. Waits for the frame with "title" subtitle. Uses current
+     * Waits for the frame with "title" subtitle. Uses current
      * timeouts and output values.
      *
-     * @param title a window title
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @see JemmyProperties#getCurrentTimeouts()
      * @see JemmyProperties#getCurrentOutput()
-     * @throws TimeoutExpiredException
      */
     public FrameOperator(String title) {
         this(title, 0);
     }
 
     /**
-     * Constructor. Waits for the index'th frame. Uses current timeout and
+     * Waits for the index'th frame. Uses current timeout and
      * output for waiting and to init operator.
-     *
-     * @param index Ordinal component index.
-     * @throws TimeoutExpiredException
      */
     public FrameOperator(int index) {
         this(waitFrame(
@@ -195,10 +158,8 @@ public class FrameOperator extends WindowOperator implements Outputable {
     }
 
     /**
-     * Constructor. Waits for the first frame. Uses current timeout and output
+     * Waits for the first frame. Uses current timeout and output
      * for waiting and to init operator.
-     *
-     * @throws TimeoutExpiredException
      */
     public FrameOperator() {
         this(0);
@@ -224,8 +185,6 @@ public class FrameOperator extends WindowOperator implements Outputable {
 
     /**
      * Waits for title. Uses getComparator() comparator.
-     *
-     * @param title Title to wait for.
      */
     public void waitTitle(final String title) {
         getOutput().printLine("Wait \"" + title + "\" title of frame \n    : " + toStringSource());
@@ -233,9 +192,6 @@ public class FrameOperator extends WindowOperator implements Outputable {
         waitState(new FrameByTitleFinder(title, getComparator()));
     }
 
-    /**
-     * Iconifies the frame.
-     */
     public void iconify() {
         output.printLine("Iconifying frame\n    " + toStringSource());
         output.printGolden("Iconifying frame");
@@ -245,9 +201,6 @@ public class FrameOperator extends WindowOperator implements Outputable {
         }
     }
 
-    /**
-     * Deiconifies the frame.
-     */
     public void deiconify() {
         output.printLine("Deiconifying frame\n    " + toStringSource());
         output.printGolden("Deiconifying frame");
@@ -257,9 +210,6 @@ public class FrameOperator extends WindowOperator implements Outputable {
         }
     }
 
-    /**
-     * Maximizes the frame.
-     */
     public void maximize() {
         output.printLine("Maximizing frame\n    " + toStringSource());
         output.printGolden("Maximizing frame");
@@ -269,9 +219,6 @@ public class FrameOperator extends WindowOperator implements Outputable {
         }
     }
 
-    /**
-     * Demaximizes the frame.
-     */
     public void demaximize() {
         output.printLine("Demaximizing frame\n    " + toStringSource());
         output.printGolden("Demaximizing frame");
@@ -283,8 +230,6 @@ public class FrameOperator extends WindowOperator implements Outputable {
 
     /**
      * Waits for the frame to have a specified state.
-     *
-     * @param state a state for the frame to have.
      */
     public void waitState(final int state) {
         getOutput().printLine("Wait frame to have " + Integer.toString(state) + " state \n    : " + toStringSource());
@@ -327,9 +272,6 @@ public class FrameOperator extends WindowOperator implements Outputable {
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code Frame.getIconImage()} through queue
-     */
     public Image getIconImage() {
         return (runMapping(new MapAction<Image>("getIconImage") {
             @Override
@@ -339,9 +281,6 @@ public class FrameOperator extends WindowOperator implements Outputable {
         }));
     }
 
-    /**
-     * Maps {@code Frame.getMenuBar()} through queue
-     */
     public MenuBar getMenuBar() {
         return (runMapping(new MapAction<MenuBar>("getMenuBar") {
             @Override
@@ -351,9 +290,6 @@ public class FrameOperator extends WindowOperator implements Outputable {
         }));
     }
 
-    /**
-     * Maps {@code Frame.getState()} through queue
-     */
     public int getState() {
         return (runMapping(new MapIntegerAction("getState") {
             @Override
@@ -365,6 +301,7 @@ public class FrameOperator extends WindowOperator implements Outputable {
 
     /**
      * Maps {@code Frame.getExtendedState()} through queue
+     *
      * @return the state of the frame
      */
     public int getExtendedState() {
@@ -376,9 +313,6 @@ public class FrameOperator extends WindowOperator implements Outputable {
         }));
     }
 
-    /**
-     * Maps {@code Frame.getTitle()} through queue
-     */
     public String getTitle() {
         return (runMapping(new MapAction<String>("getTitle") {
             @Override
@@ -388,9 +322,6 @@ public class FrameOperator extends WindowOperator implements Outputable {
         }));
     }
 
-    /**
-     * Maps {@code Frame.isResizable()} through queue
-     */
     public boolean isResizable() {
         return (runMapping(new MapBooleanAction("isResizable") {
             @Override
@@ -400,9 +331,6 @@ public class FrameOperator extends WindowOperator implements Outputable {
         }));
     }
 
-    /**
-     * Maps {@code Frame.setIconImage(Image)} through queue
-     */
     public void setIconImage(final Image image) {
         runMapping(new MapVoidAction("setIconImage") {
             @Override
@@ -412,9 +340,6 @@ public class FrameOperator extends WindowOperator implements Outputable {
         });
     }
 
-    /**
-     * Maps {@code Frame.setMenuBar(MenuBar)} through queue
-     */
     public void setMenuBar(final MenuBar menuBar) {
         runMapping(new MapVoidAction("setMenuBar") {
             @Override
@@ -424,9 +349,6 @@ public class FrameOperator extends WindowOperator implements Outputable {
         });
     }
 
-    /**
-     * Maps {@code Frame.setResizable(boolean)} through queue
-     */
     public void setResizable(final boolean b) {
         runMapping(new MapVoidAction("setResizable") {
             @Override
@@ -436,9 +358,6 @@ public class FrameOperator extends WindowOperator implements Outputable {
         });
     }
 
-    /**
-     * Maps {@code Frame.setState(int)} through queue
-     */
     public void setState(final int i) {
         runMapping(new MapVoidAction("setState") {
             @Override
@@ -450,7 +369,6 @@ public class FrameOperator extends WindowOperator implements Outputable {
 
     /**
      * Maps {@code Frame.setExtendedState(int)} through queue
-     * @param state of the frame
      */
     public void setExtendedState(final int state) {
         runMapping(new MapAction<Void>("setExtendedState") {
@@ -462,9 +380,6 @@ public class FrameOperator extends WindowOperator implements Outputable {
         });
     }
 
-    /**
-     * Maps {@code Frame.setTitle(String)} through queue
-     */
     public void setTitle(final String string) {
         runMapping(new MapVoidAction("setTitle") {
             @Override
@@ -480,12 +395,7 @@ public class FrameOperator extends WindowOperator implements Outputable {
      * A method to be used from subclasses. Uses timeouts and output passed as
      * parameters during the waiting.
      *
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
-     * @param timeouts timeouts to be used during the waiting.
-     * @param output an output to be used during the waiting.
      * @return Component instance or null if component was not found.
-     * @throws TimeoutExpiredException
      */
     protected static Frame waitFrame(ComponentChooser chooser, int index, Timeouts timeouts, TestOut output) {
         try {
@@ -504,18 +414,10 @@ public class FrameOperator extends WindowOperator implements Outputable {
      */
     public static class FrameFinder extends Finder {
 
-        /**
-         * Constructs FrameFinder.
-         *
-         * @param sf other searching criteria.
-         */
         public FrameFinder(ComponentChooser sf) {
             super(Frame.class, sf);
         }
 
-        /**
-         * Constructs FrameFinder.
-         */
         public FrameFinder() {
             super(Frame.class);
         }
@@ -529,22 +431,11 @@ public class FrameOperator extends WindowOperator implements Outputable {
         String title;
         StringComparator comparator;
 
-        /**
-         * Constructs FrameByTitleFinder.
-         *
-         * @param t a text pattern
-         * @param comparator specifies string comparision algorithm.
-         */
         public FrameByTitleFinder(String t, StringComparator comparator) {
             title = t;
             this.comparator = comparator;
         }
 
-        /**
-         * Constructs FrameByTitleFinder.
-         *
-         * @param t a text pattern
-         */
         public FrameByTitleFinder(String t) {
             this(t, Operator.getDefaultStringComparator());
         }

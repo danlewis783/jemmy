@@ -31,21 +31,18 @@ import java.awt.event.InvocationEvent;
 import java.lang.reflect.InvocationTargetException;
 
 /**
- *
  * Provides functionality to work with java.awt.EventQueue empty.
- *
- * <BR><BR>Timeouts used: <BR>
- * QueueTool.WaitQueueEmptyTimeout - timeout to wait queue emptied<BR>
- * QueueTool.QueueCheckingDelta - time delta to check result<BR>
- * QueueTool.LockTimeout - time to wait queue locked after lock action has been
- * put there<BR>
- * QueueTool.InvocationTimeout - time for action was put into queue to be
- * started<BR>
- * QueueTool.MaximumLockingTime - maximum time to lock queue.<br>
+ * <p>
+ * Timeouts used:
+ * <ul>
+ * <li>QueueTool.WaitQueueEmptyTimeout - timeout to wait queue emptied</li>
+ * <li>QueueTool.QueueCheckingDelta - time delta to check result</li>
+ * <li>QueueTool.LockTimeout - time to wait queue locked after lock action has been put there</li>
+ * <li>QueueTool.InvocationTimeout - time for action was put into queue to be started</li>
+ * <li>QueueTool.MaximumLockingTime - maximum time to lock queue.</li>
+ * </ul>
  *
  * @see Timeouts
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
 public class QueueTool implements Outputable, Timeoutable {
@@ -63,9 +60,6 @@ public class QueueTool implements Outputable, Timeoutable {
     private Locker locker;
     private Waiter<String, Void> lockWaiter;
 
-    /**
-     * Constructor.
-     */
     public QueueTool() {
         locker = new Locker();
         lockWaiter = new Waiter<String, Void>(new Waitable<String, Void>() {
@@ -119,8 +113,6 @@ public class QueueTool implements Outputable, Timeoutable {
      * Shortcuts event if
      * {@code ((JemmyProperties.getCurrentDispatchingModel() & JemmyProperties.SHORTCUT_MODEL_MASK) != 0)}
      * and if executed in the dispatch thread. Otherwise posts event.
-     *
-     * @param event Event to dispatch.
      */
     public static void processEvent(AWTEvent event) {
         if ((JemmyProperties.getCurrentDispatchingModel() & JemmyProperties.SHORTCUT_MODEL_MASK) != 0) {
@@ -136,8 +128,6 @@ public class QueueTool implements Outputable, Timeoutable {
 
     /**
      * Simply posts events into the system event queue.
-     *
-     * @param event Event to dispatch.
      */
     public static void postEvent(AWTEvent event) {
         getQueue().postEvent(event);
@@ -145,8 +135,6 @@ public class QueueTool implements Outputable, Timeoutable {
 
     /**
      * Dispatches event ahead of all events staying in the event queue.
-     *
-     * @param event an event to be shortcut.
      */
     public static void shortcutEvent(AWTEvent event) {
         installQueue();
@@ -188,7 +176,6 @@ public class QueueTool implements Outputable, Timeoutable {
     /**
      * Defines current timeouts.
      *
-     * @param ts ?t? A collection of timeout assignments.
      * @see org.netbeans.jemmy.Timeouts
      * @see org.netbeans.jemmy.Timeoutable
      * @see #getTimeouts
@@ -243,8 +230,6 @@ public class QueueTool implements Outputable, Timeoutable {
     /**
      * Waits for system event queue empty. Uses
      * "QueueTool.WaitQueueEmptyTimeout" milliseconds to wait.
-     *
-     * @throws TimeoutExpiredException
      */
     public void waitEmpty() {
         Waiter<String, Void> waiter = new Waiter<>(new Waitable<String, Void>() {
@@ -292,9 +277,6 @@ public class QueueTool implements Outputable, Timeoutable {
      * Waits for system event queue be empty for {@code emptyTime}
      * milliseconds. Uses "QueueTool.WaitQueueEmptyTimeout" milliseconds to
      * wait.
-     *
-     * @param emptyTime time for the queue to stay empty.
-     * @throws TimeoutExpiredException
      */
     public void waitEmpty(long emptyTime) {
 
@@ -322,8 +304,6 @@ public class QueueTool implements Outputable, Timeoutable {
 
     /**
      * Invokes action through EventQueue. Does not wait for it execution.
-     *
-     * @param action an action to be invoked.
      */
     public void invoke(QueueAction<?> action) {
         output.printTrace("Invoking \"" + action.getDescription() + "\" action through event queue");
@@ -333,7 +313,6 @@ public class QueueTool implements Outputable, Timeoutable {
     /**
      * Invokes runnable through EventQueue. Does not wait for it execution.
      *
-     * @param runnable a runnable to be invoked.
      * @return QueueAction instance which can be use for execution monitoring.
      * @see QueueTool.QueueAction
      */
@@ -346,7 +325,6 @@ public class QueueTool implements Outputable, Timeoutable {
     /**
      * Invokes action through EventQueue. Does not wait for it execution.
      *
-     * @param action an action to be invoked.
      * @param param {@code action.launch(Object)} method parameter.
      * @return QueueAction instance which can be use for execution monitoring.
      * @see QueueTool.QueueAction
@@ -362,7 +340,6 @@ public class QueueTool implements Outputable, Timeoutable {
      * through the event queue. Otherwise executes {@code action.launch()}
      * method directly.
      *
-     * @param action anaction to be executed.
      * @return Action result.
      */
     public <R> R invokeSmoothly(QueueAction<R> action) {
@@ -381,8 +358,6 @@ public class QueueTool implements Outputable, Timeoutable {
      * Being executed outside of AWT dispatching thread, invokes a runnable
      * through the event queue. Otherwise executes {@code runnable.run()}
      * method directly.
-     *
-     * @param runnable a runnable to be executed.
      */
     public void invokeSmoothly(Runnable runnable) {
         if (!EventQueue.isDispatchThread()) {
@@ -397,8 +372,6 @@ public class QueueTool implements Outputable, Timeoutable {
      * through the event queue. Otherwise executes
      * {@code action.launch(Object)} method directly.
      *
-     * @param action anaction to be executed.
-     * @param param an action parameter
      * @return Action result.
      */
     public <R, P> R invokeSmoothly(Action<R, P> action, P param) {
@@ -412,7 +385,6 @@ public class QueueTool implements Outputable, Timeoutable {
     /**
      * Invokes action through EventQueue. Waits for it execution.
      *
-     * @param action an action to be invoked.
      * @return a result of action
      * @throws TimeoutExpiredException if action was not executed in
      * "QueueTool.InvocationTimeout" milliseconds.
@@ -453,7 +425,6 @@ public class QueueTool implements Outputable, Timeoutable {
     /**
      * Invokes runnable through EventQueue. Waits for it execution.
      *
-     * @param runnable a runnable to be invoked.
      * @throws TimeoutExpiredException if runnable was not executed in
      * "QueueTool.InvocationTimeout" milliseconds.
      */
@@ -466,8 +437,6 @@ public class QueueTool implements Outputable, Timeoutable {
      * TimeoutExpiredException if action was not executed in
      * "QueueTool.InvocationTimeout" milliseconds.
      *
-     * @param action an action to be invoked.
-     * @param param action.launch(Object method parameter.
      * @return a result of action
      * @throws TimeoutExpiredException if action was not executed in
      * "QueueTool.InvocationTimeout" milliseconds.
@@ -481,7 +450,6 @@ public class QueueTool implements Outputable, Timeoutable {
      * "QueueTool.MaximumLockingTime" milliseconds.
      *
      * @see #unlock()
-     * @throws TimeoutExpiredException
      */
     public void lock() {
         output.printTrace("Locking queue.");
@@ -510,8 +478,6 @@ public class QueueTool implements Outputable, Timeoutable {
     /**
      * Locks event queue for "time" milliseconds. Returns immediately after
      * locking.
-     *
-     * @param time a time to lock the queue for.
      */
     public void lock(long time) {
         output.printTrace("Locking queue for " + Long.toString(time) + " milliseconds");
@@ -541,11 +507,6 @@ public class QueueTool implements Outputable, Timeoutable {
         private R result;
         private String description;
 
-        /**
-         * Constructor.
-         *
-         * @param description a description.
-         */
         public QueueAction(String description) {
             this.description = description;
             finished = false;
@@ -561,8 +522,6 @@ public class QueueTool implements Outputable, Timeoutable {
          */
         public abstract R launch() throws Exception;
 
-        /**
-         */
         @Override
         public final void run() {
             finished = false;

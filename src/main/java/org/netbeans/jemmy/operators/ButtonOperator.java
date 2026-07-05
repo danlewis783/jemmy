@@ -32,24 +32,20 @@ import java.util.Hashtable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
-import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.Timeoutable;
 import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.drivers.ButtonDriver;
 import org.netbeans.jemmy.drivers.DriverManager;
 
 /**
- *
- * <BR><BR>Timeouts used: <BR>
- * ButtonOperator.PushButtonTimeout - time between button pressing and
- * releasing<BR>
- * ComponentOperator.WaitComponentTimeout - time to wait button displayed <BR>
- * ComponentOperator.WaitComponentEnabledTimeout - time to wait button enabled
- * <BR>.
+ * Timeouts used:
+ * <ul>
+ * <li>ButtonOperator.PushButtonTimeout - time between button pressing and releasing</li>
+ * <li>ComponentOperator.WaitComponentTimeout - time to wait button displayed</li>
+ * <li>ComponentOperator.WaitComponentEnabledTimeout - time to wait button enabled</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
 public class ButtonOperator extends ComponentOperator implements Timeoutable, Outputable {
@@ -69,8 +65,6 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
     ButtonDriver driver;
 
     /**
-     * Constructor.
-     *
      * @param b The {@code java.awt.Button} managed by this instance.
      */
     public ButtonOperator(Button b) {
@@ -78,30 +72,17 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
         driver = DriverManager.getButtonDriver(getClass());
     }
 
-    /**
-     * Constructs a ButtonOperator object.
-     *
-     * @param cont container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public ButtonOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((Button) cont.waitSubComponent(new ButtonFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a ButtonOperator object.
-     *
-     * @param cont container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public ButtonOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits for a component in a container to show. The component
+     * Waits for a component in a container to show. The component
      * is identified as the {@code index+1}'th {@code java.awt.Button}
      * that shows, lies below the container in the display containment
      * hierarchy, and that has the desired text. Uses cont's timeout and output
@@ -109,11 +90,9 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
      *
      * @param cont The operator for a container containing the sought for
      * button.
-     * @param text Button text.
      * @param index Ordinal component index. The first component has
      * {@code index} 0.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public ButtonOperator(ContainerOperator<?> cont, String text, int index) {
         this((Button) waitComponent(cont, new ButtonByLabelFinder(text, cont.getComparator()), index));
@@ -121,7 +100,7 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
     }
 
     /**
-     * Constructor. Waits for a component in a container to show. The component
+     * Waits for a component in a container to show. The component
      * is identified as the first {@code java.awt.Button} that shows, lies
      * below the container in the display containment hierarchy, and that has
      * the desired text. Uses cont's timeout and output for waiting and to init
@@ -129,23 +108,19 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
      *
      * @param cont The operator for a container containing the sought for
      * button.
-     * @param text Button text.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public ButtonOperator(ContainerOperator<?> cont, String text) {
         this(cont, text, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
      * @param cont The operator for a container containing the sought for
      * button.
-     * @param index Ordinal component index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public ButtonOperator(ContainerOperator<?> cont, int index) {
         this((Button) waitComponent(cont, new ButtonFinder(), index));
@@ -153,13 +128,12 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
      * @param cont The operator for a container containing the sought for
      * button.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public ButtonOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -171,8 +145,6 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
      * @param cont Container in which to search for the component. The container
      * lies above the component in the display containment hierarchy. The
      * containment need not be direct.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation,
-     * defining and applying search criteria.
      * @param index Ordinal component index. The first {@code index} is 0.
      * @return Button instance or null if component was not found.
      */
@@ -186,8 +158,6 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
      * @param cont Container in which to search for the component. The container
      * lies above the component in the display containment hierarchy. The
      * containment need not be direct.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation,
-     * defining and applying search criteria.
      * @return Button instance or null if component was not found.
      */
     public static Button findButton(Container cont, ComponentChooser chooser) {
@@ -197,11 +167,6 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
     /**
      * Searches Button by text.
      *
-     * @param cont Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return Button instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -212,10 +177,6 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
     /**
      * Searches Button by text.
      *
-     * @param cont Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return Button instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -226,11 +187,7 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
     /**
      * Waits Button in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return Button instance.
-     * @throws TimeoutExpiredException
      */
     public static Button waitButton(Container cont, ComponentChooser chooser, int index) {
         return (Button) waitComponent(cont, new ButtonFinder(chooser), index);
@@ -239,10 +196,7 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
     /**
      * Waits 0'th Button in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return Button instance.
-     * @throws TimeoutExpiredException
      */
     public static Button waitButton(Container cont, ComponentChooser chooser) {
         return waitButton(cont, chooser, 0);
@@ -251,14 +205,8 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
     /**
      * Waits Button by text.
      *
-     * @param cont Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return Button instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static Button waitButton(Container cont, String text, boolean ce, boolean ccs, int index) {
         return waitButton(cont, new ButtonByLabelFinder(text, new DefaultStringComparator(ce, ccs)), index);
@@ -267,13 +215,8 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
     /**
      * Waits Button by text.
      *
-     * @param cont Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return Button instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static Button waitButton(Container cont, String text, boolean ce, boolean ccs) {
         return waitButton(cont, text, ce, ccs, 0);
@@ -314,8 +257,6 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
 
     /**
      * Pushes the button by mouse click.
-     *
-     * @throws TimeoutExpiredException
      */
     public void push() {
         output.printLine("Push button\n    :" + toStringSource());
@@ -338,8 +279,6 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
 
     /**
      * Press the button by mouse.
-     *
-     * @throws TimeoutExpiredException
      */
     public void press() {
         output.printLine("Press button\n    :" + toStringSource());
@@ -349,8 +288,6 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
 
     /**
      * Releases the button by mouse.
-     *
-     * @throws TimeoutExpiredException
      */
     public void release() {
         output.printLine("Release button\n    :" + toStringSource());
@@ -372,9 +309,6 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code Button.addActionListener(ActionListener)} through queue
-     */
     public void addActionListener(final ActionListener actionListener) {
         runMapping(new MapVoidAction("addActionListener") {
             @Override
@@ -384,9 +318,6 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code Button.getActionCommand()} through queue
-     */
     public String getActionCommand() {
         return (runMapping(new MapAction<String>("getActionCommand") {
             @Override
@@ -396,9 +327,6 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code Button.getLabel()} through queue
-     */
     public String getLabel() {
         return (runMapping(new MapAction<String>("getLabel") {
             @Override
@@ -408,9 +336,6 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code Button.removeActionListener(ActionListener)} through queue
-     */
     public void removeActionListener(final ActionListener actionListener) {
         runMapping(new MapVoidAction("removeActionListener") {
             @Override
@@ -420,9 +345,6 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code Button.setActionCommand(String)} through queue
-     */
     public void setActionCommand(final String string) {
         runMapping(new MapVoidAction("setActionCommand") {
             @Override
@@ -432,9 +354,6 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code Button.setLabel(String)} through queue
-     */
     public void setLabel(final String string) {
         runMapping(new MapVoidAction("setLabel") {
             @Override
@@ -454,22 +373,11 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
         String label;
         StringComparator comparator;
 
-        /**
-         * Constructs ButtonByLabelFinder.
-         *
-         * @param lb a text pattern
-         * @param comparator specifies string comparision algorithm.
-         */
         public ButtonByLabelFinder(String lb, StringComparator comparator) {
             label = lb;
             this.comparator = comparator;
         }
 
-        /**
-         * Constructs ButtonByLabelFinder.
-         *
-         * @param lb a text pattern
-         */
         public ButtonByLabelFinder(String lb) {
             this(lb, Operator.getDefaultStringComparator());
         }
@@ -502,8 +410,6 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
 
         /**
          * Constructs AbstractButtonFinder.
-         *
-         * @param sf other searching criteria.
          */
         public ButtonFinder(ComponentChooser sf) {
             super(Button.class, sf);

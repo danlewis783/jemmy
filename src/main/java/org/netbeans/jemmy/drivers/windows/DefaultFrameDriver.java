@@ -58,11 +58,11 @@ public class DefaultFrameDriver extends LightSupportiveDriver implements FrameDr
         ((FrameOperator) oper).setState(Frame.NORMAL);
     }
 
-    /** Maximizes the frame.
+    /**
+     * Maximizes the frame.
      *
-     * @param oper Frame operator.
      * @throws UnsupportedOperatorException if operator class name is not in
-     *         the list of supported classes names
+     * the list of supported classes names
      */
     @Override
     public void maximize(ComponentOperator oper) {
@@ -70,11 +70,11 @@ public class DefaultFrameDriver extends LightSupportiveDriver implements FrameDr
         ((FrameOperator) oper).setExtendedState(Frame.MAXIMIZED_BOTH);
     }
 
-    /** Demaximizes the frame.
+    /**
+     * Demaximizes the frame.
      *
-     * @param oper Frame operator.
      * @throws UnsupportedOperatorException if operator class name is not in
-     *         the list of supported classes names
+     * the list of supported classes names
      */
     @Override
     public void demaximize(ComponentOperator oper) {

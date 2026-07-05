@@ -28,20 +28,16 @@ import java.awt.Container;
 import java.util.Hashtable;
 import javax.swing.JButton;
 import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.TimeoutExpiredException;
 
 /**
- *
- * <BR><BR>Timeouts used: <BR>
- * AbstractButtonOperator.PushButtonTimeout - time between button pressing and
- * releasing<BR>
- * ComponentOperator.WaitComponentTimeout - time to wait button displayed <BR>
- * ComponentOperator.WaitComponentEnabledTimeout - time to wait button enabled
- * <BR>.
+ * Timeouts used:
+ * <ul>
+ * <li>AbstractButtonOperator.PushButtonTimeout - time between button pressing and releasing</li>
+ * <li>ComponentOperator.WaitComponentTimeout - time to wait button displayed</li>
+ * <li>ComponentOperator.WaitComponentEnabledTimeout - time to wait button enabled</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
 public class JButtonOperator extends AbstractButtonOperator {
@@ -53,46 +49,24 @@ public class JButtonOperator extends AbstractButtonOperator {
      */
     public static final String IS_DEFAULT_DPROP = "Default button";
 
-    /**
-     * Constructor.
-     *
-     * @param b a component
-     */
     public JButtonOperator(JButton b) {
         super(b);
     }
 
-    /**
-     * Constructs a JButtonOperator object.
-     *
-     * @param cont container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public JButtonOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((JButton) cont.waitSubComponent(new JButtonFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a JButtonOperator object.
-     *
-     * @param cont container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public JButtonOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont container
-     * @param text Button text.
-     * @param index Ordinal component index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public JButtonOperator(ContainerOperator<?> cont, String text, int index) {
         this((JButton) waitComponent(
@@ -103,25 +77,18 @@ public class JButtonOperator extends AbstractButtonOperator {
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont container
-     * @param text Button text.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public JButtonOperator(ContainerOperator<?> cont, String text) {
         this(cont, text, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont container
-     * @param index Ordinal component index.
-     * @throws TimeoutExpiredException
      */
     public JButtonOperator(ContainerOperator<?> cont, int index) {
         this((JButton) waitComponent(cont, new JButtonFinder(), index));
@@ -129,11 +96,8 @@ public class JButtonOperator extends AbstractButtonOperator {
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont container
-     * @throws TimeoutExpiredException
      */
     public JButtonOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -142,9 +106,6 @@ public class JButtonOperator extends AbstractButtonOperator {
     /**
      * Searches JButton in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JButton instance or null if component was not found.
      */
     public static JButton findJButton(Container cont, ComponentChooser chooser, int index) {
@@ -154,8 +115,6 @@ public class JButtonOperator extends AbstractButtonOperator {
     /**
      * Searches 0'th JButton in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JButton instance or null if component was not found.
      */
     public static JButton findJButton(Container cont, ComponentChooser chooser) {
@@ -165,11 +124,6 @@ public class JButtonOperator extends AbstractButtonOperator {
     /**
      * Searches JButton by text.
      *
-     * @param cont Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return JButton instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -184,10 +138,6 @@ public class JButtonOperator extends AbstractButtonOperator {
     /**
      * Searches JButton by text.
      *
-     * @param cont Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return JButton instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -198,11 +148,7 @@ public class JButtonOperator extends AbstractButtonOperator {
     /**
      * Waits JButton in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JButton instance.
-     * @throws TimeoutExpiredException
      */
     public static JButton waitJButton(Container cont, ComponentChooser chooser, int index) {
         return (JButton) waitAbstractButton(cont, new JButtonFinder(chooser), index);
@@ -211,10 +157,7 @@ public class JButtonOperator extends AbstractButtonOperator {
     /**
      * Waits 0'th JButton in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JButton instance.
-     * @throws TimeoutExpiredException
      */
     public static JButton waitJButton(Container cont, ComponentChooser chooser) {
         return waitJButton(cont, chooser, 0);
@@ -223,14 +166,8 @@ public class JButtonOperator extends AbstractButtonOperator {
     /**
      * Waits JButton by text.
      *
-     * @param cont Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return JButton instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static JButton waitJButton(Container cont, String text, boolean ce, boolean ccs, int index) {
         return (waitJButton(
@@ -243,13 +180,8 @@ public class JButtonOperator extends AbstractButtonOperator {
     /**
      * Waits JButton by text.
      *
-     * @param cont Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return JButton instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static JButton waitJButton(Container cont, String text, boolean ce, boolean ccs) {
         return waitJButton(cont, text, ce, ccs, 0);
@@ -268,9 +200,6 @@ public class JButtonOperator extends AbstractButtonOperator {
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code JButton.isDefaultButton()} through queue
-     */
     public boolean isDefaultButton() {
         return (runMapping(new MapBooleanAction("isDefaultButton") {
             @Override
@@ -280,9 +209,6 @@ public class JButtonOperator extends AbstractButtonOperator {
         }));
     }
 
-    /**
-     * Maps {@code JButton.isDefaultCapable()} through queue
-     */
     public boolean isDefaultCapable() {
         return (runMapping(new MapBooleanAction("isDefaultCapable") {
             @Override
@@ -292,9 +218,6 @@ public class JButtonOperator extends AbstractButtonOperator {
         }));
     }
 
-    /**
-     * Maps {@code JButton.setDefaultCapable(boolean)} through queue
-     */
     public void setDefaultCapable(final boolean b) {
         runMapping(new MapVoidAction("setDefaultCapable") {
             @Override
@@ -306,9 +229,6 @@ public class JButtonOperator extends AbstractButtonOperator {
 
     // End of mapping                                      //
     ////////////////////////////////////////////////////////
-    /**
-     * Prepares the button to click.
-     */
     protected void prepareToClick() {
         makeComponentVisible();
     }
@@ -320,8 +240,6 @@ public class JButtonOperator extends AbstractButtonOperator {
 
         /**
          * Constructs JButtonFinder.
-         *
-         * @param sf other searching criteria.
          */
         public JButtonFinder(ComponentChooser sf) {
             super(JButton.class, sf);

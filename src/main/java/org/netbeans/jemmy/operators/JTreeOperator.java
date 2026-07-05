@@ -51,7 +51,6 @@ import org.netbeans.jemmy.JemmyInputException;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.TestOut;
-import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.Timeoutable;
 import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.Waitable;
@@ -61,25 +60,23 @@ import org.netbeans.jemmy.drivers.TreeDriver;
 import org.netbeans.jemmy.util.EmptyVisualizer;
 
 /**
- * <BR><BR>Timeouts used: <BR>
- * JTreeOperator.WaitNodeExpandedTimeout - time to wait node expanded <BR>
- * JTreeOperator.WaitNodeCollapsedTimeout - time to wait node collapsed <BR>
- * JTreeOperator.WaitAfterNodeExpandedTimeout - time to to sleep after node
- * expanded <BR>
- * JTreeOperator.WaitNextNodeTimeout - time to wait next node displayed <BR>
- * JTreeOperator.WaitNodeVisibleTimeout - time to wait node visible <BR>
- * JTreeOperator.BeforeEditTimeout - time to sleep before edit click <BR>
- * JTreeOperator.WaitEditingTimeout - time to wait node editing <BR>
- * ComponentOperator.WaitComponentTimeout - time to wait component displayed
- * <BR>
- * ComponentOperator.WaitStateTimeout - time to wait for path to be expanded,
- * collapsed, selected, time to wait for a text in a row <BR>
- * WindowWaiter.WaitWindowTimeout - time to wait popup window displayed <BR>
- * JScrollBarOperator.WholeScrollTimeout - time for the whole scrolling <BR>.
+ * Timeouts used:
+ * <ul>
+ * <li>JTreeOperator.WaitNodeExpandedTimeout - time to wait node expanded</li>
+ * <li>JTreeOperator.WaitNodeCollapsedTimeout - time to wait node collapsed</li>
+ * <li>JTreeOperator.WaitAfterNodeExpandedTimeout - time to to sleep after node expanded</li>
+ * <li>JTreeOperator.WaitNextNodeTimeout - time to wait next node displayed</li>
+ * <li>JTreeOperator.WaitNodeVisibleTimeout - time to wait node visible</li>
+ * <li>JTreeOperator.BeforeEditTimeout - time to sleep before edit click</li>
+ * <li>JTreeOperator.WaitEditingTimeout - time to wait node editing</li>
+ * <li>ComponentOperator.WaitComponentTimeout - time to wait component displayed</li>
+ * <li>ComponentOperator.WaitStateTimeout - time to wait for path to be expanded, collapsed, selected, time to wait for
+ * a text in a row</li>
+ * <li>WindowWaiter.WaitWindowTimeout - time to wait popup window displayed</li>
+ * <li>JScrollBarOperator.WholeScrollTimeout - time for the whole scrolling</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
 public class JTreeOperator extends JComponentOperator implements Timeoutable, Outputable {
@@ -124,49 +121,27 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     private Timeouts timeouts;
     private TreeDriver driver;
 
-    /**
-     * Constructor.
-     *
-     * @param b a component
-     */
     public JTreeOperator(JTree b) {
         super(b);
         driver = DriverManager.getTreeDriver(getClass());
     }
 
-    /**
-     * Constructs a JTreeOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public JTreeOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((JTree) cont.waitSubComponent(new JTreeFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a JTreeOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public JTreeOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Text of a row which is currently selected.
      * @param row a row index to check text in. If equals to -1, selected row is
      * checked.
-     * @param index Ordinal component index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public JTreeOperator(ContainerOperator<?> cont, String text, int row, int index) {
         this((JTree) waitComponent(cont, new JTreeByItemFinder(text, row, cont.getComparator()), index));
@@ -174,39 +149,28 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Text of a row which is currently selected.
-     * @param index Ordinal component index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public JTreeOperator(ContainerOperator<?> cont, String text, int index) {
         this(cont, text, -1, index);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Text of a row which is currently selected.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public JTreeOperator(ContainerOperator<?> cont, String text) {
         this(cont, text, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     * @param index Ordinal component index.
-     * @throws TimeoutExpiredException
      */
     public JTreeOperator(ContainerOperator<?> cont, int index) {
         this((JTree) waitComponent(cont, new JTreeFinder(), index));
@@ -214,11 +178,8 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     * @throws TimeoutExpiredException
      */
     public JTreeOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -227,9 +188,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Searches JTree in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JTree instance or null if component was not found.
      */
     public static JTree findJTree(Container cont, ComponentChooser chooser, int index) {
@@ -239,8 +197,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Searches 0'th JTree in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JTree instance or null if component was not found.
      */
     public static JTree findJTree(Container cont, ComponentChooser chooser) {
@@ -250,13 +206,8 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Searches JTree by item.
      *
-     * @param cont Container to search component in.
-     * @param text Item text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @param rowIndex Index of row to compare text. If -1, selected row is
      * checked.
-     * @param index Ordinal component index.
      * @return JTree instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -267,10 +218,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Searches JTree by item.
      *
-     * @param cont Container to search component in.
-     * @param text Item text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @param rowIndex Index of row to compare text. If -1, selected row is
      * checked.
      * @return JTree instance or null if component was not found.
@@ -283,11 +230,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Waits JTree in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JTree instance or null if component was not found.
-     * @throws TimeoutExpiredException
      */
     public static JTree waitJTree(Container cont, ComponentChooser chooser, int index) {
         return (JTree) waitComponent(cont, new JTreeFinder(chooser), index);
@@ -296,10 +239,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Waits 0'th JTree in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JTree instance or null if component was not found.
-     * @throws TimeoutExpiredException
      */
     public static JTree waitJTree(Container cont, ComponentChooser chooser) {
         return waitJTree(cont, chooser, 0);
@@ -308,16 +248,10 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Waits JTree by item.
      *
-     * @param cont Container to search component in.
-     * @param text Item text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @param rowIndex Index of row to compare text. If -1, selected row is
      * checked.
-     * @param index Ordinal component index.
      * @return JTree instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static JTree waitJTree(Container cont, String text, boolean ce, boolean ccs, int rowIndex, int index) {
         return waitJTree(cont, new JTreeByItemFinder(text, rowIndex, new DefaultStringComparator(ce, ccs)), index);
@@ -326,15 +260,10 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Waits JTree by item.
      *
-     * @param cont Container to search component in.
-     * @param text Item text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @param rowIndex Index of row to compare text. If -1, selected row is
      * checked.
      * @return JTree instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static JTree waitJTree(Container cont, String text, boolean ce, boolean ccs, int rowIndex) {
         return waitJTree(cont, text, ce, ccs, rowIndex, 0);
@@ -379,12 +308,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
                 DriverManager.getDriver(DriverManager.TREE_DRIVER_ID, getClass(), anotherOperator.getProperties());
     }
 
-    /**
-     * Expands path.
-     *
-     * @param path a path to be expanded.
-     * @throws TimeoutExpiredException
-     */
     public void doExpandPath(TreePath path) {
         if (path != null) {
             output.printLine("Expanding \""
@@ -398,12 +321,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }
     }
 
-    /**
-     * Expands path on row.
-     *
-     * @param row a row index to be expanded.
-     * @throws TimeoutExpiredException
-     */
     public void doExpandRow(int row) {
         output.printLine("Expanding " + Integer.toString(row) + " row");
         output.printGolden("Expanding " + Integer.toString(row) + " row");
@@ -413,9 +330,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
 
     /**
      * Ensures that the node identified by path is currently viewable.
-     *
-     * @param path a path to be made visible.
-     * @throws TimeoutExpiredException
      */
     public void doMakeVisible(TreePath path) {
         if (path != null) {
@@ -431,7 +345,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Returns number of child.
      *
-     * @param node a node to count children of.
      * @return a number of children.
      */
     public int getChildCount(final Object node) {
@@ -446,7 +359,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Returns node children.
      *
-     * @param node a node to get children of.
      * @return an array of node children.
      */
     public Object[] getChildren(final Object node) {
@@ -466,8 +378,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Returns node child.
      *
-     * @param node a node to get a child of.
-     * @param index a child index.
      * @return a node child.
      */
     public Object getChild(final Object node, final int index) {
@@ -497,7 +407,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * Constructs new path from a path and index's subnode of it last node.
      *
      * @param path a path indicating a node to get a child of.
-     * @param index a child node index.
      * @return a number of children.
      */
     public TreePath getChildPath(TreePath path, int index) {
@@ -531,7 +440,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * Returns the root of the tree.
      *
      * @return tree root.
-     * @throws TimeoutExpiredException
      */
     public Object getRoot() {
         Waiter<Object, Void> rootWaiter = new Waiter<>(new Waitable<Object, Void>() {
@@ -568,11 +476,9 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Searches path in tree.
      *
-     * @param chooser TreePathChooser implementation.
      * @return a path fitting the criteria.
      * @see TreePathChooser
      * @see #findPath
-     * @throws TimeoutExpiredException
      */
     public TreePath findPath(TreePathChooser chooser) {
         output.printLine("Search for a tree path " + chooser.getDescription());
@@ -626,8 +532,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Searches index'th row by row chooser.
      *
-     * @param chooser a path searching criteria.
-     * @param index a child index.
      * @return Row index or -1 if search was insuccessful.
      * @see JTreeOperator.TreeRowChooser
      */
@@ -648,7 +552,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Searches a row by row chooser.
      *
-     * @param chooser a path searching criteria.
      * @return Row index or -1 if search was insuccessful.
      * @see JTreeOperator.TreeRowChooser
      */
@@ -659,8 +562,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Searches index'th row by substring.
      *
-     * @param item Substring.
-     * @param comparator a string comparision algorithm
      * @param index an ordinal row index between ones matching the criteria
      * @return Row index or -1 if search was insuccessful.
      */
@@ -671,9 +572,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Searches index'th row by substring.
      *
-     * @param item Substring.
-     * @param ce Compare exactly
-     * @param cc Compare case sensitivelly.
      * @param index an ordinal row index between ones matching the criteria
      * @return Row index or -1 if search was insuccessful.
      * @deprecated Use findRow(String, int) or findRow(String, StringComparator,
@@ -688,7 +586,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * Searches index'th row by substring. Uses StringComparator assigned to
      * this object.
      *
-     * @param item Substring.
      * @param index an ordinal row index between ones matching the criteria
      * @return Row index or -1 if search was insuccessful.
      */
@@ -699,8 +596,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Searches a row by substring.
      *
-     * @param item Substring.
-     * @param comparator a string comparision algorithm
      * @return Row index or -1 if search was insuccessful.
      */
     public int findRow(String item, StringComparator comparator) {
@@ -710,9 +605,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Searches a row by substring.
      *
-     * @param item Substring.
-     * @param ce Compare exactly
-     * @param cc Compare case sensitivelly.
      * @return Row index or -1 if search was insuccessful.
      * @deprecated Use findRow(String) or findRow(String, StringComparator)
      */
@@ -725,7 +617,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * Searches a row by substring. Uses StringComparator assigned to this
      * object.
      *
-     * @param item Substring.
      * @return Row index or -1 if search was insuccessful.
      */
     public int findRow(String item) {
@@ -735,7 +626,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Searches index'th row by rendered component.
      *
-     * @param chooser Component checking object.
      * @param index an ordinal row index between ones matching the criteria
      * @return Row index or -1 if search was insuccessful.
      */
@@ -746,7 +636,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Searches a row by rendered component.
      *
-     * @param chooser Component checking object.
      * @return Row index or -1 if search was insuccessful.
      */
     public int findRow(ComponentChooser chooser) {
@@ -754,57 +643,38 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     }
 
     /**
-     * Searches path in tree. Can be used to find one of the nodes with the same
-     * text. Example:<BR>
-     * <pre>
-     * root
-     * +-+node
-     * | +--subnode
-     * +-+node
-     * | +--subnode
-     * | +--subnode
-     * ...
-     * String[] names = {"node", "subnode"};<BR>
-     * int[] indexes = {1, 0};<BR>
-     * </pre> TreePath path = findPath(names, indexes, true, true);<BR>
+     * Searches path in tree. Can be used to find one of the nodes with the same text. Example:
+     * <p>
+     * <pre> root +-+node | +--subnode +-+node | +--subnode | +--subnode ... String[] names = {"node", "subnode"};
+     * <p>
+     * int[] indexes = {1, 0};
+     * <p>
+     * </pre> TreePath path = findPath(names, indexes, true, true);
+     * <p>
      * "path" will points to the second (from the top) "subnode" node.
      *
-     * @param names Node texts array.
-     * @param indexes Nodes indexes.
-     * @param comparator a string comparision algorithm
      * @return a tree path matching the criteria
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @see #findPath
-     * @throws TimeoutExpiredException
      */
     public TreePath findPath(String[] names, int[] indexes, StringComparator comparator) {
         return findPath(new StringArrayPathChooser(names, indexes, comparator));
     }
 
     /**
-     * Searches path in tree. Can be used to find one of the nodes with the same
-     * text. Example:<BR>
-     * <pre>
-     * root
-     * +-+node
-     * | +--subnode
-     * +-+node
-     * | +--subnode
-     * | +--subnode
-     * ...
-     * String[] names = {"node", "subnode"};<BR>
-     * int[] indexes = {1, 0};<BR>
-     * </pre> TreePath path = findPath(names, indexes, true, true);<BR>
+     * Searches path in tree. Can be used to find one of the nodes with the same text. Example:
+     * <p>
+     * <pre> root +-+node | +--subnode +-+node | +--subnode | +--subnode ... String[] names = {"node", "subnode"};
+     * <p>
+     * int[] indexes = {1, 0};
+     * <p>
+     * </pre> TreePath path = findPath(names, indexes, true, true);
+     * <p>
      * "path" will points to the second (from the top) "subnode" node.
      *
-     * @param names Node texts array.
-     * @param indexes Nodes indexes.
-     * @param ce Compare exactly.
-     * @param ccs Compare case sensitively.
      * @return a tree path matching the criteria
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @see #findPath
-     * @throws TimeoutExpiredException
      * @deprecated Use findPath(String[], int[]) or findCellRow(String[], int[],
      * StringComparator)
      */
@@ -816,11 +686,8 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Searches path in tree. Uses StringComparator assigned to this object.
      *
-     * @param names Node texts array.
-     * @param indexes Nodes indexes.
      * @return a tree path matching the criteria
      * @see #findPath
-     * @throws TimeoutExpiredException
      */
     public TreePath findPath(String[] names, int[] indexes) {
         return findPath(names, indexes, getComparator());
@@ -829,12 +696,9 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Searches path in tree.
      *
-     * @param names Node texts array.
-     * @param comparator a string comparision algorithm
      * @return a tree path matching the criteria
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @see #findPath
-     * @throws TimeoutExpiredException
      */
     public TreePath findPath(String[] names, StringComparator comparator) {
         int[] indexes = new int[0];
@@ -844,13 +708,9 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Searches path in tree.
      *
-     * @param names Node texts array.
-     * @param ce Compare exactly.
-     * @param ccs Compare case sensitively.
      * @return a tree path matching the criteria
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @see #findPath
-     * @throws TimeoutExpiredException
      * @deprecated Use findPath(String[]) or findCellRow(String[],
      * StringComparator)
      */
@@ -863,11 +723,9 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Searches path in tree. Uses StringComparator assigned to this object.
      *
-     * @param names Node texts array.
      * @return a tree path matching the criteria
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @see #findPath
-     * @throws TimeoutExpiredException
      */
     public TreePath findPath(String[] names) {
         int[] indexes = new int[0];
@@ -881,12 +739,9 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * devided by "delim" parameter.
      * @param indexes String representing indexes to search path components.
      * Indexes should be devided by "delim" parameter.
-     * @param delim Path components delimiter.
-     * @param comparator a string comparision algorithm
      * @return a tree path matching the criteria
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @see #findPath
-     * @throws TimeoutExpiredException
      */
     public TreePath findPath(String path, String indexes, String delim, StringComparator comparator) {
         String[] indexStrings = parseString(indexes, delim);
@@ -904,13 +759,9 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * devided by "delim" parameter.
      * @param indexes String representing indexes to search path components.
      * Indexes should be devided by "delim" parameter.
-     * @param delim Path components delimiter.
-     * @param ce Compare exactly.
-     * @param ccs Compare case sensitively.
      * @return a tree path matching the criteria
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @see #findPath
-     * @throws TimeoutExpiredException
      * @deprecated Use findPath(String, String, String) or findCellRow(String,
      * String, String, StringComparator)
      */
@@ -926,10 +777,8 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * devided by "delim" parameter.
      * @param indexes String representing indexes to search path components.
      * Indexes should be devided by "delim" parameter.
-     * @param delim Path components delimiter.
      * @return a tree path matching the criteria
      * @see #findPath
-     * @throws TimeoutExpiredException
      */
     public TreePath findPath(String path, String indexes, String delim) {
         return findPath(path, indexes, delim, getComparator());
@@ -940,12 +789,9 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      *
      * @param path String representing tree path. Path components should be
      * devided by "delim" parameter.
-     * @param delim Path components delimiter.
-     * @param comparator a string comparision algorithm
      * @return a tree path matching the criteria
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @see #findPath
-     * @throws TimeoutExpiredException
      */
     public TreePath findPath(String path, String delim, StringComparator comparator) {
         return findPath(parseString(path, delim), comparator);
@@ -954,12 +800,9 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Searches path in tree.
      *
-     * @param path String representing tree path.
-     * @param comparator a string comparision algorithm
      * @return a tree path matching the criteria
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @see #findPath
-     * @throws TimeoutExpiredException
      */
     public TreePath findPath(String path, StringComparator comparator) {
         return findPath(parseString(path), comparator);
@@ -970,13 +813,9 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      *
      * @param path String representing tree path. Path components should be
      * devided by "delim" parameter.
-     * @param delim Path components delimiter.
-     * @param ce Compare exactly.
-     * @param ccs Compare case sensitively.
      * @return a tree path matching the criteria
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @see #findPath
-     * @throws TimeoutExpiredException
      * @deprecated Use findPath(String, String) or findCellRow(String, String,
      * StringComparator)
      */
@@ -990,10 +829,8 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      *
      * @param path String representing tree path. Path components should be
      * devided by "delim" parameter.
-     * @param delim Path components delimiter.
      * @return a tree path matching the criteria
      * @see #findPath
-     * @throws TimeoutExpiredException
      */
     public TreePath findPath(String path, String delim) {
         return findPath(parseString(path, delim));
@@ -1003,10 +840,8 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * Searches path in tree. Uses StringComparator assigned to this object.
      * Uses PathParser assigned to this object.
      *
-     * @param path String representing tree path.
      * @return a tree path matching the criteria
      * @see #findPath
-     * @throws TimeoutExpiredException
      */
     public TreePath findPath(String path) {
         return findPath(parseString(path));
@@ -1015,9 +850,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Ensures that the node identified by the specified path is collapsed and
      * viewable.
-     *
-     * @param path a path to collapse.
-     * @throws TimeoutExpiredException
      */
     public void doCollapsePath(TreePath path) {
         if (path != null) {
@@ -1034,9 +866,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
 
     /**
      * Ensures that the node in the specified row is collapsed.
-     *
-     * @param row a row index to collapse.
-     * @throws TimeoutExpiredException
      */
     public void doCollapseRow(int row) {
         output.printLine("Collapsing \"" + Integer.toString(row) + "\" row");
@@ -1047,11 +876,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }
     }
 
-    /**
-     * Selects the path.
-     *
-     * @param path a path to select.
-     */
     public void selectPath(final TreePath path) {
         if (path != null) {
             output.printLine("Selecting \"" + path.toString() + "\" path");
@@ -1074,8 +898,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
 
     /**
      * Selects the node in the specified row.
-     *
-     * @param row an index of row to select.
      */
     public void selectRow(int row) {
         output.printLine("Collapsing \"" + Integer.toString(row) + "\" row");
@@ -1089,8 +911,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Selects some pathes. If verification mode is on, checks that right paths
      * have been selected.
-     *
-     * @param paths a paths to select.
      */
     public void selectPaths(TreePath[] paths) {
         output.printLine("Selecting paths:");
@@ -1109,7 +929,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Retuns points which can be used to click on path.
      *
-     * @param path a tree path to click on.
      * @return a Point in component's coordinate system.
      */
     public Point getPointToClick(TreePath path) {
@@ -1129,7 +948,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Retuns points which can be used to click on path.
      *
-     * @param row a row index to click on.
      * @return a Point in component's coordinate system.
      */
     public Point getPointToClick(int row) {
@@ -1143,12 +961,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
 
     /**
      * Clicks on the node.
-     *
-     * @param path a path to click on.
-     * @param clickCount a number of clicks
-     * @param mouseButton InputEvent.BUTTON1/2/3_MASK value
-     * @param modifiers Combination of InputEvent.*_MASK values
-     * @throws TimeoutExpiredException
      */
     public void clickOnPath(TreePath path, int clickCount, int mouseButton, int modifiers) {
         if (path != null) {
@@ -1169,11 +981,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
 
     /**
      * Clicks on the node.
-     *
-     * @param path a path to click on.
-     * @param clickCount a number of clicks
-     * @param mouseButton InputEvent.BUTTON1/2/3_MASK value
-     * @throws TimeoutExpiredException
      */
     public void clickOnPath(TreePath path, int clickCount, int mouseButton) {
         clickOnPath(path, clickCount, mouseButton, 0);
@@ -1181,10 +988,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
 
     /**
      * Clicks on the node.
-     *
-     * @param path a path to click on.
-     * @param clickCount a number of clicks
-     * @throws TimeoutExpiredException
      */
     public void clickOnPath(TreePath path, int clickCount) {
         clickOnPath(path, clickCount, getDefaultMouseButton());
@@ -1192,9 +995,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
 
     /**
      * Clicks on the node.
-     *
-     * @param path a path to click on.
-     * @throws TimeoutExpiredException
      */
     public void clickOnPath(TreePath path) {
         clickOnPath(path, 1);
@@ -1205,9 +1005,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      *
      * @param paths an array of paths to select before invoking popup on one of
      * them
-     * @param mouseButton a mouse button tused to call popup.
      * @return an opened popup menu.
-     * @throws TimeoutExpiredException
      */
     public JPopupMenu callPopupOnPaths(TreePath[] paths, int mouseButton) {
         if (paths.length == 1) {
@@ -1238,7 +1036,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * @param paths an array of paths to select before invoking popup on one of
      * them
      * @return an opened popup menu.
-     * @throws TimeoutExpiredException
      */
     public JPopupMenu callPopupOnPaths(TreePath[] paths) {
         return callPopupOnPaths(paths, getPopupMouseButton());
@@ -1247,10 +1044,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Calls popup on the specified path.
      *
-     * @param path a path to invoking popup on.
-     * @param mouseButton a mouse button tused to call popup.
      * @return an opened popup menu.
-     * @throws TimeoutExpiredException
      */
     public JPopupMenu callPopupOnPath(TreePath path, int mouseButton) {
         if (path != null) {
@@ -1264,9 +1058,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Calls popup on the specified path.
      *
-     * @param path a path to invoking popup on.
      * @return an opened popup menu.
-     * @throws TimeoutExpiredException
      */
     public JPopupMenu callPopupOnPath(TreePath path) {
         return callPopupOnPath(path, getPopupMouseButton());
@@ -1274,8 +1066,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
 
     /**
      * Scrolls to a path if the tree is on a JScrollPane component.
-     *
-     * @param path a tree path to scroll to.
      */
     public void scrollToPath(TreePath path) {
         if (path != null) {
@@ -1306,8 +1096,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
 
     /**
      * Scrolls to a row if the tree is on a JScrollPane component.
-     *
-     * @param row a row index to scroll to.
      */
     public void scrollToRow(int row) {
         scrollToPath(getPathForRow(row));
@@ -1315,9 +1103,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
 
     /**
      * Turns path to the editing mode.
-     *
-     * @param path a tree path to click on.
-     * @throws TimeoutExpiredException
      */
     public void clickForEdit(TreePath path) {
         driver.startEditing(this, getRowForPath(path), timeouts.create("JTreeOperator.WaitEditingTimeout"));
@@ -1326,10 +1111,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     /**
      * Ask renderer for component to be displayed.
      *
-     * @param path a path indicating the rendered node.
-     * @param isSelected True if the specified cell is selected.
-     * @param isExpanded True if the specified cell is expanded.
-     * @param cellHasFocus True if the specified cell has the focus.
      * @return Component to be displayed.
      */
     public Component getRenderedComponent(TreePath path, boolean isSelected, boolean isExpanded, boolean cellHasFocus) {
@@ -1353,7 +1134,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * to determine whether path is selected. Uses isExpanded(TreePath) to
      * determine whether path is expanded.
      *
-     * @param path a path indicating the rendered node.
      * @return Component to be displayed.
      */
     public Component getRenderedComponent(TreePath path) {
@@ -1364,10 +1144,8 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * Changes text of last path component.
      *
      * @param path a path indicating the node to change value for.
-     * @param newNodeText a new node value
      * @deprecated Use changePathObject(TreePath, Object) instead.
      * @see #changePathObject(TreePath, Object)
-     * @throws TimeoutExpiredException
      */
     @Deprecated
     public void changePathText(TreePath path, String newNodeText) {
@@ -1378,19 +1156,12 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * Changes last path component using getCellEditor() editor.
      *
      * @param path a path indicating the node to change value for.
-     * @param newValue a new node value
-     * @throws TimeoutExpiredException
      */
     public void changePathObject(TreePath path, Object newValue) {
         scrollToPath(path);
         driver.editItem(this, getRowForPath(path), newValue, timeouts.create("JTreeOperator.WaitEditingTimeout"));
     }
 
-    /**
-     * Waits path to be expanded.
-     *
-     * @param path a path to wait expanded.
-     */
     public void waitExpanded(final TreePath path) {
         if (path != null) {
             getOutput()
@@ -1418,11 +1189,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }
     }
 
-    /**
-     * Waits row to be expanded.
-     *
-     * @param row a row index to wait expanded.
-     */
     public void waitExpanded(final int row) {
         getOutput()
                 .printLine("Wait " + Integer.toString(row) + "'th row to be expanded in component \n    : "
@@ -1446,11 +1212,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Waits path to be collapsed.
-     *
-     * @param path a path to wait collapsed.
-     */
     public void waitCollapsed(final TreePath path) {
         if (path != null) {
             getOutput()
@@ -1478,11 +1239,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }
     }
 
-    /**
-     * Waits row to be collapsed.
-     *
-     * @param row a row index to wait collapsed.
-     */
     public void waitCollapsed(final int row) {
         getOutput()
                 .printLine("Wait " + Integer.toString(row) + "'th row to be collapsed in component \n    : "
@@ -1506,11 +1262,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Waits path to be visible.
-     *
-     * @param path a path to wait visible.
-     */
     public void waitVisible(final TreePath path) {
         if (path != null) {
             getOutput()
@@ -1540,8 +1291,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
 
     /**
      * Waits some paths to be selected.
-     *
-     * @param paths an array of paths to be selected.
      */
     public void waitSelected(final TreePath[] paths) {
         getOutput().printLine("Wait right selection in component \n    : " + toStringSource());
@@ -1574,20 +1323,10 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Waits path to be selected.
-     *
-     * @param path a tree path to be selected.
-     */
     public void waitSelected(final TreePath path) {
         waitSelected(new TreePath[] {path});
     }
 
-    /**
-     * Waits rows to be selected.
-     *
-     * @param rows an indices of rows to be selected.
-     */
     public void waitSelected(int[] rows) {
         TreePath[] paths = new TreePath[rows.length];
         for (int i = 0; i < rows.length; i++) {
@@ -1596,11 +1335,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         waitSelected(paths);
     }
 
-    /**
-     * Waits row to be selected.
-     *
-     * @param row an index of a row to be selected.
-     */
     public void waitSelected(int row) {
         waitSelected(new int[] {row});
     }
@@ -1610,7 +1344,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      *
      * @param rowText Text to be compared with row text be
      * {@code getComparator()} comparator.
-     * @param row Row index. If -1, selected one is checked.
      */
     public void waitRow(String rowText, int row) {
         getOutput()
@@ -1683,9 +1416,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code JTree.addSelectionInterval(int, int)} through queue
-     */
     public void addSelectionInterval(final int i, final int i1) {
         runMapping(new MapVoidAction("addSelectionInterval") {
             @Override
@@ -1695,9 +1425,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.addSelectionPath(TreePath)} through queue
-     */
     public void addSelectionPath(final TreePath treePath) {
         runMapping(new MapVoidAction("addSelectionPath") {
             @Override
@@ -1707,9 +1434,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.addSelectionPaths(TreePath[])} through queue
-     */
     public void addSelectionPaths(final TreePath[] treePath) {
         runMapping(new MapVoidAction("addSelectionPaths") {
             @Override
@@ -1719,9 +1443,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.addSelectionRow(int)} through queue
-     */
     public void addSelectionRow(final int i) {
         runMapping(new MapVoidAction("addSelectionRow") {
             @Override
@@ -1731,9 +1452,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.addSelectionRows(int[])} through queue
-     */
     public void addSelectionRows(final int[] i) {
         runMapping(new MapVoidAction("addSelectionRows") {
             @Override
@@ -1743,10 +1461,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.addTreeExpansionListener(TreeExpansionListener)}
-     * through queue
-     */
     public void addTreeExpansionListener(final TreeExpansionListener treeExpansionListener) {
         runMapping(new MapVoidAction("addTreeExpansionListener") {
             @Override
@@ -1756,10 +1470,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.addTreeSelectionListener(TreeSelectionListener)}
-     * through queue
-     */
     public void addTreeSelectionListener(final TreeSelectionListener treeSelectionListener) {
         runMapping(new MapVoidAction("addTreeSelectionListener") {
             @Override
@@ -1769,10 +1479,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.addTreeWillExpandListener(TreeWillExpandListener)}
-     * through queue
-     */
     public void addTreeWillExpandListener(final TreeWillExpandListener treeWillExpandListener) {
         runMapping(new MapVoidAction("addTreeWillExpandListener") {
             @Override
@@ -1782,9 +1488,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.cancelEditing()} through queue
-     */
     public void cancelEditing() {
         runMapping(new MapVoidAction("cancelEditing") {
             @Override
@@ -1794,9 +1497,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.clearSelection()} through queue
-     */
     public void clearSelection() {
         runMapping(new MapVoidAction("clearSelection") {
             @Override
@@ -1806,9 +1506,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.collapsePath(TreePath)} through queue
-     */
     public void collapsePath(final TreePath treePath) {
         runMapping(new MapVoidAction("collapsePath") {
             @Override
@@ -1818,9 +1515,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.collapseRow(int)} through queue
-     */
     public void collapseRow(final int i) {
         runMapping(new MapVoidAction("collapseRow") {
             @Override
@@ -1830,11 +1524,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps
-     * {@code JTree.convertValueToText(Object, boolean, boolean, boolean, int, boolean)}
-     * through queue
-     */
     public String convertValueToText(
             final Object object, final boolean b, final boolean b1, final boolean b2, final int i, final boolean b3) {
         return (runMapping(new MapAction<String>("convertValueToText") {
@@ -1845,9 +1534,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.expandPath(TreePath)} through queue
-     */
     public void expandPath(final TreePath treePath) {
         runMapping(new MapVoidAction("expandPath") {
             @Override
@@ -1857,9 +1543,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.expandRow(int)} through queue
-     */
     public void expandRow(final int i) {
         runMapping(new MapVoidAction("expandRow") {
             @Override
@@ -1869,9 +1552,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.fireTreeCollapsed(TreePath)} through queue
-     */
     public void fireTreeCollapsed(final TreePath treePath) {
         runMapping(new MapVoidAction("fireTreeCollapsed") {
             @Override
@@ -1881,9 +1561,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.fireTreeExpanded(TreePath)} through queue
-     */
     public void fireTreeExpanded(final TreePath treePath) {
         runMapping(new MapVoidAction("fireTreeExpanded") {
             @Override
@@ -1893,9 +1570,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.fireTreeWillCollapse(TreePath)} through queue
-     */
     public void fireTreeWillCollapse(final TreePath treePath) {
         runMapping(new MapVoidAction("fireTreeWillCollapse") {
             @Override
@@ -1905,9 +1579,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.fireTreeWillExpand(TreePath)} through queue
-     */
     public void fireTreeWillExpand(final TreePath treePath) {
         runMapping(new MapVoidAction("fireTreeWillExpand") {
             @Override
@@ -1917,9 +1588,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.getCellEditor()} through queue
-     */
     public TreeCellEditor getCellEditor() {
         return (runMapping(new MapAction<TreeCellEditor>("getCellEditor") {
             @Override
@@ -1929,9 +1597,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getCellRenderer()} through queue
-     */
     public TreeCellRenderer getCellRenderer() {
         return (runMapping(new MapAction<TreeCellRenderer>("getCellRenderer") {
             @Override
@@ -1941,9 +1606,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getClosestPathForLocation(int, int)} through queue
-     */
     public TreePath getClosestPathForLocation(final int i, final int i1) {
         return (runMapping(new MapAction<TreePath>("getClosestPathForLocation") {
             @Override
@@ -1953,9 +1615,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getClosestRowForLocation(int, int)} through queue
-     */
     public int getClosestRowForLocation(final int i, final int i1) {
         return (runMapping(new MapIntegerAction("getClosestRowForLocation") {
             @Override
@@ -1965,9 +1624,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getEditingPath()} through queue
-     */
     public TreePath getEditingPath() {
         return (runMapping(new MapAction<TreePath>("getEditingPath") {
             @Override
@@ -1977,9 +1633,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getExpandedDescendants(TreePath)} through queue
-     */
     public Enumeration<TreePath> getExpandedDescendants(final TreePath treePath) {
         return (runMapping(new MapAction<Enumeration<TreePath>>("getExpandedDescendants") {
             @Override
@@ -1989,9 +1642,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getInvokesStopCellEditing()} through queue
-     */
     public boolean getInvokesStopCellEditing() {
         return (runMapping(new MapBooleanAction("getInvokesStopCellEditing") {
             @Override
@@ -2001,9 +1651,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getLastSelectedPathComponent()} through queue
-     */
     public Object getLastSelectedPathComponent() {
         return (runMapping(new MapAction<Object>("getLastSelectedPathComponent") {
             @Override
@@ -2013,9 +1660,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getLeadSelectionPath()} through queue
-     */
     public TreePath getLeadSelectionPath() {
         return (runMapping(new MapAction<TreePath>("getLeadSelectionPath") {
             @Override
@@ -2025,9 +1669,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getLeadSelectionRow()} through queue
-     */
     public int getLeadSelectionRow() {
         return (runMapping(new MapIntegerAction("getLeadSelectionRow") {
             @Override
@@ -2037,9 +1678,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getMaxSelectionRow()} through queue
-     */
     public int getMaxSelectionRow() {
         return (runMapping(new MapIntegerAction("getMaxSelectionRow") {
             @Override
@@ -2049,9 +1687,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getMinSelectionRow()} through queue
-     */
     public int getMinSelectionRow() {
         return (runMapping(new MapIntegerAction("getMinSelectionRow") {
             @Override
@@ -2061,9 +1696,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getModel()} through queue
-     */
     public TreeModel getModel() {
         return (runMapping(new MapAction<TreeModel>("getModel") {
             @Override
@@ -2073,9 +1705,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getPathBounds(TreePath)} through queue
-     */
     public Rectangle getPathBounds(final TreePath treePath) {
         return (runMapping(new MapAction<Rectangle>("getPathBounds") {
             @Override
@@ -2085,9 +1714,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getPathForLocation(int, int)} through queue
-     */
     public TreePath getPathForLocation(final int i, final int i1) {
         return (runMapping(new MapAction<TreePath>("getPathForLocation") {
             @Override
@@ -2097,9 +1723,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getPathForRow(int)} through queue
-     */
     public TreePath getPathForRow(final int i) {
         return (runMapping(new MapAction<TreePath>("getPathForRow") {
             @Override
@@ -2109,9 +1732,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getPreferredScrollableViewportSize()} through queue
-     */
     public Dimension getPreferredScrollableViewportSize() {
         return (runMapping(new MapAction<Dimension>("getPreferredScrollableViewportSize") {
             @Override
@@ -2121,9 +1741,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getRowBounds(int)} through queue
-     */
     public Rectangle getRowBounds(final int i) {
         return (runMapping(new MapAction<Rectangle>("getRowBounds") {
             @Override
@@ -2133,9 +1750,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getRowCount()} through queue
-     */
     public int getRowCount() {
         return (runMapping(new MapIntegerAction("getRowCount") {
             @Override
@@ -2145,9 +1759,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getRowForLocation(int, int)} through queue
-     */
     public int getRowForLocation(final int i, final int i1) {
         return (runMapping(new MapIntegerAction("getRowForLocation") {
             @Override
@@ -2157,9 +1768,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getRowForPath(TreePath)} through queue
-     */
     public int getRowForPath(final TreePath treePath) {
         return (runMapping(new MapIntegerAction("getRowForPath") {
             @Override
@@ -2169,9 +1777,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getRowHeight()} through queue
-     */
     public int getRowHeight() {
         return (runMapping(new MapIntegerAction("getRowHeight") {
             @Override
@@ -2181,10 +1786,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getScrollableBlockIncrement(Rectangle, int, int)}
-     * through queue
-     */
     public int getScrollableBlockIncrement(final Rectangle rectangle, final int i, final int i1) {
         return (runMapping(new MapIntegerAction("getScrollableBlockIncrement") {
             @Override
@@ -2194,9 +1795,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getScrollableTracksViewportHeight()} through queue
-     */
     public boolean getScrollableTracksViewportHeight() {
         return (runMapping(new MapBooleanAction("getScrollableTracksViewportHeight") {
             @Override
@@ -2206,9 +1804,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getScrollableTracksViewportWidth()} through queue
-     */
     public boolean getScrollableTracksViewportWidth() {
         return (runMapping(new MapBooleanAction("getScrollableTracksViewportWidth") {
             @Override
@@ -2218,10 +1813,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getScrollableUnitIncrement(Rectangle, int, int)}
-     * through queue
-     */
     public int getScrollableUnitIncrement(final Rectangle rectangle, final int i, final int i1) {
         return (runMapping(new MapIntegerAction("getScrollableUnitIncrement") {
             @Override
@@ -2231,9 +1822,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getScrollsOnExpand()} through queue
-     */
     public boolean getScrollsOnExpand() {
         return (runMapping(new MapBooleanAction("getScrollsOnExpand") {
             @Override
@@ -2243,9 +1831,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getSelectionCount()} through queue
-     */
     public int getSelectionCount() {
         return (runMapping(new MapIntegerAction("getSelectionCount") {
             @Override
@@ -2255,9 +1840,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getSelectionModel()} through queue
-     */
     public TreeSelectionModel getSelectionModel() {
         return (runMapping(new MapAction<TreeSelectionModel>("getSelectionModel") {
             @Override
@@ -2267,9 +1849,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getSelectionPath()} through queue
-     */
     public TreePath getSelectionPath() {
         return (runMapping(new MapAction<TreePath>("getSelectionPath") {
             @Override
@@ -2279,9 +1858,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getSelectionPaths()} through queue
-     */
     public TreePath[] getSelectionPaths() {
         return ((TreePath[]) runMapping(new MapAction<Object>("getSelectionPaths") {
             @Override
@@ -2291,9 +1867,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getSelectionRows()} through queue
-     */
     public int[] getSelectionRows() {
         return ((int[]) runMapping(new MapAction<Object>("getSelectionRows") {
             @Override
@@ -2303,9 +1876,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getShowsRootHandles()} through queue
-     */
     public boolean getShowsRootHandles() {
         return (runMapping(new MapBooleanAction("getShowsRootHandles") {
             @Override
@@ -2315,9 +1885,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getUI()} through queue
-     */
     public TreeUI getUI() {
         return (runMapping(new MapAction<TreeUI>("getUI") {
             @Override
@@ -2327,9 +1894,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.getVisibleRowCount()} through queue
-     */
     public int getVisibleRowCount() {
         return (runMapping(new MapIntegerAction("getVisibleRowCount") {
             @Override
@@ -2339,9 +1903,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.hasBeenExpanded(TreePath)} through queue
-     */
     public boolean hasBeenExpanded(final TreePath treePath) {
         return (runMapping(new MapBooleanAction("hasBeenExpanded") {
             @Override
@@ -2351,9 +1912,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.isCollapsed(int)} through queue
-     */
     public boolean isCollapsed(final int i) {
         return (runMapping(new MapBooleanAction("isCollapsed") {
             @Override
@@ -2363,9 +1921,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.isCollapsed(TreePath)} through queue
-     */
     public boolean isCollapsed(final TreePath treePath) {
         return (runMapping(new MapBooleanAction("isCollapsed") {
             @Override
@@ -2375,9 +1930,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.isEditable()} through queue
-     */
     public boolean isEditable() {
         return (runMapping(new MapBooleanAction("isEditable") {
             @Override
@@ -2387,9 +1939,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.isEditing()} through queue
-     */
     public boolean isEditing() {
         return (runMapping(new MapBooleanAction("isEditing") {
             @Override
@@ -2399,9 +1948,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.isExpanded(int)} through queue
-     */
     public boolean isExpanded(final int i) {
         return (runMapping(new MapBooleanAction("isExpanded") {
             @Override
@@ -2411,9 +1957,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.isExpanded(TreePath)} through queue
-     */
     public boolean isExpanded(final TreePath treePath) {
         return (runMapping(new MapBooleanAction("isExpanded") {
             @Override
@@ -2423,9 +1966,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.isFixedRowHeight()} through queue
-     */
     public boolean isFixedRowHeight() {
         return (runMapping(new MapBooleanAction("isFixedRowHeight") {
             @Override
@@ -2435,9 +1975,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.isLargeModel()} through queue
-     */
     public boolean isLargeModel() {
         return (runMapping(new MapBooleanAction("isLargeModel") {
             @Override
@@ -2447,9 +1984,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.isPathEditable(TreePath)} through queue
-     */
     public boolean isPathEditable(final TreePath treePath) {
         return (runMapping(new MapBooleanAction("isPathEditable") {
             @Override
@@ -2459,9 +1993,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.isPathSelected(TreePath)} through queue
-     */
     public boolean isPathSelected(final TreePath treePath) {
         return (runMapping(new MapBooleanAction("isPathSelected") {
             @Override
@@ -2471,9 +2002,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.isRootVisible()} through queue
-     */
     public boolean isRootVisible() {
         return (runMapping(new MapBooleanAction("isRootVisible") {
             @Override
@@ -2483,9 +2011,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.isRowSelected(int)} through queue
-     */
     public boolean isRowSelected(final int i) {
         return (runMapping(new MapBooleanAction("isRowSelected") {
             @Override
@@ -2495,9 +2020,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.isSelectionEmpty()} through queue
-     */
     public boolean isSelectionEmpty() {
         return (runMapping(new MapBooleanAction("isSelectionEmpty") {
             @Override
@@ -2507,9 +2029,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.isVisible(TreePath)} through queue
-     */
     public boolean isVisible(final TreePath treePath) {
         return (runMapping(new MapBooleanAction("isVisible") {
             @Override
@@ -2519,9 +2038,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.makeVisible(TreePath)} through queue
-     */
     public void makeVisible(final TreePath treePath) {
         runMapping(new MapVoidAction("makeVisible") {
             @Override
@@ -2531,9 +2047,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.removeSelectionInterval(int, int)} through queue
-     */
     public void removeSelectionInterval(final int i, final int i1) {
         runMapping(new MapVoidAction("removeSelectionInterval") {
             @Override
@@ -2543,9 +2056,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.removeSelectionPath(TreePath)} through queue
-     */
     public void removeSelectionPath(final TreePath treePath) {
         runMapping(new MapVoidAction("removeSelectionPath") {
             @Override
@@ -2555,9 +2065,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.removeSelectionPaths(TreePath[])} through queue
-     */
     public void removeSelectionPaths(final TreePath[] treePath) {
         runMapping(new MapVoidAction("removeSelectionPaths") {
             @Override
@@ -2567,9 +2074,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.removeSelectionRow(int)} through queue
-     */
     public void removeSelectionRow(final int i) {
         runMapping(new MapVoidAction("removeSelectionRow") {
             @Override
@@ -2579,9 +2083,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.removeSelectionRows(int[])} through queue
-     */
     public void removeSelectionRows(final int[] i) {
         runMapping(new MapVoidAction("removeSelectionRows") {
             @Override
@@ -2591,11 +2092,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps
-     * {@code JTree.removeTreeExpansionListener(TreeExpansionListener)}
-     * through queue
-     */
     public void removeTreeExpansionListener(final TreeExpansionListener treeExpansionListener) {
         runMapping(new MapVoidAction("removeTreeExpansionListener") {
             @Override
@@ -2605,11 +2101,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps
-     * {@code JTree.removeTreeSelectionListener(TreeSelectionListener)}
-     * through queue
-     */
     public void removeTreeSelectionListener(final TreeSelectionListener treeSelectionListener) {
         runMapping(new MapVoidAction("removeTreeSelectionListener") {
             @Override
@@ -2619,11 +2110,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps
-     * {@code JTree.removeTreeWillExpandListener(TreeWillExpandListener)}
-     * through queue
-     */
     public void removeTreeWillExpandListener(final TreeWillExpandListener treeWillExpandListener) {
         runMapping(new MapVoidAction("removeTreeWillExpandListener") {
             @Override
@@ -2633,9 +2119,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.scrollPathToVisible(TreePath)} through queue
-     */
     public void scrollPathToVisible(final TreePath treePath) {
         runMapping(new MapVoidAction("scrollPathToVisible") {
             @Override
@@ -2645,9 +2128,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.scrollRowToVisible(int)} through queue
-     */
     public void scrollRowToVisible(final int i) {
         runMapping(new MapVoidAction("scrollRowToVisible") {
             @Override
@@ -2657,9 +2137,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.setCellEditor(TreeCellEditor)} through queue
-     */
     public void setCellEditor(final TreeCellEditor treeCellEditor) {
         runMapping(new MapVoidAction("setCellEditor") {
             @Override
@@ -2669,9 +2146,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.setCellRenderer(TreeCellRenderer)} through queue
-     */
     public void setCellRenderer(final TreeCellRenderer treeCellRenderer) {
         runMapping(new MapVoidAction("setCellRenderer") {
             @Override
@@ -2681,9 +2155,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.setEditable(boolean)} through queue
-     */
     public void setEditable(final boolean b) {
         runMapping(new MapVoidAction("setEditable") {
             @Override
@@ -2693,9 +2164,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.setInvokesStopCellEditing(boolean)} through queue
-     */
     public void setInvokesStopCellEditing(final boolean b) {
         runMapping(new MapVoidAction("setInvokesStopCellEditing") {
             @Override
@@ -2705,9 +2173,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.setLargeModel(boolean)} through queue
-     */
     public void setLargeModel(final boolean b) {
         runMapping(new MapVoidAction("setLargeModel") {
             @Override
@@ -2717,9 +2182,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.setModel(TreeModel)} through queue
-     */
     public void setModel(final TreeModel treeModel) {
         runMapping(new MapVoidAction("setModel") {
             @Override
@@ -2729,9 +2191,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.setRootVisible(boolean)} through queue
-     */
     public void setRootVisible(final boolean b) {
         runMapping(new MapVoidAction("setRootVisible") {
             @Override
@@ -2741,9 +2200,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.setRowHeight(int)} through queue
-     */
     public void setRowHeight(final int i) {
         runMapping(new MapVoidAction("setRowHeight") {
             @Override
@@ -2753,9 +2209,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.setScrollsOnExpand(boolean)} through queue
-     */
     public void setScrollsOnExpand(final boolean b) {
         runMapping(new MapVoidAction("setScrollsOnExpand") {
             @Override
@@ -2765,9 +2218,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.setSelectionInterval(int, int)} through queue
-     */
     public void setSelectionInterval(final int i, final int i1) {
         runMapping(new MapVoidAction("setSelectionInterval") {
             @Override
@@ -2777,9 +2227,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.setSelectionModel(TreeSelectionModel)} through queue
-     */
     public void setSelectionModel(final TreeSelectionModel treeSelectionModel) {
         runMapping(new MapVoidAction("setSelectionModel") {
             @Override
@@ -2789,9 +2236,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.setSelectionPath(TreePath)} through queue
-     */
     public void setSelectionPath(final TreePath treePath) {
         runMapping(new MapVoidAction("setSelectionPath") {
             @Override
@@ -2801,9 +2245,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.setSelectionPaths(TreePath[])} through queue
-     */
     public void setSelectionPaths(final TreePath[] treePath) {
         runMapping(new MapVoidAction("setSelectionPaths") {
             @Override
@@ -2813,9 +2254,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.setSelectionRow(int)} through queue
-     */
     public void setSelectionRow(final int i) {
         runMapping(new MapVoidAction("setSelectionRow") {
             @Override
@@ -2825,9 +2263,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.setSelectionRows(int[])} through queue
-     */
     public void setSelectionRows(final int[] i) {
         runMapping(new MapVoidAction("setSelectionRows") {
             @Override
@@ -2837,9 +2272,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.setShowsRootHandles(boolean)} through queue
-     */
     public void setShowsRootHandles(final boolean b) {
         runMapping(new MapVoidAction("setShowsRootHandles") {
             @Override
@@ -2849,9 +2281,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.setUI(TreeUI)} through queue
-     */
     public void setUI(final TreeUI treeUI) {
         runMapping(new MapVoidAction("setUI") {
             @Override
@@ -2861,9 +2290,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.setVisibleRowCount(int)} through queue
-     */
     public void setVisibleRowCount(final int i) {
         runMapping(new MapVoidAction("setVisibleRowCount") {
             @Override
@@ -2873,9 +2299,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.startEditingAtPath(TreePath)} through queue
-     */
     public void startEditingAtPath(final TreePath treePath) {
         runMapping(new MapVoidAction("startEditingAtPath") {
             @Override
@@ -2885,9 +2308,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         });
     }
 
-    /**
-     * Maps {@code JTree.stopEditing()} through queue
-     */
     public boolean stopEditing() {
         return (runMapping(new MapBooleanAction("stopEditing") {
             @Override
@@ -2897,9 +2317,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }));
     }
 
-    /**
-     * Maps {@code JTree.treeDidChange()} through queue
-     */
     public void treeDidChange() {
         runMapping(new MapVoidAction("treeDidChange") {
             @Override
@@ -2919,8 +2336,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         /**
          * Should be true if row is good.
          *
-         * @param oper Operator used to search item.
-         * @param row Row be checked.
          * @return true if the row fits the criteria
          */
         public boolean checkRow(JTreeOperator oper, int row);
@@ -2991,36 +2406,18 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
 
         private static final long serialVersionUID = 42L;
 
-        /**
-         * Constructor.
-         */
         public NoSuchPathException() {
             super("Unknown/null/invalid tree path.", null);
         }
 
-        /**
-         * Constructor.
-         *
-         * @param path a nonexistent path.
-         */
         public NoSuchPathException(String[] path) {
             super("No such path as \"" + pathToString(path) + "\"", getSource());
         }
 
-        /**
-         * Constructor.
-         *
-         * @param index a nonexistent line index.
-         */
         public NoSuchPathException(int index) {
             super("Tree does not contain " + index + "'th line", getSource());
         }
 
-        /**
-         * Constructor.
-         *
-         * @param path a nonexistent path.
-         */
         public NoSuchPathException(TreePath path) {
             super("No such path as \"" + path.toString() + "\"", getSource());
         }
@@ -3034,8 +2431,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         /**
          * Checks if the path fits the criteria.
          *
-         * @param path TreePath to check.
-         * @param indexInParent Index of the "path" in path's parent.
          * @return true if the path fits the criteria
          */
         public boolean checkPath(TreePath path, int indexInParent);
@@ -3043,8 +2438,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         /**
          * Checks if the path has another path as a parent.
          *
-         * @param path TreePath to check.
-         * @param indexInParent Index of the "path" in path's parent.
          * @return true if path looked for is a child/grandchild of a path
          * passed as a parameter.
          */
@@ -3073,8 +2466,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
          * @param arr a node text array. First element defines a text of a first
          * node under a tree root, second element - a children of the first
          * node, ...
-         * @param indices indexes of nodes in nodes' parents.
-         * @param comparator String comparision criteria.
          */
         StringArrayPathChooser(String[] arr, int[] indices, StringComparator comparator) {
             this.arr = arr;
@@ -3182,8 +2573,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
 
         /**
          * Constructs JTreeFinder.
-         *
-         * @param sf other searching criteria.
          */
         public JTreeFinder(ComponentChooser sf) {
             super(JTree.class, sf);
@@ -3209,10 +2598,8 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         /**
          * Constructs JTreeByItemFinder.
          *
-         * @param lb a text pattern
          * @param ii row index to check. If equal to -1, selected row is
          * checked.
-         * @param comparator specifies string comparision algorithm.
          */
         public JTreeByItemFinder(String lb, int ii, StringComparator comparator) {
             label = lb;
@@ -3223,7 +2610,6 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         /**
          * Constructs JTreeByItemFinder.
          *
-         * @param lb a text pattern
          * @param ii row index to check. If equal to -1, selected row is
          * checked.
          */

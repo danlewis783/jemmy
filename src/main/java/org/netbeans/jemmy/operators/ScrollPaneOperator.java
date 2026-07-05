@@ -37,7 +37,6 @@ import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
-import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.Timeoutable;
 import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.drivers.DriverManager;
@@ -45,14 +44,13 @@ import org.netbeans.jemmy.drivers.ScrollDriver;
 import org.netbeans.jemmy.drivers.scrolling.ScrollAdjuster;
 
 /**
- * <BR><BR>Timeouts used: <BR>
- * ScrollbarOperator.WholeScrollTimeout - time for one scroll click <BR>
- * ComponentOperator.WaitComponentTimeout - time to wait component displayed
- * <BR>.
+ * Timeouts used:
+ * <ul>
+ * <li>ScrollbarOperator.WholeScrollTimeout - time for one scroll click</li>
+ * <li>ComponentOperator.WaitComponentTimeout - time to wait component displayed</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
 public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements Timeoutable, Outputable {
@@ -64,8 +62,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
     private ScrollDriver driver;
 
     /**
-     * Constructor.
-     *
      * @param b The {@code java.awt.ScrollPane} managed by this instance.
      */
     public ScrollPaneOperator(ScrollPane b) {
@@ -73,35 +69,18 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
         driver = DriverManager.getScrollDriver(getClass());
     }
 
-    /**
-     * Constructs a ScrollPaneOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public ScrollPaneOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((ScrollPane) cont.waitSubComponent(new ScrollPaneFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a ScrollPaneOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public ScrollPaneOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont Operator pointing a container to search component in.
-     * @param index Ordinal component index.
-     * @throws TimeoutExpiredException
      */
     public ScrollPaneOperator(ContainerOperator<?> cont, int index) {
         this((ScrollPane) waitComponent(cont, new ScrollPaneFinder(), index));
@@ -109,11 +88,8 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont Operator pointing a container to search component in.
-     * @throws TimeoutExpiredException
      */
     public ScrollPaneOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -122,9 +98,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
     /**
      * Searches ScrollPane in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return ScrollPane instance or null if component was not found.
      */
     public static ScrollPane findScrollPane(Container cont, ComponentChooser chooser, int index) {
@@ -134,8 +107,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
     /**
      * Searches 0'th ScrollPane in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return ScrollPane instance or null if component was not found.
      */
     public static ScrollPane findScrollPane(Container cont, ComponentChooser chooser) {
@@ -145,8 +116,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
     /**
      * Searches ScrollPane in container.
      *
-     * @param cont Container to search component in.
-     * @param index Ordinal component index.
      * @return ScrollPane instance or null if component was not found.
      */
     public static ScrollPane findScrollPane(Container cont, int index) {
@@ -157,7 +126,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
     /**
      * Searches 0'th ScrollPane in container.
      *
-     * @param cont Container to search component in.
      * @return ScrollPane instance or null if component was not found.
      */
     public static ScrollPane findScrollPane(Container cont) {
@@ -167,8 +135,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
     /**
      * Searches ScrollPane object which component lies on.
      *
-     * @param comp Component to find ScrollPane under.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return ScrollPane instance or null if component was not found.
      */
     public static ScrollPane findScrollPaneUnder(Component comp, ComponentChooser chooser) {
@@ -178,7 +144,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
     /**
      * Searches ScrollPane object which component lies on.
      *
-     * @param comp Component to find ScrollPane under.
      * @return ScrollPane instance or null if component was not found.
      */
     public static ScrollPane findScrollPaneUnder(Component comp) {
@@ -188,11 +153,7 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
     /**
      * Waits ScrollPane in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return ScrollPane instance or null if component was not displayed.
-     * @throws TimeoutExpiredException
      */
     public static ScrollPane waitScrollPane(Container cont, ComponentChooser chooser, int index) {
         return (ScrollPane) waitComponent(cont, new ScrollPaneFinder(chooser), index);
@@ -201,10 +162,7 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
     /**
      * Waits 0'th ScrollPane in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return ScrollPane instance or null if component was not displayed.
-     * @throws TimeoutExpiredException
      */
     public static ScrollPane waitScrollPane(Container cont, ComponentChooser chooser) {
         return waitScrollPane(cont, chooser, 0);
@@ -213,10 +171,7 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
     /**
      * Waits ScrollPane in container.
      *
-     * @param cont Container to search component in.
-     * @param index Ordinal component index.
      * @return ScrollPane instance or null if component was not displayed.
-     * @throws TimeoutExpiredException
      */
     public static ScrollPane waitScrollPane(Container cont, int index) {
         return waitScrollPane(
@@ -226,9 +181,7 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
     /**
      * Waits 0'th ScrollPane in container.
      *
-     * @param cont Container to search component in.
      * @return ScrollPane instance or null if component was not displayed.
-     * @throws TimeoutExpiredException
      */
     public static ScrollPane waitScrollPane(Container cont) {
         return waitScrollPane(cont, 0);
@@ -273,9 +226,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
 
     /**
      * Sets both values.
-     *
-     * @param x a horizontal value.
-     * @param y a vertical value.
      */
     public void setValues(int x, int y) {
         getHAdjustable().setValue(x);
@@ -284,8 +234,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
 
     /**
      * Scrools to the position defined by a ScrollAdjuster instance.
-     *
-     * @param adj specifies the position.
      */
     public void scrollTo(final ScrollAdjuster adj) {
         produceTimeRestricted(
@@ -311,9 +259,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
 
     /**
      * Scrolls horizontal scroll bar.
-     *
-     * @param value Value to scroll horizontal scroll bar to.
-     * @throws TimeoutExpiredException
      */
     public void scrollToHorizontalValue(final int value) {
         output.printTrace(
@@ -324,10 +269,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
 
     /**
      * Scrolls horizontal scroll bar.
-     *
-     * @param proportionalValue Proportional value to scroll horizontal scroll
-     * bar to.
-     * @throws TimeoutExpiredException
      */
     public void scrollToHorizontalValue(double proportionalValue) {
         output.printTrace("Scroll ScrollPane to " + Double.toString(proportionalValue)
@@ -344,9 +285,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
 
     /**
      * Scrolls vertical scroll bar.
-     *
-     * @param value Value to scroll vertical scroll bar to.
-     * @throws TimeoutExpiredException
      */
     public void scrollToVerticalValue(final int value) {
         output.printTrace("Scroll ScrollPane to " + Integer.toString(value) + " vertical value \n" + toStringSource());
@@ -356,9 +294,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
 
     /**
      * Scrolls vertical scroll bar.
-     *
-     * @param proportionalValue Value to scroll vertical scroll bar to.
-     * @throws TimeoutExpiredException
      */
     public void scrollToVerticalValue(double proportionalValue) {
         output.printTrace("Scroll ScrollPane to " + Double.toString(proportionalValue)
@@ -375,10 +310,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
 
     /**
      * Scrolls both scroll bars.
-     *
-     * @param valueX Value to scroll horizontal scroll bar to.
-     * @param valueY Value to scroll vertical scroll bar to.
-     * @throws TimeoutExpiredException
      */
     public void scrollToValues(int valueX, int valueY) {
         scrollToVerticalValue(valueX);
@@ -387,21 +318,12 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
 
     /**
      * Scrolls both scroll bars.
-     *
-     * @param proportionalValueX Value to scroll horizontal scroll bar to.
-     * @param proportionalValueY Value to scroll vertical scroll bar to.
-     * @throws TimeoutExpiredException
      */
     public void scrollToValues(double proportionalValueX, double proportionalValueY) {
         scrollToVerticalValue(proportionalValueX);
         scrollToHorizontalValue(proportionalValueY);
     }
 
-    /**
-     * Scrolls pane to top.
-     *
-     * @throws TimeoutExpiredException
-     */
     public void scrollToTop() {
         output.printTrace("Scroll ScrollPane to top\n" + toStringSource());
         output.printGolden("Scroll ScrollPane to top");
@@ -426,11 +348,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
                 "ScrollbarOperator.WholeScrollTimeout");
     }
 
-    /**
-     * Scrolls pane to bottom.
-     *
-     * @throws TimeoutExpiredException
-     */
     public void scrollToBottom() {
         output.printTrace("Scroll ScrollPane to bottom\n" + toStringSource());
         output.printGolden("Scroll ScrollPane to bottom");
@@ -455,11 +372,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
                 "ScrollbarOperator.WholeScrollTimeout");
     }
 
-    /**
-     * Scrolls pane to left.
-     *
-     * @throws TimeoutExpiredException
-     */
     public void scrollToLeft() {
         output.printTrace("Scroll ScrollPane to left\n" + toStringSource());
         output.printGolden("Scroll ScrollPane to left");
@@ -484,11 +396,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
                 "ScrollbarOperator.WholeScrollTimeout");
     }
 
-    /**
-     * Scrolls pane to right.
-     *
-     * @throws TimeoutExpiredException
-     */
     public void scrollToRight() {
         output.printTrace("Scroll ScrollPane to right\n" + toStringSource());
         output.printGolden("Scroll ScrollPane to right");
@@ -513,29 +420,11 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
                 "ScrollbarOperator.WholeScrollTimeout");
     }
 
-    /**
-     * Scrolls pane to rectangle..
-     *
-     * @param comp a subcomponent defining coordinate system.
-     * @param x coordinate
-     * @param y coordinate
-     * @param width rectangle width
-     * @param height rectangle height
-     * @throws TimeoutExpiredException
-     */
     public void scrollToComponentRectangle(Component comp, int x, int y, int width, int height) {
         scrollTo(new ComponentRectChecker(comp, x, y, width, height, Adjustable.HORIZONTAL));
         scrollTo(new ComponentRectChecker(comp, x, y, width, height, Adjustable.VERTICAL));
     }
 
-    /**
-     * Scrolls pane to point.
-     *
-     * @param comp a subcomponent defining coordinate system.
-     * @param x coordinate
-     * @param y coordinate
-     * @throws TimeoutExpiredException
-     */
     public void scrollToComponentPoint(Component comp, int x, int y) {
         scrollToComponentRectangle(
                 comp, x - X_POINT_RECT_SIZE, y - Y_POINT_RECT_SIZE, 2 * X_POINT_RECT_SIZE, 2 * Y_POINT_RECT_SIZE);
@@ -544,9 +433,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
     /**
      * Scrolls pane to component on this pane. Component should lay on the
      * ScrollPane view.
-     *
-     * @param comp Component to scroll to.
-     * @throws TimeoutExpiredException
      */
     public void scrollToComponent(final Component comp) {
         String componentToString = runMapping(new Operator.MapAction<String>("comp.toString()") {
@@ -564,11 +450,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
      * Checks if component's rectangle is inside view port (no scrolling
      * necessary).
      *
-     * @param comp a subcomponent defining coordinate system.
-     * @param x coordinate
-     * @param y coordinate
-     * @param width rectangle width
-     * @param height rectangle height
      * @return true if pointed subcomponent rectangle is inside the scrolling
      * area.
      */
@@ -602,7 +483,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
     /**
      * Checks if component is inside view port (no scrolling necessary).
      *
-     * @param comp a subcomponent defining coordinate system.
      * @return true if pointed subcomponent is inside the scrolling area.
      */
     public boolean checkInside(Component comp) {
@@ -628,9 +508,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code ScrollPane.getHAdjustable()} through queue
-     */
     public Adjustable getHAdjustable() {
         return (runMapping(new MapAction<Adjustable>("getHAdjustable") {
             @Override
@@ -640,9 +517,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
         }));
     }
 
-    /**
-     * Maps {@code ScrollPane.getHScrollbarHeight()} through queue
-     */
     public int getHScrollbarHeight() {
         return (runMapping(new MapIntegerAction("getHScrollbarHeight") {
             @Override
@@ -652,9 +526,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
         }));
     }
 
-    /**
-     * Maps {@code ScrollPane.getScrollPosition()} through queue
-     */
     public Point getScrollPosition() {
         return (runMapping(new MapAction<Point>("getScrollPosition") {
             @Override
@@ -664,9 +535,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
         }));
     }
 
-    /**
-     * Maps {@code ScrollPane.getScrollbarDisplayPolicy()} through queue
-     */
     public int getScrollbarDisplayPolicy() {
         return (runMapping(new MapIntegerAction("getScrollbarDisplayPolicy") {
             @Override
@@ -676,9 +544,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
         }));
     }
 
-    /**
-     * Maps {@code ScrollPane.getVAdjustable()} through queue
-     */
     public Adjustable getVAdjustable() {
         return (runMapping(new MapAction<Adjustable>("getVAdjustable") {
             @Override
@@ -688,9 +553,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
         }));
     }
 
-    /**
-     * Maps {@code ScrollPane.getVScrollbarWidth()} through queue
-     */
     public int getVScrollbarWidth() {
         return (runMapping(new MapIntegerAction("getVScrollbarWidth") {
             @Override
@@ -700,9 +562,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
         }));
     }
 
-    /**
-     * Maps {@code ScrollPane.getViewportSize()} through queue
-     */
     public Dimension getViewportSize() {
         return (runMapping(new MapAction<Dimension>("getViewportSize") {
             @Override
@@ -712,9 +571,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
         }));
     }
 
-    /**
-     * Maps {@code ScrollPane.paramString()} through queue
-     */
     public String paramString() {
         return (runMapping(new MapAction<String>("paramString") {
             @Override
@@ -724,9 +580,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
         }));
     }
 
-    /**
-     * Maps {@code ScrollPane.setScrollPosition(int, int)} through queue
-     */
     public void setScrollPosition(final int i, final int i1) {
         runMapping(new MapVoidAction("setScrollPosition") {
             @Override
@@ -736,9 +589,6 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
         });
     }
 
-    /**
-     * Maps {@code ScrollPane.setScrollPosition(Point)} through queue
-     */
     public void setScrollPosition(final Point point) {
         runMapping(new MapVoidAction("setScrollPosition") {
             @Override
@@ -849,18 +699,10 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
      */
     public static class ScrollPaneFinder extends Finder {
 
-        /**
-         * Constructs ScrollPaneFinder.
-         *
-         * @param sf other searching criteria.
-         */
         public ScrollPaneFinder(ComponentChooser sf) {
             super(ScrollPane.class, sf);
         }
 
-        /**
-         * Constructs ScrollPaneFinder.
-         */
         public ScrollPaneFinder() {
             super(ScrollPane.class);
         }

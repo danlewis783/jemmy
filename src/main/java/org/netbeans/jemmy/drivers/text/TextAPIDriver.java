@@ -35,16 +35,9 @@ import org.netbeans.jemmy.operators.TextComponentOperator;
 
 /**
  * Superclass for all TextDrivers using API calls.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public abstract class TextAPIDriver extends LightSupportiveDriver implements TextDriver {
 
-    /**
-     * Constructs a ChoiceDriver.
-     *
-     * @param supported an array of supported class names
-     */
     public TextAPIDriver(String[] supported) {
         super(supported);
     }
@@ -117,7 +110,6 @@ public abstract class TextAPIDriver extends LightSupportiveDriver implements Tex
     /**
      * Returns operator's text.
      *
-     * @param oper an operator.
      * @return string representing component text.
      */
     public abstract String getText(ComponentOperator oper);
@@ -125,7 +117,6 @@ public abstract class TextAPIDriver extends LightSupportiveDriver implements Tex
     /**
      * Returns current caret position.
      *
-     * @param oper an operator.
      * @return int represnting current operator's caret position.
      */
     public abstract int getCaretPosition(ComponentOperator oper);
@@ -133,7 +124,6 @@ public abstract class TextAPIDriver extends LightSupportiveDriver implements Tex
     /**
      * Returns a caret position of selection start.
      *
-     * @param oper an operator.
      * @return int represnting index of operator's selection start.
      */
     public abstract int getSelectionStart(ComponentOperator oper);
@@ -141,7 +131,6 @@ public abstract class TextAPIDriver extends LightSupportiveDriver implements Tex
     /**
      * Returns a caret position of selection end.
      *
-     * @param oper an operator.
      * @return int represnting index of operator's selection end.
      */
     public abstract int getSelectionEnd(ComponentOperator oper);

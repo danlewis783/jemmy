@@ -43,11 +43,7 @@ import org.netbeans.jemmy.explorer.GUIBrowser;
 import org.netbeans.jemmy.util.Platform;
 
 /**
- *
  * Keeps default Jemmy properties.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
- *
  */
 public class JemmyProperties {
 
@@ -89,9 +85,6 @@ public class JemmyProperties {
 
     Hashtable<String, Object> properties;
 
-    /**
-     *
-     */
     protected JemmyProperties() {
         super();
         properties = new Hashtable<>();
@@ -181,7 +174,6 @@ public class JemmyProperties {
     /**
      * Just like getProperties().getProperty(propertyName).
      *
-     * @param propertyName a property key
      * @return a property value
      * @see #setCurrentProperty
      * @see #setCurrentTimeout
@@ -193,8 +185,6 @@ public class JemmyProperties {
     /**
      * Just like getProperties().setProperty(propertyName, propertyValue).
      *
-     * @param propertyName a property key
-     * @param propertyValue a property value
      * @return previous property value
      * @see #getCurrentProperty
      * @see #getCurrentTimeout
@@ -206,7 +196,6 @@ public class JemmyProperties {
     /**
      * Removes a property from current properties list.
      *
-     * @param propertyName a property key.
      * @return previous property value
      */
     public static Object removeCurrentProperty(String propertyName) {
@@ -235,7 +224,6 @@ public class JemmyProperties {
     /**
      * Just like getProperties().setTimeouts(to).
      *
-     * @param to New timeouts
      * @return old timeouts.
      * @see #getCurrentTimeouts
      */
@@ -246,8 +234,6 @@ public class JemmyProperties {
     /**
      * Just like getProperties().getTimeouts().setTimeout(name, newValue).
      *
-     * @param name a timeout name
-     * @param newValue a timeout value
      * @return previous timeout value
      * @see #getCurrentTimeout
      */
@@ -258,7 +244,6 @@ public class JemmyProperties {
     /**
      * Just like getProperties().getTimeouts().getTimeout(name).
      *
-     * @param name a timeout name
      * @return a timeout value
      * @see #setCurrentTimeout
      */
@@ -269,8 +254,6 @@ public class JemmyProperties {
     /**
      * Just like getProperties().getTimeouts().initTimeout(name, newValue).
      *
-     * @param name a timeout name
-     * @param newValue a timeout value
      * @return a timeout value
      * @see #setCurrentTimeout
      */
@@ -291,7 +274,6 @@ public class JemmyProperties {
     /**
      * Just like getProperties().setOutput(out).
      *
-     * @param out new output
      * @return a TestOut object representing the current output.
      * @see #getCurrentOutput
      */
@@ -312,7 +294,6 @@ public class JemmyProperties {
     /**
      * Just like getProperties().setBundleManager(resources).
      *
-     * @param resources new BundleManager
      * @return a BundleManager object representing the current bundle manager.
      * @see #getCurrentBundleManager
      */
@@ -323,7 +304,6 @@ public class JemmyProperties {
     /**
      * Just like getProperties().getBundleManager().getResource(key).
      *
-     * @param key a resource key.
      * @return a resource value
      */
     public static String getCurrentResource(String key) {
@@ -333,8 +313,6 @@ public class JemmyProperties {
     /**
      * Just like getProperties().getBundleManager().getResource(bundleID, key).
      *
-     * @param key a resource key.
-     * @param bundleID a bundle ID
      * @return a resource value
      */
     public static String getCurrentResource(String bundleID, String key) {
@@ -355,7 +333,6 @@ public class JemmyProperties {
     /**
      * Just like getProperties().setCharBindingMap(map).
      *
-     * @param map new CharBindingMap.
      * @return old CharBindingMap object.
      * @see #getCurrentCharBindingMap
      */
@@ -382,7 +359,6 @@ public class JemmyProperties {
      * are reproduced by event posting. If (model & QUEUE_MODEL_MASK) != 0
      * actions are reproduced through event queue.
      *
-     * @param model New dispatching model value.
      * @return Previous dispatching model value.
      * @see #setDispatchingModel(int)
      * @see #getCurrentDispatchingModel()
@@ -444,8 +420,6 @@ public class JemmyProperties {
 
     /**
      * Prints full version into standard output.
-     *
-     * @param argv Application args.
      */
     public static void main(String[] argv) {
         if (argv.length == 0) {
@@ -480,9 +454,9 @@ public class JemmyProperties {
     /**
      * Method to initialize timeouts and resources.
      *
-     * @param prop_file File to get filenames from. <BR>
+     * @param prop_file File to get filenames from.
      * Can contain definition of variables TIMEOUTS_FILE - full path to timeouts
-     * file, <BR>
+     * file,
      * RESOURCE_FILE - full path to resource file.
      * @see org.netbeans.jemmy.JemmyProperties#initProperties()
      */
@@ -509,7 +483,8 @@ public class JemmyProperties {
     }
 
     /**
-     * Method to initialize timeouts and resources. <BR>
+     * Method to initialize timeouts and resources.
+     * <p>
      * Uses jemmy.properties system property to find file.
      *
      * @see org.netbeans.jemmy.JemmyProperties#initProperties(String)
@@ -528,24 +503,10 @@ public class JemmyProperties {
         }
     }
 
-    /**
-     * Initializes dispatching model.
-     *
-     * @param queue Notifies that event queue dispatching should be used.
-     * @param robot Notifies that robot dispatching should be used.
-     * @param shortcut Notifies that event shorcutting should be used.
-     */
     public void initDispatchingModel(boolean queue, boolean robot, boolean shortcut) {
         initDispatchingModel(queue, robot, shortcut, false);
     }
 
-    /**
-     * Initializes dispatching model.
-     *
-     * @param queue Notifies that event queue dispatching should be used.
-     * @param robot Notifies that robot dispatching should be used.
-     * @param shortcut Notifies that event shorcutting should be used.
-     */
     public void initDispatchingModel(boolean queue, boolean robot, boolean shortcut, boolean smooth) {
         int model = getDefaultDispatchingModel();
         getOutput().print("Reproduce user actions ");
@@ -581,23 +542,18 @@ public class JemmyProperties {
         setDispatchingModel(model);
     }
 
-    /**
-     * Initializes dispatching model.
-     *
-     * @param queue Notifies that event queue dispatching should be used.
-     * @param robot Notifies that robot dispatching should be used.
-     */
     public void initDispatchingModel(boolean queue, boolean robot) {
         this.initDispatchingModel(queue, robot, false);
     }
 
     /**
-     * Initializes dispatching model. Uses "jemmy.queue_dispatching" and
-     * "jemmy.robot_dispatching" system properties to determine what model
-     * should be used. Possible values for the both properties: <BR>
-     * "off" - switch mode off. <BR>
-     * "on" - switch mode on. <BR>
-     * "" - use default value.
+     * Initializes dispatching model. Uses "jemmy.queue_dispatching" and "jemmy.robot_dispatching" system properties to
+     * determine what model should be used. Possible values for the both properties:
+     * <ul>
+     * <li>"off" - switch mode off.</li>
+     * <li>"on" - switch mode on.</li>
+     * <li>"" - use default value.</li>
+     * </ul>
      *
      * @see #getDefaultDispatchingModel()
      */
@@ -649,7 +605,6 @@ public class JemmyProperties {
     /**
      * Changes timeouts.
      *
-     * @param to new timeouts.
      * @return old timeouts.
      * @see #getTimeouts
      */
@@ -660,8 +615,6 @@ public class JemmyProperties {
     /**
      * Changes a timeouts value.
      *
-     * @param name Timeout name
-     * @param newValue New timeout value
      * @return previous timeout value
      * @see #getTimeout
      */
@@ -672,7 +625,6 @@ public class JemmyProperties {
     /**
      * Returns a timeouts value.
      *
-     * @param name Timeout name
      * @return a timeout value
      * @see #setTimeout
      */
@@ -683,8 +635,6 @@ public class JemmyProperties {
     /**
      * Inits a timeouts value.
      *
-     * @param name Timeout name
-     * @param newValue New timeout value
      * @return a timeout value
      */
     public long initTimeout(String name, long newValue) {
@@ -704,7 +654,6 @@ public class JemmyProperties {
     /**
      * Changes output.
      *
-     * @param out new output.
      * @return old output.
      * @see #getOutput
      */
@@ -725,7 +674,6 @@ public class JemmyProperties {
     /**
      * Changes bundle manager.
      *
-     * @param resources new bundle manager.
      * @return old bundle manager
      * @see #getBundleManager
      */
@@ -736,7 +684,6 @@ public class JemmyProperties {
     /**
      * Returns resource value.
      *
-     * @param key Resource key.
      * @return resource value
      */
     public String getResource(String key) {
@@ -746,8 +693,6 @@ public class JemmyProperties {
     /**
      * Returns resource value from the specified bundle.
      *
-     * @param bundleID Id of a bundle to get resource from.
-     * @param key Resource key.
      * @return resource value
      */
     public String getResource(String bundleID, String key) {
@@ -767,7 +712,6 @@ public class JemmyProperties {
     /**
      * Changes char binding map.
      *
-     * @param map new char binding map.
      * @return old char binding map.
      * @see #getCharBindingMap
      */
@@ -817,7 +761,6 @@ public class JemmyProperties {
     /**
      * Specifies the dispatching model value.
      *
-     * @param model New dispatching model value.
      * @return Previous dispatching model value.
      * @see #setCurrentDispatchingModel(int)
      * @see #getDispatchingModel()
@@ -856,7 +799,6 @@ public class JemmyProperties {
     /**
      * Checks if "name" propery currently has a value.
      *
-     * @param name Property name. Should by unique.
      * @return true if property was defined.
      * @see #setProperty(String, Object)
      * @see #getProperty(String)
@@ -868,8 +810,6 @@ public class JemmyProperties {
     /**
      * Saves object as a static link to be used by other objects.
      *
-     * @param name Property name. Should by unique.
-     * @param newValue Property value.
      * @return Previous value of "name" property.
      * @see #setCurrentProperty(String, Object)
      * @see #getProperty(String)
@@ -888,7 +828,6 @@ public class JemmyProperties {
     /**
      * Returns the property value.
      *
-     * @param name Property name. Should by unique.
      * @return Property value stored by setProperty(String, Object) method.
      * @see #getCurrentProperty(String)
      * @see #setProperty(String, Object)
@@ -905,7 +844,6 @@ public class JemmyProperties {
     /**
      * Removes the property.
      *
-     * @param name A name of the property to be removed.
      * @return previous property value
      */
     public Object removeProperty(String name) {
@@ -934,8 +872,6 @@ public class JemmyProperties {
 
     /**
      * Copy all properties from this instance into another.
-     *
-     * @param properties a JemmyProperties instance to copy properties into.
      */
     public void copyTo(JemmyProperties properties) {
         String[] keys = getKeys();

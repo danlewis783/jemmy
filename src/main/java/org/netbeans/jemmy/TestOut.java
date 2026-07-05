@@ -31,12 +31,6 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
-/**
- *
- * Test output.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
- */
 public class TestOut {
 
     private InputStream input;
@@ -46,25 +40,10 @@ public class TestOut {
     private BufferedReader buffInput;
     private boolean autoFlushMode = true;
 
-    /**
-     * Constructor.
-     *
-     * @param in Input stream
-     * @param out Output stream
-     * @param err Errput stream
-     */
     public TestOut(InputStream in, PrintStream out, PrintStream err) {
         this(in, out, err, null);
     }
 
-    /**
-     * Constructor.
-     *
-     * @param in Input stream
-     * @param out Output stream
-     * @param err Errput stream
-     * @param golden Golgen output stream
-     */
     public TestOut(InputStream in, PrintStream out, PrintStream err, PrintStream golden) {
         super();
         PrintWriter tout = null;
@@ -82,25 +61,10 @@ public class TestOut {
         initStreams(in, tout, terr, tgolden);
     }
 
-    /**
-     * Constructor.
-     *
-     * @param in Input stream
-     * @param out Output stream
-     * @param err Errput stream
-     */
     public TestOut(InputStream in, PrintWriter out, PrintWriter err) {
         this(in, out, err, null);
     }
 
-    /**
-     * Constructor.
-     *
-     * @param in Input stream
-     * @param out Output stream
-     * @param err Errput stream
-     * @param golden Golgen output stream
-     */
     public TestOut(InputStream in, PrintWriter out, PrintWriter err, PrintWriter golden) {
         super();
         initStreams(in, out, err, golden);
@@ -126,7 +90,6 @@ public class TestOut {
     /**
      * Specifies either flush is invoked after each output.
      *
-     * @param autoFlushMode If true flush is invoking after each output.
      * @return Old value of the auto flush mode.
      * @see #getAutoFlushMode
      */
@@ -174,11 +137,6 @@ public class TestOut {
         }
     }
 
-    /**
-     * Prints a line into output.
-     *
-     * @param line a string to print into output stream.
-     */
     public void print(String line) {
         if (output != null) {
             output.print(line);
@@ -188,8 +146,6 @@ public class TestOut {
     /**
      * Prints a line and then terminate the line by writing the line separator
      * string.
-     *
-     * @param line a string to print into output stream.
      */
     public void printLine(String line) {
         if (output != null) {
@@ -200,11 +156,6 @@ public class TestOut {
         }
     }
 
-    /**
-     * Prints a line into golden output.
-     *
-     * @param line a string to print into golden output stream.
-     */
     public void printGolden(String line) {
         if (golden_output != null) {
             golden_output.println(line);
@@ -214,11 +165,6 @@ public class TestOut {
         }
     }
 
-    /**
-     * Prints a line into error output.
-     *
-     * @param line a string to print into error output stream.
-     */
     public void printErrLine(String line) {
         if (errput != null) {
             errput.println(line);
@@ -230,9 +176,6 @@ public class TestOut {
 
     /**
      * Prints a line into either output or errput.
-     *
-     * @param toOut If true prints a line into output.
-     * @param line a string to print.
      */
     public void printLine(boolean toOut, String line) {
         if (toOut) {
@@ -244,8 +187,6 @@ public class TestOut {
 
     /**
      * Prints a trace line.
-     *
-     * @param text a trace text.
      */
     public void printTrace(String text) {
         printLine("Trace:");
@@ -254,8 +195,6 @@ public class TestOut {
 
     /**
      * Prints a error line.
-     *
-     * @param text a error text.
      */
     public void printError(String text) {
         printErrLine("Error:");
@@ -264,8 +203,6 @@ public class TestOut {
 
     /**
      * Prints an exception stack trace into error stream.
-     *
-     * @param e exception
      */
     public void printStackTrace(Throwable e) {
         if (errput != null) {

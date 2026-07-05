@@ -39,25 +39,21 @@ import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
-import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.Timeoutable;
 import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.drivers.ButtonDriver;
 import org.netbeans.jemmy.drivers.DriverManager;
 
 /**
- *
- * <BR><BR>Timeouts used: <BR>
- * AbstractButtonOperator.PushButtonTimeout - time between button pressing and
- * releasing<BR>
- * ComponentOperator.WaitComponentTimeout - time to wait button displayed <BR>
- * ComponentOperator.WaitComponentEnabledTimeout - time to wait button enabled
- * <BR>
- * ComponentOperator.WaitStateTimeout - time to wait for text <BR>.
+ * Timeouts used:
+ * <ul>
+ * <li>AbstractButtonOperator.PushButtonTimeout - time between button pressing and releasing</li>
+ * <li>ComponentOperator.WaitComponentTimeout - time to wait button displayed</li>
+ * <li>ComponentOperator.WaitComponentEnabledTimeout - time to wait button enabled</li>
+ * <li>ComponentOperator.WaitStateTimeout - time to wait for text</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
 public class AbstractButtonOperator extends JComponentOperator implements Timeoutable, Outputable {
@@ -87,8 +83,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
     ButtonDriver driver;
 
     /**
-     * Constructor.
-     *
      * @param b The {@code java.awt.AbstractButton} managed by this
      * instance.
      */
@@ -97,30 +91,17 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         driver = DriverManager.getButtonDriver(getClass());
     }
 
-    /**
-     * Constructs an AbstractButtonOperator object.
-     *
-     * @param cont container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public AbstractButtonOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((AbstractButton) cont.waitSubComponent(new AbstractButtonFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs an AbstractButtonOperator object.
-     *
-     * @param cont container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public AbstractButtonOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits for a component in a container to show. The component
+     * Waits for a component in a container to show. The component
      * is identified as the {@code index+1}'th
      * {@code javax.swing.AbstractButton} that shows, lies below the
      * container in the display containment hierarchy, and that has the desired
@@ -129,11 +110,9 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
      *
      * @param cont The operator for a container containing the sought for
      * button.
-     * @param text Button text.
      * @param index Ordinal component index. The first component has
      * {@code index} 0.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public AbstractButtonOperator(ContainerOperator<?> cont, String text, int index) {
         this((AbstractButton) waitComponent(cont, new AbstractButtonByLabelFinder(text, cont.getComparator()), index));
@@ -141,7 +120,7 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
     }
 
     /**
-     * Constructor. Waits for a component in a container to show. The component
+     * Waits for a component in a container to show. The component
      * is identified as the first {@code javax.swing.AbstractButton} that
      * shows, lies below the container in the display containment hierarchy, and
      * that has the desired text. Uses cont's timeout and output for waiting and
@@ -149,23 +128,19 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
      *
      * @param cont The operator for a container containing the sought for
      * button.
-     * @param text Button text.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public AbstractButtonOperator(ContainerOperator<?> cont, String text) {
         this(cont, text, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
      * @param cont The operator for a container containing the sought for
      * button.
-     * @param index Ordinal component index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public AbstractButtonOperator(ContainerOperator<?> cont, int index) {
         this((AbstractButton) waitComponent(cont, new AbstractButtonFinder(), index));
@@ -173,13 +148,12 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
      * @param cont The operator for a container containing the sought for
      * button.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public AbstractButtonOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -191,8 +165,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
      * @param cont Container in which to search for the component. The container
      * lies above the component in the display containment hierarchy. The
      * containment need not be direct.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation,
-     * defining and applying search criteria.
      * @param index Ordinal component index. The first {@code index} is 0.
      * @return AbstractButton instance or null if component was not found.
      */
@@ -206,8 +178,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
      * @param cont Container in which to search for the component. The container
      * lies above the component in the display containment hierarchy. The
      * containment need not be direct.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation,
-     * defining and applying search criteria.
      * @return AbstractButton instance or null if component was not found.
      */
     public static AbstractButton findAbstractButton(Container cont, ComponentChooser chooser) {
@@ -217,11 +187,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
     /**
      * Searches AbstractButton by text.
      *
-     * @param cont Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return AbstractButton instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -233,10 +198,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
     /**
      * Searches AbstractButton by text.
      *
-     * @param cont Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return AbstractButton instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -247,11 +208,7 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
     /**
      * Waits AbstractButton in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return AbstractButton instance.
-     * @throws TimeoutExpiredException
      */
     public static AbstractButton waitAbstractButton(Container cont, ComponentChooser chooser, int index) {
         return (AbstractButton) waitComponent(cont, new AbstractButtonFinder(chooser), index);
@@ -260,10 +217,7 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
     /**
      * Waits 0'th AbstractButton in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return AbstractButton instance.
-     * @throws TimeoutExpiredException
      */
     public static AbstractButton waitAbstractButton(Container cont, ComponentChooser chooser) {
         return waitAbstractButton(cont, chooser, 0);
@@ -272,14 +226,8 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
     /**
      * Waits AbstractButton by text.
      *
-     * @param cont Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return AbstractButton instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static AbstractButton waitAbstractButton(Container cont, String text, boolean ce, boolean ccs, int index) {
         return waitAbstractButton(
@@ -289,13 +237,8 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
     /**
      * Waits AbstractButton by text.
      *
-     * @param cont Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return AbstractButton instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static AbstractButton waitAbstractButton(Container cont, String text, boolean ce, boolean ccs) {
         return waitAbstractButton(cont, text, ce, ccs, 0);
@@ -364,8 +307,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
     /**
      * Changes selection if necessary. Uses {@code push()} method in order
      * to do so.
-     *
-     * @param selected a button selection.
      */
     public void changeSelection(boolean selected) {
         if (isSelected() != selected) {
@@ -378,8 +319,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
 
     /**
      * Runs {@code changeSelection(boolean)} method in a separate thread.
-     *
-     * @param selected a button selection.
      */
     public void changeSelectionNoBlock(boolean selected) {
         produceNoBlocking(
@@ -395,8 +334,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
 
     /**
      * Press the button by mouse.
-     *
-     * @throws TimeoutExpiredException
      */
     public void press() {
         output.printLine("Press button\n    :" + toStringSource());
@@ -412,8 +349,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
 
     /**
      * Releases the button by mouse.
-     *
-     * @throws TimeoutExpiredException
      */
     public void release() {
         output.printLine("Release button\n    :" + toStringSource());
@@ -426,11 +361,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         driver.release(this);
     }
 
-    /**
-     * Waits for button to be selected.
-     *
-     * @param selected a button selection.
-     */
     public void waitSelected(final boolean selected) {
         getOutput().printLine("Wait button to be selected \n    : " + toStringSource());
         getOutput().printGolden("Wait button to be selected");
@@ -454,8 +384,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
 
     /**
      * Waits for text. Uses getComparator() comparator.
-     *
-     * @param text Text to wait for.
      */
     public void waitText(String text) {
         getOutput().printLine("Wait \"" + text + "\" text in component \n    : " + toStringSource());
@@ -478,10 +406,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code AbstractButton.addActionListener(ActionListener)}
-     * through queue
-     */
     public void addActionListener(final ActionListener actionListener) {
         runMapping(new MapVoidAction("addActionListener") {
             @Override
@@ -491,10 +415,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.addChangeListener(ChangeListener)}
-     * through queue
-     */
     public void addChangeListener(final ChangeListener changeListener) {
         runMapping(new MapVoidAction("addChangeListener") {
             @Override
@@ -504,9 +424,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.addItemListener(ItemListener)} through queue
-     */
     public void addItemListener(final ItemListener itemListener) {
         runMapping(new MapVoidAction("addItemListener") {
             @Override
@@ -516,9 +433,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.doClick()} through queue
-     */
     public void doClick() {
         runMapping(new MapVoidAction("doClick") {
             @Override
@@ -528,9 +442,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.doClick(int)} through queue
-     */
     public void doClick(final int i) {
         runMapping(new MapVoidAction("doClick") {
             @Override
@@ -540,9 +451,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.getActionCommand()} through queue
-     */
     public String getActionCommand() {
         return (runMapping(new MapAction<String>("getActionCommand") {
             @Override
@@ -552,9 +460,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code AbstractButton.getDisabledIcon()} through queue
-     */
     public Icon getDisabledIcon() {
         return (runMapping(new MapAction<Icon>("getDisabledIcon") {
             @Override
@@ -564,9 +469,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code AbstractButton.getDisabledSelectedIcon()} through queue
-     */
     public Icon getDisabledSelectedIcon() {
         return (runMapping(new MapAction<Icon>("getDisabledSelectedIcon") {
             @Override
@@ -576,9 +478,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code AbstractButton.getHorizontalAlignment()} through queue
-     */
     public int getHorizontalAlignment() {
         return (runMapping(new MapIntegerAction("getHorizontalAlignment") {
             @Override
@@ -588,9 +487,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code AbstractButton.getHorizontalTextPosition()} through queue
-     */
     public int getHorizontalTextPosition() {
         return (runMapping(new MapIntegerAction("getHorizontalTextPosition") {
             @Override
@@ -600,9 +496,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code AbstractButton.getIcon()} through queue
-     */
     public Icon getIcon() {
         return (runMapping(new MapAction<Icon>("getIcon") {
             @Override
@@ -612,9 +505,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code AbstractButton.getMargin()} through queue
-     */
     public Insets getMargin() {
         return (runMapping(new MapAction<Insets>("getMargin") {
             @Override
@@ -624,9 +514,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code AbstractButton.getMnemonic()} through queue
-     */
     public int getMnemonic() {
         return (runMapping(new MapIntegerAction("getMnemonic") {
             @Override
@@ -636,9 +523,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code AbstractButton.getModel()} through queue
-     */
     public ButtonModel getModel() {
         return (runMapping(new MapAction<ButtonModel>("getModel") {
             @Override
@@ -648,9 +532,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code AbstractButton.getPressedIcon()} through queue
-     */
     public Icon getPressedIcon() {
         return (runMapping(new MapAction<Icon>("getPressedIcon") {
             @Override
@@ -660,9 +541,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code AbstractButton.getRolloverIcon()} through queue
-     */
     public Icon getRolloverIcon() {
         return (runMapping(new MapAction<Icon>("getRolloverIcon") {
             @Override
@@ -672,9 +550,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code AbstractButton.getRolloverSelectedIcon()} through queue
-     */
     public Icon getRolloverSelectedIcon() {
         return (runMapping(new MapAction<Icon>("getRolloverSelectedIcon") {
             @Override
@@ -684,9 +559,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code AbstractButton.getSelectedIcon()} through queue
-     */
     public Icon getSelectedIcon() {
         return (runMapping(new MapAction<Icon>("getSelectedIcon") {
             @Override
@@ -696,9 +568,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code AbstractButton.getSelectedObjects()} through queue
-     */
     public Object[] getSelectedObjects() {
         return ((Object[]) runMapping(new MapAction<Object>("getSelectedObjects") {
             @Override
@@ -708,9 +577,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code AbstractButton.getText()} through queue
-     */
     public String getText() {
         return (runMapping(new MapAction<String>("getText") {
             @Override
@@ -720,9 +586,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code AbstractButton.getUI()} through queue
-     */
     public ButtonUI getUI() {
         return (runMapping(new MapAction<ButtonUI>("getUI") {
             @Override
@@ -732,9 +595,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code AbstractButton.getVerticalAlignment()} through queue
-     */
     public int getVerticalAlignment() {
         return (runMapping(new MapIntegerAction("getVerticalAlignment") {
             @Override
@@ -744,9 +604,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code AbstractButton.getVerticalTextPosition()} through queue
-     */
     public int getVerticalTextPosition() {
         return (runMapping(new MapIntegerAction("getVerticalTextPosition") {
             @Override
@@ -756,9 +613,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code AbstractButton.isBorderPainted()} through queue
-     */
     public boolean isBorderPainted() {
         return (runMapping(new MapBooleanAction("isBorderPainted") {
             @Override
@@ -768,9 +622,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code AbstractButton.isContentAreaFilled()} through queue
-     */
     public boolean isContentAreaFilled() {
         return (runMapping(new MapBooleanAction("isContentAreaFilled") {
             @Override
@@ -780,9 +631,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code AbstractButton.isFocusPainted()} through queue
-     */
     public boolean isFocusPainted() {
         return (runMapping(new MapBooleanAction("isFocusPainted") {
             @Override
@@ -792,9 +640,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code AbstractButton.isRolloverEnabled()} through queue
-     */
     public boolean isRolloverEnabled() {
         return (runMapping(new MapBooleanAction("isRolloverEnabled") {
             @Override
@@ -804,9 +649,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code AbstractButton.isSelected()} through queue
-     */
     public boolean isSelected() {
         return (runMapping(new MapBooleanAction("isSelected") {
             @Override
@@ -816,10 +658,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         }));
     }
 
-    /**
-     * Maps {@code AbstractButton.removeActionListener(ActionListener)}
-     * through queue
-     */
     public void removeActionListener(final ActionListener actionListener) {
         runMapping(new MapVoidAction("removeActionListener") {
             @Override
@@ -829,10 +667,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.removeChangeListener(ChangeListener)}
-     * through queue
-     */
     public void removeChangeListener(final ChangeListener changeListener) {
         runMapping(new MapVoidAction("removeChangeListener") {
             @Override
@@ -842,9 +676,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.removeItemListener(ItemListener)} through queue
-     */
     public void removeItemListener(final ItemListener itemListener) {
         runMapping(new MapVoidAction("removeItemListener") {
             @Override
@@ -854,9 +685,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.setActionCommand(String)} through queue
-     */
     public void setActionCommand(final String string) {
         runMapping(new MapVoidAction("setActionCommand") {
             @Override
@@ -866,9 +694,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.setBorderPainted(boolean)} through queue
-     */
     public void setBorderPainted(final boolean b) {
         runMapping(new MapVoidAction("setBorderPainted") {
             @Override
@@ -878,9 +703,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.setContentAreaFilled(boolean)} through queue
-     */
     public void setContentAreaFilled(final boolean b) {
         runMapping(new MapVoidAction("setContentAreaFilled") {
             @Override
@@ -890,9 +712,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.setDisabledIcon(Icon)} through queue
-     */
     public void setDisabledIcon(final Icon icon) {
         runMapping(new MapVoidAction("setDisabledIcon") {
             @Override
@@ -902,9 +721,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.setDisabledSelectedIcon(Icon)} through queue
-     */
     public void setDisabledSelectedIcon(final Icon icon) {
         runMapping(new MapVoidAction("setDisabledSelectedIcon") {
             @Override
@@ -914,9 +730,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.setFocusPainted(boolean)} through queue
-     */
     public void setFocusPainted(final boolean b) {
         runMapping(new MapVoidAction("setFocusPainted") {
             @Override
@@ -926,9 +739,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.setHorizontalAlignment(int)} through queue
-     */
     public void setHorizontalAlignment(final int i) {
         runMapping(new MapVoidAction("setHorizontalAlignment") {
             @Override
@@ -938,9 +748,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.setHorizontalTextPosition(int)} through queue
-     */
     public void setHorizontalTextPosition(final int i) {
         runMapping(new MapVoidAction("setHorizontalTextPosition") {
             @Override
@@ -950,9 +757,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.setIcon(Icon)} through queue
-     */
     public void setIcon(final Icon icon) {
         runMapping(new MapVoidAction("setIcon") {
             @Override
@@ -962,9 +766,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.setMargin(Insets)} through queue
-     */
     public void setMargin(final Insets insets) {
         runMapping(new MapVoidAction("setMargin") {
             @Override
@@ -974,9 +775,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.setMnemonic(char)} through queue
-     */
     public void setMnemonic(final char c) {
         runMapping(new MapVoidAction("setMnemonic") {
             @Override
@@ -986,9 +784,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.setMnemonic(int)} through queue
-     */
     public void setMnemonic(final int i) {
         runMapping(new MapVoidAction("setMnemonic") {
             @Override
@@ -998,9 +793,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.setModel(ButtonModel)} through queue
-     */
     public void setModel(final ButtonModel buttonModel) {
         runMapping(new MapVoidAction("setModel") {
             @Override
@@ -1010,9 +802,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.setPressedIcon(Icon)} through queue
-     */
     public void setPressedIcon(final Icon icon) {
         runMapping(new MapVoidAction("setPressedIcon") {
             @Override
@@ -1022,9 +811,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.setRolloverEnabled(boolean)} through queue
-     */
     public void setRolloverEnabled(final boolean b) {
         runMapping(new MapVoidAction("setRolloverEnabled") {
             @Override
@@ -1034,9 +820,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.setRolloverIcon(Icon)} through queue
-     */
     public void setRolloverIcon(final Icon icon) {
         runMapping(new MapVoidAction("setRolloverIcon") {
             @Override
@@ -1046,9 +829,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.setRolloverSelectedIcon(Icon)} through queue
-     */
     public void setRolloverSelectedIcon(final Icon icon) {
         runMapping(new MapVoidAction("setRolloverSelectedIcon") {
             @Override
@@ -1058,9 +838,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.setSelected(boolean)} through queue
-     */
     public void setSelected(final boolean b) {
         runMapping(new MapVoidAction("setSelected") {
             @Override
@@ -1070,9 +847,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.setSelectedIcon(Icon)} through queue
-     */
     public void setSelectedIcon(final Icon icon) {
         runMapping(new MapVoidAction("setSelectedIcon") {
             @Override
@@ -1082,9 +856,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.setText(String)} through queue
-     */
     public void setText(final String string) {
         runMapping(new MapVoidAction("setText") {
             @Override
@@ -1094,9 +865,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.setUI(ButtonUI)} through queue
-     */
     public void setUI(final ButtonUI buttonUI) {
         runMapping(new MapVoidAction("setUI") {
             @Override
@@ -1106,9 +874,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.setVerticalAlignment(int)} through queue
-     */
     public void setVerticalAlignment(final int i) {
         runMapping(new MapVoidAction("setVerticalAlignment") {
             @Override
@@ -1118,9 +883,6 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         });
     }
 
-    /**
-     * Maps {@code AbstractButton.setVerticalTextPosition(int)} through queue
-     */
     public void setVerticalTextPosition(final int i) {
         runMapping(new MapVoidAction("setVerticalTextPosition") {
             @Override
@@ -1140,22 +902,11 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
         String label;
         StringComparator comparator;
 
-        /**
-         * Constructs AbstractButtonByLabelFinder.
-         *
-         * @param lb a text pattern
-         * @param comparator specifies string comparision algorithm.
-         */
         public AbstractButtonByLabelFinder(String lb, StringComparator comparator) {
             label = lb;
             this.comparator = comparator;
         }
 
-        /**
-         * Constructs AbstractButtonByLabelFinder.
-         *
-         * @param lb a text pattern
-         */
         public AbstractButtonByLabelFinder(String lb) {
             this(lb, Operator.getDefaultStringComparator());
         }
@@ -1186,18 +937,10 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
      */
     public static class AbstractButtonFinder extends Finder {
 
-        /**
-         * Constructs AbstractButtonFinder.
-         *
-         * @param sf other searching criteria.
-         */
         public AbstractButtonFinder(ComponentChooser sf) {
             super(AbstractButton.class, sf);
         }
 
-        /**
-         * Constructs AbstractButtonFinder.
-         */
         public AbstractButtonFinder() {
             super(AbstractButton.class);
         }

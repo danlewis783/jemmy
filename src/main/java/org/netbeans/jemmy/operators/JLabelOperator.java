@@ -33,14 +33,13 @@ import javax.swing.plaf.LabelUI;
 import org.netbeans.jemmy.ComponentChooser;
 
 /**
- * <BR><BR>Timeouts used: <BR>
- * ComponentOperator.WaitComponentTimeout - time to wait component displayed
- * <BR>
- * ComponentOperator.WaitStateTimeout - time to wait for text <BR>.
+ * Timeouts used:
+ * <ul>
+ * <li>ComponentOperator.WaitComponentTimeout - time to wait component displayed</li>
+ * <li>ComponentOperator.WaitStateTimeout - time to wait for text</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
- * @author Alexandre Iline (alexandre.iline@oracle.com)
- *
  */
 public class JLabelOperator extends JComponentOperator {
 
@@ -51,46 +50,24 @@ public class JLabelOperator extends JComponentOperator {
      */
     public static final String TEXT_DPROP = "Text";
 
-    /**
-     * Constructor.
-     *
-     * @param b a component
-     */
     public JLabelOperator(JLabel b) {
         super(b);
     }
 
-    /**
-     * Constructs a JLabelOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public JLabelOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((JLabel) cont.waitSubComponent(new JLabelFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a JLabelOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public JLabelOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Button text.
-     * @param index Ordinal component index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     *
      */
     public JLabelOperator(ContainerOperator<?> cont, String text, int index) {
         this((JLabel) waitComponent(cont, new JLabelByLabelFinder(text, cont.getComparator()), index));
@@ -98,25 +75,18 @@ public class JLabelOperator extends JComponentOperator {
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Button text.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     *
      */
     public JLabelOperator(ContainerOperator<?> cont, String text) {
         this(cont, text, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     * @param index Ordinal component index.
-     *
      */
     public JLabelOperator(ContainerOperator<?> cont, int index) {
         this((JLabel) waitComponent(cont, new JLabelFinder(), index));
@@ -124,11 +94,8 @@ public class JLabelOperator extends JComponentOperator {
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     *
      */
     public JLabelOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -137,9 +104,6 @@ public class JLabelOperator extends JComponentOperator {
     /**
      * Searches JLabel in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index Ordinal component index.
      * @return JLabel instance or null if component was not found.
      */
     public static JLabel findJLabel(Container cont, ComponentChooser chooser, int index) {
@@ -149,8 +113,6 @@ public class JLabelOperator extends JComponentOperator {
     /**
      * Searches JLabel in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser a component chooser specifying searching criteria.
      * @return JLabel instance or null if component was not found.
      */
     public static JLabel findJLabel(Container cont, ComponentChooser chooser) {
@@ -160,11 +122,6 @@ public class JLabelOperator extends JComponentOperator {
     /**
      * Searches JLabel by text.
      *
-     * @param cont Container to search component in.
-     * @param text Component text.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return JLabel instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -175,10 +132,6 @@ public class JLabelOperator extends JComponentOperator {
     /**
      * Searches JLabel by text.
      *
-     * @param cont Container to search component in.
-     * @param text Component text.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return JLabel instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -189,11 +142,7 @@ public class JLabelOperator extends JComponentOperator {
     /**
      * Waits JLabel in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index Ordinal component index.
      * @return JLabel instance.
-     *
      */
     public static JLabel waitJLabel(final Container cont, final ComponentChooser chooser, final int index) {
         return (JLabel) waitComponent(cont, new JLabelFinder(chooser), index);
@@ -202,10 +151,7 @@ public class JLabelOperator extends JComponentOperator {
     /**
      * Waits JLabel in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser a component chooser specifying searching criteria.
      * @return JLabel instance.
-     *
      */
     public static JLabel waitJLabel(Container cont, ComponentChooser chooser) {
         return waitJLabel(cont, chooser, 0);
@@ -214,14 +160,8 @@ public class JLabelOperator extends JComponentOperator {
     /**
      * Waits JLabel by text.
      *
-     * @param cont Container to search component in.
-     * @param text Component text.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return JLabel instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     *
      */
     public static JLabel waitJLabel(Container cont, String text, boolean ce, boolean ccs, int index) {
         return waitJLabel(cont, new JLabelByLabelFinder(text, new DefaultStringComparator(ce, ccs)), index);
@@ -230,13 +170,8 @@ public class JLabelOperator extends JComponentOperator {
     /**
      * Waits JLabel by text.
      *
-     * @param cont Container to search component in.
-     * @param text Component text.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return JLabel instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     *
      */
     public static JLabel waitJLabel(Container cont, String text, boolean ce, boolean ccs) {
         return waitJLabel(cont, text, ce, ccs, 0);
@@ -244,8 +179,6 @@ public class JLabelOperator extends JComponentOperator {
 
     /**
      * Waits for text. Uses getComparator() comparator.
-     *
-     * @param text Text to wait for.
      */
     public void waitText(String text) {
         getOutput().printLine("Wait \"" + text + "\" text in component \n    : " + toStringSource());
@@ -269,9 +202,6 @@ public class JLabelOperator extends JComponentOperator {
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code JLabel.getDisabledIcon()} through queue
-     */
     public Icon getDisabledIcon() {
         return (runMapping(new MapAction<Icon>("getDisabledIcon") {
             @Override
@@ -281,9 +211,6 @@ public class JLabelOperator extends JComponentOperator {
         }));
     }
 
-    /**
-     * Maps {@code JLabel.getDisplayedMnemonic()} through queue
-     */
     public int getDisplayedMnemonic() {
         return (runMapping(new MapIntegerAction("getDisplayedMnemonic") {
             @Override
@@ -293,9 +220,6 @@ public class JLabelOperator extends JComponentOperator {
         }));
     }
 
-    /**
-     * Maps {@code JLabel.getHorizontalAlignment()} through queue
-     */
     public int getHorizontalAlignment() {
         return (runMapping(new MapIntegerAction("getHorizontalAlignment") {
             @Override
@@ -305,9 +229,6 @@ public class JLabelOperator extends JComponentOperator {
         }));
     }
 
-    /**
-     * Maps {@code JLabel.getHorizontalTextPosition()} through queue
-     */
     public int getHorizontalTextPosition() {
         return (runMapping(new MapIntegerAction("getHorizontalTextPosition") {
             @Override
@@ -317,9 +238,6 @@ public class JLabelOperator extends JComponentOperator {
         }));
     }
 
-    /**
-     * Maps {@code JLabel.getIcon()} through queue
-     */
     public Icon getIcon() {
         return (runMapping(new MapAction<Icon>("getIcon") {
             @Override
@@ -329,9 +247,6 @@ public class JLabelOperator extends JComponentOperator {
         }));
     }
 
-    /**
-     * Maps {@code JLabel.getIconTextGap()} through queue
-     */
     public int getIconTextGap() {
         return (runMapping(new MapIntegerAction("getIconTextGap") {
             @Override
@@ -341,9 +256,6 @@ public class JLabelOperator extends JComponentOperator {
         }));
     }
 
-    /**
-     * Maps {@code JLabel.getLabelFor()} through queue
-     */
     public Component getLabelFor() {
         return (runMapping(new MapAction<Component>("getLabelFor") {
             @Override
@@ -353,9 +265,6 @@ public class JLabelOperator extends JComponentOperator {
         }));
     }
 
-    /**
-     * Maps {@code JLabel.getText()} through queue
-     */
     public String getText() {
         return (runMapping(new MapAction<String>("getText") {
             @Override
@@ -365,9 +274,6 @@ public class JLabelOperator extends JComponentOperator {
         }));
     }
 
-    /**
-     * Maps {@code JLabel.getUI()} through queue
-     */
     public LabelUI getUI() {
         return (runMapping(new MapAction<LabelUI>("getUI") {
             @Override
@@ -377,9 +283,6 @@ public class JLabelOperator extends JComponentOperator {
         }));
     }
 
-    /**
-     * Maps {@code JLabel.getVerticalAlignment()} through queue
-     */
     public int getVerticalAlignment() {
         return (runMapping(new MapIntegerAction("getVerticalAlignment") {
             @Override
@@ -389,9 +292,6 @@ public class JLabelOperator extends JComponentOperator {
         }));
     }
 
-    /**
-     * Maps {@code JLabel.getVerticalTextPosition()} through queue
-     */
     public int getVerticalTextPosition() {
         return (runMapping(new MapIntegerAction("getVerticalTextPosition") {
             @Override
@@ -401,9 +301,6 @@ public class JLabelOperator extends JComponentOperator {
         }));
     }
 
-    /**
-     * Maps {@code JLabel.setDisabledIcon(Icon)} through queue
-     */
     public void setDisabledIcon(final Icon icon) {
         runMapping(new MapVoidAction("setDisabledIcon") {
             @Override
@@ -413,9 +310,6 @@ public class JLabelOperator extends JComponentOperator {
         });
     }
 
-    /**
-     * Maps {@code JLabel.setDisplayedMnemonic(char)} through queue
-     */
     public void setDisplayedMnemonic(final char c) {
         runMapping(new MapVoidAction("setDisplayedMnemonic") {
             @Override
@@ -425,9 +319,6 @@ public class JLabelOperator extends JComponentOperator {
         });
     }
 
-    /**
-     * Maps {@code JLabel.setDisplayedMnemonic(int)} through queue
-     */
     public void setDisplayedMnemonic(final int i) {
         runMapping(new MapVoidAction("setDisplayedMnemonic") {
             @Override
@@ -437,9 +328,6 @@ public class JLabelOperator extends JComponentOperator {
         });
     }
 
-    /**
-     * Maps {@code JLabel.setHorizontalAlignment(int)} through queue
-     */
     public void setHorizontalAlignment(final int i) {
         runMapping(new MapVoidAction("setHorizontalAlignment") {
             @Override
@@ -449,9 +337,6 @@ public class JLabelOperator extends JComponentOperator {
         });
     }
 
-    /**
-     * Maps {@code JLabel.setHorizontalTextPosition(int)} through queue
-     */
     public void setHorizontalTextPosition(final int i) {
         runMapping(new MapVoidAction("setHorizontalTextPosition") {
             @Override
@@ -461,9 +346,6 @@ public class JLabelOperator extends JComponentOperator {
         });
     }
 
-    /**
-     * Maps {@code JLabel.setIcon(Icon)} through queue
-     */
     public void setIcon(final Icon icon) {
         runMapping(new MapVoidAction("setIcon") {
             @Override
@@ -473,9 +355,6 @@ public class JLabelOperator extends JComponentOperator {
         });
     }
 
-    /**
-     * Maps {@code JLabel.setIconTextGap(int)} through queue
-     */
     public void setIconTextGap(final int i) {
         runMapping(new MapVoidAction("setIconTextGap") {
             @Override
@@ -485,9 +364,6 @@ public class JLabelOperator extends JComponentOperator {
         });
     }
 
-    /**
-     * Maps {@code JLabel.setLabelFor(Component)} through queue
-     */
     public void setLabelFor(final Component component) {
         runMapping(new MapVoidAction("setLabelFor") {
             @Override
@@ -497,9 +373,6 @@ public class JLabelOperator extends JComponentOperator {
         });
     }
 
-    /**
-     * Maps {@code JLabel.setText(String)} through queue
-     */
     public void setText(final String string) {
         runMapping(new MapVoidAction("setText") {
             @Override
@@ -509,9 +382,6 @@ public class JLabelOperator extends JComponentOperator {
         });
     }
 
-    /**
-     * Maps {@code JLabel.setUI(LabelUI)} through queue
-     */
     public void setUI(final LabelUI labelUI) {
         runMapping(new MapVoidAction("setUI") {
             @Override
@@ -521,9 +391,6 @@ public class JLabelOperator extends JComponentOperator {
         });
     }
 
-    /**
-     * Maps {@code JLabel.setVerticalAlignment(int)} through queue
-     */
     public void setVerticalAlignment(final int i) {
         runMapping(new MapVoidAction("setVerticalAlignment") {
             @Override
@@ -533,9 +400,6 @@ public class JLabelOperator extends JComponentOperator {
         });
     }
 
-    /**
-     * Maps {@code JLabel.setVerticalTextPosition(int)} through queue
-     */
     public void setVerticalTextPosition(final int i) {
         runMapping(new MapVoidAction("setVerticalTextPosition") {
             @Override
@@ -557,9 +421,6 @@ public class JLabelOperator extends JComponentOperator {
 
         /**
          * Constructs JLabelByLabelFinder.
-         *
-         * @param lb a text pattern
-         * @param comparator specifies string comparision algorithm.
          */
         public JLabelByLabelFinder(String lb, StringComparator comparator) {
             label = lb;
@@ -568,8 +429,6 @@ public class JLabelOperator extends JComponentOperator {
 
         /**
          * Constructs JLabelByLabelFinder.
-         *
-         * @param lb a text pattern
          */
         public JLabelByLabelFinder(String lb) {
             this(lb, Operator.getDefaultStringComparator());
@@ -603,8 +462,6 @@ public class JLabelOperator extends JComponentOperator {
 
         /**
          * Constructs JLabelFinder.
-         *
-         * @param sf other searching criteria.
          */
         public JLabelFinder(ComponentChooser sf) {
             super(JLabel.class, sf);

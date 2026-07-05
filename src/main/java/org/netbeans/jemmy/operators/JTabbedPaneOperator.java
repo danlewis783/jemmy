@@ -38,18 +38,16 @@ import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyInputException;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
-import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.drivers.DriverManager;
 import org.netbeans.jemmy.drivers.ListDriver;
 
 /**
- * <BR><BR>Timeouts used: <BR>
- * ComponentOperator.WaitComponentTimeout - time to wait component displayed
- * <BR>.
+ * Timeouts used:
+ * <ul>
+ * <li>ComponentOperator.WaitComponentTimeout - time to wait component displayed</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
 public class JTabbedPaneOperator extends JComponentOperator implements Outputable {
@@ -71,49 +69,27 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
     private TestOut output;
     private ListDriver driver;
 
-    /**
-     * Constructor.
-     *
-     * @param b a component
-     */
     public JTabbedPaneOperator(JTabbedPane b) {
         super(b);
         driver = DriverManager.getListDriver(getClass());
     }
 
-    /**
-     * Constructs a JTabbedPaneOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public JTabbedPaneOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((JTabbedPane) cont.waitSubComponent(new JTabbedPaneFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a JTabbedPaneOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public JTabbedPaneOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits component by tab title first. Uses cont's timeout and
+     * Waits component by tab title first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Tab title.
      * @param tabIndex a page index to check. if equal to -1, selected page is
      * checked.
-     * @param index Ordinal component index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public JTabbedPaneOperator(ContainerOperator<?> cont, String text, int tabIndex, int index) {
         this((JTabbedPane)
@@ -122,39 +98,28 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
     }
 
     /**
-     * Constructor. Waits component by activetab title first. Uses cont's
+     * Waits component by activetab title first. Uses cont's
      * timeout and output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Title of tab which is currently selected.
-     * @param index Ordinal component index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public JTabbedPaneOperator(ContainerOperator<?> cont, String text, int index) {
         this(cont, text, -1, index);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Title of tab which is currently selected.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public JTabbedPaneOperator(ContainerOperator<?> cont, String text) {
         this(cont, text, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     * @param index Ordinal component index.
-     * @throws TimeoutExpiredException
      */
     public JTabbedPaneOperator(ContainerOperator<?> cont, int index) {
         this((JTabbedPane) waitComponent(cont, new JTabbedPaneFinder(), index));
@@ -162,11 +127,8 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     * @throws TimeoutExpiredException
      */
     public JTabbedPaneOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -175,9 +137,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
     /**
      * Searches JTabbedPane in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JTabbedPane instance or null if component was not found.
      */
     public static JTabbedPane findJTabbedPane(Container cont, ComponentChooser chooser, int index) {
@@ -187,8 +146,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
     /**
      * Searches 0'th JTabbedPane in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JTabbedPane instance or null if component was not found.
      */
     public static JTabbedPane findJTabbedPane(Container cont, ComponentChooser chooser) {
@@ -198,12 +155,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
     /**
      * Searches JTabbedPane by tab title.
      *
-     * @param cont Container to search component in.
-     * @param text Tooltip text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param itemIndex Tab index. if -1 selected one is checked.
-     * @param index Ordinal component index.
      * @return JTabbedPane instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -216,11 +167,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
     /**
      * Searches JTabbedPane by tab title.
      *
-     * @param cont Container to search component in.
-     * @param text Tooltip text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param itemIndex Tab index. if -1 selected one is checked.
      * @return JTabbedPane instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -231,8 +177,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
     /**
      * Searches JTabbedPane object which component lies on.
      *
-     * @param comp Component to find JTabbedPane under.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JTabbedPane instance or null if component was not found.
      */
     public static JTabbedPane findJTabbedPaneUnder(Component comp, ComponentChooser chooser) {
@@ -242,7 +186,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
     /**
      * Searches JTabbedPane object which component lies on.
      *
-     * @param comp Component to find JTabbedPane under.
      * @return JTabbedPane instance or null if component was not found.
      */
     public static JTabbedPane findJTabbedPaneUnder(Component comp) {
@@ -252,11 +195,7 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
     /**
      * Waits JTabbedPane in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JTabbedPane instance.
-     * @throws TimeoutExpiredException
      */
     public static JTabbedPane waitJTabbedPane(Container cont, ComponentChooser chooser, int index) {
         return (JTabbedPane) waitComponent(cont, new JTabbedPaneFinder(chooser), index);
@@ -265,10 +204,7 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
     /**
      * Waits 0'th JTabbedPane in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JTabbedPane instance.
-     * @throws TimeoutExpiredException
      */
     public static JTabbedPane waitJTabbedPane(Container cont, ComponentChooser chooser) {
         return waitJTabbedPane(cont, chooser, 0);
@@ -277,15 +213,8 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
     /**
      * Waits JTabbedPane by tab title.
      *
-     * @param cont Container to search component in.
-     * @param text Tooltip text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param itemIndex Tab index. if -1 selected one is checked.
-     * @param index Ordinal component index.
      * @return JTabbedPane instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static JTabbedPane waitJTabbedPane(
             Container cont, String text, boolean ce, boolean ccs, int itemIndex, int index) {
@@ -296,14 +225,8 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
     /**
      * Waits JTabbedPane by tab title.
      *
-     * @param cont Container to search component in.
-     * @param text Tooltip text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param itemIndex Tab index. if -1 selected one is checked.
      * @return JTabbedPane instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static JTabbedPane waitJTabbedPane(Container cont, String text, boolean ce, boolean ccs, int itemIndex) {
         return waitJTabbedPane(cont, text, ce, ccs, itemIndex, 0);
@@ -330,7 +253,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
     /**
      * Searches tab index by tab title.
      *
-     * @param chooser page searching criteria
      * @return a page index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @deprecated Use findPage(String) or findPage(String, StringComparator)
@@ -348,8 +270,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
     /**
      * Searches tab index by tab title.
      *
-     * @param title a page title.
-     * @param comparator a string comparision algorithm
      * @return a page index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @deprecated Use findPage(String) or findPage(String, StringComparator)
@@ -363,9 +283,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
      * Searches tab index by tab title. isCaptionEqual method is used to compare
      * page title with match.
      *
-     * @param title a page title.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return a page index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @deprecated Use findPage(String) or findPage(String, StringComparator)
@@ -379,7 +296,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
      * Searches tab index by tab title. isCaptionEqual method is used to compare
      * page title with match. Uses StringComparator assigned to this object.
      *
-     * @param title a page title.
      * @return a page index.
      */
     public int findPage(String title) {
@@ -389,7 +305,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
     /**
      * Selects tab.
      *
-     * @param index a page ordinal index.
      * @return a root corresponding to the page.
      */
     public Component selectPage(int index) {
@@ -405,7 +320,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
     /**
      * Selects tab.
      *
-     * @param chooser page searching criteria
      * @return a root corresponding to the page.
      */
     public Component selectPage(TabPageChooser chooser) {
@@ -417,8 +331,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
     /**
      * Selects tab.
      *
-     * @param title a page title.
-     * @param comparator a string comparision algorithm
      * @return a root corresponding to the page.
      */
     public Component selectPage(String title, StringComparator comparator) {
@@ -428,9 +340,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
     /**
      * Selects tab by tab title.
      *
-     * @param title a page title.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @deprecated Use selectPage(String) or selectPage(String,
      * StringComparator)
@@ -444,7 +353,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
     /**
      * Selects tab by tab title. Uses StringComparator assigned to this object.
      *
-     * @param title a page title.
      * @return a root corresponding to the page.
      */
     public Component selectPage(String title) {
@@ -454,7 +362,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
     /**
      * Wait for a page to exist.
      *
-     * @param chooser page searching criteria
      * @return a page index.
      */
     public int waitPage(final TabPageChooser chooser) {
@@ -480,8 +387,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
     /**
      * Wait for a page to exist.
      *
-     * @param title a page title.
-     * @param comparator a string comparision algorithm
      * @return a page index.
      */
     public int waitPage(String title, StringComparator comparator) {
@@ -491,18 +396,12 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
     /**
      * Wait for a page to exist.
      *
-     * @param title a page title.
      * @return a page index.
      */
     public int waitPage(String title) {
         return waitPage(title, getComparator());
     }
 
-    /**
-     * Waits for a page to be selected.
-     *
-     * @param pageIndex an index of a page to be selected.
-     */
     public void waitSelected(final int pageIndex) {
         getOutput()
                 .printLine("Wait " + Integer.toString(pageIndex) + "'th page to be "
@@ -527,11 +426,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         });
     }
 
-    /**
-     * Waits for a page to be selected.
-     *
-     * @param pageTitle a title of a page to be selected.
-     */
     public void waitSelected(final String pageTitle) {
         waitSelected(findPage(pageTitle));
     }
@@ -554,9 +448,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code JTabbedPane.addChangeListener(ChangeListener)} through queue
-     */
     public void addChangeListener(final ChangeListener changeListener) {
         runMapping(new MapVoidAction("addChangeListener") {
             @Override
@@ -566,9 +457,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         });
     }
 
-    /**
-     * Maps {@code JTabbedPane.addTab(String, Component)} through queue
-     */
     public void addTab(final String string, final Component component) {
         runMapping(new MapVoidAction("addTab") {
             @Override
@@ -578,9 +466,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         });
     }
 
-    /**
-     * Maps {@code JTabbedPane.addTab(String, Icon, Component)} through queue
-     */
     public void addTab(final String string, final Icon icon, final Component component) {
         runMapping(new MapVoidAction("addTab") {
             @Override
@@ -590,10 +475,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         });
     }
 
-    /**
-     * Maps {@code JTabbedPane.addTab(String, Icon, Component, String)}
-     * through queue
-     */
     public void addTab(final String string, final Icon icon, final Component component, final String string1) {
         runMapping(new MapVoidAction("addTab") {
             @Override
@@ -603,9 +484,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         });
     }
 
-    /**
-     * Maps {@code JTabbedPane.getBackgroundAt(int)} through queue
-     */
     public Color getBackgroundAt(final int i) {
         return (runMapping(new MapAction<Color>("getBackgroundAt") {
             @Override
@@ -615,9 +493,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         }));
     }
 
-    /**
-     * Maps {@code JTabbedPane.getBoundsAt(int)} through queue
-     */
     public Rectangle getBoundsAt(final int i) {
         return (runMapping(new MapAction<Rectangle>("getBoundsAt") {
             @Override
@@ -627,9 +502,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         }));
     }
 
-    /**
-     * Maps {@code JTabbedPane.getComponentAt(int)} through queue
-     */
     public Component getComponentAt(final int i) {
         return (runMapping(new MapAction<Component>("getComponentAt") {
             @Override
@@ -639,9 +511,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         }));
     }
 
-    /**
-     * Maps {@code JTabbedPane.getDisabledIconAt(int)} through queue
-     */
     public Icon getDisabledIconAt(final int i) {
         return (runMapping(new MapAction<Icon>("getDisabledIconAt") {
             @Override
@@ -651,9 +520,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         }));
     }
 
-    /**
-     * Maps {@code JTabbedPane.getForegroundAt(int)} through queue
-     */
     public Color getForegroundAt(final int i) {
         return (runMapping(new MapAction<Color>("getForegroundAt") {
             @Override
@@ -663,9 +529,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         }));
     }
 
-    /**
-     * Maps {@code JTabbedPane.getIconAt(int)} through queue
-     */
     public Icon getIconAt(final int i) {
         return (runMapping(new MapAction<Icon>("getIconAt") {
             @Override
@@ -675,9 +538,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         }));
     }
 
-    /**
-     * Maps {@code JTabbedPane.getModel()} through queue
-     */
     public SingleSelectionModel getModel() {
         return (runMapping(new MapAction<SingleSelectionModel>("getModel") {
             @Override
@@ -687,9 +547,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         }));
     }
 
-    /**
-     * Maps {@code JTabbedPane.getSelectedComponent()} through queue
-     */
     public Component getSelectedComponent() {
         return (runMapping(new MapAction<Component>("getSelectedComponent") {
             @Override
@@ -699,9 +556,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         }));
     }
 
-    /**
-     * Maps {@code JTabbedPane.getSelectedIndex()} through queue
-     */
     public int getSelectedIndex() {
         return (runMapping(new MapIntegerAction("getSelectedIndex") {
             @Override
@@ -711,9 +565,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         }));
     }
 
-    /**
-     * Maps {@code JTabbedPane.getTabCount()} through queue
-     */
     public int getTabCount() {
         return (runMapping(new MapIntegerAction("getTabCount") {
             @Override
@@ -723,9 +574,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         }));
     }
 
-    /**
-     * Maps {@code JTabbedPane.getTabPlacement()} through queue
-     */
     public int getTabPlacement() {
         return (runMapping(new MapIntegerAction("getTabPlacement") {
             @Override
@@ -735,9 +583,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         }));
     }
 
-    /**
-     * Maps {@code JTabbedPane.getTabRunCount()} through queue
-     */
     public int getTabRunCount() {
         return (runMapping(new MapIntegerAction("getTabRunCount") {
             @Override
@@ -747,9 +592,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         }));
     }
 
-    /**
-     * Maps {@code JTabbedPane.getTitleAt(int)} through queue
-     */
     public String getTitleAt(final int i) {
         return (runMapping(new MapAction<String>("getTitleAt") {
             @Override
@@ -759,9 +601,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         }));
     }
 
-    /**
-     * Maps {@code JTabbedPane.getUI()} through queue
-     */
     public TabbedPaneUI getUI() {
         return (runMapping(new MapAction<TabbedPaneUI>("getUI") {
             @Override
@@ -771,9 +610,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         }));
     }
 
-    /**
-     * Maps {@code JTabbedPane.indexOfComponent(Component)} through queue
-     */
     public int indexOfComponent(final Component component) {
         return (runMapping(new MapIntegerAction("indexOfComponent") {
             @Override
@@ -783,9 +619,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         }));
     }
 
-    /**
-     * Maps {@code JTabbedPane.indexOfTab(String)} through queue
-     */
     public int indexOfTab(final String string) {
         return (runMapping(new MapIntegerAction("indexOfTab") {
             @Override
@@ -795,9 +628,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         }));
     }
 
-    /**
-     * Maps {@code JTabbedPane.indexOfTab(Icon)} through queue
-     */
     public int indexOfTab(final Icon icon) {
         return (runMapping(new MapIntegerAction("indexOfTab") {
             @Override
@@ -807,11 +637,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         }));
     }
 
-    /**
-     * Maps
-     * {@code JTabbedPane.insertTab(String, Icon, Component, String, int)}
-     * through queue
-     */
     public void insertTab(
             final String string, final Icon icon, final Component component, final String string1, final int i) {
         runMapping(new MapVoidAction("insertTab") {
@@ -822,9 +647,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         });
     }
 
-    /**
-     * Maps {@code JTabbedPane.isEnabledAt(int)} through queue
-     */
     public boolean isEnabledAt(final int i) {
         return (runMapping(new MapBooleanAction("isEnabledAt") {
             @Override
@@ -834,10 +656,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         }));
     }
 
-    /**
-     * Maps {@code JTabbedPane.removeChangeListener(ChangeListener)}
-     * through queue
-     */
     public void removeChangeListener(final ChangeListener changeListener) {
         runMapping(new MapVoidAction("removeChangeListener") {
             @Override
@@ -847,9 +665,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         });
     }
 
-    /**
-     * Maps {@code JTabbedPane.removeTabAt(int)} through queue
-     */
     public void removeTabAt(final int i) {
         runMapping(new MapVoidAction("removeTabAt") {
             @Override
@@ -859,9 +674,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         });
     }
 
-    /**
-     * Maps {@code JTabbedPane.setBackgroundAt(int, Color)} through queue
-     */
     public void setBackgroundAt(final int i, final Color color) {
         runMapping(new MapVoidAction("setBackgroundAt") {
             @Override
@@ -871,9 +683,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         });
     }
 
-    /**
-     * Maps {@code JTabbedPane.setComponentAt(int, Component)} through queue
-     */
     public void setComponentAt(final int i, final Component component) {
         runMapping(new MapVoidAction("setComponentAt") {
             @Override
@@ -883,9 +692,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         });
     }
 
-    /**
-     * Maps {@code JTabbedPane.setDisabledIconAt(int, Icon)} through queue
-     */
     public void setDisabledIconAt(final int i, final Icon icon) {
         runMapping(new MapVoidAction("setDisabledIconAt") {
             @Override
@@ -895,9 +701,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         });
     }
 
-    /**
-     * Maps {@code JTabbedPane.setEnabledAt(int, boolean)} through queue
-     */
     public void setEnabledAt(final int i, final boolean b) {
         runMapping(new MapVoidAction("setEnabledAt") {
             @Override
@@ -907,9 +710,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         });
     }
 
-    /**
-     * Maps {@code JTabbedPane.setForegroundAt(int, Color)} through queue
-     */
     public void setForegroundAt(final int i, final Color color) {
         runMapping(new MapVoidAction("setForegroundAt") {
             @Override
@@ -919,9 +719,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         });
     }
 
-    /**
-     * Maps {@code JTabbedPane.setIconAt(int, Icon)} through queue
-     */
     public void setIconAt(final int i, final Icon icon) {
         runMapping(new MapVoidAction("setIconAt") {
             @Override
@@ -931,9 +728,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         });
     }
 
-    /**
-     * Maps {@code JTabbedPane.setModel(SingleSelectionModel)} through queue
-     */
     public void setModel(final SingleSelectionModel singleSelectionModel) {
         runMapping(new MapVoidAction("setModel") {
             @Override
@@ -943,9 +737,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         });
     }
 
-    /**
-     * Maps {@code JTabbedPane.setSelectedComponent(Component)} through queue
-     */
     public void setSelectedComponent(final Component component) {
         runMapping(new MapVoidAction("setSelectedComponent") {
             @Override
@@ -955,9 +746,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         });
     }
 
-    /**
-     * Maps {@code JTabbedPane.setSelectedIndex(int)} through queue
-     */
     public void setSelectedIndex(final int i) {
         runMapping(new MapVoidAction("setSelectedIndex") {
             @Override
@@ -967,9 +755,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         });
     }
 
-    /**
-     * Maps {@code JTabbedPane.setTabPlacement(int)} through queue
-     */
     public void setTabPlacement(final int i) {
         runMapping(new MapVoidAction("setTabPlacement") {
             @Override
@@ -979,9 +764,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         });
     }
 
-    /**
-     * Maps {@code JTabbedPane.setTitleAt(int, String)} through queue
-     */
     public void setTitleAt(final int i, final String string) {
         runMapping(new MapVoidAction("setTitleAt") {
             @Override
@@ -991,9 +773,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         });
     }
 
-    /**
-     * Maps {@code JTabbedPane.setUI(TabbedPaneUI)} through queue
-     */
     public void setUI(final TabbedPaneUI tabbedPaneUI) {
         runMapping(new MapVoidAction("setUI") {
             @Override
@@ -1013,8 +792,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         /**
          * Should be true if a page is good.
          *
-         * @param oper Operator used to search item.
-         * @param index Index of a page be checked.
          * @return true if a page fits the criteria.
          */
         public boolean checkPage(JTabbedPaneOperator oper, int index);
@@ -1034,11 +811,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
 
         private static final long serialVersionUID = 42L;
 
-        /**
-         * Constructor.
-         *
-         * @param item nonexistent page title.
-         */
         public NoSuchPageException(String item) {
             super("No such page as \"" + item + "\"", getSource());
         }
@@ -1056,10 +828,8 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         /**
          * Constructs JTabbedPaneByItemFinder.
          *
-         * @param lb a text pattern
          * @param ii page index to check. If equal to -1, selected page is
          * checked.
-         * @param comparator specifies string comparision algorithm.
          */
         public JTabbedPaneByItemFinder(String lb, int ii, StringComparator comparator) {
             title = lb;
@@ -1070,7 +840,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
         /**
          * Constructs JTabbedPaneByItemFinder.
          *
-         * @param lb a text pattern
          * @param ii page index to check. If equal to -1, selected page is
          * checked.
          */
@@ -1118,8 +887,6 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
 
         /**
          * Constructs JTabbedPaneFinder.
-         *
-         * @param sf other searching criteria.
          */
         public JTabbedPaneFinder(ComponentChooser sf) {
             super(JTabbedPane.class, sf);

@@ -29,11 +29,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 /**
- *
  * Class to display information about object: fields, methods, ancestors and so
  * on.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class ObjectBrowser implements Outputable {
 
@@ -41,9 +38,6 @@ public class ObjectBrowser implements Outputable {
 
     private TestOut output;
 
-    /**
-     * Constructor.
-     */
     public ObjectBrowser() {}
 
     /**
@@ -76,7 +70,6 @@ public class ObjectBrowser implements Outputable {
     /**
      * Specifies the object value.
      *
-     * @param obj Object to work with.
      * @see #getObject
      */
     public void setObject(Object obj) {

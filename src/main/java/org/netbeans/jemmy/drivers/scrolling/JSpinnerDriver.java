@@ -33,14 +33,9 @@ import org.netbeans.jemmy.operators.JSpinnerOperator;
 
 /**
  * A scroll driver serving JSpinner component.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class JSpinnerDriver extends LightSupportiveDriver implements ScrollDriver {
 
-    /**
-     * Constructs a JSpinnerDriver object.
-     */
     public JSpinnerDriver() {
         super(new String[] {"org.netbeans.jemmy.operators.JSpinnerOperator"});
     }

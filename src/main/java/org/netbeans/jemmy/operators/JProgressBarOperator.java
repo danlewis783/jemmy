@@ -36,23 +36,21 @@ import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
-import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.Timeoutable;
 import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.Waitable;
 import org.netbeans.jemmy.Waiter;
 
 /**
- *
- * Operator is supposed to be used to operate with an instance of
- * javax.swing.JProgressBar class.
- *
- * <BR><BR>Timeouts used: <BR>
- * JProgressBarOperator.WaitValueTimeout - used from waitValue() method <BR>.
+ * Operator is supposed to be used to operate with an instance of javax.swing.JProgressBar class.
+ * <p>
+ * Timeouts used:
+ * <ul>
+ * <li>JProgressBarOperator.WaitValueTimeout - used from waitValue() method</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
  *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class JProgressBarOperator extends JComponentOperator implements Timeoutable, Outputable {
 
@@ -82,44 +80,22 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
     private Timeouts timeouts;
     private TestOut output;
 
-    /**
-     * Constructor.
-     *
-     * @param b JProgressBar component.
-     */
     public JProgressBarOperator(JProgressBar b) {
         super(b);
     }
 
-    /**
-     * Constructs a JProgressBarOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public JProgressBarOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((JProgressBar) cont.waitSubComponent(new JProgressBarFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a JProgressBarOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public JProgressBarOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont Operator pointing a container to search component in.
-     * @param index Ordinal component index.
-     * @throws TimeoutExpiredException
      */
     public JProgressBarOperator(ContainerOperator<?> cont, int index) {
         this((JProgressBar) waitComponent(cont, new JProgressBarFinder(), index));
@@ -127,11 +103,8 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont Operator pointing a container to search component in.
-     * @throws TimeoutExpiredException
      */
     public JProgressBarOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -140,9 +113,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
     /**
      * Searches JProgressBar in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JProgressBar instance or null if component was not found.
      */
     public static JProgressBar findJProgressBar(Container cont, ComponentChooser chooser, int index) {
@@ -152,8 +122,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
     /**
      * Searches 0'th JProgressBar in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JProgressBar instance or null if component was not found.
      */
     public static JProgressBar findJProgressBar(Container cont, ComponentChooser chooser) {
@@ -163,8 +131,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
     /**
      * Searches JProgressBar in container.
      *
-     * @param cont Container to search component in.
-     * @param index Ordinal component index.
      * @return JProgressBar instance or null if component was not found.
      */
     public static JProgressBar findJProgressBar(Container cont, int index) {
@@ -175,7 +141,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
     /**
      * Searches 0'th JProgressBar in container.
      *
-     * @param cont Container to search component in.
      * @return JProgressBar instance or null if component was not found.
      */
     public static JProgressBar findJProgressBar(Container cont) {
@@ -185,11 +150,7 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
     /**
      * Waits JProgressBar in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JProgressBar instance or null if component was not displayed.
-     * @throws TimeoutExpiredException
      */
     public static JProgressBar waitJProgressBar(Container cont, ComponentChooser chooser, int index) {
         return (JProgressBar) waitComponent(cont, new JProgressBarFinder(chooser), index);
@@ -198,10 +159,7 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
     /**
      * Waits 0'th JProgressBar in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JProgressBar instance or null if component was not displayed.
-     * @throws TimeoutExpiredException
      */
     public static JProgressBar waitJProgressBar(Container cont, ComponentChooser chooser) {
         return waitJProgressBar(cont, chooser, 0);
@@ -210,10 +168,7 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
     /**
      * Waits JProgressBar in container.
      *
-     * @param cont Container to search component in.
-     * @param index Ordinal component index.
      * @return JProgressBar instance or null if component was not displayed.
-     * @throws TimeoutExpiredException
      */
     public static JProgressBar waitJProgressBar(Container cont, int index) {
         return waitJProgressBar(
@@ -223,9 +178,7 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
     /**
      * Waits 0'th JProgressBar in container.
      *
-     * @param cont Container to search component in.
      * @return JProgressBar instance or null if component was not displayed.
-     * @throws TimeoutExpiredException
      */
     public static JProgressBar waitJProgressBar(Container cont) {
         return waitJProgressBar(cont, 0);
@@ -260,7 +213,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
     /**
      * Waits for criteria defined by {@code chooser} to be reached.
      *
-     * @param chooser an object specifying waiting criteria.
      * @see #waitValue(int)
      * @deprecated Use waitState(ComponentChooser) instead.
      */
@@ -298,7 +250,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
      * parameter. Can be used for typical progress bar (when value is
      * increasing).
      *
-     * @param value a value to reach.
      * @see Operator#waitState(ComponentChooser)
      */
     public void waitValue(final int value) {
@@ -325,7 +276,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
     /**
      * Waits progress bar string to match {@code value} parameter.
      *
-     * @param value a string value.
      * @see Operator#waitState(ComponentChooser)
      */
     public void waitValue(final String value) {
@@ -360,9 +310,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code JProgressBar.addChangeListener(ChangeListener)} through queue
-     */
     public void addChangeListener(final ChangeListener changeListener) {
         runMapping(new MapVoidAction("addChangeListener") {
             @Override
@@ -372,9 +319,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JProgressBar.getMaximum()} through queue
-     */
     public int getMaximum() {
         return (runMapping(new MapIntegerAction("getMaximum") {
             @Override
@@ -384,9 +328,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JProgressBar.getMinimum()} through queue
-     */
     public int getMinimum() {
         return (runMapping(new MapIntegerAction("getMinimum") {
             @Override
@@ -396,9 +337,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JProgressBar.getModel()} through queue
-     */
     public BoundedRangeModel getModel() {
         return (runMapping(new MapAction<BoundedRangeModel>("getModel") {
             @Override
@@ -408,9 +346,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JProgressBar.getOrientation()} through queue
-     */
     public int getOrientation() {
         return (runMapping(new MapIntegerAction("getOrientation") {
             @Override
@@ -420,9 +355,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JProgressBar.getPercentComplete()} through queue
-     */
     public double getPercentComplete() {
         return (runMapping(new MapDoubleAction("getPercentComplete") {
             @Override
@@ -432,9 +364,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JProgressBar.getString()} through queue
-     */
     public String getString() {
         return (runMapping(new MapAction<String>("getString") {
             @Override
@@ -444,9 +373,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JProgressBar.getUI()} through queue
-     */
     public ProgressBarUI getUI() {
         return (runMapping(new MapAction<ProgressBarUI>("getUI") {
             @Override
@@ -456,9 +382,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JProgressBar.getValue()} through queue
-     */
     public int getValue() {
         return (runMapping(new MapIntegerAction("getValue") {
             @Override
@@ -468,9 +391,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JProgressBar.isBorderPainted()} through queue
-     */
     public boolean isBorderPainted() {
         return (runMapping(new MapBooleanAction("isBorderPainted") {
             @Override
@@ -480,9 +400,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JProgressBar.isStringPainted()} through queue
-     */
     public boolean isStringPainted() {
         return (runMapping(new MapBooleanAction("isStringPainted") {
             @Override
@@ -492,10 +409,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code JProgressBar.removeChangeListener(ChangeListener)}
-     * through queue
-     */
     public void removeChangeListener(final ChangeListener changeListener) {
         runMapping(new MapVoidAction("removeChangeListener") {
             @Override
@@ -505,9 +418,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JProgressBar.setBorderPainted(boolean)} through queue
-     */
     public void setBorderPainted(final boolean b) {
         runMapping(new MapVoidAction("setBorderPainted") {
             @Override
@@ -517,9 +427,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JProgressBar.setMaximum(int)} through queue
-     */
     public void setMaximum(final int i) {
         runMapping(new MapVoidAction("setMaximum") {
             @Override
@@ -529,9 +436,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JProgressBar.setMinimum(int)} through queue
-     */
     public void setMinimum(final int i) {
         runMapping(new MapVoidAction("setMinimum") {
             @Override
@@ -541,9 +445,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JProgressBar.setModel(BoundedRangeModel)} through queue
-     */
     public void setModel(final BoundedRangeModel boundedRangeModel) {
         runMapping(new MapVoidAction("setModel") {
             @Override
@@ -553,9 +454,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JProgressBar.setOrientation(int)} through queue
-     */
     public void setOrientation(final int i) {
         runMapping(new MapVoidAction("setOrientation") {
             @Override
@@ -565,9 +463,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JProgressBar.setString(String)} through queue
-     */
     public void setString(final String string) {
         runMapping(new MapVoidAction("setString") {
             @Override
@@ -577,9 +472,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JProgressBar.setStringPainted(boolean)} through queue
-     */
     public void setStringPainted(final boolean b) {
         runMapping(new MapVoidAction("setStringPainted") {
             @Override
@@ -589,9 +481,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JProgressBar.setUI(ProgressBarUI)} through queue
-     */
     public void setUI(final ProgressBarUI progressBarUI) {
         runMapping(new MapVoidAction("setUI") {
             @Override
@@ -601,9 +490,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code JProgressBar.setValue(int)} through queue
-     */
     public void setValue(final int i) {
         runMapping(new MapVoidAction("setValue") {
             @Override
@@ -628,7 +514,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
         /**
          * Check if criteria jave been reached.
          *
-         * @param value current value.
          * @return true if criteria reached.
          */
         public boolean checkValue(int value);
@@ -648,8 +533,6 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
 
         /**
          * Constructs JProgressBarFinder.
-         *
-         * @param sf other searching criteria.
          */
         public JProgressBarFinder(ComponentChooser sf) {
             super(JProgressBar.class, sf);

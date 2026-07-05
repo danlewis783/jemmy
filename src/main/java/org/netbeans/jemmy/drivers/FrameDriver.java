@@ -31,31 +31,11 @@ import org.netbeans.jemmy.operators.ComponentOperator;
  */
 public interface FrameDriver {
 
-    /**
-     * Iconifies a frame.
-     *
-     * @param oper Frame operator.
-     */
     public void iconify(ComponentOperator oper);
 
-    /**
-     * Deiconifies a frame.
-     *
-     * @param oper Frame operator.
-     */
     public void deiconify(ComponentOperator oper);
 
-    /**
-     * Maximizes a frame.
-     *
-     * @param oper Frame operator.
-     */
     public void maximize(ComponentOperator oper);
 
-    /**
-     * Demaximizes a frame.
-     *
-     * @param oper Frame operator.
-     */
     public void demaximize(ComponentOperator oper);
 }

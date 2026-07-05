@@ -26,19 +26,11 @@ package org.netbeans.jemmy.drivers.scrolling;
 
 /**
  * Specifies scrolling criteria.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public interface ScrollAdjuster {
 
-    /**
-     * Increase scroll direction.
-     */
     public static final int INCREASE_SCROLL_DIRECTION = 1;
 
-    /**
-     * Decrease scroll direction.
-     */
     public static final int DECREASE_SCROLL_DIRECTION = -1;
 
     /**

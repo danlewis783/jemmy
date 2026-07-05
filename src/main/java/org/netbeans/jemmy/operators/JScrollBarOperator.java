@@ -37,7 +37,6 @@ import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
-import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.Timeoutable;
 import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.Waitable;
@@ -47,22 +46,18 @@ import org.netbeans.jemmy.drivers.scrolling.ScrollAdjuster;
 import org.netbeans.jemmy.util.EmptyVisualizer;
 
 /**
- *
- * Operator is supposed to be used to operate with an instance of
- * javax.swing.JScrollBar class. <BR><BR>
- *
- *
- * <BR><BR>Timeouts used: <BR>
- * JScrollBarOperator.OneScrollClickTimeout - time for one scroll click <BR>
- * JScrollBarOperator.WholeScrollTimeout - time for the whole scrolling <BR>
- * JScrollBarOperator.BeforeDropTimeout - to sleep before drop
- * JScrollBarOperator.DragAndDropScrollingDelta - to sleep before drag steps
- * ComponentOperator.WaitComponentTimeout - time to wait component displayed
- * <BR>.
+ * Operator is supposed to be used to operate with an instance of javax.swing.JScrollBar class.
+ * <p>
+ * Timeouts used:
+ * <ul>
+ * <li>JScrollBarOperator.OneScrollClickTimeout - time for one scroll click</li>
+ * <li>JScrollBarOperator.WholeScrollTimeout - time for the whole scrolling</li>
+ * <li>JScrollBarOperator.BeforeDropTimeout - to sleep before drop JScrollBarOperator.DragAndDropScrollingDelta - to
+ * sleep before drag steps ComponentOperator.WaitComponentTimeout - time to wait component displayed</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
  *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class JScrollBarOperator extends JComponentOperator implements Timeoutable, Outputable {
 
@@ -120,45 +115,23 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
 
     private ScrollDriver driver;
 
-    /**
-     * Constructor.
-     *
-     * @param b JScrollBar component.
-     */
     public JScrollBarOperator(JScrollBar b) {
         super(b);
         driver = DriverManager.getScrollDriver(getClass());
     }
 
-    /**
-     * Constructs a JScrollBarOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public JScrollBarOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((JScrollBar) cont.waitSubComponent(new JScrollBarFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a JScrollBarOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public JScrollBarOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont Operator pointing a container to search component in.
-     * @param index Ordinal component index.
-     * @throws TimeoutExpiredException
      */
     public JScrollBarOperator(ContainerOperator<?> cont, int index) {
         this((JScrollBar) waitComponent(cont, new JScrollBarFinder(), index));
@@ -166,11 +139,8 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont Operator pointing a container to search component in.
-     * @throws TimeoutExpiredException
      */
     public JScrollBarOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -179,9 +149,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
     /**
      * Searches JScrollBar in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JScrollBar instance or null if component was not found.
      */
     public static JScrollBar findJScrollBar(Container cont, ComponentChooser chooser, int index) {
@@ -191,8 +158,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
     /**
      * Searches 0'th JScrollBar in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JScrollBar instance or null if component was not found.
      */
     public static JScrollBar findJScrollBar(Container cont, ComponentChooser chooser) {
@@ -202,8 +167,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
     /**
      * Searches JScrollBar in container.
      *
-     * @param cont Container to search component in.
-     * @param index Ordinal component index.
      * @return JScrollBar instance or null if component was not found.
      */
     public static JScrollBar findJScrollBar(Container cont, int index) {
@@ -214,7 +177,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
     /**
      * Searches 0'th JScrollBar in container.
      *
-     * @param cont Container to search component in.
      * @return JScrollBar instance or null if component was not found.
      */
     public static JScrollBar findJScrollBar(Container cont) {
@@ -224,11 +186,7 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
     /**
      * Waits JScrollBar in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JScrollBar instance or null if component was not displayed.
-     * @throws TimeoutExpiredException
      */
     public static JScrollBar waitJScrollBar(Container cont, ComponentChooser chooser, int index) {
         return (JScrollBar) waitComponent(cont, new JScrollBarFinder(chooser), index);
@@ -237,10 +195,7 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
     /**
      * Waits 0'th JScrollBar in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JScrollBar instance or null if component was not displayed.
-     * @throws TimeoutExpiredException
      */
     public static JScrollBar waitJScrollBar(Container cont, ComponentChooser chooser) {
         return waitJScrollBar(cont, chooser, 0);
@@ -249,10 +204,7 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
     /**
      * Waits JScrollBar in container.
      *
-     * @param cont Container to search component in.
-     * @param index Ordinal component index.
      * @return JScrollBar instance or null if component was not displayed.
-     * @throws TimeoutExpiredException
      */
     public static JScrollBar waitJScrollBar(Container cont, int index) {
         return waitJScrollBar(
@@ -262,9 +214,7 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
     /**
      * Waits 0'th JScrollBar in container.
      *
-     * @param cont Container to search component in.
      * @return JScrollBar instance or null if component was not displayed.
-     * @throws TimeoutExpiredException
      */
     public static JScrollBar waitJScrollBar(Container cont) {
         return waitJScrollBar(cont, 0);
@@ -309,8 +259,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
     /**
      * Does simple scroll click.
      *
-     * @param increase a scrolling direction.
-     * @throws TimeoutExpiredException
      * @deprecated All scrolling is done through a ScrollDriver registered to
      * this operator type.
      */
@@ -323,11 +271,7 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
      * Scrolls scrollbar to the position defined by w parameter. Uses
      * ScrollDriver registered to this operator type.
      *
-     * @param w Scrolling is stopped when w.actionProduced(waiterParam) != null
-     * @param waiterParam a waiting parameter.
-     * @param increase a scrolling direction.
      * @see #scrollTo(JScrollBarOperator.ScrollChecker)
-     * @throws TimeoutExpiredException
      */
     public <P> void scrollTo(Waitable<?, P> w, P waiterParam, boolean increase) {
         scrollTo(new WaitableChecker<>(w, waiterParam, increase, this));
@@ -337,10 +281,7 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
      * Scrolls scrollbar to the position defined by a ScrollChecker
      * implementation.
      *
-     * @param checker ScrollChecker implementation defining scrolling direction,
-     * and so on.
      * @see ScrollChecker
-     * @throws TimeoutExpiredException
      */
     public void scrollTo(ScrollChecker checker) {
         scrollTo(new CheckerAdjustable(checker, this));
@@ -349,9 +290,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
     /**
      * Scrolls scrollbar to the position defined by a ScrollAdjuster
      * implementation.
-     *
-     * @param adj defines scrolling direction, and so on.
-     * @throws TimeoutExpiredException
      */
     public void scrollTo(final ScrollAdjuster adj) {
         initOperators();
@@ -378,9 +316,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
 
     /**
      * Scrolls scroll bar to necessary value.
-     *
-     * @param value Scroll bar value to scroll to.
-     * @throws TimeoutExpiredException
      */
     public void scrollToValue(int value) {
         output.printTrace("Scroll JScrollBar to " + Integer.toString(value) + " value\n" + toStringSource());
@@ -392,7 +327,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
      * Scrolls scroll bar to necessary proportional value.
      *
      * @param proportionalValue Proportional scroll to. Must be >= 0 and <= 1.
-     * @throws TimeoutExpiredException
      */
     public void scrollToValue(double proportionalValue) {
         output.printTrace("Scroll JScrollBar to " + Double.toString(proportionalValue) + " proportional value\n"
@@ -402,11 +336,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
                 (int) (getMinimum() + (getMaximum() - getVisibleAmount() - getMinimum()) * proportionalValue)));
     }
 
-    /**
-     * Scrolls to minimum value.
-     *
-     * @throws TimeoutExpiredException
-     */
     public void scrollToMinimum() {
         output.printTrace("Scroll JScrollBar to minimum value\n" + toStringSource());
         output.printGolden("Scroll JScrollBar to minimum value");
@@ -432,11 +361,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
                 "JScrollBarOperator.WholeScrollTimeout");
     }
 
-    /**
-     * Scrolls to maximum value.
-     *
-     * @throws TimeoutExpiredException
-     */
     public void scrollToMaximum() {
         output.printTrace("Scroll JScrollBar to maximum value\n" + toStringSource());
         output.printGolden("Scroll JScrollBar to maximum value");
@@ -498,10 +422,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code JScrollBar.addAdjustmentListener(AdjustmentListener)}
-     * through queue
-     */
     public void addAdjustmentListener(final AdjustmentListener adjustmentListener) {
         runMapping(new MapVoidAction("addAdjustmentListener") {
             @Override
@@ -511,9 +431,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
         });
     }
 
-    /**
-     * Maps {@code JScrollBar.getBlockIncrement()} through queue
-     */
     public int getBlockIncrement() {
         return (runMapping(new MapIntegerAction("getBlockIncrement") {
             @Override
@@ -523,9 +440,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
         }));
     }
 
-    /**
-     * Maps {@code JScrollBar.getBlockIncrement(int)} through queue
-     */
     public int getBlockIncrement(final int i) {
         return (runMapping(new MapIntegerAction("getBlockIncrement") {
             @Override
@@ -535,9 +449,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
         }));
     }
 
-    /**
-     * Maps {@code JScrollBar.getMaximum()} through queue
-     */
     public int getMaximum() {
         return (runMapping(new MapIntegerAction("getMaximum") {
             @Override
@@ -547,9 +458,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
         }));
     }
 
-    /**
-     * Maps {@code JScrollBar.getMinimum()} through queue
-     */
     public int getMinimum() {
         return (runMapping(new MapIntegerAction("getMinimum") {
             @Override
@@ -559,9 +467,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
         }));
     }
 
-    /**
-     * Maps {@code JScrollBar.getModel()} through queue
-     */
     public BoundedRangeModel getModel() {
         return (runMapping(new MapAction<BoundedRangeModel>("getModel") {
             @Override
@@ -571,9 +476,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
         }));
     }
 
-    /**
-     * Maps {@code JScrollBar.getOrientation()} through queue
-     */
     public int getOrientation() {
         return (runMapping(new MapIntegerAction("getOrientation") {
             @Override
@@ -583,9 +485,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
         }));
     }
 
-    /**
-     * Maps {@code JScrollBar.getUI()} through queue
-     */
     public ScrollBarUI getUI() {
         return (runMapping(new MapAction<ScrollBarUI>("getUI") {
             @Override
@@ -595,9 +494,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
         }));
     }
 
-    /**
-     * Maps {@code JScrollBar.getUnitIncrement()} through queue
-     */
     public int getUnitIncrement() {
         return (runMapping(new MapIntegerAction("getUnitIncrement") {
             @Override
@@ -607,9 +503,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
         }));
     }
 
-    /**
-     * Maps {@code JScrollBar.getUnitIncrement(int)} through queue
-     */
     public int getUnitIncrement(final int i) {
         return (runMapping(new MapIntegerAction("getUnitIncrement") {
             @Override
@@ -619,9 +512,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
         }));
     }
 
-    /**
-     * Maps {@code JScrollBar.getValue()} through queue
-     */
     public int getValue() {
         return (runMapping(new MapIntegerAction("getValue") {
             @Override
@@ -631,9 +521,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
         }));
     }
 
-    /**
-     * Maps {@code JScrollBar.getValueIsAdjusting()} through queue
-     */
     public boolean getValueIsAdjusting() {
         return (runMapping(new MapBooleanAction("getValueIsAdjusting") {
             @Override
@@ -643,9 +530,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
         }));
     }
 
-    /**
-     * Maps {@code JScrollBar.getVisibleAmount()} through queue
-     */
     public int getVisibleAmount() {
         return (runMapping(new MapIntegerAction("getVisibleAmount") {
             @Override
@@ -655,10 +539,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
         }));
     }
 
-    /**
-     * Maps {@code JScrollBar.removeAdjustmentListener(AdjustmentListener)}
-     * through queue
-     */
     public void removeAdjustmentListener(final AdjustmentListener adjustmentListener) {
         runMapping(new MapVoidAction("removeAdjustmentListener") {
             @Override
@@ -668,9 +548,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
         });
     }
 
-    /**
-     * Maps {@code JScrollBar.setBlockIncrement(int)} through queue
-     */
     public void setBlockIncrement(final int i) {
         runMapping(new MapVoidAction("setBlockIncrement") {
             @Override
@@ -680,9 +557,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
         });
     }
 
-    /**
-     * Maps {@code JScrollBar.setMaximum(int)} through queue
-     */
     public void setMaximum(final int i) {
         runMapping(new MapVoidAction("setMaximum") {
             @Override
@@ -692,9 +566,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
         });
     }
 
-    /**
-     * Maps {@code JScrollBar.setMinimum(int)} through queue
-     */
     public void setMinimum(final int i) {
         runMapping(new MapVoidAction("setMinimum") {
             @Override
@@ -704,9 +575,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
         });
     }
 
-    /**
-     * Maps {@code JScrollBar.setModel(BoundedRangeModel)} through queue
-     */
     public void setModel(final BoundedRangeModel boundedRangeModel) {
         runMapping(new MapVoidAction("setModel") {
             @Override
@@ -716,9 +584,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
         });
     }
 
-    /**
-     * Maps {@code JScrollBar.setOrientation(int)} through queue
-     */
     public void setOrientation(final int i) {
         runMapping(new MapVoidAction("setOrientation") {
             @Override
@@ -728,9 +593,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
         });
     }
 
-    /**
-     * Maps {@code JScrollBar.setUnitIncrement(int)} through queue
-     */
     public void setUnitIncrement(final int i) {
         runMapping(new MapVoidAction("setUnitIncrement") {
             @Override
@@ -740,9 +602,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
         });
     }
 
-    /**
-     * Maps {@code JScrollBar.setValue(int)} through queue
-     */
     public void setValue(final int i) {
         runMapping(new MapVoidAction("setValue") {
             @Override
@@ -752,9 +611,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
         });
     }
 
-    /**
-     * Maps {@code JScrollBar.setValueIsAdjusting(boolean)} through queue
-     */
     public void setValueIsAdjusting(final boolean b) {
         runMapping(new MapVoidAction("setValueIsAdjusting") {
             @Override
@@ -764,9 +620,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
         });
     }
 
-    /**
-     * Maps {@code JScrollBar.setValues(int, int, int, int)} through queue
-     */
     public void setValues(final int i, final int i1, final int i2, final int i3) {
         runMapping(new MapVoidAction("setValues") {
             @Override
@@ -776,9 +629,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
         });
     }
 
-    /**
-     * Maps {@code JScrollBar.setVisibleAmount(int)} through queue
-     */
     public void setVisibleAmount(final int i) {
         runMapping(new MapVoidAction("setVisibleAmount") {
             @Override
@@ -867,17 +717,16 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
         /**
          * Defines a scrolling direction.
          *
-         * @param oper an operator
          * @see
          * org.netbeans.jemmy.drivers.scrolling.ScrollAdjuster#INCREASE_SCROLL_DIRECTION
          * @see
          * org.netbeans.jemmy.drivers.scrolling.ScrollAdjuster#DECREASE_SCROLL_DIRECTION
          * @see
          * org.netbeans.jemmy.drivers.scrolling.ScrollAdjuster#DO_NOT_TOUCH_SCROLL_DIRECTION
-         * @return one of the following values:<BR>
-         * ScrollAdjuster.INCREASE_SCROLL_DIRECTION<BR>
-         * ScrollAdjuster.DECREASE_SCROLL_DIRECTION<BR>
-         * ScrollAdjuster.DO_NOT_TOUCH_SCROLL_DIRECTION<BR>
+         * @return one of the following values:
+         * ScrollAdjuster.INCREASE_SCROLL_DIRECTION
+         * ScrollAdjuster.DECREASE_SCROLL_DIRECTION
+         * ScrollAdjuster.DO_NOT_TOUCH_SCROLL_DIRECTION
          */
         public int getScrollDirection(JScrollBarOperator oper);
 
@@ -1004,8 +853,6 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
 
         /**
          * Constructs JScrollBarFinder.
-         *
-         * @param sf other searching criteria.
          */
         public JScrollBarFinder(ComponentChooser sf) {
             super(JScrollBar.class, sf);

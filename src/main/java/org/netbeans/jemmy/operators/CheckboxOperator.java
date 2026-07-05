@@ -34,22 +34,18 @@ import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
-import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.drivers.ButtonDriver;
 import org.netbeans.jemmy.drivers.DriverManager;
 
 /**
- *
- * <BR><BR>Timeouts used: <BR>
- * ButtonOperator.PushButtonTimeout - time between checkbox pressing and
- * releasing<BR>
- * ComponentOperator.WaitComponentTimeout - time to wait checkbox displayed <BR>
- * ComponentOperator.WaitComponentEnabledTimeout - time to wait checkbox enabled
- * <BR>.
+ * Timeouts used:
+ * <ul>
+ * <li>ButtonOperator.PushButtonTimeout - time between checkbox pressing and releasing</li>
+ * <li>ComponentOperator.WaitComponentTimeout - time to wait checkbox displayed</li>
+ * <li>ComponentOperator.WaitComponentEnabledTimeout - time to wait checkbox enabled</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
 public class CheckboxOperator extends ComponentOperator implements Outputable {
@@ -64,47 +60,25 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
     private TestOut output;
     ButtonDriver driver;
 
-    /**
-     * Constructor.
-     *
-     * @param b a component
-     */
     public CheckboxOperator(Checkbox b) {
         super(b);
         driver = DriverManager.getButtonDriver(getClass());
     }
 
-    /**
-     * Constructs an CheckboxOperator object.
-     *
-     * @param cont container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public CheckboxOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((Checkbox) cont.waitSubComponent(new CheckboxFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs an CheckboxOperator object.
-     *
-     * @param cont container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public CheckboxOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont container
-     * @param text Checkbox text.
-     * @param index Ordinal component index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public CheckboxOperator(ContainerOperator<?> cont, String text, int index) {
         this((Checkbox) waitComponent(cont, new CheckboxByLabelFinder(text, cont.getComparator()), index));
@@ -112,25 +86,18 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont container
-     * @param text Checkbox text.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public CheckboxOperator(ContainerOperator<?> cont, String text) {
         this(cont, text, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont container
-     * @param index Ordinal component index.
-     * @throws TimeoutExpiredException
      */
     public CheckboxOperator(ContainerOperator<?> cont, int index) {
         this((Checkbox) waitComponent(cont, new CheckboxFinder(), index));
@@ -138,11 +105,8 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont container
-     * @throws TimeoutExpiredException
      */
     public CheckboxOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -151,9 +115,6 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
     /**
      * Searches Checkbox in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return Checkbox instance or null if component was not found.
      */
     public static Checkbox findCheckbox(Container cont, ComponentChooser chooser, int index) {
@@ -163,8 +124,6 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
     /**
      * Searches 0'th Checkbox in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return Checkbox instance or null if component was not found.
      */
     public static Checkbox findCheckbox(Container cont, ComponentChooser chooser) {
@@ -174,11 +133,6 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
     /**
      * Searches Checkbox by text.
      *
-     * @param cont Container to search component in.
-     * @param text Checkbox text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return Checkbox instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -189,10 +143,6 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
     /**
      * Searches Checkbox by text.
      *
-     * @param cont Container to search component in.
-     * @param text Checkbox text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return Checkbox instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -203,11 +153,7 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
     /**
      * Waits Checkbox in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return Checkbox instance.
-     * @throws TimeoutExpiredException
      */
     public static Checkbox waitCheckbox(Container cont, ComponentChooser chooser, int index) {
         return (Checkbox) waitComponent(cont, new CheckboxFinder(chooser), index);
@@ -216,10 +162,7 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
     /**
      * Waits 0'th Checkbox in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return Checkbox instance.
-     * @throws TimeoutExpiredException
      */
     public static Checkbox waitCheckbox(Container cont, ComponentChooser chooser) {
         return waitCheckbox(cont, chooser, 0);
@@ -228,14 +171,8 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
     /**
      * Waits Checkbox by text.
      *
-     * @param cont Container to search component in.
-     * @param text Checkbox text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return Checkbox instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static Checkbox waitCheckbox(Container cont, String text, boolean ce, boolean ccs, int index) {
         return (waitCheckbox(cont, new CheckboxByLabelFinder(text, new DefaultStringComparator(ce, ccs)), index));
@@ -244,13 +181,8 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
     /**
      * Waits Checkbox by text.
      *
-     * @param cont Container to search component in.
-     * @param text Checkbox text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return Checkbox instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static Checkbox waitCheckbox(Container cont, String text, boolean ce, boolean ccs) {
         return waitCheckbox(cont, text, ce, ccs, 0);
@@ -277,8 +209,6 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
     /**
      * Changes selection if necessary. Uses a ButtonDriver registered for this
      * operator.
-     *
-     * @param newValue a button selection.
      */
     public void changeSelection(boolean newValue) {
         makeComponentVisible();
@@ -300,8 +230,6 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
 
     /**
      * Runs {@code changeSelection(boolean)} method in a separate thread.
-     *
-     * @param selected a button selection.
      */
     public void changeSelectionNoBlock(boolean selected) {
         produceNoBlocking(
@@ -317,8 +245,6 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
 
     /**
      * Waits for button to be selected.
-     *
-     * @param selected selection.
      */
     public void waitSelected(final boolean selected) {
         getOutput().printLine("Wait button to be selected \n    : " + toStringSource());
@@ -353,9 +279,6 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code Checkbox.addItemListener(ItemListener)} through queue
-     */
     public void addItemListener(final ItemListener itemListener) {
         runMapping(new MapVoidAction("addItemListener") {
             @Override
@@ -365,9 +288,6 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
         });
     }
 
-    /**
-     * Maps {@code Checkbox.getCheckboxGroup()} through queue
-     */
     public CheckboxGroup getCheckboxGroup() {
         return (runMapping(new MapAction<CheckboxGroup>("getCheckboxGroup") {
             @Override
@@ -377,9 +297,6 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
         }));
     }
 
-    /**
-     * Maps {@code Checkbox.getLabel()} through queue
-     */
     public String getLabel() {
         return (runMapping(new MapAction<String>("getLabel") {
             @Override
@@ -389,9 +306,6 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
         }));
     }
 
-    /**
-     * Maps {@code Checkbox.getState()} through queue
-     */
     public boolean getState() {
         return (runMapping(new MapBooleanAction("getState") {
             @Override
@@ -401,9 +315,6 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
         }));
     }
 
-    /**
-     * Maps {@code Checkbox.removeItemListener(ItemListener)} through queue
-     */
     public void removeItemListener(final ItemListener itemListener) {
         runMapping(new MapVoidAction("removeItemListener") {
             @Override
@@ -413,9 +324,6 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
         });
     }
 
-    /**
-     * Maps {@code Checkbox.setCheckboxGroup(CheckboxGroup)} through queue
-     */
     public void setCheckboxGroup(final CheckboxGroup grp) {
         runMapping(new MapVoidAction("setCheckboxGroup") {
             @Override
@@ -425,9 +333,6 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
         });
     }
 
-    /**
-     * Maps {@code Checkbox.setLabel(String)} through queue
-     */
     public void setLabel(final String string) {
         runMapping(new MapVoidAction("setLabel") {
             @Override
@@ -437,9 +342,6 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
         });
     }
 
-    /**
-     * Maps {@code Checkbox.setState(boolean)} through queue
-     */
     public void setState(final boolean state) {
         runMapping(new MapVoidAction("setState") {
             @Override
@@ -459,22 +361,11 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
         String label;
         StringComparator comparator;
 
-        /**
-         * Constructs CheckboxByLabelFinder.
-         *
-         * @param lb a label pattern
-         * @param comparator specifies string comparision algorithm.
-         */
         public CheckboxByLabelFinder(String lb, StringComparator comparator) {
             label = lb;
             this.comparator = comparator;
         }
 
-        /**
-         * Constructs CheckboxByLabelFinder.
-         *
-         * @param lb a label pattern
-         */
         public CheckboxByLabelFinder(String lb) {
             this(lb, Operator.getDefaultStringComparator());
         }
@@ -505,18 +396,10 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
      */
     public static class CheckboxFinder extends Finder {
 
-        /**
-         * Constructs CheckboxFinder.
-         *
-         * @param sf other searching criteria.
-         */
         public CheckboxFinder(ComponentChooser sf) {
             super(Checkbox.class, sf);
         }
 
-        /**
-         * Constructs CheckboxFinder.
-         */
         public CheckboxFinder() {
             super(Checkbox.class);
         }

@@ -43,23 +43,19 @@ import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
-import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.Timeoutable;
 import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.util.EmptyVisualizer;
 
 /**
- *
- * <BR><BR>Timeouts used: <BR>
- * JMenuItemOperator.PushMenuTimeout - time between button pressing and
- * releasing<BR>
- * ComponentOperator.WaitComponentTimeout - time to wait button displayed <BR>
- * ComponentOperator.WaitComponentEnabledTimeout - time to wait button enabled
- * <BR>.
+ * Timeouts used:
+ * <ul>
+ * <li>JMenuItemOperator.PushMenuTimeout - time between button pressing and releasing</li>
+ * <li>ComponentOperator.WaitComponentTimeout - time to wait button displayed</li>
+ * <li>ComponentOperator.WaitComponentEnabledTimeout - time to wait button enabled</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
 public class JMenuItemOperator extends AbstractButtonOperator implements Timeoutable, Outputable {
@@ -69,48 +65,26 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
     private Timeouts timeouts;
     private TestOut output;
 
-    /**
-     * Constructor.
-     *
-     * @param item a component
-     */
     public JMenuItemOperator(JMenuItem item) {
         super(item);
         setTimeouts(JemmyProperties.getProperties().getTimeouts());
         setOutput(JemmyProperties.getProperties().getOutput());
     }
 
-    /**
-     * Constructs a JMenuItemOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public JMenuItemOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((JMenuItem) cont.waitSubComponent(new JMenuItemFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a JMenuItemOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public JMenuItemOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Button text.
-     * @param index Ordinal component index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public JMenuItemOperator(ContainerOperator<?> cont, String text, int index) {
         this((JMenuItem) waitComponent(cont, new JMenuItemByLabelFinder(text, cont.getComparator()), index));
@@ -119,25 +93,18 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Button text.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public JMenuItemOperator(ContainerOperator<?> cont, String text) {
         this(cont, text, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     * @param index Ordinal component index.
-     * @throws TimeoutExpiredException
      */
     public JMenuItemOperator(ContainerOperator<?> cont, int index) {
         this((JMenuItem) waitComponent(cont, new JMenuItemFinder(), index));
@@ -145,11 +112,8 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     * @throws TimeoutExpiredException
      */
     public JMenuItemOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -158,9 +122,6 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
     /**
      * Searches JMenuItem in container.
      *
-     * @param menu Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JMenuItem instance or null if component was not found.
      */
     public static JMenuItem findJMenuItem(Container menu, ComponentChooser chooser, int index) {
@@ -170,8 +131,6 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
     /**
      * Searches 0'th JMenuItem in container.
      *
-     * @param menu Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JMenuItem instance or null if component was not found.
      */
     public static JMenuItem findJMenuItem(Container menu, ComponentChooser chooser) {
@@ -181,11 +140,6 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
     /**
      * Searches JMenuItem by text.
      *
-     * @param menu Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return JMenuItem instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -196,10 +150,6 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
     /**
      * Searches JMenuItem by text.
      *
-     * @param menu Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return JMenuItem instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -210,11 +160,7 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
     /**
      * Waits JMenuItem in container.
      *
-     * @param menu Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JMenuItem instance.
-     * @throws TimeoutExpiredException
      */
     public static JMenuItem waitJMenuItem(Container menu, ComponentChooser chooser, int index) {
         return (JMenuItem) waitComponent(menu, new JMenuItemFinder(chooser), index);
@@ -223,10 +169,7 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
     /**
      * Waits 0'th JMenuItem in container.
      *
-     * @param menu Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JMenuItem instance.
-     * @throws TimeoutExpiredException
      */
     public static JMenuItem waitJMenuItem(Container menu, ComponentChooser chooser) {
         return waitJMenuItem(menu, chooser, 0);
@@ -235,14 +178,8 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
     /**
      * Waits JMenuItem by text.
      *
-     * @param menu Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return JMenuItem instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static JMenuItem waitJMenuItem(Container menu, String text, boolean ce, boolean ccs, int index) {
         return (waitJMenuItem(menu, new JMenuItemByLabelFinder(text, new DefaultStringComparator(ce, ccs)), index));
@@ -251,13 +188,8 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
     /**
      * Waits JMenuItem by text.
      *
-     * @param menu Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return JMenuItem instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static JMenuItem waitJMenuItem(Container menu, String text, boolean ce, boolean ccs) {
         return waitJMenuItem(menu, text, ce, ccs, 0);
@@ -296,9 +228,6 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
         return result;
     }
 
-    /**
-     * Push this menu item.
-     */
     @Override
     public void push() {
         setVisualizer(new EmptyVisualizer());
@@ -316,11 +245,6 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps
-     * {@code JMenuItem.addMenuDragMouseListener(MenuDragMouseListener)}
-     * through queue
-     */
     public void addMenuDragMouseListener(final MenuDragMouseListener menuDragMouseListener) {
         runMapping(new MapVoidAction("addMenuDragMouseListener") {
             @Override
@@ -330,9 +254,6 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
         });
     }
 
-    /**
-     * Maps {@code JMenuItem.addMenuKeyListener(MenuKeyListener)} through queue
-     */
     public void addMenuKeyListener(final MenuKeyListener menuKeyListener) {
         runMapping(new MapVoidAction("addMenuKeyListener") {
             @Override
@@ -342,9 +263,6 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
         });
     }
 
-    /**
-     * Maps {@code JMenuItem.getAccelerator()} through queue
-     */
     public KeyStroke getAccelerator() {
         return (runMapping(new MapAction<KeyStroke>("getAccelerator") {
             @Override
@@ -354,9 +272,6 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
         }));
     }
 
-    /**
-     * Maps {@code JMenuItem.getComponent()} through queue
-     */
     public Component getComponent() {
         return (runMapping(new MapAction<Component>("getComponent") {
             @Override
@@ -366,9 +281,6 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
         }));
     }
 
-    /**
-     * Maps {@code JMenuItem.getSubElements()} through queue
-     */
     public MenuElement[] getSubElements() {
         return ((MenuElement[]) runMapping(new MapAction<Object>("getSubElements") {
             @Override
@@ -378,9 +290,6 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
         }));
     }
 
-    /**
-     * Maps {@code JMenuItem.isArmed()} through queue
-     */
     public boolean isArmed() {
         return (runMapping(new MapBooleanAction("isArmed") {
             @Override
@@ -390,9 +299,6 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
         }));
     }
 
-    /**
-     * Maps {@code JMenuItem.menuSelectionChanged(boolean)} through queue
-     */
     public void menuSelectionChanged(final boolean b) {
         runMapping(new MapVoidAction("menuSelectionChanged") {
             @Override
@@ -402,11 +308,6 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
         });
     }
 
-    /**
-     * Maps
-     * {@code JMenuItem.processKeyEvent(KeyEvent, MenuElement[], MenuSelectionManager)}
-     * through queue
-     */
     public void processKeyEvent(
             final KeyEvent keyEvent, final MenuElement[] menuElement, final MenuSelectionManager menuSelectionManager) {
         runMapping(new MapVoidAction("processKeyEvent") {
@@ -417,10 +318,6 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
         });
     }
 
-    /**
-     * Maps {@code JMenuItem.processMenuDragMouseEvent(MenuDragMouseEvent)}
-     * through queue
-     */
     public void processMenuDragMouseEvent(final MenuDragMouseEvent menuDragMouseEvent) {
         runMapping(new MapVoidAction("processMenuDragMouseEvent") {
             @Override
@@ -430,9 +327,6 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
         });
     }
 
-    /**
-     * Maps {@code JMenuItem.processMenuKeyEvent(MenuKeyEvent)} through queue
-     */
     public void processMenuKeyEvent(final MenuKeyEvent menuKeyEvent) {
         runMapping(new MapVoidAction("processMenuKeyEvent") {
             @Override
@@ -442,11 +336,6 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
         });
     }
 
-    /**
-     * Maps
-     * {@code JMenuItem.processMouseEvent(MouseEvent, MenuElement[], MenuSelectionManager)}
-     * through queue
-     */
     public void processMouseEvent(
             final MouseEvent mouseEvent,
             final MenuElement[] menuElement,
@@ -459,11 +348,6 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
         });
     }
 
-    /**
-     * Maps
-     * {@code JMenuItem.removeMenuDragMouseListener(MenuDragMouseListener)}
-     * through queue
-     */
     public void removeMenuDragMouseListener(final MenuDragMouseListener menuDragMouseListener) {
         runMapping(new MapVoidAction("removeMenuDragMouseListener") {
             @Override
@@ -473,10 +357,6 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
         });
     }
 
-    /**
-     * Maps {@code JMenuItem.removeMenuKeyListener(MenuKeyListener)}
-     * through queue
-     */
     public void removeMenuKeyListener(final MenuKeyListener menuKeyListener) {
         runMapping(new MapVoidAction("removeMenuKeyListener") {
             @Override
@@ -486,9 +366,6 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
         });
     }
 
-    /**
-     * Maps {@code JMenuItem.setAccelerator(KeyStroke)} through queue
-     */
     public void setAccelerator(final KeyStroke keyStroke) {
         runMapping(new MapVoidAction("setAccelerator") {
             @Override
@@ -498,9 +375,6 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
         });
     }
 
-    /**
-     * Maps {@code JMenuItem.setArmed(boolean)} through queue
-     */
     public void setArmed(final boolean b) {
         runMapping(new MapVoidAction("setArmed") {
             @Override
@@ -510,9 +384,6 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
         });
     }
 
-    /**
-     * Maps {@code JMenuItem.setUI(MenuItemUI)} through queue
-     */
     public void setUI(final MenuItemUI menuItemUI) {
         runMapping(new MapVoidAction("setUI") {
             @Override
@@ -582,9 +453,6 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
 
         /**
          * Constructs JMenuItemByLabelFinder.
-         *
-         * @param lb a text pattern
-         * @param comparator specifies string comparision algorithm.
          */
         public JMenuItemByLabelFinder(String lb, StringComparator comparator) {
             label = lb;
@@ -593,8 +461,6 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
 
         /**
          * Constructs JMenuItemByLabelFinder.
-         *
-         * @param lb a text pattern
          */
         public JMenuItemByLabelFinder(String lb) {
             this(lb, Operator.getDefaultStringComparator());
@@ -628,8 +494,6 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
 
         /**
          * Constructs JMenuItemFinder.
-         *
-         * @param sf other searching criteria.
          */
         public JMenuItemFinder(ComponentChooser sf) {
             super(JMenuItem.class, sf);

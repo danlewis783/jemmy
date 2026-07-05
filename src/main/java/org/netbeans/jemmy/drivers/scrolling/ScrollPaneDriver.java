@@ -32,16 +32,11 @@ import org.netbeans.jemmy.operators.ScrollPaneOperator;
 
 /**
  * ScrollDriver for java.awt.ScrollPane component type.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class ScrollPaneDriver extends AWTScrollDriver {
 
     private static final int CLICK_OFFSET = 5;
 
-    /**
-     * Constructs a ScrollPaneDriver.
-     */
     public ScrollPaneDriver() {
         super(new String[] {"org.netbeans.jemmy.operators.ScrollPaneOperator"});
     }

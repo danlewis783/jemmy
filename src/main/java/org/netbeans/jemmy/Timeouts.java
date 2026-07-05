@@ -35,7 +35,6 @@ import java.util.Hashtable;
 import java.util.Properties;
 
 /**
- *
  * Class to store and process a set of timeout values.
  *
  * @see #setDefault(String, long)
@@ -43,7 +42,6 @@ import java.util.Properties;
  * @see #setTimeout(String, long)
  * @see #getTimeout(String)
  *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class Timeouts {
 
@@ -69,8 +67,6 @@ public class Timeouts {
     /**
      * Stores default timeout value.
      *
-     * @param name Timeout name.
-     * @param newValue Timeout value.
      * @see #getDefault(String)
      * @see #initDefault(String, long)
      * @see #containsDefault(String)
@@ -82,8 +78,6 @@ public class Timeouts {
     /**
      * Sets default timeout value if it was not set before.
      *
-     * @param name Timeout name.
-     * @param newValue Timeout value.
      * @see #setDefault(String, long)
      * @see #getDefault(String)
      * @see #containsDefault(String)
@@ -95,7 +89,6 @@ public class Timeouts {
     /**
      * Gets default timeout value.
      *
-     * @param name Timeout name.
      * @return Timeout value or -1 if timeout is not defined.
      * @see #setDefault(String, long)
      * @see #initDefault(String, long)
@@ -108,7 +101,6 @@ public class Timeouts {
     /**
      * Check that default timeout value was defined.
      *
-     * @param name Timeout name.
      * @return True if timeout has been defined, false otherwise.
      * @see #setDefault(String, long)
      * @see #getDefault(String)
@@ -125,7 +117,6 @@ public class Timeouts {
     /**
      * Loads default timeouts values.
      *
-     * @param stream Stream to load timeouts from.
      * @see org.netbeans.jemmy.Timeouts#loadDefaults(String)
      * @see org.netbeans.jemmy.Timeouts#loadDefaults()
      * @exception IOException
@@ -137,7 +128,6 @@ public class Timeouts {
     /**
      * Loads default timeouts values from file.
      *
-     * @param fileName File to load timeouts from.
      * @see org.netbeans.jemmy.Timeouts#loadDefaults(InputStream)
      * @see org.netbeans.jemmy.Timeouts#loadDefaults(String)
      * @exception IOException
@@ -163,7 +153,6 @@ public class Timeouts {
     /**
      * Creates Timeout new object by name and getTimeout(name) value.
      *
-     * @param name Timeout name.
      * @return a Timeout instance.
      */
     public Timeout create(String name) {
@@ -182,7 +171,6 @@ public class Timeouts {
     /**
      * Checks if timeout has already been defined in this timeout instance.
      *
-     * @param name Timeout name.
      * @return True if timeout has been defined, false otherwise.
      * @see #containsDefault(String)
      */
@@ -193,8 +181,6 @@ public class Timeouts {
     /**
      * Sets new timeout value.
      *
-     * @param name Timeout name.
-     * @param newValue Timeout value.
      * @return old timeout value
      * @see #getTimeout
      */
@@ -211,7 +197,6 @@ public class Timeouts {
      * Gets timeout value. It timeout was not defined in this instance, returns
      * default timeout value.
      *
-     * @param name Timeout name.
      * @return Timeout value.
      * @see #getDefault(String)
      * @see #setTimeout
@@ -242,8 +227,6 @@ public class Timeouts {
     /**
      * Sets timeout value if it was not set before.
      *
-     * @param name Timeout name.
-     * @param newValue Timeout value.
      * @return old timeout value
      */
     public long initTimeout(String name, long newValue) {
@@ -274,7 +257,6 @@ public class Timeouts {
      * Sleeps for the "name" timeout value. Can throw InterruptedException if
      * current thread was interrupted.
      *
-     * @param name Timeout name.
      * @exception InterruptedException
      */
     public void eSleep(String name) throws InterruptedException {
@@ -286,8 +268,6 @@ public class Timeouts {
     /**
      * Sleeps for the "name" timeout value. Does not throw InterruptedException
      * anyway.
-     *
-     * @param name Timeout name.
      */
     public void sleep(String name) {
         create(name).sleep();
@@ -295,8 +275,6 @@ public class Timeouts {
 
     /**
      * Prints all defined timeouts.
-     *
-     * @param pw PrintWriter to print into.
      */
     public void print(PrintWriter pw) {
         Enumeration<String> e = timeouts.keys();
@@ -318,8 +296,6 @@ public class Timeouts {
 
     /**
      * Prins all defined timeouts.
-     *
-     * @param ps PrintStream to print into.
      */
     public void print(PrintStream ps) {
         print(new PrintWriter(ps));
@@ -328,7 +304,6 @@ public class Timeouts {
     /**
      * Loads timeouts values.
      *
-     * @param stream Stream to load timeouts from.
      * @see org.netbeans.jemmy.Timeouts#load(String)
      * @see org.netbeans.jemmy.Timeouts#load()
      * @exception IOException
@@ -349,7 +324,6 @@ public class Timeouts {
     /**
      * Loads timeouts values from file.
      *
-     * @param fileName File to load timeouts from.
      * @see org.netbeans.jemmy.Timeouts#load(InputStream)
      * @see org.netbeans.jemmy.Timeouts#load(String)
      * @exception IOException

@@ -39,14 +39,9 @@ import org.netbeans.jemmy.operators.Operator;
 
 /**
  * ScrollDriver for javax.swing.JSplitPane component type.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class JSplitPaneDriver extends LightSupportiveDriver implements ScrollDriver {
 
-    /**
-     * Constructs a JSplitPaneDriver.
-     */
     public JSplitPaneDriver() {
         super(new String[] {"org.netbeans.jemmy.operators.JSplitPaneOperator"});
     }

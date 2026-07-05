@@ -28,8 +28,6 @@ import java.awt.image.BufferedImage;
 
 /**
  * Compares two images strictly (i.e. all the pixel colors should match).
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class StrictImageComparator implements ImageComparator {
 
@@ -37,8 +35,6 @@ public class StrictImageComparator implements ImageComparator {
      * Checks images sizes and pixels. Compares one pixel after another untill
      * one will be different.
      *
-     * @param image1 an image to compare.
-     * @param image2 an image to compare.
      * @return True if all the pixels match, false otherwise.
      */
     @Override
@@ -59,8 +55,6 @@ public class StrictImageComparator implements ImageComparator {
     /**
      * Could be used to override the way of comparing colors.
      *
-     * @param rgb1 a color to compare.
-     * @param rgb2 a color to compare.
      * @return true if colors are equal.
      */
     protected boolean compareColors(int rgb1, int rgb2) {

@@ -37,8 +37,6 @@ import org.netbeans.jemmy.drivers.LightSupportiveDriver;
 
 /**
  * Superclass for all drivers using robot.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class RobotDriver extends LightSupportiveDriver {
 
@@ -48,23 +46,14 @@ public class RobotDriver extends LightSupportiveDriver {
     private double oldY;
     private static final double CONSTANT1 = 0.75;
     private static final double CONSTANT2 = 12.0;
-    /**
-     * A reference to the robot instance.
-     */
     protected ClassReference robotReference = null;
 
-    /**
-     * A QueueTool instance.
-     */
     protected QueueTool qtool;
 
     protected Timeout autoDelay;
 
     /**
-     * Constructs a RobotDriver object.
-     *
      * @param autoDelay Time for {@code Robot.setAutoDelay(long)} method.
-     * @param supported an array of supported class names
      */
     public RobotDriver(Timeout autoDelay, String[] supported) {
         super(supported);
@@ -79,8 +68,6 @@ public class RobotDriver extends LightSupportiveDriver {
     }
 
     /**
-     * Constructs a RobotDriver object.
-     *
      * @param autoDelay Time for {@code Robot.setAutoDelay(long)} method.
      */
     public RobotDriver(Timeout autoDelay) {
@@ -195,8 +182,6 @@ public class RobotDriver extends LightSupportiveDriver {
      * Performs a single operation.
      *
      * @param method a name of {@code java.awt.Robot} method.
-     * @param params method parameters
-     * @param paramClasses method parameters classes
      */
     protected void makeAnOperation(final String method, final Object[] params, final Class<?>[] paramClasses) {
         if (robotReference == null) {

@@ -34,20 +34,15 @@ import java.util.Hashtable;
 import java.util.zip.ZipException;
 
 /**
- *
- * Provides functionality to work with a bunch of resource files. <BR>
+ * Provides functionality to work with a bunch of resource files.
  *
  * @see org.netbeans.jemmy.Bundle
  *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class BundleManager {
 
     private Hashtable<String, Bundle> bundles;
 
-    /**
-     * Bundle manager constructor.
-     */
     public BundleManager() {
         bundles = new Hashtable<>();
         try {
@@ -59,8 +54,6 @@ public class BundleManager {
     /**
      * Adds a Bundle to the managed collection of resource files.
      *
-     * @param bundle Bundle object
-     * @param ID Symbolic bundle id
      * @return First parameter or null if bundle with ID already exists.
      * @see org.netbeans.jemmy.Bundle
      */
@@ -76,7 +69,6 @@ public class BundleManager {
     /**
      * Removes a Bundle from the managed collection of resource files.
      *
-     * @param ID Symbolic bundle id
      * @return Removed bundle or null if no bundle ID is.
      */
     public Bundle removeBundle(String ID) {
@@ -88,7 +80,6 @@ public class BundleManager {
     /**
      * Returns a Bundle given it's symbolic ID.
      *
-     * @param ID Symbolic bundle ID
      * @return the Bundle. A null reference is returned if no bundle with the
      * symbolic ID was found.
      */
@@ -102,7 +93,6 @@ public class BundleManager {
      * Bundle is added to the collection of objects managed by this
      * {@code BundleManager}.
      *
-     * @param fileName Name of a file to load resources from.
      * @param ID Symbolic bundle ID used to identify the new bundle used to
      * manage the resources from the file.
      * @return a newly created bundle.
@@ -153,9 +143,6 @@ public class BundleManager {
      * Loads resources from file in jar archive into new Bundle object and adds
      * it.
      *
-     * @param fileName Name of jar file.
-     * @param entryName ?enryName? Name of file to load resources from.
-     * @param ID Symbolic bundle id
      * @return a newly created bundle.
      * @exception IOException
      * @exception FileNotFoundException
@@ -174,9 +161,6 @@ public class BundleManager {
      * Loads resources from file in zip archive into new Bundle object and adds
      * it.
      *
-     * @param fileName Name of jar file.
-     * @param entryName ?enryName? Name of file to load resources from.
-     * @param ID Symbolic bundle id
      * @return a newly created bundle.
      * @exception ZipException
      * @exception IOException
@@ -192,11 +176,6 @@ public class BundleManager {
         return addBundle(bundle, ID);
     }
 
-    /**
-     * Prints bundles contents.
-     *
-     * @param writer Writer to print data in.
-     */
     public void print(PrintWriter writer) {
         Enumeration<String> keys = bundles.keys();
         Bundle bundle;
@@ -209,11 +188,6 @@ public class BundleManager {
         }
     }
 
-    /**
-     * Prints bundles contents.
-     *
-     * @param stream Stream to print data in.
-     */
     public void print(PrintStream stream) {
         print(new PrintWriter(stream));
     }
@@ -221,8 +195,6 @@ public class BundleManager {
     /**
      * Returns resource from ID bundle.
      *
-     * @param bundleID Bundle ID.
-     * @param key Resource key.
      * @return the resource value. If the bundle ID does not exist if the
      * resource with the given key cannot be found, a null reference is
      * returned.
@@ -238,7 +210,6 @@ public class BundleManager {
     /**
      * Searches for a resource in all the managed Bundles.
      *
-     * @param key Resource key.
      * @return first resource value found that is indexed by the given key. If
      * no resource is found, return a null reference.
      */
@@ -257,7 +228,6 @@ public class BundleManager {
     /**
      * Counts the number of resource occurences in all the managed Bundles.
      *
-     * @param key Resource key
      * @return the number of resource occurences with the given key among all
      * the Bundles managed by this BundleManager.
      */

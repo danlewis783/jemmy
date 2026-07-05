@@ -31,22 +31,7 @@ import org.netbeans.jemmy.operators.ComponentOperator;
  */
 public interface TableDriver {
 
-    /**
-     * Selects a cell.
-     *
-     * @param oper Table operator.
-     * @param row Cell row index.
-     * @param column Cell column index.
-     */
     public void selectCell(ComponentOperator oper, int row, int column);
 
-    /**
-     * Edits a cell.
-     *
-     * @param oper Table operator.
-     * @param row Cell row index.
-     * @param column Cell column index.
-     * @param value New value.
-     */
     public void editCell(ComponentOperator oper, int row, int column, Object value);
 }

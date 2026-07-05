@@ -35,8 +35,6 @@ import org.netbeans.jemmy.drivers.input.MouseRobotDriver;
 
 /**
  * Installs drivers for low-level drivers.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class InputDriverInstaller {
 
@@ -45,8 +43,6 @@ public class InputDriverInstaller {
     boolean smooth = false;
 
     /**
-     * Constructs an InputDriverInstaller object.
-     *
      * @param useEventDrivers Tells whether to use event drivers, otherwise
      * robot drivers.
      * @param robotAutoDelay Time for {@code Robot.setAutoDelay(long)}
@@ -74,7 +70,6 @@ public class InputDriverInstaller {
      *
      * @param useEventDrivers Tells whether to use event drivers, otherwise
      * robot drivers.
-     * @param smooth whether to move mouse smoothly.
      */
     public InputDriverInstaller(boolean useEventDrivers, boolean smooth) {
         this(useEventDrivers);
@@ -103,9 +98,6 @@ public class InputDriverInstaller {
         EventDispatcher.performInit();
     }
 
-    /**
-     * Installs input drivers.
-     */
     public void install() {
         if (useEventDrivers) {
             LightDriver keyE = new KeyEventDriver();

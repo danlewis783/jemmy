@@ -23,8 +23,8 @@
  * questions.
  */
 /**
- * <h1>Focus drivers.</h1>
- * Different drivers to give input focus to a component.<br>
+ * <h1>Focus drivers.</h1> Different drivers to give input focus to a component.
+ * <p>
  * <hr>
  */
 package org.netbeans.jemmy.drivers.focus;

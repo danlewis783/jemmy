@@ -23,16 +23,17 @@
  * questions.
  */
 /**
- * <h1>Drivers interfaces</h1>
- * Contains interfaces of "drivers".<br><br>
- * Driver is a class which actually implements action reproducing. There are
- * different types of drivers (mouse driver, keyboard driver, button drivers,
- * ...), each of them represented by interface (button driver - by ButtonDriver
- * interface, ...)<br><br>
- * Package also contains some classes allowing to manage driver set.<br><br>
- * Subpackages contain driver implementations.<br><br>
- * Drivers is low-level API: they are not supposed to be used directly from
- * test.<br>
+ * <h1>Drivers interfaces</h1> Contains interfaces of "drivers".
+ * <p>
+ * Driver is a class which actually implements action reproducing. There are different types of drivers (mouse driver,
+ * keyboard driver, button drivers, ...), each of them represented by interface (button driver - by ButtonDriver
+ * interface, ...)
+ * <p>
+ * Package also contains some classes allowing to manage driver set.
+ * <p>
+ * Subpackages contain driver implementations.
+ * <p>
+ * Drivers is low-level API: they are not supposed to be used directly from test.
  *
  * @since 04/17/2002
  * <hr>

@@ -30,14 +30,10 @@ import org.netbeans.jemmy.operators.ComponentOperator;
 
 /**
  * KeyDriver using robot operations.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class KeyRobotDriver extends RobotDriver implements KeyDriver {
 
     /**
-     * Constructs a KeyRobotDriver object.
-     *
      * @param autoDelay Time for {@code Robot.setAutoDelay(long)} method.
      */
     public KeyRobotDriver(Timeout autoDelay) {
@@ -45,10 +41,7 @@ public class KeyRobotDriver extends RobotDriver implements KeyDriver {
     }
 
     /**
-     * Constructs a KeyRobotDriver object.
-     *
      * @param autoDelay Time for {@code Robot.setAutoDelay(long)} method.
-     * @param supported an array of supported class names
      */
     public KeyRobotDriver(Timeout autoDelay, String[] supported) {
         super(autoDelay, supported);
@@ -69,7 +62,6 @@ public class KeyRobotDriver extends RobotDriver implements KeyDriver {
     /**
      * Presses a key.
      *
-     * @param oper Operator to press a key on.
      * @param keyCode Key code ({@code KeyEventVK_*} field.
      * @param modifiers a combination of {@code InputEvent.*_MASK} fields.
      */
@@ -86,7 +78,6 @@ public class KeyRobotDriver extends RobotDriver implements KeyDriver {
     /**
      * Releases a key.
      *
-     * @param oper Operator to release a key on.
      * @param keyCode Key code ({@code KeyEventVK_*} field.
      * @param modifiers a combination of {@code InputEvent.*_MASK} fields.
      */

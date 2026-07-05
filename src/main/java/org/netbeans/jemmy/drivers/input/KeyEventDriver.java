@@ -32,16 +32,9 @@ import org.netbeans.jemmy.operators.ComponentOperator;
 
 /**
  * KeyDriver using event dispatching.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class KeyEventDriver extends EventDriver implements KeyDriver {
 
-    /**
-     * Constructs a KeyEventDriver object.
-     *
-     * @param supported an array of supported class names
-     */
     public KeyEventDriver(String[] supported) {
         super(supported);
     }

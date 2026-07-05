@@ -35,7 +35,6 @@ public interface KeyDriver {
     /**
      * Presses a key.
      *
-     * @param oper Component operator.
      * @param keyCode Key code ({@code KeyEvent.VK_*} value)
      * @param modifiers a combination of {@code InputEvent.*_MASK} fields.
      */
@@ -44,8 +43,6 @@ public interface KeyDriver {
     /**
      * Typed a key.
      *
-     * @param oper Component operator.
-     * @param keyChar Symbol to be typed.
      * @param modifiers a combination of {@code InputEvent.*_MASK} fields.
      */
     public void typedKey(ComponentOperator oper, int keyCode, char keyChar, int modifiers);
@@ -53,7 +50,6 @@ public interface KeyDriver {
     /**
      * Releases a key.
      *
-     * @param oper Component operator.
      * @param keyCode Key code ({@code KeyEvent.VK_*} value)
      * @param modifiers a combination of {@code InputEvent.*_MASK} fields.
      */
@@ -62,21 +58,16 @@ public interface KeyDriver {
     /**
      * Pushes a key.
      *
-     * @param oper Component operator.
      * @param keyCode Key code ({@code KeyEvent.VK_*} value)
      * @param modifiers a combination of {@code InputEvent.*_MASK} fields.
-     * @param pushTime Time between pressing and releasing.
      */
     public void pushKey(ComponentOperator oper, int keyCode, int modifiers, Timeout pushTime);
 
     /**
      * Types a symbol.
      *
-     * @param oper Component operator.
      * @param keyCode Key code ({@code KeyEvent.VK_*} value)
-     * @param keyChar Symbol to be typed.
      * @param modifiers a combination of {@code InputEvent.*_MASK} fields.
-     * @param pushTime Time between pressing and releasing.
      */
     public void typeKey(ComponentOperator oper, int keyCode, char keyChar, int modifiers, Timeout pushTime);
 }

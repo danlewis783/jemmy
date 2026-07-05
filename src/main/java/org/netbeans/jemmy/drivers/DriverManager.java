@@ -28,74 +28,23 @@ import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.operators.ComponentOperator;
 
-/**
- * Manages driver set.
- */
 public class DriverManager {
 
-    /**
-     * Symbolic constant - prefix for drivers names.
-     */
     public static final String DRIVER_ID = "drivers.";
-    /**
-     * Symbolic constant for tree drivers.
-     */
     public static final String TREE_DRIVER_ID = DRIVER_ID + "tree";
-    /**
-     * Symbolic constant for text drivers.
-     */
     public static final String TEXT_DRIVER_ID = DRIVER_ID + "text";
-    /**
-     * Symbolic constant for key drivers.
-     */
     public static final String KEY_DRIVER_ID = DRIVER_ID + "key";
-    /**
-     * Symbolic constant for mouse drivers.
-     */
     public static final String MOUSE_DRIVER_ID = DRIVER_ID + "mouse";
-    /**
-     * Symbolic constant for scroll drivers.
-     */
     public static final String SCROLL_DRIVER_ID = DRIVER_ID + "scroll";
-    /**
-     * Symbolic constant for button drivers.
-     */
     public static final String BUTTON_DRIVER_ID = DRIVER_ID + "button";
-    /**
-     * Symbolic constant for list drivers.
-     */
     public static final String LIST_DRIVER_ID = DRIVER_ID + "list";
-    /**
-     * Symbolic constant for multiselection list drivers.
-     */
     public static final String MULTISELLIST_DRIVER_ID = DRIVER_ID + "multisellist";
-    /**
-     * Symbolic constant for reorderable list drivers.
-     */
     public static final String ORDEREDLIST_DRIVER_ID = DRIVER_ID + "orderedlist";
-    /**
-     * Symbolic constant for table drivers.
-     */
     public static final String TABLE_DRIVER_ID = DRIVER_ID + "table";
-    /**
-     * Symbolic constant for window drivers.
-     */
     public static final String WINDOW_DRIVER_ID = DRIVER_ID + "window";
-    /**
-     * Symbolic constant for window drivers.
-     */
     public static final String FRAME_DRIVER_ID = DRIVER_ID + "frame";
-    /**
-     * Symbolic constant for window drivers.
-     */
     public static final String INTERNAL_FRAME_DRIVER_ID = DRIVER_ID + "internal_frame";
-    /**
-     * Symbolic constant for frame drivers.
-     */
     public static final String FOCUS_DRIVER_ID = DRIVER_ID + "focus";
-    /**
-     * Symbolic constant for menu drivers.
-     */
     public static final String MENU_DRIVER_ID = DRIVER_ID + "menu";
 
     // cannot be instantiated!
@@ -104,9 +53,6 @@ public class DriverManager {
     /**
      * Searches a driver.
      *
-     * @param id Driver type id.
-     * @param operatorClass Class to get an driver for.
-     * @param props Instance to get driver from.
      * @return a driver.
      * @see #setDriver
      */
@@ -123,8 +69,6 @@ public class DriverManager {
      * Searches a driver. Uses {@code operator.getProperties()} to receive
      * JemmyProperties instance.
      *
-     * @param id Driver type id.
-     * @param operator Operator to get an driver for.
      * @return a driver.
      * @see #setDriver
      */
@@ -135,8 +79,6 @@ public class DriverManager {
     /**
      * Searches a driver. Uses current JemmyProperties.
      *
-     * @param id Driver type id.
-     * @param operatorClass Class to get an driver for.
      * @return a driver.
      * @see #setDriver
      */
@@ -153,9 +95,6 @@ public class DriverManager {
     /**
      * Sets driver for an operator class.
      *
-     * @param id Driver type id.
-     * @param driver A driver to be installed.
-     * @param operatorClass Class to set driver for.
      * @see #getDriver
      */
     public static void setDriver(String id, Object driver, Class<?> operatorClass) {
@@ -173,9 +112,6 @@ public class DriverManager {
     /**
      * Sets driver for an operator class name.
      *
-     * @param id Driver type id.
-     * @param driver A driver to be installed.
-     * @param operatorClassName A name of operator class.
      * @see #getDriver
      */
     public static void setDriver(String id, Object driver, String operatorClassName) {
@@ -193,8 +129,6 @@ public class DriverManager {
     /**
      * Sets driver for all classes supported by driver.
      *
-     * @param id Driver type id.
-     * @param driver A driver to be installed.
      * @see #getDriver
      */
     public static void setDriver(String id, Driver driver) {
@@ -207,8 +141,6 @@ public class DriverManager {
     /**
      * Sets driver for all classes supported by driver.
      *
-     * @param id Driver type id.
-     * @param driver A driver to be installed.
      * @see #getDriver
      */
     public static void setDriver(String id, LightDriver driver) {
@@ -218,12 +150,6 @@ public class DriverManager {
         }
     }
 
-    /**
-     * Removes driver for operator class.
-     *
-     * @param id Driver type to remove.
-     * @param operatorClass Class to remove driver for.
-     */
     public static void removeDriver(String id, Class<?> operatorClass) {
         JemmyProperties.removeCurrentProperty(makeID(id, operatorClass));
         if (Boolean.getBoolean(DRIVER_ID + "trace_output")) {
@@ -232,12 +158,6 @@ public class DriverManager {
         }
     }
 
-    /**
-     * Removes driver for operator class.
-     *
-     * @param id Driver type to remove.
-     * @param operatorClassName A name of operator class.
-     */
     public static void removeDriver(String id, String operatorClassName) {
         JemmyProperties.removeCurrentProperty(makeID(id, operatorClassName));
         if (Boolean.getBoolean(DRIVER_ID + "trace_output")) {
@@ -246,24 +166,12 @@ public class DriverManager {
         }
     }
 
-    /**
-     * Removes driver for operator classes.
-     *
-     * @param id Driver type to remove.
-     * @param operatorClasses Classes to remove driver for.
-     */
     public static void removeDriver(String id, Class<?>[] operatorClasses) {
         for (Class<?> operatorClass : operatorClasses) {
             removeDriver(id, operatorClass);
         }
     }
 
-    /**
-     * Removes driver for operator classes.
-     *
-     * @param id Driver type to remove.
-     * @param operatorClassNames Names of operator classes.
-     */
     public static void removeDriver(String id, String[] operatorClassNames) {
         for (String operatorClassName : operatorClassNames) {
             removeDriver(id, operatorClassName);
@@ -272,8 +180,6 @@ public class DriverManager {
 
     /**
      * Removes driver for all supported classes.
-     *
-     * @param id Driver type to remove.
      */
     public static void removeDrivers(String id) {
         String[] keys = JemmyProperties.getCurrentKeys();
@@ -287,7 +193,6 @@ public class DriverManager {
     /**
      * Returns {@code TREE_DRIVER_ID} driver.
      *
-     * @param operatorClass Class to find driver for.
      * @return a driver
      * @see #setTreeDriver
      */
@@ -298,7 +203,6 @@ public class DriverManager {
     /**
      * Returns {@code TREE_DRIVER_ID} driver.
      *
-     * @param operator Operator to find driver for.
      * @return a driver
      * @see #setTreeDriver
      */
@@ -309,7 +213,6 @@ public class DriverManager {
     /**
      * Defines {@code TREE_DRIVER_ID} driver.
      *
-     * @param driver a driver
      * @see #getTreeDriver
      */
     public static void setTreeDriver(TreeDriver driver) {
@@ -319,7 +222,6 @@ public class DriverManager {
     /**
      * Returns {@code TEXT_DRIVER_ID} driver.
      *
-     * @param operatorClass Class to find driver for.
      * @return a driver
      * @see #setTextDriver
      */
@@ -330,7 +232,6 @@ public class DriverManager {
     /**
      * Returns {@code TEXT_DRIVER_ID} driver.
      *
-     * @param operator Operator to find driver for.
      * @return a driver
      * @see #setTextDriver
      */
@@ -341,7 +242,6 @@ public class DriverManager {
     /**
      * Defines {@code TEXT_DRIVER_ID} driver.
      *
-     * @param driver a driver
      * @see #getTextDriver
      */
     public static void setTextDriver(TextDriver driver) {
@@ -351,7 +251,6 @@ public class DriverManager {
     /**
      * Returns {@code KEY_DRIVER_ID} driver.
      *
-     * @param operatorClass Class to find driver for.
      * @return a driver
      * @see #setKeyDriver
      */
@@ -362,7 +261,6 @@ public class DriverManager {
     /**
      * Returns {@code KEY_DRIVER_ID} driver.
      *
-     * @param operator Operator to find driver for.
      * @return a driver
      * @see #setKeyDriver
      */
@@ -373,7 +271,6 @@ public class DriverManager {
     /**
      * Defines {@code KEY_DRIVER_ID} driver.
      *
-     * @param driver a driver
      * @see #getKeyDriver
      */
     public static void setKeyDriver(KeyDriver driver) {
@@ -383,7 +280,6 @@ public class DriverManager {
     /**
      * Returns {@code MOUSE_DRIVER_ID} driver.
      *
-     * @param operatorClass Class to find driver for.
      * @return a driver
      * @see #setMouseDriver
      */
@@ -394,7 +290,6 @@ public class DriverManager {
     /**
      * Returns {@code MOUSE_DRIVER_ID} driver.
      *
-     * @param operator Operator to find driver for.
      * @return a driver
      * @see #setMouseDriver
      */
@@ -405,7 +300,6 @@ public class DriverManager {
     /**
      * Defines {@code MOUSE_DRIVER_ID} driver.
      *
-     * @param driver a driver
      * @see #getMouseDriver
      */
     public static void setMouseDriver(MouseDriver driver) {
@@ -415,7 +309,6 @@ public class DriverManager {
     /**
      * Returns {@code SCROLL_DRIVER_ID} driver.
      *
-     * @param operatorClass Class to find driver for.
      * @return a driver
      * @see #setScrollDriver
      */
@@ -426,7 +319,6 @@ public class DriverManager {
     /**
      * Returns {@code SCROLL_DRIVER_ID} driver.
      *
-     * @param operator Operator to find driver for.
      * @return a driver
      * @see #setScrollDriver
      */
@@ -437,7 +329,6 @@ public class DriverManager {
     /**
      * Defines {@code SCROLL_DRIVER_ID} driver.
      *
-     * @param driver a driver
      * @see #getScrollDriver
      */
     public static void setScrollDriver(ScrollDriver driver) {
@@ -447,7 +338,6 @@ public class DriverManager {
     /**
      * Returns {@code BUTTON_DRIVER_ID} driver.
      *
-     * @param operatorClass Class to find driver for.
      * @return a driver
      * @see #setButtonDriver
      */
@@ -458,7 +348,6 @@ public class DriverManager {
     /**
      * Returns {@code BUTTON_DRIVER_ID} driver.
      *
-     * @param operator Operator to find driver for.
      * @return a driver
      * @see #setButtonDriver
      */
@@ -469,7 +358,6 @@ public class DriverManager {
     /**
      * Defines {@code BUTTON_DRIVER_ID} driver.
      *
-     * @param driver a driver
      * @see #getButtonDriver
      */
     public static void setButtonDriver(ButtonDriver driver) {
@@ -479,7 +367,6 @@ public class DriverManager {
     /**
      * Returns {@code LIST_DRIVER_ID} driver.
      *
-     * @param operatorClass Class to find driver for.
      * @return a driver
      * @see #setListDriver
      */
@@ -490,7 +377,6 @@ public class DriverManager {
     /**
      * Returns {@code LIST_DRIVER_ID} driver.
      *
-     * @param operator Operator to find driver for.
      * @return a driver
      * @see #setListDriver
      */
@@ -501,7 +387,6 @@ public class DriverManager {
     /**
      * Defines {@code LIST_DRIVER_ID} driver.
      *
-     * @param driver a driver
      * @see #getListDriver
      */
     public static void setListDriver(ListDriver driver) {
@@ -511,7 +396,6 @@ public class DriverManager {
     /**
      * Returns {@code MULTISELLIST_DRIVER_ID} driver.
      *
-     * @param operatorClass Class to find driver for.
      * @return a driver
      * @see #setMultiSelListDriver
      */
@@ -522,7 +406,6 @@ public class DriverManager {
     /**
      * Returns {@code MULTISELLIST_DRIVER_ID} driver.
      *
-     * @param operator Operator to find driver for.
      * @return a driver
      * @see #setMultiSelListDriver
      */
@@ -533,7 +416,6 @@ public class DriverManager {
     /**
      * Defines {@code MULTISELLIST_DRIVER_ID} driver.
      *
-     * @param driver a driver
      * @see #getMultiSelListDriver
      */
     public static void setMultiSelListDriver(MultiSelListDriver driver) {
@@ -543,7 +425,6 @@ public class DriverManager {
     /**
      * Returns {@code ORDEREDLIST_DRIVER_ID} driver.
      *
-     * @param operatorClass Class to find driver for.
      * @return a driver
      * @see #setOrderedListDriver
      */
@@ -554,7 +435,6 @@ public class DriverManager {
     /**
      * Returns {@code ORDEREDLIST_DRIVER_ID} driver.
      *
-     * @param operator Operator to find driver for.
      * @return a driver
      * @see #setOrderedListDriver
      */
@@ -565,7 +445,6 @@ public class DriverManager {
     /**
      * Defines {@code ORDEREDLIST_DRIVER_ID} driver.
      *
-     * @param driver a driver
      * @see #getOrderedListDriver
      */
     public static void setOrderedListDriver(OrderedListDriver driver) {
@@ -575,7 +454,6 @@ public class DriverManager {
     /**
      * Returns {@code TABLE_DRIVER_ID} driver.
      *
-     * @param operatorClass Class to find driver for.
      * @return a driver
      * @see #setTableDriver
      */
@@ -586,7 +464,6 @@ public class DriverManager {
     /**
      * Returns {@code TABLE_DRIVER_ID} driver.
      *
-     * @param operator Operator to find driver for.
      * @return a driver
      * @see #setTableDriver
      */
@@ -597,7 +474,6 @@ public class DriverManager {
     /**
      * Defines {@code TABLE_DRIVER_ID} driver.
      *
-     * @param driver a driver
      * @see #getTableDriver
      */
     public static void setTableDriver(TableDriver driver) {
@@ -607,7 +483,6 @@ public class DriverManager {
     /**
      * Returns {@code WINDOW_DRIVER_ID} driver.
      *
-     * @param operatorClass Class to find driver for.
      * @return a driver
      * @see #setWindowDriver
      */
@@ -618,7 +493,6 @@ public class DriverManager {
     /**
      * Returns {@code WINDOW_DRIVER_ID} driver.
      *
-     * @param operator Operator to find driver for.
      * @return a driver
      * @see #setWindowDriver
      */
@@ -629,7 +503,6 @@ public class DriverManager {
     /**
      * Defines {@code WINDOW_DRIVER_ID} driver.
      *
-     * @param driver a driver
      * @see #getWindowDriver
      */
     public static void setWindowDriver(WindowDriver driver) {
@@ -639,7 +512,6 @@ public class DriverManager {
     /**
      * Returns {@code FRAME_DRIVER_ID} driver.
      *
-     * @param operatorClass Class to find driver for.
      * @return a driver
      * @see #setFrameDriver
      */
@@ -650,7 +522,6 @@ public class DriverManager {
     /**
      * Returns {@code FRAME_DRIVER_ID} driver.
      *
-     * @param operator Operator to find driver for.
      * @return a driver
      * @see #setFrameDriver
      */
@@ -661,7 +532,6 @@ public class DriverManager {
     /**
      * Defines {@code FRAME_DRIVER_ID} driver.
      *
-     * @param driver a driver
      * @see #getFrameDriver
      */
     public static void setFrameDriver(FrameDriver driver) {
@@ -671,7 +541,6 @@ public class DriverManager {
     /**
      * Returns {@code INTERNAL_FRAME_DRIVER_ID} driver.
      *
-     * @param operatorClass Class to find driver for.
      * @return a driver
      * @see #setInternalFrameDriver
      */
@@ -682,7 +551,6 @@ public class DriverManager {
     /**
      * Returns {@code INTERNAL_FRAME_DRIVER_ID} driver.
      *
-     * @param operator Operator to find driver for.
      * @return a driver
      * @see #setInternalFrameDriver
      */
@@ -693,7 +561,6 @@ public class DriverManager {
     /**
      * Defines {@code INTERNAL_FRAME_DRIVER_ID} driver.
      *
-     * @param driver a driver
      * @see #getInternalFrameDriver
      */
     public static void setInternalFrameDriver(InternalFrameDriver driver) {
@@ -703,7 +570,6 @@ public class DriverManager {
     /**
      * Returns {@code FOCUS_DRIVER_ID} driver.
      *
-     * @param operatorClass Class to find driver for.
      * @return a driver
      * @see #setFocusDriver
      */
@@ -714,7 +580,6 @@ public class DriverManager {
     /**
      * Returns {@code FOCUS_DRIVER_ID} driver.
      *
-     * @param operator Operator to find driver for.
      * @return a driver
      * @see #setFocusDriver
      */
@@ -725,7 +590,6 @@ public class DriverManager {
     /**
      * Defines {@code FOCUS_DRIVER_ID} driver.
      *
-     * @param driver a driver
      * @see #getFocusDriver
      */
     public static void setFocusDriver(FocusDriver driver) {
@@ -735,7 +599,6 @@ public class DriverManager {
     /**
      * Returns {@code MENU_DRIVER_ID} driver.
      *
-     * @param operatorClass Class to find driver for.
      * @return a driver
      * @see #setMenuDriver
      */
@@ -746,7 +609,6 @@ public class DriverManager {
     /**
      * Returns {@code MENU_DRIVER_ID} driver.
      *
-     * @param operator Operator to find driver for.
      * @return a driver
      * @see #setMenuDriver
      */
@@ -757,7 +619,6 @@ public class DriverManager {
     /**
      * Defines {@code MENU_DRIVER_ID} driver.
      *
-     * @param driver a driver
      * @see #getMenuDriver
      */
     public static void setMenuDriver(MenuDriver driver) {

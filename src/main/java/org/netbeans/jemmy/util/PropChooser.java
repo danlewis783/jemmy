@@ -33,26 +33,14 @@ import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
 
 /**
- *
- * Implementation of org.netbeans.jemmy.ComponentChooser interface. Class can be
- * used to find component by its field/methods values. <br>
- * Example:
- * <pre>
- *            String[] methods = {"getClientProperty"};
- *            Object[][] params = {{"classname"}};
- *            Class<?>[][] classes = {{Object.class}};
- *            Object[] results = {"javax.swing.JCheckBox"};
- *
- *            JCheckBox box = JCheckBoxOperator.findJCheckBox(frm0, new PropChooser(methods, params, classes, results));
- * </pre> Or:
- * <pre>
- *            String[] methods = {"getText"};
- *            Object[] results = {"Open"};
- *
- *            JButtonOperator box = new JButtonOperator(containerOperator, new PropChooser(fields, results));
+ * Implementation of org.netbeans.jemmy.ComponentChooser interface. Class can be used to find component by its
+ * field/methods values.
+ * <p>
+ * Example: <pre> String[] methods = {"getClientProperty"}; Object[][] params = {{"classname"}}; Class<?>[][] classes =
+ * {{Object.class}}; Object[] results = {"javax.swing.JCheckBox"}; JCheckBox box = JCheckBoxOperator.findJCheckBox(frm0,
+ * new PropChooser(methods, params, classes, results)); </pre> Or: <pre> String[] methods = {"getText"}; Object[]
+ * results = {"Open"}; JButtonOperator box = new JButtonOperator(containerOperator, new PropChooser(fields, results));
  * </pre>
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class PropChooser implements ComponentChooser, Outputable {
 
@@ -79,14 +67,10 @@ public class PropChooser implements ComponentChooser, Outputable {
     private TestOut output;
 
     /**
-     * Constructs a PropChooser object.
-     *
-     * @param propNames Names of methods/fields
-     * @param params Parameters values for methods. <BR>
-     * params[0] is an array of parameters for propNames[0] methods. <BR>
+     * @param params Parameters values for methods.
+     * params[0] is an array of parameters for propNames[0] methods.
      * If propNames[0] is a field, params[0] is ignored.
-     * @param classes Parameters classes.
-     * @param results Objects to compare method/field values to. <BR>
+     * @param results Objects to compare method/field values to.
      * A value of propNames[0] method/field should be equal to results[0]
      * object.
      */
@@ -116,9 +100,6 @@ public class PropChooser implements ComponentChooser, Outputable {
     /**
      * Constructs a PropChooser object for checking of methods with no
      * parameters.
-     *
-     * @param propNames Names of methods/fields
-     * @param results Objects to compare method/field values to.
      */
     public PropChooser(String[] propNames, Object[] results) {
         this(propNames, null, null, results);
@@ -203,8 +184,6 @@ public class PropChooser implements ComponentChooser, Outputable {
      * Method to check one method result with an etalon. Can be overrided by a
      * subclass.
      *
-     * @param value Method/field value
-     * @param etalon Object to compare to.
      * @return true if the value matches the etalon.
      */
     protected boolean checkProperty(Object value, Object etalon) {

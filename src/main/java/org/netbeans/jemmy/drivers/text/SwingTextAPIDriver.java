@@ -29,14 +29,9 @@ import org.netbeans.jemmy.operators.JTextComponentOperator;
 
 /**
  * TextDriver for swing component types. Uses API calls.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class SwingTextAPIDriver extends TextAPIDriver {
 
-    /**
-     * Constructs a SwingTextAPIDriver.
-     */
     public SwingTextAPIDriver() {
         super(new String[] {"org.netbeans.jemmy.operators.JTextComponentOperator"});
     }

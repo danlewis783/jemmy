@@ -29,19 +29,11 @@ import java.io.PrintStream;
 import org.netbeans.jemmy.TestCompletedException;
 
 /**
- *
  * Exception is throught if test (demo) execution has been interrupted
  * (CommentWindow.isInterrupted() returned true).
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
- *
  */
 public class DemoInterruptedException extends TestCompletedException {
 
-    /**
-     * Constructs a DemoInterruptedException object.
-     * @param description an exception descriptio.
-     */
     public DemoInterruptedException(String description) {
         super(100, description);
     }

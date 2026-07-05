@@ -53,7 +53,6 @@ import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.TestOut;
-import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.Timeoutable;
 import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.Waiter;
@@ -62,19 +61,17 @@ import org.netbeans.jemmy.drivers.TableDriver;
 import org.netbeans.jemmy.util.EmptyVisualizer;
 
 /**
- * <BR><BR>Timeouts used: <BR>
- * JTableOperator.WaitEditingTimeout - time to wait cell editing<BR>
- * ComponentOperator.WaitComponentTimeout - time to wait component displayed
- * <BR>
- * ComponentOperator.WaitStateTimeout - time to wait for cell contents <BR>
- * JTextComponentOperator.ChangeCaretPositionTimeout - maximum time to chenge
- * caret position <BR>
- * JTextComponentOperator.TypeTextTimeout - maximum time to type text <BR>
- * JScrollBarOperator.WholeScrollTimeout - time for the whole scrolling <BR>.
+ * Timeouts used:
+ * <ul>
+ * <li>JTableOperator.WaitEditingTimeout - time to wait cell editing</li>
+ * <li>ComponentOperator.WaitComponentTimeout - time to wait component displayed</li>
+ * <li>ComponentOperator.WaitStateTimeout - time to wait for cell contents</li>
+ * <li>JTextComponentOperator.ChangeCaretPositionTimeout - maximum time to chenge caret position</li>
+ * <li>JTextComponentOperator.TypeTextTimeout - maximum time to type text</li>
+ * <li>JScrollBarOperator.WholeScrollTimeout - time for the whole scrolling</li>
+ * </ul>
  *
  * @see Timeouts
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
 public class JTableOperator extends JComponentOperator implements Outputable, Timeoutable {
@@ -128,49 +125,25 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
 
     TableDriver driver;
 
-    /**
-     * Constructor.
-     *
-     * @param b a component
-     */
     public JTableOperator(JTable b) {
         super(b);
         driver = DriverManager.getTableDriver(getClass());
     }
 
-    /**
-     * Constructs a JTableOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public JTableOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((JTable) cont.waitSubComponent(new JTableFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a JTableOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public JTableOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits by cell text first. Uses cont's timeout and output for
+     * Waits by cell text first. Uses cont's timeout and output for
      * waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Text of a cell which is currently selected.
-     * @param row a cell row to check.
-     * @param column a cell row to check.
-     * @param index Ordinal component index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public JTableOperator(ContainerOperator<?> cont, String text, int row, int column, int index) {
         this((JTable) waitComponent(cont, new JTableByCellFinder(text, row, column, cont.getComparator()), index));
@@ -178,54 +151,38 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     }
 
     /**
-     * Constructor. Waits by cell text first. Uses cont's timeout and output for
+     * Waits by cell text first. Uses cont's timeout and output for
      * waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Text of a cell which is currently selected.
-     * @param row a cell row to check.
-     * @param column a cell row to check.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public JTableOperator(ContainerOperator<?> cont, String text, int row, int column) {
         this(cont, text, row, column, 0);
     }
 
     /**
-     * Constructor. Waits by text in selected cell first. Uses cont's timeout
+     * Waits by text in selected cell first. Uses cont's timeout
      * and output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Text of a cell which is currently selected.
-     * @param index Ordinal component index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public JTableOperator(ContainerOperator<?> cont, String text, int index) {
         this(cont, text, -1, -1, index);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Text of a cell which is currently selected.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public JTableOperator(ContainerOperator<?> cont, String text) {
         this(cont, text, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     * @param index Ordinal component index.
-     * @throws TimeoutExpiredException
      */
     public JTableOperator(ContainerOperator<?> cont, int index) {
         this((JTable) waitComponent(cont, new JTableFinder(), index));
@@ -233,11 +190,8 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     * @throws TimeoutExpiredException
      */
     public JTableOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -249,9 +203,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches JTable in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JTable instance or null if component was not found.
      */
     public static JTable findJTable(Container cont, ComponentChooser chooser, int index) {
@@ -261,8 +212,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches 0'th JTable in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JTable instance or null if component was not found.
      */
     public static JTable findJTable(Container cont, ComponentChooser chooser) {
@@ -272,14 +221,9 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches JTable by cell.
      *
-     * @param cont Container to search component in.
-     * @param text Item text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @param row Index of row to compare text. If -1, selected row is checked.
      * @param column Index of column to compare text. If -1, selected column is
      * checked.
-     * @param index Ordinal component index.
      * @return JTable instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -291,10 +235,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches JTable by cell.
      *
-     * @param cont Container to search component in.
-     * @param text Item text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @param row Index of row to compare text. If -1, selected row is checked.
      * @param column Index of column to compare text. If -1, selected column is
      * checked.
@@ -308,11 +248,7 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Waits JTable in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JTable instance or null if component was not found.
-     * @throws TimeoutExpiredException
      */
     public static JTable waitJTable(Container cont, ComponentChooser chooser, int index) {
         return (JTable) waitComponent(cont, new JTableFinder(chooser), index);
@@ -321,10 +257,7 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Waits 0'th JTable in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JTable instance or null if component was not found.
-     * @throws TimeoutExpiredException
      */
     public static JTable waitJTable(Container cont, ComponentChooser chooser) {
         return waitJTable(cont, chooser, 0);
@@ -333,17 +266,11 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Waits JTable by cell.
      *
-     * @param cont Container to search component in.
-     * @param text Item text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @param row Index of row to compare text. If -1, selected row is checked.
      * @param column Index of column to compare text. If -1, selected column is
      * checked.
-     * @param index Ordinal component index.
      * @return JTable instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static JTable waitJTable(
             Container cont, String text, boolean ce, boolean ccs, int row, int column, int index) {
@@ -353,16 +280,11 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Waits JTable by cell.
      *
-     * @param cont Container to search component in.
-     * @param text Item text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @param row Index of row to compare text. If -1, selected row is checked.
      * @param column Index of column to compare text. If -1, selected column is
      * checked.
      * @return JTable instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static JTable waitJTable(Container cont, String text, boolean ce, boolean ccs, int row, int column) {
         return waitJTable(cont, text, ce, ccs, row, column, 0);
@@ -411,9 +333,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches cell coordinates.
      *
-     * @param text a text pattern
-     * @param comparator a string comparision algorithm
-     * @param index an ordinal cell index
      * @return Point indicating coordinates (x - column, y - row)
      */
     public Point findCell(String text, StringComparator comparator, int index) {
@@ -423,11 +342,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches cell coordinates in the specified rows and columns.
      *
-     * @param text a text pattern
-     * @param comparator a string comparision algorithm
-     * @param rows rows to search in
-     * @param columns columns to search in
-     * @param index an ordinal cell index
      * @return Point indicating coordinates (x - column, y - row)
      */
     public Point findCell(String text, StringComparator comparator, int[] rows, int[] columns, int index) {
@@ -437,9 +351,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches cell row index.
      *
-     * @param text a text pattern
-     * @param comparator a string comparision algorithm
-     * @param index an ordinal cell index
      * @return a row index.
      */
     public int findCellRow(String text, StringComparator comparator, int index) {
@@ -450,10 +361,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
      * Searches cell row index. Searching is performed between cells in one
      * column.
      *
-     * @param text a text pattern
-     * @param comparator a string comparision algorithm
-     * @param column a column index to search in
-     * @param index an ordinal cell index
      * @return a row index.
      */
     public int findCellRow(String text, StringComparator comparator, int column, int index) {
@@ -463,9 +370,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches cell column visible index.
      *
-     * @param text a text pattern
-     * @param comparator a string comparision algorithm
-     * @param index an ordinal cell index
      * @return a column index.
      */
     public int findCellColumn(String text, StringComparator comparator, int index) {
@@ -476,10 +380,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
      * Searches cell column index. Searching is performed between cells in one
      * row.
      *
-     * @param text a text pattern
-     * @param comparator a string comparision algorithm
-     * @param row a row index to search in
-     * @param index an ordinal cell index
      * @return a column index.
      */
     public int findCellColumn(String text, StringComparator comparator, int row, int index) {
@@ -490,10 +390,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches cell row by cell text.
      *
-     * @param text Text to search by.
-     * @param ce Compare exactly.
-     * @param ccs Compare case sensitively.
-     * @param index Ordinal index in suitable cells.
      * @return a row index.
      * @see #findCellRow(String, int)
      * @deprecated Use findCellRow(String, int) or findCellRow(String,
@@ -507,10 +403,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches cell column by cell text.
      *
-     * @param text Text to search by.
-     * @param ce Compare exactly.
-     * @param ccs Compare case sensitively.
-     * @param index Ordinal index in suitable cells.
      * @return a column index.
      * @see #findCellColumn(String, int)
      * @deprecated Use findCellColumn(String, int) or findCellColumn(String,
@@ -524,9 +416,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches first cell row by cell text.
      *
-     * @param text Text to search by.
-     * @param ce Compare exactly.
-     * @param ccs Compare case sensitively.
      * @return a row index.
      * @see #findCellRow(String)
      * @deprecated Use findCellRow(String) or findCellRow(String,
@@ -540,9 +429,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches first cell column by cell text.
      *
-     * @param text Text to search by.
-     * @param ce Compare exactly.
-     * @param ccs Compare case sensitively.
      * @return a column index.
      * @see #findCellColumn(String)
      * @deprecated Use findCellColumn(String) or findCellColumn(String,
@@ -557,8 +443,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches cell row index.
      *
-     * @param text a text pattern
-     * @param comparator a string comparision algorithm
      * @return a row index.
      */
     public int findCellRow(String text, StringComparator comparator) {
@@ -568,8 +452,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches cell column visible index.
      *
-     * @param text a text pattern
-     * @param comparator a string comparision algorithm
      * @return a column index.
      */
     public int findCellColumn(String text, StringComparator comparator) {
@@ -580,8 +462,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches cell row by cell text.
      *
-     * @param text Text to search by.
-     * @param index Ordinal index in suitable cells.
      * @return a row index.
      */
     public int findCellRow(String text, int index) {
@@ -592,9 +472,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
      * Searches cell row index. Searching is performed between cells in one
      * column.
      *
-     * @param text a text pattern
-     * @param column a column index to search in
-     * @param index Ordinal index in suitable cells.
      * @return a row index.
      */
     public int findCellRow(String text, int column, int index) {
@@ -604,8 +481,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches cell column by cell text.
      *
-     * @param text Text to search by.
-     * @param index Ordinal index in suitable cells.
      * @return a column index.
      */
     public int findCellColumn(String text, int index) {
@@ -616,9 +491,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
      * Searches cell column index. Searching is performed between cells in one
      * row.
      *
-     * @param text a text pattern
-     * @param row a row index to search in
-     * @param index Ordinal index in suitable cells.
      * @return a column index.
      */
     public int findCellColumn(String text, int row, int index) {
@@ -628,8 +500,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches cell coordinates.
      *
-     * @param text a text pattern
-     * @param index an ordinal cell index
      * @return Point indicating coordinates (x - column, y - row)
      */
     public Point findCell(String text, int index) {
@@ -639,10 +509,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches cell coordinates in the specified rows and columns.
      *
-     * @param text a text pattern
-     * @param rows rows to search in
-     * @param columns columns to search in
-     * @param index an ordinal cell index
      * @return Point indicating coordinates (x - column, y - row)
      */
     public Point findCell(String text, int[] rows, int[] columns, int index) {
@@ -653,7 +519,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches first cell row by cell text.
      *
-     * @param text Text to search by.
      * @return a row index.
      */
     public int findCellRow(String text) {
@@ -663,7 +528,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches first cell column by cell text.
      *
-     * @param text Text to search by.
      * @return a column index.
      */
     public int findCellColumn(String text) {
@@ -674,8 +538,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches cell row by rendered component.
      *
-     * @param chooser Component verifying object.
-     * @param index Ordinal index in suitable cells.
      * @return a row index.
      */
     public int findCellRow(ComponentChooser chooser, int index) {
@@ -686,9 +548,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
      * Searches cell row index. Searching is performed between cells in one
      * column.
      *
-     * @param chooser Component verifying object.
-     * @param column a column index to search in
-     * @param index Ordinal index in suitable cells.
      * @return a row index.
      */
     public int findCellRow(ComponentChooser chooser, int column, int index) {
@@ -698,8 +557,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches cell column by rendered component.
      *
-     * @param chooser Component verifying object.
-     * @param index Ordinal index in suitable cells.
      * @return a column index.
      */
     public int findCellColumn(ComponentChooser chooser, int index) {
@@ -710,9 +567,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
      * Searches cell column index. Searching is performed between cells in one
      * row.
      *
-     * @param chooser Component verifying object.
-     * @param row a row index to search in
-     * @param index Ordinal index in suitable cells.
      * @return a column index.
      */
     public int findCellColumn(ComponentChooser chooser, int row, int index) {
@@ -722,8 +576,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches cell coordinates.
      *
-     * @param chooser Component verifying object.
-     * @param index an ordinal cell index
      * @return Point indicating coordinates (x - column, y - row)
      */
     public Point findCell(ComponentChooser chooser, int index) {
@@ -733,10 +585,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches cell coordinates.
      *
-     * @param chooser Component verifying object.
-     * @param rows rows to search in
-     * @param columns columns to search in
-     * @param index an ordinal cell index
      * @return Point indicating coordinates (x - column, y - row)
      */
     public Point findCell(ComponentChooser chooser, int[] rows, int[] columns, int index) {
@@ -747,7 +595,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches cell row by rendered component.
      *
-     * @param chooser Component verifying object.
      * @return a row index.
      */
     public int findCellRow(ComponentChooser chooser) {
@@ -757,7 +604,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches cell column by rendered component.
      *
-     * @param chooser Component verifying object.
      * @return a column index.
      */
     public int findCellColumn(ComponentChooser chooser) {
@@ -767,7 +613,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches cell coordinates.
      *
-     * @param chooser Component verifying object.
      * @return Point indicating coordinates (x - column, y - row)
      */
     public Point findCell(ComponentChooser chooser) {
@@ -778,8 +623,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches cell row by TableCellChooser.
      *
-     * @param chooser Cell verifying object.
-     * @param index Ordinal index in suitable cells.
      * @return a row index.
      */
     public int findCellRow(TableCellChooser chooser, int index) {
@@ -790,9 +633,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
      * Searches cell row index. Searching is performed between cells in one
      * column.
      *
-     * @param chooser Cell verifying object.
-     * @param column a column index to search in
-     * @param index Ordinal index in suitable cells.
      * @return a row index.
      */
     public int findCellRow(TableCellChooser chooser, int column, int index) {
@@ -802,8 +642,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches cell column by TableCellChooser.
      *
-     * @param chooser ComponentCell verifying object.
-     * @param index Ordinal index in suitable cells.
      * @return a column index.
      */
     public int findCellColumn(TableCellChooser chooser, int index) {
@@ -814,9 +652,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
      * Searches cell column index. Searching is performed between cells in one
      * row.
      *
-     * @param chooser Cell verifying object.
-     * @param row a row index to search in
-     * @param index Ordinal index in suitable cells.
      * @return a column index.
      */
     public int findCellColumn(TableCellChooser chooser, int row, int index) {
@@ -826,8 +661,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches cell coordinates.
      *
-     * @param chooser cell verifying object.
-     * @param index an ordinal cell index
      * @return Point indicating coordinates (x - column, y - row)
      */
     public Point findCell(TableCellChooser chooser, int index) {
@@ -837,10 +670,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches cell coordinates in the specified rows and columns.
      *
-     * @param chooser cell verifying object.
-     * @param rows rows to search in
-     * @param columns columns to search in
-     * @param index an ordinal cell index
      * @return Point indicating coordinates (x - column, y - row)
      */
     public Point findCell(TableCellChooser chooser, int[] rows, int[] columns, int index) {
@@ -882,7 +711,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches cell row by TableCellChooser.
      *
-     * @param chooser Cell verifying object.
      * @return a row index.
      */
     public int findCellRow(TableCellChooser chooser) {
@@ -892,7 +720,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches cell column by TableCellChooser.
      *
-     * @param chooser Cell verifying object.
      * @return a column index.
      */
     public int findCellColumn(TableCellChooser chooser) {
@@ -902,7 +729,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches cell coordinates.
      *
-     * @param chooser cell verifying object.
      * @return Point indicating coordinates (x - column, y - row)
      */
     public Point findCell(TableCellChooser chooser) {
@@ -914,12 +740,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     ////////////////////////////////////////////////////////
     /**
      * Does mouse click on the cell.
-     *
-     * @param row a row index
-     * @param column a column index
-     * @param clickCount a number of clicks
-     * @param button a mouse button (value of InputEvent.BUTTON*_MASK field)
-     * @param modifiers Modifiers (combination of InputEvent.*_MASK values)
      */
     public void clickOnCell(
             final int row, final int column, final int clickCount, final int button, final int modifiers) {
@@ -939,11 +759,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
 
     /**
      * Does mouse click on the cell with no modifiers.
-     *
-     * @param row a row index
-     * @param column a column index
-     * @param clickCount a number of clicks
-     * @param button a mouse button (value of InputEvent.BUTTON*_MASK field)
      */
     public void clickOnCell(int row, int column, int clickCount, int button) {
         clickOnCell(row, column, clickCount, button, 0);
@@ -951,10 +766,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
 
     /**
      * Does mouse click on the cell by default mouse button with no modifiers.
-     *
-     * @param row a row index
-     * @param column a column index
-     * @param clickCount a number of clicks
      */
     public void clickOnCell(int row, int column, int clickCount) {
         clickOnCell(row, column, clickCount, getDefaultMouseButton());
@@ -962,9 +773,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
 
     /**
      * Does single mouse click on the cell.
-     *
-     * @param row a row index
-     * @param column a column index
      */
     public void clickOnCell(int row, int column) {
         clickOnCell(row, column, 1);
@@ -972,10 +780,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
 
     /**
      * Double clicks on cell to turns it to the editing mode.
-     *
-     * @param row a row index
-     * @param column a column index
-     * @throws TimeoutExpiredException
      */
     public void clickForEdit(int row, int column) {
         clickOnCell(row, column, 2);
@@ -984,12 +788,8 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Changes text of the cell pointed by row and column indexes.
      *
-     * @param row a row index
-     * @param column a column index
-     * @param newText a text to enter
      * @deprecated Use changeCellObject(int, int, Object) instead.
      * @see #changeCellObject(int, int, Object)
-     * @throws TimeoutExpiredException
      */
     @Deprecated
     public void changeCellText(int row, int column, String newText) {
@@ -999,11 +799,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Changes value of the cell pointed by row and column indexes. uses editor
      * defined by setCellEditor method.
-     *
-     * @param row a row index
-     * @param column a column index
-     * @param newValue an object to chenge cell value to.
-     * @throws TimeoutExpiredException
      */
     public void changeCellObject(int row, int column, Object newValue) {
         driver.editCell(this, row, column, newValue);
@@ -1011,10 +806,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
 
     /**
      * Scrolls to a cell if the table lies on a JScrollPane component.
-     *
-     * @param row a row index
-     * @param column a column index
-     * @throws TimeoutExpiredException
      */
     public void scrollToCell(int row, int column) {
         output.printTrace("Scroll JTable to (" + Integer.toString(row)
@@ -1036,12 +827,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
                 getSource(), (int) rect.getX(), (int) rect.getY(), (int) rect.getWidth(), (int) rect.getHeight());
     }
 
-    /**
-     * Selects a specified cell.
-     *
-     * @param row a row index
-     * @param column a column index
-     */
     public void selectCell(int row, int column) {
         driver.selectCell(this, row, column);
     }
@@ -1049,8 +834,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches a column by name.
      *
-     * @param name a text pattern
-     * @param comparator a string comparision algorithm
      * @return a column index
      */
     public int findColumn(String name, StringComparator comparator) {
@@ -1066,7 +849,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Searches a column by name.
      *
-     * @param name a text pattern
      * @return a column index
      */
     public int findColumn(String name) {
@@ -1076,8 +858,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Calls popup menu on specified cell.
      *
-     * @param row a row index
-     * @param column a column index
      * @return the menu
      */
     public JPopupMenu callPopupOnCell(int row, int column) {
@@ -1095,10 +875,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Ask renderer for component to be displayed.
      *
-     * @param row cell row index.
-     * @param column cell column visible index.
-     * @param isSelected True if the specified cell was selected.
-     * @param cellHasFocus True if the specified cell has the focus.
      * @return Component to be displayed.
      */
     public Component getRenderedComponent(int row, int column, boolean isSelected, boolean cellHasFocus) {
@@ -1112,8 +888,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
      * isCellSelected(itemIndex) to determine whether cell is selected. Supposes
      * item do not have focus.
      *
-     * @param row cell row index.
-     * @param column cell column visible index.
      * @return Component to be displayed.
      */
     public Component getRenderedComponent(int row, int column) {
@@ -1123,8 +897,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Returns a point at the center of the cell rectangle.
      *
-     * @param row a row index
-     * @param column a column index
      * @return a Point in component's coordinate system.
      */
     public Point getPointToClick(int row, int column) {
@@ -1144,9 +916,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
     /**
      * Waits for an editor.
      *
-     * @param chooser a chhoser specifying criteria to distinguish cell editor.
-     * @param row a row index
-     * @param column a column index
      * @return a component displayed over the cell and fitting the criteria
      * specified by {@code chooser}
      */
@@ -1228,9 +997,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code JTable.addColumn(TableColumn)} through queue
-     */
     public void addColumn(final TableColumn tableColumn) {
         runMapping(new MapVoidAction("addColumn") {
             @Override
@@ -1240,9 +1006,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.addColumnSelectionInterval(int, int)} through queue
-     */
     public void addColumnSelectionInterval(final int i, final int i1) {
         runMapping(new MapVoidAction("addColumnSelectionInterval") {
             @Override
@@ -1252,9 +1015,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.addRowSelectionInterval(int, int)} through queue
-     */
     public void addRowSelectionInterval(final int i, final int i1) {
         runMapping(new MapVoidAction("addRowSelectionInterval") {
             @Override
@@ -1264,9 +1024,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.changeSelection(int, int, boolean, boolean)} through queue
-     */
     public void changeSelection(int rowIndex, int columnIndex, boolean toggle, boolean extend) {
         runMapping(new MapVoidAction("clearSelection") {
             @Override
@@ -1276,9 +1033,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.clearSelection()} through queue
-     */
     public void clearSelection() {
         runMapping(new MapVoidAction("clearSelection") {
             @Override
@@ -1288,9 +1042,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.columnAdded(TableColumnModelEvent)} through queue
-     */
     public void columnAdded(final TableColumnModelEvent tableColumnModelEvent) {
         runMapping(new MapVoidAction("columnAdded") {
             @Override
@@ -1300,9 +1051,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.columnAtPoint(Point)} through queue
-     */
     public int columnAtPoint(final Point point) {
         return (runMapping(new MapIntegerAction("columnAtPoint") {
             @Override
@@ -1312,9 +1060,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.columnMarginChanged(ChangeEvent)} through queue
-     */
     public void columnMarginChanged(final ChangeEvent changeEvent) {
         runMapping(new MapVoidAction("columnMarginChanged") {
             @Override
@@ -1324,9 +1069,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.columnMoved(TableColumnModelEvent)} through queue
-     */
     public void columnMoved(final TableColumnModelEvent tableColumnModelEvent) {
         runMapping(new MapVoidAction("columnMoved") {
             @Override
@@ -1336,9 +1078,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.columnRemoved(TableColumnModelEvent)} through queue
-     */
     public void columnRemoved(final TableColumnModelEvent tableColumnModelEvent) {
         runMapping(new MapVoidAction("columnRemoved") {
             @Override
@@ -1348,10 +1087,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.columnSelectionChanged(ListSelectionEvent)}
-     * through queue
-     */
     public void columnSelectionChanged(final ListSelectionEvent listSelectionEvent) {
         runMapping(new MapVoidAction("columnSelectionChanged") {
             @Override
@@ -1361,9 +1096,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.convertColumnIndexToModel(int)} through queue
-     */
     public int convertColumnIndexToModel(final int i) {
         return (runMapping(new MapIntegerAction("convertColumnIndexToModel") {
             @Override
@@ -1373,9 +1105,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.convertColumnIndexToView(int)} through queue
-     */
     public int convertColumnIndexToView(final int i) {
         return (runMapping(new MapIntegerAction("convertColumnIndexToView") {
             @Override
@@ -1385,9 +1114,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.createDefaultColumnsFromModel()} through queue
-     */
     public void createDefaultColumnsFromModel() {
         runMapping(new MapVoidAction("createDefaultColumnsFromModel") {
             @Override
@@ -1397,9 +1123,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.editCellAt(int, int)} through queue
-     */
     public boolean editCellAt(final int i, final int i1) {
         return (runMapping(new MapBooleanAction("editCellAt") {
             @Override
@@ -1409,9 +1132,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.editCellAt(int, int, EventObject)} through queue
-     */
     public boolean editCellAt(final int i, final int i1, final EventObject eventObject) {
         return (runMapping(new MapBooleanAction("editCellAt") {
             @Override
@@ -1421,9 +1141,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.editingCanceled(ChangeEvent)} through queue
-     */
     public void editingCanceled(final ChangeEvent changeEvent) {
         runMapping(new MapVoidAction("editingCanceled") {
             @Override
@@ -1433,9 +1150,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.editingStopped(ChangeEvent)} through queue
-     */
     public void editingStopped(final ChangeEvent changeEvent) {
         runMapping(new MapVoidAction("editingStopped") {
             @Override
@@ -1445,9 +1159,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.getAutoCreateColumnsFromModel()} through queue
-     */
     public boolean getAutoCreateColumnsFromModel() {
         return (runMapping(new MapBooleanAction("getAutoCreateColumnsFromModel") {
             @Override
@@ -1457,9 +1168,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getAutoResizeMode()} through queue
-     */
     public int getAutoResizeMode() {
         return (runMapping(new MapIntegerAction("getAutoResizeMode") {
             @Override
@@ -1469,9 +1177,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getCellEditor()} through queue
-     */
     public TableCellEditor getCellEditor() {
         return (runMapping(new MapAction<TableCellEditor>("getCellEditor") {
             @Override
@@ -1481,9 +1186,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getCellEditor(int, int)} through queue
-     */
     public TableCellEditor getCellEditor(final int i, final int i1) {
         return (runMapping(new MapAction<TableCellEditor>("getCellEditor") {
             @Override
@@ -1493,9 +1195,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getCellRect(int, int, boolean)} through queue
-     */
     public Rectangle getCellRect(final int i, final int i1, final boolean b) {
         return (runMapping(new MapAction<Rectangle>("getCellRect") {
             @Override
@@ -1505,9 +1204,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getCellRenderer(int, int)} through queue
-     */
     public TableCellRenderer getCellRenderer(final int i, final int i1) {
         return (runMapping(new MapAction<TableCellRenderer>("getCellRenderer") {
             @Override
@@ -1517,9 +1213,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getCellSelectionEnabled()} through queue
-     */
     public boolean getCellSelectionEnabled() {
         return (runMapping(new MapBooleanAction("getCellSelectionEnabled") {
             @Override
@@ -1529,9 +1222,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getColumn(Object)} through queue
-     */
     public TableColumn getColumn(final Object object) {
         return (runMapping(new MapAction<TableColumn>("getColumn") {
             @Override
@@ -1541,9 +1231,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getColumnClass(int)} through queue
-     */
     public Class<?> getColumnClass(final int i) {
         return (runMapping(new MapAction<Class<?>>("getColumnClass") {
             @Override
@@ -1553,9 +1240,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getColumnCount()} through queue
-     */
     public int getColumnCount() {
         return (runMapping(new MapIntegerAction("getColumnCount") {
             @Override
@@ -1565,9 +1249,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getColumnModel()} through queue
-     */
     public TableColumnModel getColumnModel() {
         return (runMapping(new MapAction<TableColumnModel>("getColumnModel") {
             @Override
@@ -1577,9 +1258,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getColumnName(int)} through queue
-     */
     public String getColumnName(final int i) {
         return (runMapping(new MapAction<String>("getColumnName") {
             @Override
@@ -1589,9 +1267,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getColumnSelectionAllowed()} through queue
-     */
     public boolean getColumnSelectionAllowed() {
         return (runMapping(new MapBooleanAction("getColumnSelectionAllowed") {
             @Override
@@ -1601,9 +1276,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getDefaultEditor(Class)} through queue
-     */
     public TableCellEditor getDefaultEditor(final Class<?> clss) {
         return (runMapping(new MapAction<TableCellEditor>("getDefaultEditor") {
             @Override
@@ -1613,9 +1285,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getDefaultRenderer(Class)} through queue
-     */
     public TableCellRenderer getDefaultRenderer(final Class<?> clss) {
         return (runMapping(new MapAction<TableCellRenderer>("getDefaultRenderer") {
             @Override
@@ -1625,9 +1294,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getEditingColumn()} through queue
-     */
     public int getEditingColumn() {
         return (runMapping(new MapIntegerAction("getEditingColumn") {
             @Override
@@ -1637,9 +1303,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getEditingRow()} through queue
-     */
     public int getEditingRow() {
         return (runMapping(new MapIntegerAction("getEditingRow") {
             @Override
@@ -1649,9 +1312,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getEditorComponent()} through queue
-     */
     public Component getEditorComponent() {
         return (runMapping(new MapAction<Component>("getEditorComponent") {
             @Override
@@ -1661,9 +1321,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getGridColor()} through queue
-     */
     public Color getGridColor() {
         return (runMapping(new MapAction<Color>("getGridColor") {
             @Override
@@ -1673,9 +1330,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getIntercellSpacing()} through queue
-     */
     public Dimension getIntercellSpacing() {
         return (runMapping(new MapAction<Dimension>("getIntercellSpacing") {
             @Override
@@ -1685,9 +1339,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getModel()} through queue
-     */
     public TableModel getModel() {
         return (runMapping(new MapAction<TableModel>("getModel") {
             @Override
@@ -1697,9 +1348,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getPreferredScrollableViewportSize()} through queue
-     */
     public Dimension getPreferredScrollableViewportSize() {
         return (runMapping(new MapAction<Dimension>("getPreferredScrollableViewportSize") {
             @Override
@@ -1709,9 +1357,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getRowCount()} through queue
-     */
     public int getRowCount() {
         return (runMapping(new MapIntegerAction("getRowCount") {
             @Override
@@ -1721,9 +1366,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getRowHeight()} through queue
-     */
     public int getRowHeight() {
         return (runMapping(new MapIntegerAction("getRowHeight") {
             @Override
@@ -1733,9 +1375,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getRowMargin()} through queue
-     */
     public int getRowMargin() {
         return (runMapping(new MapIntegerAction("getRowMargin") {
             @Override
@@ -1745,9 +1384,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getRowSelectionAllowed()} through queue
-     */
     public boolean getRowSelectionAllowed() {
         return (runMapping(new MapBooleanAction("getRowSelectionAllowed") {
             @Override
@@ -1757,10 +1393,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getScrollableBlockIncrement(Rectangle, int, int)}
-     * through queue
-     */
     public int getScrollableBlockIncrement(final Rectangle rectangle, final int i, final int i1) {
         return (runMapping(new MapIntegerAction("getScrollableBlockIncrement") {
             @Override
@@ -1770,9 +1402,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getScrollableTracksViewportHeight()} through queue
-     */
     public boolean getScrollableTracksViewportHeight() {
         return (runMapping(new MapBooleanAction("getScrollableTracksViewportHeight") {
             @Override
@@ -1782,9 +1411,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getScrollableTracksViewportWidth()} through queue
-     */
     public boolean getScrollableTracksViewportWidth() {
         return (runMapping(new MapBooleanAction("getScrollableTracksViewportWidth") {
             @Override
@@ -1794,10 +1420,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getScrollableUnitIncrement(Rectangle, int, int)}
-     * through queue
-     */
     public int getScrollableUnitIncrement(final Rectangle rectangle, final int i, final int i1) {
         return (runMapping(new MapIntegerAction("getScrollableUnitIncrement") {
             @Override
@@ -1807,9 +1429,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getSelectedColumn()} through queue
-     */
     public int getSelectedColumn() {
         return (runMapping(new MapIntegerAction("getSelectedColumn") {
             @Override
@@ -1819,9 +1438,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getSelectedColumnCount()} through queue
-     */
     public int getSelectedColumnCount() {
         return (runMapping(new MapIntegerAction("getSelectedColumnCount") {
             @Override
@@ -1831,9 +1447,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getSelectedColumns()} through queue
-     */
     public int[] getSelectedColumns() {
         return ((int[]) runMapping(new MapAction<Object>("getSelectedColumns") {
             @Override
@@ -1843,9 +1456,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getSelectedRow()} through queue
-     */
     public int getSelectedRow() {
         return (runMapping(new MapIntegerAction("getSelectedRow") {
             @Override
@@ -1855,9 +1465,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getSelectedRowCount()} through queue
-     */
     public int getSelectedRowCount() {
         return (runMapping(new MapIntegerAction("getSelectedRowCount") {
             @Override
@@ -1867,9 +1474,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getSelectedRows()} through queue
-     */
     public int[] getSelectedRows() {
         return ((int[]) runMapping(new MapAction<Object>("getSelectedRows") {
             @Override
@@ -1879,9 +1483,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getSelectionBackground()} through queue
-     */
     public Color getSelectionBackground() {
         return (runMapping(new MapAction<Color>("getSelectionBackground") {
             @Override
@@ -1891,9 +1492,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getSelectionForeground()} through queue
-     */
     public Color getSelectionForeground() {
         return (runMapping(new MapAction<Color>("getSelectionForeground") {
             @Override
@@ -1903,9 +1501,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getSelectionModel()} through queue
-     */
     public ListSelectionModel getSelectionModel() {
         return (runMapping(new MapAction<ListSelectionModel>("getSelectionModel") {
             @Override
@@ -1915,9 +1510,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getShowHorizontalLines()} through queue
-     */
     public boolean getShowHorizontalLines() {
         return (runMapping(new MapBooleanAction("getShowHorizontalLines") {
             @Override
@@ -1927,9 +1519,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getShowVerticalLines()} through queue
-     */
     public boolean getShowVerticalLines() {
         return (runMapping(new MapBooleanAction("getShowVerticalLines") {
             @Override
@@ -1939,9 +1528,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getTableHeader()} through queue
-     */
     public JTableHeader getTableHeader() {
         return (runMapping(new MapAction<JTableHeader>("getTableHeader") {
             @Override
@@ -1951,9 +1537,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getUI()} through queue
-     */
     public TableUI getUI() {
         return (runMapping(new MapAction<TableUI>("getUI") {
             @Override
@@ -1963,9 +1546,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.getValueAt(int, int)} through queue
-     */
     public Object getValueAt(final int i, final int i1) {
         return (runMapping(new MapAction<Object>("getValueAt") {
             @Override
@@ -1975,9 +1555,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.isCellEditable(int, int)} through queue
-     */
     public boolean isCellEditable(final int i, final int i1) {
         return (runMapping(new MapBooleanAction("isCellEditable") {
             @Override
@@ -1987,9 +1564,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.isCellSelected(int, int)} through queue
-     */
     public boolean isCellSelected(final int i, final int i1) {
         return (runMapping(new MapBooleanAction("isCellSelected") {
             @Override
@@ -1999,9 +1573,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.isColumnSelected(int)} through queue
-     */
     public boolean isColumnSelected(final int i) {
         return (runMapping(new MapBooleanAction("isColumnSelected") {
             @Override
@@ -2011,9 +1582,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.isEditing()} through queue
-     */
     public boolean isEditing() {
         return (runMapping(new MapBooleanAction("isEditing") {
             @Override
@@ -2023,9 +1591,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.isRowSelected(int)} through queue
-     */
     public boolean isRowSelected(final int i) {
         return (runMapping(new MapBooleanAction("isRowSelected") {
             @Override
@@ -2035,9 +1600,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.moveColumn(int, int)} through queue
-     */
     public void moveColumn(final int i, final int i1) {
         runMapping(new MapVoidAction("moveColumn") {
             @Override
@@ -2047,9 +1609,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.prepareEditor(TableCellEditor, int, int)} through queue
-     */
     public Component prepareEditor(final TableCellEditor tableCellEditor, final int i, final int i1) {
         return (runMapping(new MapAction<Component>("prepareEditor") {
             @Override
@@ -2059,10 +1618,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.prepareRenderer(TableCellRenderer, int, int)}
-     * through queue
-     */
     public Component prepareRenderer(final TableCellRenderer tableCellRenderer, final int i, final int i1) {
         return (runMapping(new MapAction<Component>("prepareRenderer") {
             @Override
@@ -2072,9 +1627,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.removeColumn(TableColumn)} through queue
-     */
     public void removeColumn(final TableColumn tableColumn) {
         runMapping(new MapVoidAction("removeColumn") {
             @Override
@@ -2084,9 +1636,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.removeColumnSelectionInterval(int, int)} through queue
-     */
     public void removeColumnSelectionInterval(final int i, final int i1) {
         runMapping(new MapVoidAction("removeColumnSelectionInterval") {
             @Override
@@ -2096,9 +1645,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.removeEditor()} through queue
-     */
     public void removeEditor() {
         runMapping(new MapVoidAction("removeEditor") {
             @Override
@@ -2108,9 +1654,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.removeRowSelectionInterval(int, int)} through queue
-     */
     public void removeRowSelectionInterval(final int i, final int i1) {
         runMapping(new MapVoidAction("removeRowSelectionInterval") {
             @Override
@@ -2120,9 +1663,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.rowAtPoint(Point)} through queue
-     */
     public int rowAtPoint(final Point point) {
         return (runMapping(new MapIntegerAction("rowAtPoint") {
             @Override
@@ -2132,9 +1672,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }));
     }
 
-    /**
-     * Maps {@code JTable.selectAll()} through queue
-     */
     public void selectAll() {
         runMapping(new MapVoidAction("selectAll") {
             @Override
@@ -2144,9 +1681,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setAutoCreateColumnsFromModel(boolean)} through queue
-     */
     public void setAutoCreateColumnsFromModel(final boolean b) {
         runMapping(new MapVoidAction("setAutoCreateColumnsFromModel") {
             @Override
@@ -2156,9 +1690,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setAutoResizeMode(int)} through queue
-     */
     public void setAutoResizeMode(final int i) {
         runMapping(new MapVoidAction("setAutoResizeMode") {
             @Override
@@ -2168,9 +1699,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setCellEditor(TableCellEditor)} through queue
-     */
     public void setCellEditor(final TableCellEditor tableCellEditor) {
         runMapping(new MapVoidAction("setCellEditor") {
             @Override
@@ -2180,9 +1708,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setCellSelectionEnabled(boolean)} through queue
-     */
     public void setCellSelectionEnabled(final boolean b) {
         runMapping(new MapVoidAction("setCellSelectionEnabled") {
             @Override
@@ -2192,9 +1717,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setColumnModel(TableColumnModel)} through queue
-     */
     public void setColumnModel(final TableColumnModel tableColumnModel) {
         runMapping(new MapVoidAction("setColumnModel") {
             @Override
@@ -2204,9 +1726,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setColumnSelectionAllowed(boolean)} through queue
-     */
     public void setColumnSelectionAllowed(final boolean b) {
         runMapping(new MapVoidAction("setColumnSelectionAllowed") {
             @Override
@@ -2216,9 +1735,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setColumnSelectionInterval(int, int)} through queue
-     */
     public void setColumnSelectionInterval(final int i, final int i1) {
         runMapping(new MapVoidAction("setColumnSelectionInterval") {
             @Override
@@ -2228,9 +1744,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setDefaultEditor(Class, TableCellEditor)} through queue
-     */
     public void setDefaultEditor(final Class<?> clss, final TableCellEditor tableCellEditor) {
         runMapping(new MapVoidAction("setDefaultEditor") {
             @Override
@@ -2240,10 +1753,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setDefaultRenderer(Class, TableCellRenderer)}
-     * through queue
-     */
     public void setDefaultRenderer(final Class<?> clss, final TableCellRenderer tableCellRenderer) {
         runMapping(new MapVoidAction("setDefaultRenderer") {
             @Override
@@ -2253,9 +1762,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setEditingColumn(int)} through queue
-     */
     public void setEditingColumn(final int i) {
         runMapping(new MapVoidAction("setEditingColumn") {
             @Override
@@ -2265,9 +1771,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setEditingRow(int)} through queue
-     */
     public void setEditingRow(final int i) {
         runMapping(new MapVoidAction("setEditingRow") {
             @Override
@@ -2277,9 +1780,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setGridColor(Color)} through queue
-     */
     public void setGridColor(final Color color) {
         runMapping(new MapVoidAction("setGridColor") {
             @Override
@@ -2289,9 +1789,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setIntercellSpacing(Dimension)} through queue
-     */
     public void setIntercellSpacing(final Dimension dimension) {
         runMapping(new MapVoidAction("setIntercellSpacing") {
             @Override
@@ -2301,9 +1798,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setModel(TableModel)} through queue
-     */
     public void setModel(final TableModel tableModel) {
         runMapping(new MapVoidAction("setModel") {
             @Override
@@ -2313,10 +1807,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setPreferredScrollableViewportSize(Dimension)}
-     * through queue
-     */
     public void setPreferredScrollableViewportSize(final Dimension dimension) {
         runMapping(new MapVoidAction("setPreferredScrollableViewportSize") {
             @Override
@@ -2326,9 +1816,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setRowHeight(int)} through queue
-     */
     public void setRowHeight(final int i) {
         runMapping(new MapVoidAction("setRowHeight") {
             @Override
@@ -2338,9 +1825,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setRowMargin(int)} through queue
-     */
     public void setRowMargin(final int i) {
         runMapping(new MapVoidAction("setRowMargin") {
             @Override
@@ -2350,9 +1834,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setRowSelectionAllowed(boolean)} through queue
-     */
     public void setRowSelectionAllowed(final boolean b) {
         runMapping(new MapVoidAction("setRowSelectionAllowed") {
             @Override
@@ -2362,9 +1843,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setRowSelectionInterval(int, int)} through queue
-     */
     public void setRowSelectionInterval(final int i, final int i1) {
         runMapping(new MapVoidAction("setRowSelectionInterval") {
             @Override
@@ -2374,9 +1852,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setSelectionBackground(Color)} through queue
-     */
     public void setSelectionBackground(final Color color) {
         runMapping(new MapVoidAction("setSelectionBackground") {
             @Override
@@ -2386,9 +1861,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setSelectionForeground(Color)} through queue
-     */
     public void setSelectionForeground(final Color color) {
         runMapping(new MapVoidAction("setSelectionForeground") {
             @Override
@@ -2398,9 +1870,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setSelectionMode(int)} through queue
-     */
     public void setSelectionMode(final int i) {
         runMapping(new MapVoidAction("setSelectionMode") {
             @Override
@@ -2410,9 +1879,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setSelectionModel(ListSelectionModel)} through queue
-     */
     public void setSelectionModel(final ListSelectionModel listSelectionModel) {
         runMapping(new MapVoidAction("setSelectionModel") {
             @Override
@@ -2422,9 +1888,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setShowGrid(boolean)} through queue
-     */
     public void setShowGrid(final boolean b) {
         runMapping(new MapVoidAction("setShowGrid") {
             @Override
@@ -2434,9 +1897,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setShowHorizontalLines(boolean)} through queue
-     */
     public void setShowHorizontalLines(final boolean b) {
         runMapping(new MapVoidAction("setShowHorizontalLines") {
             @Override
@@ -2446,9 +1906,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setShowVerticalLines(boolean)} through queue
-     */
     public void setShowVerticalLines(final boolean b) {
         runMapping(new MapVoidAction("setShowVerticalLines") {
             @Override
@@ -2458,9 +1915,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setTableHeader(JTableHeader)} through queue
-     */
     public void setTableHeader(final JTableHeader jTableHeader) {
         runMapping(new MapVoidAction("setTableHeader") {
             @Override
@@ -2470,9 +1924,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setUI(TableUI)} through queue
-     */
     public void setUI(final TableUI tableUI) {
         runMapping(new MapVoidAction("setUI") {
             @Override
@@ -2482,9 +1933,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.setValueAt(Object, int, int)} through queue
-     */
     public void setValueAt(final Object object, final int i, final int i1) {
         runMapping(new MapVoidAction("setValueAt") {
             @Override
@@ -2494,9 +1942,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.tableChanged(TableModelEvent)} through queue
-     */
     public void tableChanged(final TableModelEvent tableModelEvent) {
         runMapping(new MapVoidAction("tableChanged") {
             @Override
@@ -2506,9 +1951,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         });
     }
 
-    /**
-     * Maps {@code JTable.valueChanged(ListSelectionEvent)} through queue
-     */
     public void valueChanged(final ListSelectionEvent listSelectionEvent) {
         runMapping(new MapVoidAction("valueChanged") {
             @Override
@@ -2532,9 +1974,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         /**
          * Should be true if item is good.
          *
-         * @param oper Operator used to search item.
-         * @param row Row be checked.
-         * @param column Column be checked.
          * @return true if cell fits the criteria
          */
         public boolean checkCell(JTableOperator oper, int row, int column);
@@ -2611,12 +2050,10 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         /**
          * Constructs JTableByCellFinder.
          *
-         * @param lb a text pattern
          * @param r a row index to look in. If equal to -1, selected row is
          * checked.
          * @param c a column index to look in. If equal to -1, selected column
          * is checked.
-         * @param comparator specifies string comparision algorithm.
          */
         public JTableByCellFinder(String lb, int r, int c, StringComparator comparator) {
             label = lb;
@@ -2628,7 +2065,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         /**
          * Constructs JTableByCellFinder.
          *
-         * @param lb a text pattern
          * @param r a row index to look in. If equal to -1, selected row is
          * checked.
          * @param c a column index to look in. If equal to -1, selected column
@@ -2692,8 +2128,6 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
 
         /**
          * Constructs JTableFinder.
-         *
-         * @param sf other searching criteria.
          */
         public JTableFinder(ComponentChooser sf) {
             super(JTable.class, sf);

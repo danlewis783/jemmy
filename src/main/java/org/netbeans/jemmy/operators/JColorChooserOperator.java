@@ -40,11 +40,7 @@ import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
 
 /**
- *
  * Class provides methods to cover main JColorChooser component functionality.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
- *
  */
 public class JColorChooserOperator extends JComponentOperator implements Outputable {
 
@@ -92,11 +88,6 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
     private JTextFieldOperator green;
     private JTextFieldOperator blue;
 
-    /**
-     * Constructor.
-     *
-     * @param comp a component
-     */
     public JColorChooserOperator(JColorChooser comp) {
         super(comp);
         setTimeouts(JemmyProperties.getProperties().getTimeouts());
@@ -104,35 +95,18 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
         tabbed = new JTabbedPaneOperator(this);
     }
 
-    /**
-     * Constructs a JColorChooserOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public JColorChooserOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((JColorChooser) cont.waitSubComponent(new JColorChooserFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a JColorChooserOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public JColorChooserOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont Operator pointing a container to search component in.
-     * @param index Ordinal component index.
-     *
      */
     public JColorChooserOperator(ContainerOperator<?> cont, int index) {
         this((JColorChooser) waitComponent(cont, new JColorChooserFinder(), index));
@@ -140,11 +114,8 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont Operator pointing a container to search component in.
-     *
      */
     public JColorChooserOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -153,9 +124,6 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
     /**
      * Searches JColorChooser in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JColorChooser instance or null if component was not found.
      */
     public static JColorChooser findJColorChooser(Container cont, ComponentChooser chooser, int index) {
@@ -165,8 +133,6 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
     /**
      * Searches 0'th JColorChooser in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JColorChooser instance or null if component was not found.
      */
     public static JColorChooser findJColorChooser(Container cont, ComponentChooser chooser) {
@@ -176,8 +142,6 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
     /**
      * Searches JColorChooser in container.
      *
-     * @param cont Container to search component in.
-     * @param index Ordinal component index.
      * @return JColorChooser instance or null if component was not found.
      */
     public static JColorChooser findJColorChooser(Container cont, int index) {
@@ -188,7 +152,6 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
     /**
      * Searches 0'th JColorChooser in container.
      *
-     * @param cont Container to search component in.
      * @return JColorChooser instance or null if component was not found.
      */
     public static JColorChooser findJColorChooser(Container cont) {
@@ -198,11 +161,7 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
     /**
      * Waits JColorChooser in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JColorChooser instance or null if component was not displayed.
-     *
      */
     public static JColorChooser waitJColorChooser(Container cont, ComponentChooser chooser, int index) {
         return (JColorChooser) waitComponent(cont, new JColorChooserFinder(chooser), index);
@@ -211,10 +170,7 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
     /**
      * Waits 0'th JColorChooser in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JColorChooser instance or null if component was not displayed.
-     *
      */
     public static JColorChooser waitJColorChooser(Container cont, ComponentChooser chooser) {
         return waitJColorChooser(cont, chooser, 0);
@@ -223,10 +179,7 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
     /**
      * Waits JColorChooser in container.
      *
-     * @param cont Container to search component in.
-     * @param index Ordinal component index.
      * @return JColorChooser instance or null if component was not displayed.
-     *
      */
     public static JColorChooser waitJColorChooser(Container cont, int index) {
         return waitJColorChooser(
@@ -236,9 +189,7 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
     /**
      * Waits 0'th JColorChooser in container.
      *
-     * @param cont Container to search component in.
      * @return JColorChooser instance or null if component was not displayed.
-     *
      */
     public static JColorChooser waitJColorChooser(Container cont) {
         return waitJColorChooser(cont, 0);
@@ -270,7 +221,6 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
     /**
      * Enters red color component value. Switches to "RGB" page first.
      *
-     * @param value red color component
      * @see #switchToRGB()
      * @see #enterColor(int, int, int)
      * @see #enterColor(java.awt.Color)
@@ -284,7 +234,6 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
     /**
      * Enters green color component value. Switches to "RGB" page first.
      *
-     * @param value green color component
      * @see #switchToRGB()
      * @see #enterColor(int, int, int)
      * @see #enterColor(java.awt.Color)
@@ -298,7 +247,6 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
     /**
      * Enters blue color component value. Switches to "RGB" page first.
      *
-     * @param value blue color component
      * @see #switchToRGB()
      * @see #enterColor(int, int, int)
      * @see #enterColor(java.awt.Color)
@@ -312,9 +260,6 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
     /**
      * Enters all color components values. Switches to "RGB" page first.
      *
-     * @param red red color component
-     * @param green green color component
-     * @param blue blue color component
      * @see #switchToRGB()
      * @see #enterColor(java.awt.Color)
      * @see #enterColor(int)
@@ -329,7 +274,6 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
     /**
      * Enters color. Switches to "RGB" page first.
      *
-     * @param color a color
      * @see #switchToRGB()
      * @see #enterColor(int, int, int)
      * @see #enterColor(int)
@@ -341,7 +285,6 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
     /**
      * Enters color. Switches to "RGB" page first.
      *
-     * @param color a color
      * @see #switchToRGB()
      * @see #enterColor(int, int, int)
      * @see #enterColor(java.awt.Color)
@@ -364,11 +307,6 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps
-     * {@code JColorChooser.addChooserPanel(AbstractColorChooserPanel)}
-     * through queue
-     */
     public void addChooserPanel(final AbstractColorChooserPanel abstractColorChooserPanel) {
         runMapping(new MapVoidAction("addChooserPanel") {
             @Override
@@ -378,9 +316,6 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
         });
     }
 
-    /**
-     * Maps {@code JColorChooser.getChooserPanels()} through queue
-     */
     public AbstractColorChooserPanel[] getChooserPanels() {
         return ((AbstractColorChooserPanel[]) runMapping(new MapAction<Object>("getChooserPanels") {
             @Override
@@ -390,9 +325,6 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
         }));
     }
 
-    /**
-     * Maps {@code JColorChooser.getColor()} through queue
-     */
     public Color getColor() {
         return (runMapping(new MapAction<Color>("getColor") {
             @Override
@@ -402,9 +334,6 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
         }));
     }
 
-    /**
-     * Maps {@code JColorChooser.getPreviewPanel()} through queue
-     */
     public JComponent getPreviewPanel() {
         return (runMapping(new MapAction<JComponent>("getPreviewPanel") {
             @Override
@@ -419,7 +348,7 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
      * is already selected, else returns null.
      *
      * @return an operator for Hue <code>JSpinner<code> inside HSV or HSL
-     *         tab
+     * tab
      */
     public JSpinnerOperator getHueSpinnerOperator() {
         return getSpinnerOperator(new String[] {HSV_TITLE, HSL_TITLE}, new int[] {HSV_HUE_INDEX, HSL_HUE_INDEX});
@@ -502,7 +431,7 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
      * tab is already selected, else returns null.
      *
      * @return an operator for Alpha <code>JSpinner<code> inside RGB/CMYK
-     *         tab
+     * tab
      */
     public JSpinnerOperator getAlphaSpinnerOperator() {
         return getSpinnerOperator(new String[] {RGB_TITLE, CMYK_TITLE}, new int[] {RGB_ALPHA_INDEX, CMYK_ALPHA_INDEX});
@@ -553,7 +482,7 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
      * is already selected, else returns null.
      *
      * @return an operator for Hue <code>JSlider<code> inside HSV or HSL
-     *         tab
+     * tab
      */
     public JSliderOperator getHueSliderOperator() {
         return getSliderOperator(new String[] {HSV_TITLE, HSL_TITLE}, new int[] {HSV_HUE_INDEX, HSL_HUE_INDEX});
@@ -636,7 +565,7 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
      * tab is already selected, else returns null.
      *
      * @return an operator for Alpha <code>JSlider<code> inside RGB/CMYK
-     *         tab
+     * tab
      */
     public JSliderOperator getAlphaSliderOperator() {
         return getSliderOperator(new String[] {RGB_TITLE, CMYK_TITLE}, new int[] {RGB_ALPHA_INDEX, CMYK_ALPHA_INDEX});
@@ -696,9 +625,6 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
         return colorCode;
     }
 
-    /**
-     * Maps {@code JColorChooser.getSelectionModel()} through queue
-     */
     public ColorSelectionModel getSelectionModel() {
         return (runMapping(new MapAction<ColorSelectionModel>("getSelectionModel") {
             @Override
@@ -708,9 +634,6 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
         }));
     }
 
-    /**
-     * Maps {@code JColorChooser.getUI()} through queue
-     */
     public ColorChooserUI getUI() {
         return (runMapping(new MapAction<ColorChooserUI>("getUI") {
             @Override
@@ -720,11 +643,6 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
         }));
     }
 
-    /**
-     * Maps
-     * {@code JColorChooser.removeChooserPanel(AbstractColorChooserPanel)}
-     * through queue
-     */
     public AbstractColorChooserPanel removeChooserPanel(final AbstractColorChooserPanel abstractColorChooserPanel) {
         return (runMapping(new MapAction<AbstractColorChooserPanel>("removeChooserPanel") {
             @Override
@@ -734,11 +652,6 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
         }));
     }
 
-    /**
-     * Maps
-     * {@code JColorChooser.setChooserPanels(AbstractColorChooserPanel[])}
-     * through queue
-     */
     public void setChooserPanels(final AbstractColorChooserPanel[] abstractColorChooserPanel) {
         runMapping(new MapVoidAction("setChooserPanels") {
             @Override
@@ -748,9 +661,6 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
         });
     }
 
-    /**
-     * Maps {@code JColorChooser.setColor(int)} through queue
-     */
     public void setColor(final int i) {
         runMapping(new MapVoidAction("setColor") {
             @Override
@@ -760,9 +670,6 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
         });
     }
 
-    /**
-     * Maps {@code JColorChooser.setColor(int, int, int)} through queue
-     */
     public void setColor(final int i, final int i1, final int i2) {
         runMapping(new MapVoidAction("setColor") {
             @Override
@@ -772,9 +679,6 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
         });
     }
 
-    /**
-     * Maps {@code JColorChooser.setColor(Color)} through queue
-     */
     public void setColor(final Color color) {
         runMapping(new MapVoidAction("setColor") {
             @Override
@@ -784,9 +688,6 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
         });
     }
 
-    /**
-     * Maps {@code JColorChooser.setPreviewPanel(JComponent)} through queue
-     */
     public void setPreviewPanel(final JComponent jComponent) {
         runMapping(new MapVoidAction("setPreviewPanel") {
             @Override
@@ -796,10 +697,6 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
         });
     }
 
-    /**
-     * Maps {@code JColorChooser.setSelectionModel(ColorSelectionModel)}
-     * through queue
-     */
     public void setSelectionModel(final ColorSelectionModel colorSelectionModel) {
         runMapping(new MapVoidAction("setSelectionModel") {
             @Override
@@ -809,9 +706,6 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
         });
     }
 
-    /**
-     * Maps {@code JColorChooser.setUI(ColorChooserUI)} through queue
-     */
     public void setUI(final ColorChooserUI colorChooserUI) {
         runMapping(new MapVoidAction("setUI") {
             @Override
@@ -830,8 +724,6 @@ public class JColorChooserOperator extends JComponentOperator implements Outputa
 
         /**
          * Constructs JColorChooserFinder.
-         *
-         * @param sf other searching criteria.
          */
         public JColorChooserFinder(ComponentChooser sf) {
             super(JColorChooser.class, sf);

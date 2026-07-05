@@ -23,8 +23,8 @@
  * questions.
  */
 /**
- * <h1>Menu drivers.</h1>
- * Different drivers to perform a menu operations.<br>
+ * <h1>Menu drivers.</h1> Different drivers to perform a menu operations.
+ * <p>
  * <hr>
  */
 package org.netbeans.jemmy.drivers.menus;

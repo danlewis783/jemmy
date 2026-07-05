@@ -37,8 +37,6 @@ import org.netbeans.jemmy.operators.Operator;
 
 /**
  * ScrollDriver for javax.swing.JScrollBar component type.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class JScrollBarDriver extends AbstractScrollDriver {
 
@@ -48,9 +46,6 @@ public class JScrollBarDriver extends AbstractScrollDriver {
 
     private QueueTool queueTool;
 
-    /**
-     * Constructs a JScrollBarDriver.
-     */
     public JScrollBarDriver() {
         super(new String[] {"org.netbeans.jemmy.operators.JScrollBarOperator"});
         queueTool = new QueueTool();

@@ -27,21 +27,13 @@ package org.netbeans.jemmy;
 import java.awt.Component;
 
 /**
- *
  * Exception can be thrown as a result of attempt to produce a key operation for
  * a component which does not have focus.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class ComponentIsNotFocusedException extends JemmyInputException {
 
     private static final long serialVersionUID = 42L;
 
-    /**
-     * Constructs a ComponentIsNotFocusedException object.
-     *
-     * @param comp a Component.
-     */
     public ComponentIsNotFocusedException(Component comp) {
         super("Component do not have focus", comp);
     }

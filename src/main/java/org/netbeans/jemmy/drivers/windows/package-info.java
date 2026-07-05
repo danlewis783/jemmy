@@ -23,8 +23,8 @@
  * questions.
  */
 /**
- * <h1>Window drivers.</h1>
- * Different drivers to perform a window operations.<br>
+ * <h1>Window drivers.</h1> Different drivers to perform a window operations.
+ * <p>
  * <hr>
  */
 package org.netbeans.jemmy.drivers.windows;

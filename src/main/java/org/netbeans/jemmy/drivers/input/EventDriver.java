@@ -32,16 +32,9 @@ import org.netbeans.jemmy.drivers.LightSupportiveDriver;
 
 /**
  * Superclass for all drivers using event dispatching.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class EventDriver extends LightSupportiveDriver {
 
-    /**
-     * Constructs an EventDriver object.
-     *
-     * @param supported an array of supported class names
-     */
     public EventDriver(String[] supported) {
         super(supported);
     }
@@ -53,22 +46,11 @@ public class EventDriver extends LightSupportiveDriver {
         this(new String[] {"org.netbeans.jemmy.operators.ComponentOperator"});
     }
 
-    /**
-     * Dispatches an event to the component.
-     *
-     * @param comp Component to dispatch events to.
-     * @param event an event to dispatch.
-     */
     public void dispatchEvent(Component comp, AWTEvent event) {
         //        checkVisibility(comp);
         QueueTool.processEvent(event);
     }
 
-    /**
-     * Checks component visibility.
-     *
-     * @param component a component.
-     */
     protected void checkVisibility(Component component) {
         if (!component.isVisible()) {
             throw (new ComponentIsNotVisibleException(component));
@@ -83,12 +65,6 @@ public class EventDriver extends LightSupportiveDriver {
         AWTEvent event;
         Component component;
 
-        /**
-         * Constructs an EventDriver$Dispatcher object.
-         *
-         * @param component a component to dispatch event to.
-         * @param e an event to dispatch.
-         */
         public Dispatcher(Component component, AWTEvent e) {
             super(e.getClass().getName() + " event dispatching");
             this.component = component;

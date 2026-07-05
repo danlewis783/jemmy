@@ -41,10 +41,7 @@ import org.netbeans.jemmy.drivers.TextDriver;
 /**
  * This operator type covers java.awt.TextArea component.
  *
- *
  * @see org.netbeans.jemmy.Timeouts
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
 public class TextComponentOperator extends ComponentOperator implements Timeoutable, Outputable {
@@ -74,8 +71,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
     private TextDriver driver;
 
     /**
-     * Constructor.
-     *
      * @param b The {@code java.awt.TextComponent} managed by this
      * instance.
      */
@@ -84,30 +79,17 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
         driver = DriverManager.getTextDriver(getClass());
     }
 
-    /**
-     * Constructs a TextComponentOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public TextComponentOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((TextComponent) cont.waitSubComponent(new TextComponentFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a TextComponentOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public TextComponentOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits for a component in a container to show. The component
+     * Waits for a component in a container to show. The component
      * is identified as the {@code index+1}'th
      * {@code java.awt.TextComponent} that shows, lies below the container
      * in the display containment hierarchy, and that has the desired text. Uses
@@ -115,7 +97,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
      *
      * @param cont The operator for a container containing the sought for
      * textComponent.
-     * @param text TextComponent text.
      * @param index Ordinal component index. The first component has
      * {@code index} 0.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
@@ -126,7 +107,7 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
     }
 
     /**
-     * Constructor. Waits for a component in a container to show. The component
+     * Waits for a component in a container to show. The component
      * is identified as the first {@code java.awt.TextComponent} that
      * shows, lies below the container in the display containment hierarchy, and
      * that has the desired text. Uses cont's timeout and output for waiting and
@@ -134,7 +115,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
      *
      * @param cont The operator for a container containing the sought for
      * textComponent.
-     * @param text TextComponent text.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public TextComponentOperator(ContainerOperator<?> cont, String text) {
@@ -142,12 +122,11 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
      * @param cont The operator for a container containing the sought for
      * textComponent.
-     * @param index Ordinal component index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public TextComponentOperator(ContainerOperator<?> cont, int index) {
@@ -156,7 +135,7 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
      * @param cont The operator for a container containing the sought for
@@ -173,8 +152,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
      * @param cont Container in which to search for the component. The container
      * lies above the component in the display containment hierarchy. The
      * containment need not be direct.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation,
-     * defining and applying search criteria.
      * @param index Ordinal component index. The first {@code index} is 0.
      * @return TextComponent instance or null if component was not found.
      */
@@ -188,8 +165,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
      * @param cont Container in which to search for the component. The container
      * lies above the component in the display containment hierarchy. The
      * containment need not be direct.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation,
-     * defining and applying search criteria.
      * @return TextComponent instance or null if component was not found.
      */
     public static TextComponent findTextComponent(Container cont, ComponentChooser chooser) {
@@ -199,11 +174,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
     /**
      * Searches TextComponent by text.
      *
-     * @param cont Container to search component in.
-     * @param text TextComponent text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return TextComponent instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -215,10 +185,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
     /**
      * Searches TextComponent by text.
      *
-     * @param cont Container to search component in.
-     * @param text TextComponent text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return TextComponent instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -229,9 +195,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
     /**
      * Waits TextComponent in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return TextComponent instance.
      */
     public static TextComponent waitTextComponent(Container cont, ComponentChooser chooser, int index) {
@@ -241,8 +204,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
     /**
      * Waits 0'th TextComponent in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return TextComponent instance.
      */
     public static TextComponent waitTextComponent(Container cont, ComponentChooser chooser) {
@@ -252,11 +213,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
     /**
      * Waits TextComponent by text.
      *
-     * @param cont Container to search component in.
-     * @param text TextComponent text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return TextComponent instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -268,10 +224,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
     /**
      * Waits TextComponent by text.
      *
-     * @param cont Container to search component in.
-     * @param text TextComponent text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return TextComponent instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -315,12 +267,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
                 DriverManager.getDriver(DriverManager.TEXT_DRIVER_ID, getClass(), anotherOperator.getProperties());
     }
 
-    /**
-     * Changes caret position.
-     *
-     * @param position Position to move caret to.
-     *
-     */
     public void changeCaretPosition(final int position) {
         makeComponentVisible();
         produceTimeRestricted(
@@ -347,10 +293,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
 
     /**
      * Selects a part of text.
-     *
-     * @param startPosition Start caret position
-     * @param finalPosition Final caret position
-     *
      */
     public void selectText(final int startPosition, final int finalPosition) {
         makeComponentVisible();
@@ -378,7 +320,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
     /**
      * Finds start text position.
      *
-     * @param text Text to be searched.
      * @param index Index of text instance (first instance has index 0)
      * @return Caret position correspondent to text start.
      */
@@ -400,17 +341,12 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
     /**
      * Finds start text position.
      *
-     * @param text Text to be searched.
      * @return Caret position correspondent to text start.
      */
     public int getPositionByText(String text) {
         return getPositionByText(text, 0);
     }
 
-    /**
-     * Clears text.
-     *
-     */
     public void clearText() {
         output.printLine("Clearing text in text component\n    : " + toStringSource());
         output.printGolden("Clearing text in text component");
@@ -438,9 +374,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
 
     /**
      * Types text starting from known position.
-     *
-     * @param text Text to be typed.
-     * @param caretPosition Position to start type text
      */
     public void typeText(final String text, final int caretPosition) {
         output.printLine("Typing text \"" + text + "\" from "
@@ -472,8 +405,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
 
     /**
      * Types text starting from known position.
-     *
-     * @param text Text to be typed.
      */
     public void typeText(String text) {
         typeText(text, getCaretPosition());
@@ -481,9 +412,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
 
     /**
      * Requests a focus, clears text, types new one and pushes Enter.
-     *
-     * @param text New text value. Shouldn't include final '\n'.
-     *
      */
     public void enterText(final String text) {
         makeComponentVisible();
@@ -519,9 +447,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code TextComponent.addTextListener(TextListener)} through queue
-     */
     public void addTextListener(final TextListener textListener) {
         runMapping(new MapVoidAction("addTextListener") {
             @Override
@@ -531,9 +456,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code TextComponent.getCaretPosition()} through queue
-     */
     public int getCaretPosition() {
         return (runMapping(new MapIntegerAction("getCaretPosition") {
             @Override
@@ -543,9 +465,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code TextComponent.getSelectedText()} through queue
-     */
     public String getSelectedText() {
         return (runMapping(new MapAction<String>("getSelectedText") {
             @Override
@@ -555,9 +474,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code TextComponent.getSelectionEnd()} through queue
-     */
     public int getSelectionEnd() {
         return (runMapping(new MapIntegerAction("getSelectionEnd") {
             @Override
@@ -567,9 +483,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code TextComponent.getSelectionStart()} through queue
-     */
     public int getSelectionStart() {
         return (runMapping(new MapIntegerAction("getSelectionStart") {
             @Override
@@ -579,9 +492,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code TextComponent.getText()} through queue
-     */
     public String getText() {
         return (runMapping(new MapAction<String>("getText") {
             @Override
@@ -591,9 +501,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code TextComponent.isEditable()} through queue
-     */
     public boolean isEditable() {
         return (runMapping(new MapBooleanAction("isEditable") {
             @Override
@@ -603,9 +510,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code TextComponent.removeTextListener(TextListener)} through queue
-     */
     public void removeTextListener(final TextListener textListener) {
         runMapping(new MapVoidAction("removeTextListener") {
             @Override
@@ -615,9 +519,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code TextComponent.select(int, int)} through queue
-     */
     public void select(final int i, final int i1) {
         runMapping(new MapVoidAction("select") {
             @Override
@@ -627,9 +528,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code TextComponent.selectAll()} through queue
-     */
     public void selectAll() {
         runMapping(new MapVoidAction("selectAll") {
             @Override
@@ -639,9 +537,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code TextComponent.setCaretPosition(int)} through queue
-     */
     public void setCaretPosition(final int i) {
         runMapping(new MapVoidAction("setCaretPosition") {
             @Override
@@ -651,9 +546,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code TextComponent.setEditable(boolean)} through queue
-     */
     public void setEditable(final boolean b) {
         runMapping(new MapVoidAction("setEditable") {
             @Override
@@ -663,9 +555,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code TextComponent.setSelectionEnd(int)} through queue
-     */
     public void setSelectionEnd(final int i) {
         runMapping(new MapVoidAction("setSelectionEnd") {
             @Override
@@ -675,9 +564,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code TextComponent.setSelectionStart(int)} through queue
-     */
     public void setSelectionStart(final int i) {
         runMapping(new MapVoidAction("setSelectionStart") {
             @Override
@@ -687,9 +573,6 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code TextComponent.setText(String)} through queue
-     */
     public void setText(final String string) {
         runMapping(new MapVoidAction("setText") {
             @Override
@@ -718,22 +601,11 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
         String label;
         StringComparator comparator;
 
-        /**
-         * Constructs TextComponentByTextFinder.
-         *
-         * @param lb a text pattern
-         * @param comparator specifies string comparision algorithm.
-         */
         public TextComponentByTextFinder(String lb, StringComparator comparator) {
             label = lb;
             this.comparator = comparator;
         }
 
-        /**
-         * Constructs TextComponentByTextFinder.
-         *
-         * @param lb a text pattern
-         */
         public TextComponentByTextFinder(String lb) {
             this(lb, Operator.getDefaultStringComparator());
         }
@@ -764,18 +636,10 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
      */
     public static class TextComponentFinder extends Finder {
 
-        /**
-         * Constructs TextComponentFinder.
-         *
-         * @param sf other searching criteria.
-         */
         public TextComponentFinder(ComponentChooser sf) {
             super(TextComponent.class, sf);
         }
 
-        /**
-         * Constructs TextComponentFinder.
-         */
         public TextComponentFinder() {
             super(TextComponent.class);
         }

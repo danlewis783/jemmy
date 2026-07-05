@@ -29,8 +29,6 @@ import java.awt.image.BufferedImage;
 
 /**
  * Performs "strict" (i.e. based on all pixels matching) image search.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class StrictImageFinder implements ImageFinder {
 
@@ -39,8 +37,6 @@ public class StrictImageFinder implements ImageFinder {
 
     /**
      * Creates an instance searching subimages insige a parameter image.
-     *
-     * @param area - Image to search in.
      */
     public StrictImageFinder(BufferedImage area) {
         bigWidth = area.getWidth();
@@ -56,7 +52,6 @@ public class StrictImageFinder implements ImageFinder {
     /**
      * Searchs for an image inside image passed into constructor.
      *
-     * @param image an image to search.
      * @param index an ordinal image location index. If equal to 1, for example,
      * second appropriate location will be found.
      * @return Left-up corner coordinates of image location.

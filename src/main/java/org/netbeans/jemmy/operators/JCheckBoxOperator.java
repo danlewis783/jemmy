@@ -27,64 +27,38 @@ package org.netbeans.jemmy.operators;
 import java.awt.Container;
 import javax.swing.JCheckBox;
 import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.TimeoutExpiredException;
 
 /**
- *
- * <BR><BR>Timeouts used: <BR>
- * AbstractButtonOperator.PushButtonTimeout - time between button pressing and
- * releasing<BR>
- * ComponentOperator.WaitComponentTimeout - time to wait button displayed <BR>
- * ComponentOperator.WaitComponentEnabledTimeout - time to wait button enabled
- * <BR>.
+ * Timeouts used:
+ * <ul>
+ * <li>AbstractButtonOperator.PushButtonTimeout - time between button pressing and releasing</li>
+ * <li>ComponentOperator.WaitComponentTimeout - time to wait button displayed</li>
+ * <li>ComponentOperator.WaitComponentEnabledTimeout - time to wait button enabled</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
 public class JCheckBoxOperator extends JToggleButtonOperator {
 
-    /**
-     * Constructor.
-     *
-     * @param b a component
-     */
     public JCheckBoxOperator(JCheckBox b) {
         super(b);
     }
 
-    /**
-     * Constructs a JCheckBoxOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public JCheckBoxOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((JCheckBox) cont.waitSubComponent(new JCheckBoxFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a JCheckBoxOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public JCheckBoxOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Button text.
-     * @param index Ordinal component index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public JCheckBoxOperator(ContainerOperator<?> cont, String text, int index) {
         this((JCheckBox) waitComponent(
@@ -95,25 +69,18 @@ public class JCheckBoxOperator extends JToggleButtonOperator {
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Button text.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public JCheckBoxOperator(ContainerOperator<?> cont, String text) {
         this(cont, text, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     * @param index Ordinal component index.
-     * @throws TimeoutExpiredException
      */
     public JCheckBoxOperator(ContainerOperator<?> cont, int index) {
         this((JCheckBox) waitComponent(cont, new JCheckBoxFinder(), index));
@@ -121,11 +88,8 @@ public class JCheckBoxOperator extends JToggleButtonOperator {
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     * @throws TimeoutExpiredException
      */
     public JCheckBoxOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -134,9 +98,6 @@ public class JCheckBoxOperator extends JToggleButtonOperator {
     /**
      * Searches JCheckBox in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JCheckBox instance or null if component was not found.
      */
     public static JCheckBox findJCheckBox(Container cont, ComponentChooser chooser, int index) {
@@ -146,8 +107,6 @@ public class JCheckBoxOperator extends JToggleButtonOperator {
     /**
      * Searches 0'th JCheckBox in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JCheckBox instance or null if component was not found.
      */
     public static JCheckBox findJCheckBox(Container cont, ComponentChooser chooser) {
@@ -157,11 +116,6 @@ public class JCheckBoxOperator extends JToggleButtonOperator {
     /**
      * Searches JCheckBox by text.
      *
-     * @param cont Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return JCheckBox instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -176,10 +130,6 @@ public class JCheckBoxOperator extends JToggleButtonOperator {
     /**
      * Searches JCheckBox by text.
      *
-     * @param cont Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return JCheckBox instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -190,11 +140,7 @@ public class JCheckBoxOperator extends JToggleButtonOperator {
     /**
      * Waits JCheckBox in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JCheckBox instance.
-     * @throws TimeoutExpiredException
      */
     public static JCheckBox waitJCheckBox(Container cont, ComponentChooser chooser, int index) {
         return (JCheckBox) waitJToggleButton(cont, new JCheckBoxFinder(chooser), index);
@@ -203,10 +149,7 @@ public class JCheckBoxOperator extends JToggleButtonOperator {
     /**
      * Waits 0'th JCheckBox in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JCheckBox instance.
-     * @throws TimeoutExpiredException
      */
     public static JCheckBox waitJCheckBox(Container cont, ComponentChooser chooser) {
         return waitJCheckBox(cont, chooser, 0);
@@ -215,14 +158,8 @@ public class JCheckBoxOperator extends JToggleButtonOperator {
     /**
      * Waits JCheckBox by text.
      *
-     * @param cont Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return JCheckBox instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static JCheckBox waitJCheckBox(Container cont, String text, boolean ce, boolean ccs, int index) {
         return (waitJCheckBox(
@@ -235,13 +172,8 @@ public class JCheckBoxOperator extends JToggleButtonOperator {
     /**
      * Waits JCheckBox by text.
      *
-     * @param cont Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return JCheckBox instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static JCheckBox waitJCheckBox(Container cont, String text, boolean ce, boolean ccs) {
         return waitJCheckBox(cont, text, ce, ccs, 0);
@@ -254,8 +186,6 @@ public class JCheckBoxOperator extends JToggleButtonOperator {
 
         /**
          * Constructs JCheckBoxFinder.
-         *
-         * @param sf other searching criteria.
          */
         public JCheckBoxFinder(ComponentChooser sf) {
             super(JCheckBox.class, sf);

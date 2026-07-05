@@ -57,16 +57,9 @@ import org.netbeans.jemmy.util.LookAndFeel;
  * Installs all necessary drivers for Jemmy operators except low-level drivers
  * which are installed by
  * <a href="InputDriverInstaller.java">InputDriverInstaller</a>.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class DefaultDriverInstaller extends ArrayDriverInstaller {
 
-    /**
-     * Constructs a DefaultDriverInstaller object.
-     *
-     * @param shortcutEvents Signals whether shortcut mode is used.
-     */
     public DefaultDriverInstaller(boolean shortcutEvents) {
         super(
                 new String[] {

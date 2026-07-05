@@ -25,12 +25,10 @@
 package org.netbeans.jemmy;
 
 /**
- *
  * Defines an action to be executed by {@code ActionProducer} instance.
  *
  * @see org.netbeans.jemmy.ActionProducer
  *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public interface Action<R, P> {
 

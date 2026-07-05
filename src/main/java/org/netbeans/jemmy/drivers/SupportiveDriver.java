@@ -34,8 +34,6 @@ public abstract class SupportiveDriver implements Driver {
     private Class<?>[] supported;
 
     /**
-     * Creates an instance.
-     *
      * @param supported Array of operator classes which are supported by this
      * driver.
      */
@@ -47,7 +45,6 @@ public abstract class SupportiveDriver implements Driver {
      * Throws {@code UnsupportedOperatorException} exception if parameter's
      * class is not in list of supported classes.
      *
-     * @param oper Operator whose class should be checked.
      * @throws UnsupportedOperatorException
      */
     public void checkSupported(ComponentOperator oper) {

@@ -43,11 +43,7 @@ import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.operators.JButtonOperator;
 
 /**
- *
  * Default org.netbeans.jemmy.demo.CommentWindow implementation.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
- *
  */
 public class DefaultCommentWindow extends JDialog implements CommentWindow {
 
@@ -63,10 +59,6 @@ public class DefaultCommentWindow extends JDialog implements CommentWindow {
 
     long readCommentTimeout = 1000;
 
-    /**
-     * Constructs a DefaultCommentWindow object.
-     * @param modal Display as modal dialog.
-     */
     public DefaultCommentWindow(boolean modal) {
 
         super();
@@ -135,16 +127,12 @@ public class DefaultCommentWindow extends JDialog implements CommentWindow {
         setModal(modal);
     }
 
-    /**
-     * Constructs a DefaultCommentWindow object.
-     */
     public DefaultCommentWindow() {
         this(false);
     }
 
     /**
      * Specifies the time to display comment.
-     * @param timeout lond value.
      */
     public void setCommentTimeout(long timeout) {
         readCommentTimeout = timeout;
@@ -201,10 +189,7 @@ public class DefaultCommentWindow extends JDialog implements CommentWindow {
     public class Mover extends Thread {
         JButtonOperator bo;
         boolean toPush = false;
-        /**
-         * Creates a Mover object.
-         * @param button a Button
-         */
+
         public Mover(JButton button) {
             super();
             bo = new JButtonOperator(button);

@@ -99,17 +99,10 @@ import org.netbeans.jemmy.operators.Operator;
 import org.netbeans.jemmy.util.Dumper;
 
 /**
- * An application allowing to explore a Java GUI application. Could be executed
- * by command: <br>
- * <pre>
- * java "application java options" \
- *   org.netbeans.jemmy.explorer.GUIBrowser \
- *   "application main class" \
- *   "application parameters"
- * </pre> or from java code by {@code GUIBrowser.showBrowser()} method
- * using.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
+ * An application allowing to explore a Java GUI application. Could be executed by command:
+ * <p>
+ * <pre> java "application java options" \ org.netbeans.jemmy.explorer.GUIBrowser \ "application main class" \
+ * "application parameters" </pre> or from java code by {@code GUIBrowser.showBrowser()} method using.
  */
 public class GUIBrowser extends JFrame {
 
@@ -316,8 +309,6 @@ public class GUIBrowser extends JFrame {
 
     /**
      * Specifies a status text.
-     *
-     * @param st a status text.
      */
     public void setStatus(String st) {
         status.setText(st);
@@ -333,8 +324,8 @@ public class GUIBrowser extends JFrame {
     /**
      * Method to invoke GUIBrowser as java application.
      *
-     * @param argv Argument array. If not empty, first element should be<br>
-     * main class of an aplication to be browsed.<br>
+     * @param argv Argument array. If not empty, first element should be
+     * main class of an aplication to be browsed.
      * Other elements are application parameters.
      */
     public static void main(String[] argv) {

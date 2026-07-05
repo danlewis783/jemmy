@@ -27,18 +27,18 @@ package org.netbeans.jemmy;
 import java.awt.Component;
 
 /**
- *
  * Waits for something defined by Waitable interface to be happened.
- *
- * <BR><BR>Timeouts used: <BR>
- * Waiter.TimeDelta - time delta to check actionProduced result.<BR>
- * Waiter.WaitingTime - maximal waiting time<BR>
- * Waiter.AfterWaitingTime - time to sleep after waiting has been finished.<BR>
+ * <p>
+ * Timeouts used:
+ * <ul>
+ * <li>Waiter.TimeDelta - time delta to check actionProduced result.</li>
+ * <li>Waiter.WaitingTime - maximal waiting time</li>
+ * <li>Waiter.AfterWaitingTime - time to sleep after waiting has been finished.</li>
+ * </ul>
  *
  * @see Timeouts
  * @see Waitable
  *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class Waiter<R, P> implements Waitable<R, P>, Timeoutable, Outputable {
 
@@ -62,11 +62,6 @@ public class Waiter<R, P> implements Waitable<R, P>, Timeoutable, Outputable {
 
     public static volatile boolean globalTimeoutExpired = false;
 
-    /**
-     * Constructor.
-     *
-     * @param w Waitable object defining waiting criteria.
-     */
     public Waiter(Waitable<R, P> w) {
         super();
         if (w == null) {
@@ -98,7 +93,6 @@ public class Waiter<R, P> implements Waitable<R, P>, Timeoutable, Outputable {
     /**
      * Defines current timeouts.
      *
-     * @param timeouts A collection of timeout assignments.
      * @see org.netbeans.jemmy.Timeoutable
      * @see org.netbeans.jemmy.Timeouts
      * @see #getTimeouts
@@ -139,8 +133,6 @@ public class Waiter<R, P> implements Waitable<R, P>, Timeoutable, Outputable {
     /**
      * Sets the origin of the current "Waiter.WaitingTime" to be shown in
      * timeout error messages
-     *
-     * @param origin is the name of the origin.
      */
     public void setWaitingTimeOrigin(String origin) {
         waitingTimeOrigin = origin;
@@ -190,9 +182,7 @@ public class Waiter<R, P> implements Waitable<R, P>, Timeoutable, Outputable {
      * Waits for not null result of actionProduced method of Waitable
      * implementation passed into constructor.
      *
-     * @param waitableObject Object to be passed into actionProduced method.
      * @return non null result of action.
-     * @throws TimeoutExpiredException
      * @exception InterruptedException
      */
     public R waitAction(P waitableObject) throws InterruptedException {
@@ -220,8 +210,8 @@ public class Waiter<R, P> implements Waitable<R, P>, Timeoutable, Outputable {
      * subclass was created using protected no-parameters constructor, it should
      * implement its own actionProduced method() as this one will throw an
      * UnsupportedOperationException.
+     *
      * @see Waitable
-     * @param obj
      */
     @Override
     public R actionProduced(P obj) {
@@ -260,7 +250,6 @@ public class Waiter<R, P> implements Waitable<R, P>, Timeoutable, Outputable {
     /**
      * Returns message to be printed when waiting timeout has been expired.
      *
-     * @param timeSpent time from waiting start (milliseconds)
      * @return a message.
      */
     protected String getTimeoutExpiredMessage(long timeSpent) {
@@ -271,8 +260,6 @@ public class Waiter<R, P> implements Waitable<R, P>, Timeoutable, Outputable {
      * Returns message to be printed when waiting has been successfully
      * finished.
      *
-     * @param timeSpent time from waiting start (milliseconds)
-     * @param result result of Waitable.actionproduced method.
      * @return a message.
      */
     protected String getActionProducedMessage(long timeSpent, final Object result) {

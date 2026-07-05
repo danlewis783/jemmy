@@ -34,6 +34,7 @@ public class Platform {
 
     /**
      * Checking whether the platform is linux
+     *
      * @return
      */
     public static boolean isLinux() {
@@ -42,6 +43,7 @@ public class Platform {
 
     /**
      * Checking whether the platform is OSX
+     *
      * @return
      */
     public static boolean isOSX() {
@@ -50,6 +52,7 @@ public class Platform {
 
     /**
      * Checking whether the platform is Solaris
+     *
      * @return
      */
     public static boolean isSolaris() {
@@ -58,6 +61,7 @@ public class Platform {
 
     /**
      * Checking whether the platform is Windows
+     *
      * @return
      */
     public static boolean isWindows() {

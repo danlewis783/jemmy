@@ -32,6 +32,7 @@ public class UIStatus {
     /**
      * Indentifier for mouse location dump property. The mouse location is saved on last mouse move performed with
      * this operator.
+     *
      * @see org.netbeans.jemmy.util.Dumper#dumpAll(String)
      */
     public static final String LAST_MOUSE_MOVE_DPROP = "Last mouse move location";

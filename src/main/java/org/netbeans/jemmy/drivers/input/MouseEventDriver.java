@@ -35,23 +35,13 @@ import org.netbeans.jemmy.operators.Operator;
 
 /**
  * MouseDriver using event dispatching.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class MouseEventDriver extends EventDriver implements MouseDriver {
 
-    /**
-     * Constructs a MouseEventDriver object.
-     *
-     * @param supported an array of supported class names
-     */
     public MouseEventDriver(String[] supported) {
         super(supported);
     }
 
-    /**
-     * Constructs a MouseEventDriver object.
-     */
     public MouseEventDriver() {
         super();
     }
@@ -150,13 +140,7 @@ public class MouseEventDriver extends EventDriver implements MouseDriver {
     /**
      * Dispatches a mouse event to the component.
      *
-     * @param comp Component to dispatch events to.
-     * @param id an event id.
      * @param modifiers a combination of {@code InputEvent.*_MASK} fields.
-     * @param x relative x coordinate of event point
-     * @param y relative y coordinate of event point
-     * @param clickCount click count
-     * @param mouseButton mouse button.
      */
     protected void dispatchEvent(Component comp, int id, int modifiers, int x, int y, int clickCount, int mouseButton) {
         dispatchEvent(

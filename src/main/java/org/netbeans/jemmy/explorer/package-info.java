@@ -24,7 +24,7 @@
  */
 /**
  * <h1>Package org.netbeans.jemmy.explorer</h1>
- * Contains auxiliary classes to explore tested application.<br>
+ * Contains auxiliary classes to explore tested application.
  *
  * @since 23 Feb 2002
  * <hr>

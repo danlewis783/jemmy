@@ -42,9 +42,6 @@ public interface MouseDriver {
     /**
      * Presses mouse.
      *
-     * @param oper Component operator.
-     * @param x Relative x coordinate.
-     * @param y Relative y coordinate.
      * @param mouseButton mouse button ({@code InputEvent.BUTTON*_MASK}
      * field)
      * @param modifiers a combination of {@code InputEvent.*_MASK} fields.
@@ -54,9 +51,6 @@ public interface MouseDriver {
     /**
      * Releases mouse.
      *
-     * @param oper Component operator.
-     * @param x Relative x coordinate.
-     * @param y Relative y coordinate.
      * @param mouseButton mouse button ({@code InputEvent.BUTTON*_MASK}
      * field)
      * @param modifiers a combination of {@code InputEvent.*_MASK} fields.
@@ -66,33 +60,18 @@ public interface MouseDriver {
     /**
      * Clicks mouse.
      *
-     * @param oper Component operator.
-     * @param x Relative x coordinate.
-     * @param y Relative y coordinate.
-     * @param clickCount How many times to click.
      * @param mouseButton mouse button ({@code InputEvent.BUTTON*_MASK}
      * field)
      * @param modifiers a combination of {@code InputEvent.*_MASK} fields.
-     * @param mouseClick Time between pressing and releasing mouse.
      */
     public void clickMouse(
             ComponentOperator oper, int x, int y, int clickCount, int mouseButton, int modifiers, Timeout mouseClick);
 
-    /**
-     * Moves mouse.
-     *
-     * @param oper Component operator.
-     * @param x Relative x coordinate.
-     * @param y Relative y coordinate.
-     */
     public void moveMouse(ComponentOperator oper, int x, int y);
 
     /**
      * Drags mouse.
      *
-     * @param oper Component operator.
-     * @param x Relative x coordinate.
-     * @param y Relative y coordinate.
      * @param mouseButton mouse button ({@code InputEvent.BUTTON*_MASK}
      * field)
      * @param modifiers a combination of {@code InputEvent.*_MASK} fields.
@@ -102,16 +81,9 @@ public interface MouseDriver {
     /**
      * Performs drag'n'drop.
      *
-     * @param oper Component operator.
-     * @param start_x Relative x coordinate of start point.
-     * @param start_y Relative y coordinate of start point.
-     * @param end_x Relative x coordinate of end point.
-     * @param end_y Relative y coordinate of end point.
      * @param mouseButton mouse button ({@code InputEvent.BUTTON*_MASK}
      * field)
      * @param modifiers a combination of {@code InputEvent.*_MASK} fields.
-     * @param before Time to sleep after taking (before dragging)
-     * @param after Time to sleep before dropping (after dragging)
      */
     public void dragNDrop(
             ComponentOperator oper,
@@ -126,15 +98,11 @@ public interface MouseDriver {
 
     /**
      * Moves mouse inside a component.
-     *
-     * @param oper Component operator.
      */
     public void enterMouse(ComponentOperator oper);
 
     /**
      * Moves mouse outside a component.
-     *
-     * @param oper Component operator.
      */
     public void exitMouse(ComponentOperator oper);
 }

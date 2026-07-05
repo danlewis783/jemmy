@@ -33,8 +33,6 @@ public interface FocusDriver {
 
     /**
      * Makes a compoennt having focus.
-     *
-     * @param operator Component operator.
      */
     public void giveFocus(ComponentOperator operator);
 }

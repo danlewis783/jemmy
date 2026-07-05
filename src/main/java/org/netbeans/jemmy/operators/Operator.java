@@ -52,8 +52,6 @@ import org.netbeans.jemmy.util.Platform;
 
 /**
  * Keeps all environment and low-level methods.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public abstract class Operator implements Timeoutable, Outputable {
 
@@ -97,7 +95,6 @@ public abstract class Operator implements Timeoutable, Outputable {
      * Default implementation is org.netbeans.jemmy.util.DefaultVisualizer
      * class.
      *
-     * @param visualizer ComponentVisualizer implementation
      * @return previous value
      * @see #setVisualizer(Operator.ComponentVisualizer)
      * @see #getDefaultComponentVisualizer()
@@ -122,7 +119,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * Defines string comparator to be assigned in constructor.
      *
-     * @param comparator the comparator to be used by default.
      * @return previous value.
      * @see #getDefaultStringComparator()
      * @see Operator.StringComparator
@@ -146,7 +142,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * Specifies an object used for parsing of path-like strings.
      *
-     * @param parser the parser.
      * @return a previous value.
      * @see Operator.PathParser
      * @see #getDefaultPathParser
@@ -170,7 +165,6 @@ public abstract class Operator implements Timeoutable, Outputable {
      * Defines whether newly created operators should perform operation
      * verifications by default.
      *
-     * @param verification a verification mode to be used by default.
      * @return a previous value.
      * @see #getDefaultVerification()
      * @see #setVerification(boolean)
@@ -215,9 +209,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * Compares caption (button text, window title, ...) with a sample text.
      *
-     * @param caption String to be compared with match
-     * @param match Sample to compare with
-     * @param comparator StringComparator instance.
      * @return true is the captions matched the match.
      * @see #isCaptionEqual
      */
@@ -250,7 +241,6 @@ public abstract class Operator implements Timeoutable, Outputable {
      * from operator packages list, and "class name" is the name of class or one
      * of its superclasses.
      *
-     * @param comp Component to create operator for.
      * @return a new operator with default environment.
      * @see #addOperatorPackage(String)
      */
@@ -271,10 +261,10 @@ public abstract class Operator implements Timeoutable, Outputable {
     }
 
     /**
-     * Adds package to the list of packages containing operators. <BR>
+     * Adds package to the list of packages containing operators.
+     * <p>
      * "org.netbeans.jemmy.operators" is in the list by default.
      *
-     * @param pkgName Package name.
      * @see #createOperator(Component)
      */
     public static void addOperatorPackage(String pkgName) {
@@ -333,8 +323,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * Copies all environment (output, timeouts, visualizer) from another
      * operator.
-     *
-     * @param anotherOperator an operator to copy the environment to.
      */
     public void copyEnvironment(Operator anotherOperator) {
         setTimeouts(anotherOperator.getTimeouts());
@@ -373,7 +361,6 @@ public abstract class Operator implements Timeoutable, Outputable {
      * Changes component visualizer. Visualizer is used from from
      * makeComponentVisible() method.
      *
-     * @param vo a visualizer to assign to this operator.
      * @see #setDefaultComponentVisualizer(Operator.ComponentVisualizer)
      * @see #getVisualizer()
      */
@@ -395,7 +382,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * Assigns a JemmyProperty object to this operator.
      *
-     * @param properties a properties to assign to this operator.
      * @return previously assigned properties.
      * @see #getProperties
      */
@@ -408,7 +394,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * Defines CharBindingMap.
      *
-     * @param map a CharBindingMap to use for keyboard operations.
      * @see org.netbeans.jemmy.CharBindingMap
      * @see
      * org.netbeans.jemmy.JemmyProperties#setCurrentCharBindingMap(CharBindingMap)
@@ -454,7 +439,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * Defines object which is used for string comparison.
      *
-     * @param comparator a comparator to use for string comparision.
      * @see org.netbeans.jemmy.operators.Operator.StringComparator
      * @see org.netbeans.jemmy.operators.Operator.DefaultStringComparator
      * @see #getComparator
@@ -476,7 +460,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * Specifies object which is used for parsing of path-like strings.
      *
-     * @param parser a parser to use for path parsing.
      * @see #getPathParser
      */
     public void setPathParser(PathParser parser) {
@@ -486,7 +469,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * Defines whether operator should perform operation verifications.
      *
-     * @param verification new value.
      * @return old value
      * @see #setDefaultVerification(boolean)
      * @see #getDefaultVerification()
@@ -517,7 +499,6 @@ public abstract class Operator implements Timeoutable, Outputable {
      * Creates new array which has all elements from first array, except last
      * element.
      *
-     * @param path an original array
      * @return new array
      */
     public String[] getParentPath(String path[]) {
@@ -544,7 +525,6 @@ public abstract class Operator implements Timeoutable, Outputable {
      * Parses a string to a string array using a PathParser assigned to this
      * operator.
      *
-     * @param path an original string
      * @return created String array.
      */
     public String[] parseString(String path) {
@@ -554,8 +534,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * Parses strings like "1|2|3" into arrays {"1", "2", "3"}.
      *
-     * @param path an original string
-     * @param delim a delimiter string
      * @return created String array.
      */
     public String[] parseString(String path, String delim) {
@@ -565,7 +543,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * Returns key code to be pressed for character typing.
      *
-     * @param c Character to be typed.
      * @return a value of one of the {@code KeyEvent.VK_*} fields.
      * @see org.netbeans.jemmy.CharBindingMap
      */
@@ -576,7 +553,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * Returns modifiers mask for character typing.
      *
-     * @param c Character to be typed.
      * @return a combination of {@code InputEvent.*_MASK} fields.
      * @see org.netbeans.jemmy.CharBindingMap
      */
@@ -587,7 +563,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * Returns key codes to by pressed for characters typing.
      *
-     * @param c Characters to be typed.
      * @return an array of {@code KeyEvent.VK_*} values.
      * @see org.netbeans.jemmy.CharBindingMap
      */
@@ -602,7 +577,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * Returns modifiers masks for characters typing.
      *
-     * @param c Characters to be typed.
      * @return an array of a combination of {@code InputEvent.*_MASK}
      * fields.
      * @see org.netbeans.jemmy.CharBindingMap
@@ -618,7 +592,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * Returns key codes to by pressed for the string typing.
      *
-     * @param s String to be typed.
      * @return an array of {@code KeyEvent.VK_*} values.
      * @see org.netbeans.jemmy.CharBindingMap
      */
@@ -629,7 +602,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * Returns modifiers masks for the string typing.
      *
-     * @param s String to be typed.
      * @return an array of a combination of {@code InputEvent.*_MASK}
      * fields.
      * @see org.netbeans.jemmy.CharBindingMap
@@ -641,8 +613,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * Compares string using getComparator StringComparator.
      *
-     * @param caption a caption
-     * @param match a pattern
      * @return true if {@code caption} and {@code match} match
      * @see #isCaptionEqual
      */
@@ -678,7 +648,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * Waits a state specified by a ComponentChooser instance.
      *
-     * @param state a ComponentChooser defining the state criteria.
      * @throws TimeoutExpiredException if the state has not achieved in a value
      * defined by {@code "ComponentOperator.WaitStateTimeout"}
      */
@@ -715,7 +684,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * Waits a state specified by a ComponentChooser instance on EDT queue.
      *
-     * @param state a ComponentChooser defining the state criteria.
      * @throws TimeoutExpiredException if the state has not achieved in a value
      * defined by {@code "ComponentOperator.WaitStateTimeout"}
      */
@@ -744,8 +712,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * Performs an operation with time control.
      *
-     * @param action an action to execute.
-     * @param param an action parameters.
      * @param actionTimeOrigin is a timeout name to use for waiting for the
      * action to be finished.
      * @return an action result.
@@ -775,7 +741,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * Performs an operation with time control.
      *
-     * @param action an action to execute.
      * @param actionTimeOrigin is a timeout name to use for waiting for the
      * action to be finished.
      * @return an action result.
@@ -786,9 +751,6 @@ public abstract class Operator implements Timeoutable, Outputable {
 
     /**
      * Performs an operation without time control.
-     *
-     * @param action an action to execute.
-     * @param param an action parameters.
      */
     protected <R, P> void produceNoBlocking(NoBlockingAction<R, P> action, P param) {
         try {
@@ -807,8 +769,6 @@ public abstract class Operator implements Timeoutable, Outputable {
 
     /**
      * Performs an operation without time control.
-     *
-     * @param action an action to execute.
      */
     protected void produceNoBlocking(NoBlockingAction<?, ?> action) {
         produceNoBlocking(action, null);
@@ -830,8 +790,6 @@ public abstract class Operator implements Timeoutable, Outputable {
 
     /**
      * Unlocks Queue and then throw exception.
-     *
-     * @param e an exception to be thrown.
      */
     protected void unlockAndThrow(Exception e) {
         unlockQueue();
@@ -841,7 +799,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * To map nonprimitive type component's method.
      *
-     * @param action a mapping action.
      * @return an action result.
      * @see Operator.MapAction
      */
@@ -852,7 +809,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * To map char component's method.
      *
-     * @param action a mapping action.
      * @return an action result.
      * @see #runMapping(Operator.MapAction)
      * @see Operator.MapCharacterAction
@@ -864,7 +820,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * To map byte component's method.
      *
-     * @param action a mapping action.
      * @return an action result.
      * @see #runMapping(Operator.MapAction)
      * @see Operator.MapByteAction
@@ -876,7 +831,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * To map int component's method.
      *
-     * @param action a mapping action.
      * @return an action result.
      * @see #runMapping(Operator.MapAction)
      * @see Operator.MapIntegerAction
@@ -888,7 +842,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * To map long component's method.
      *
-     * @param action a mapping action.
      * @return an action result.
      * @see #runMapping(Operator.MapAction)
      * @see Operator.MapLongAction
@@ -900,7 +853,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * To map float component's method.
      *
-     * @param action a mapping action.
      * @return an action result.
      * @see #runMapping(Operator.MapAction)
      * @see Operator.MapFloatAction
@@ -912,7 +864,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * To map double component's method.
      *
-     * @param action a mapping action.
      * @return an action result.
      * @see #runMapping(Operator.MapAction)
      * @see Operator.MapDoubleAction
@@ -924,7 +875,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * To map boolean component's method.
      *
-     * @param action a mapping action.
      * @return an action result.
      * @see #runMapping(Operator.MapAction)
      * @see Operator.MapBooleanAction
@@ -936,7 +886,6 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * To map void component's method.
      *
-     * @param action a mapping action.
      * @see #runMapping(Operator.MapAction)
      * @see Operator.MapVoidAction
      */
@@ -948,11 +897,9 @@ public abstract class Operator implements Timeoutable, Outputable {
      * Adds array of objects to dump hashtable. Is used for multiple properties
      * such as list items and tree nodes.
      *
-     * @param table a table to add properties to.
      * @param title property names prefix. Property names are constructed by
      * adding a number to the prefix:
      * {@code title + "_" + Iteger.toString("ordinal index")}
-     * @param items an array of property values.
      * @return an array of property names (with added numbers).
      */
     protected String[] addToDump(Hashtable<String, Object> table, String title, Object[] items) {
@@ -967,11 +914,9 @@ public abstract class Operator implements Timeoutable, Outputable {
      * Adds two dimentional array of objects to dump hashtable. Is used for
      * multiple properties such as table cells.
      *
-     * @param table a table to add properties to.
      * @param title property names prefix. Property names are constructed by
      * adding two numbers to the prefix:
      * {@code title + "_" + Iteger.toString("row index") + "_" + Iteger.toString("column index")}
-     * @param items an array of property values.
      * @return an array of property names (with added numbers).
      */
     protected String[] addToDump(Hashtable<String, Object> table, String title, Object[][] items) {
@@ -1063,42 +1008,32 @@ public abstract class Operator implements Timeoutable, Outputable {
 
         /**
          * Prepares component for a user input.
-         *
-         * @param compOper Operator asking for necessary actions.
          */
         public void makeVisible(ComponentOperator compOper);
     }
 
     /**
      * Interface to compare string resources like labels, button text, ... with
-     * match. <BR>
+     * match.
      */
     public interface StringComparator {
 
         /**
          * Imlementation must return true if strings are equal.
          *
-         * @param caption a text to compare with pattern.
-         * @param match a pattern
          * @return true if text and pattern matches.
          */
         public boolean equals(String caption, String match);
     }
 
-    /**
-     * Default StringComparator implementation.
-     */
     public static class DefaultStringComparator implements StringComparator {
 
         boolean ce;
         boolean ccs;
 
         /**
-         * Constructs a DefaultStringComparator object.
-         *
          * @param ce Compare exactly. If false, text can be a substring of
          * caption.
-         * @param ccs Compare case sensitively.
          */
         public DefaultStringComparator(boolean ce, boolean ccs) {
             this.ce = ce;
@@ -1147,7 +1082,6 @@ public abstract class Operator implements Timeoutable, Outputable {
         /**
          * Parses a string to a String array.
          *
-         * @param path a String to parse.
          * @return a parsed array.
          */
         public String[] parse(String path);
@@ -1161,11 +1095,6 @@ public abstract class Operator implements Timeoutable, Outputable {
 
         String separator;
 
-        /**
-         * Constructs a DefaultPathParser object.
-         *
-         * @param separator a string used as separator.
-         */
         public DefaultPathParser(String separator) {
             this.separator = separator;
         }
@@ -1200,22 +1129,11 @@ public abstract class Operator implements Timeoutable, Outputable {
         Class<?> clz;
         ComponentChooser subchooser;
 
-        /**
-         * Constructs Finder.
-         *
-         * @param clz a component class.
-         * @param subchooser other searching criteria.
-         */
         public Finder(Class<?> clz, ComponentChooser subchooser) {
             this.clz = clz;
             this.subchooser = subchooser;
         }
 
-        /**
-         * Constructs Finder.
-         *
-         * @param clz a component class.
-         */
         public Finder(Class<?> clz) {
             this(clz, ComponentSearcher.getTrueChooser("Any " + clz.getName()));
         }
@@ -1240,25 +1158,25 @@ public abstract class Operator implements Timeoutable, Outputable {
     }
 
     /**
-     * Can be used to make nonblocking operation implementation. Typical
-     * scenario is: <BR>
-     * produceNoBlocking(new NoBlockingAction("Button pushing") {<BR>
-     * public Object doAction(Object param) {<BR>
-     * push();<BR>
-     * return null;<BR>
-     * }<BR>
-     * });<BR>
+     * Can be used to make nonblocking operation implementation. Typical scenario is:
+     * <p>
+     * produceNoBlocking(new NoBlockingAction("Button pushing") {
+     * <p>
+     * public Object doAction(Object param) {
+     * <p>
+     * push();
+     * <p>
+     * return null;
+     * <p>
+     * }
+     * <p>
+     * });
      */
     protected abstract class NoBlockingAction<R, P> implements Action<R, P> {
 
         String description;
         Exception exception;
 
-        /**
-         * Constructs a NoBlockingAction object.
-         *
-         * @param description an action description.
-         */
         public NoBlockingAction(String description) {
             this.description = description;
             exception = null;
@@ -1278,7 +1196,6 @@ public abstract class Operator implements Timeoutable, Outputable {
         /**
          * Performs a mapping action.
          *
-         * @param param an action parameter.
          * @return an action result.
          */
         public abstract R doAction(P param);
@@ -1296,7 +1213,6 @@ public abstract class Operator implements Timeoutable, Outputable {
         /**
          * Specifies the exception.
          *
-         * @param e an exception.
          * @see #getException
          */
         protected void setException(Exception e) {
@@ -1315,25 +1231,26 @@ public abstract class Operator implements Timeoutable, Outputable {
     }
 
     /**
-     * Can be used to simplify non-primitive type component's methods mapping.
-     * Like this: <BR>
-     * public Color getBackground() { <BR>
-     * return((Color)runMapping(new MapAction("getBackground") { <BR>
-     * public Object map() { <BR>
-     * return ((Component)getSource()).getBackground(); <BR>
-     * } <BR>
-     * })); <BR>
-     * } <BR>
+     * Can be used to simplify non-primitive type component's methods mapping. Like this:
+     * <p>
+     * public Color getBackground() {
+     * <p>
+     * return((Color)runMapping(new MapAction("getBackground") {
+     * <p>
+     * public Object map() {
+     * <p>
+     * return ((Component)getSource()).getBackground();
+     * <p>
+     * }
+     * <p>
+     * }));
+     * <p>
+     * }
      *
      * @see #runMapping(Operator.MapAction)
      */
     protected abstract class MapAction<R> extends QueueTool.QueueAction<R> {
 
-        /**
-         * Constructs a MapAction object.
-         *
-         * @param description an action description.
-         */
         public MapAction(String description) {
             super(description);
         }
@@ -1359,11 +1276,6 @@ public abstract class Operator implements Timeoutable, Outputable {
      */
     protected abstract class MapCharacterAction extends QueueTool.QueueAction<Object> {
 
-        /**
-         * Constructs a MapCharacterAction object.
-         *
-         * @param description an action description.
-         */
         public MapCharacterAction(String description) {
             super(description);
         }
@@ -1389,11 +1301,6 @@ public abstract class Operator implements Timeoutable, Outputable {
      */
     protected abstract class MapByteAction extends QueueTool.QueueAction<Object> {
 
-        /**
-         * Constructs a MapByteAction object.
-         *
-         * @param description an action description.
-         */
         public MapByteAction(String description) {
             super(description);
         }
@@ -1419,11 +1326,6 @@ public abstract class Operator implements Timeoutable, Outputable {
      */
     protected abstract class MapIntegerAction extends QueueTool.QueueAction<Object> {
 
-        /**
-         * Constructs a MapIntegerAction object.
-         *
-         * @param description an action description.
-         */
         public MapIntegerAction(String description) {
             super(description);
         }
@@ -1449,11 +1351,6 @@ public abstract class Operator implements Timeoutable, Outputable {
      */
     protected abstract class MapLongAction extends QueueTool.QueueAction<Object> {
 
-        /**
-         * Constructs a MapLongAction object.
-         *
-         * @param description an action description.
-         */
         public MapLongAction(String description) {
             super(description);
         }
@@ -1479,11 +1376,6 @@ public abstract class Operator implements Timeoutable, Outputable {
      */
     protected abstract class MapFloatAction extends QueueTool.QueueAction<Object> {
 
-        /**
-         * Constructs a MapFloatAction object.
-         *
-         * @param description an action description.
-         */
         public MapFloatAction(String description) {
             super(description);
         }
@@ -1509,11 +1401,6 @@ public abstract class Operator implements Timeoutable, Outputable {
      */
     protected abstract class MapDoubleAction extends QueueTool.QueueAction<Object> {
 
-        /**
-         * Constructs a MapDoubleAction object.
-         *
-         * @param description an action description.
-         */
         public MapDoubleAction(String description) {
             super(description);
         }
@@ -1539,11 +1426,6 @@ public abstract class Operator implements Timeoutable, Outputable {
      */
     protected abstract class MapBooleanAction extends QueueTool.QueueAction<Object> {
 
-        /**
-         * Constructs a MapBooleanAction object.
-         *
-         * @param description an action description.
-         */
         public MapBooleanAction(String description) {
             super(description);
         }
@@ -1569,11 +1451,6 @@ public abstract class Operator implements Timeoutable, Outputable {
      */
     protected abstract class MapVoidAction extends QueueTool.QueueAction<Object> {
 
-        /**
-         * Constructs a MapVoidAction object.
-         *
-         * @param description an action description.
-         */
         public MapVoidAction(String description) {
             super(description);
         }

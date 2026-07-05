@@ -40,7 +40,6 @@ import org.netbeans.jemmy.operators.WindowOperator;
  * Class allows to make periodical window jobs like error window closing.
  *
  * @see WindowJob
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class WindowManager implements Timeoutable, Outputable {
 
@@ -64,8 +63,6 @@ public class WindowManager implements Timeoutable, Outputable {
 
     /**
      * Adds job to list.
-     *
-     * @param job a job to perform.
      */
     public static void addJob(WindowJob<?, Window> job) {
         manager.add(job);
@@ -73,8 +70,6 @@ public class WindowManager implements Timeoutable, Outputable {
 
     /**
      * Removes job from list.
-     *
-     * @param job a job to remove.
      */
     public static void removeJob(WindowJob<?, ?> job) {
         manager.remove(job);
@@ -111,8 +106,6 @@ public class WindowManager implements Timeoutable, Outputable {
 
     /**
      * Adds job to list.
-     *
-     * @param job a job to perform.
      */
     public void add(WindowJob<?, Window> job) {
         output.printLine("Starting job \"" + job.getDescription() + "\"");
@@ -125,8 +118,6 @@ public class WindowManager implements Timeoutable, Outputable {
 
     /**
      * Removes job from list.
-     *
-     * @param job a job to remove.
      */
     public void remove(WindowJob<?, ?> job) {
         output.printLine("Killing job \"" + job.getDescription() + "\"");

@@ -27,64 +27,38 @@ package org.netbeans.jemmy.operators;
 import java.awt.Container;
 import javax.swing.JToggleButton;
 import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.TimeoutExpiredException;
 
 /**
- *
- * <BR><BR>Timeouts used: <BR>
- * AbstractButtonOperator.PushButtonTimeout - time between button pressing and
- * releasing<BR>
- * ComponentOperator.WaitComponentTimeout - time to wait button displayed <BR>
- * ComponentOperator.WaitComponentEnabledTimeout - time to wait button enabled
- * <BR>.
+ * Timeouts used:
+ * <ul>
+ * <li>AbstractButtonOperator.PushButtonTimeout - time between button pressing and releasing</li>
+ * <li>ComponentOperator.WaitComponentTimeout - time to wait button displayed</li>
+ * <li>ComponentOperator.WaitComponentEnabledTimeout - time to wait button enabled</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
 public class JToggleButtonOperator extends AbstractButtonOperator {
 
-    /**
-     * Constructor.
-     *
-     * @param b a component
-     */
     public JToggleButtonOperator(JToggleButton b) {
         super(b);
     }
 
-    /**
-     * Constructs a JToggleButtonOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public JToggleButtonOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((JToggleButton) cont.waitSubComponent(new JToggleButtonFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a JToggleButtonOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public JToggleButtonOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Button text.
-     * @param index Ordinal component index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public JToggleButtonOperator(ContainerOperator<?> cont, String text, int index) {
         this((JToggleButton) waitComponent(
@@ -96,25 +70,18 @@ public class JToggleButtonOperator extends AbstractButtonOperator {
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Button text.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public JToggleButtonOperator(ContainerOperator<?> cont, String text) {
         this(cont, text, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     * @param index Ordinal component index.
-     * @throws TimeoutExpiredException
      */
     public JToggleButtonOperator(ContainerOperator<?> cont, int index) {
         this((JToggleButton) waitComponent(cont, new JToggleButtonFinder(), index));
@@ -122,11 +89,8 @@ public class JToggleButtonOperator extends AbstractButtonOperator {
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     * @throws TimeoutExpiredException
      */
     public JToggleButtonOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -135,9 +99,6 @@ public class JToggleButtonOperator extends AbstractButtonOperator {
     /**
      * Searches JToggleButton in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JToggleButton instance or null if component was not found.
      */
     public static JToggleButton findJToggleButton(Container cont, ComponentChooser chooser, int index) {
@@ -147,8 +108,6 @@ public class JToggleButtonOperator extends AbstractButtonOperator {
     /**
      * Searches 0'th JToggleButton in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JToggleButton instance or null if component was not found.
      */
     public static JToggleButton findJToggleButton(Container cont, ComponentChooser chooser) {
@@ -158,11 +117,6 @@ public class JToggleButtonOperator extends AbstractButtonOperator {
     /**
      * Searches JToggleButton by text.
      *
-     * @param cont Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return JToggleButton instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -177,10 +131,6 @@ public class JToggleButtonOperator extends AbstractButtonOperator {
     /**
      * Searches JToggleButton by text.
      *
-     * @param cont Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return JToggleButton instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -191,11 +141,7 @@ public class JToggleButtonOperator extends AbstractButtonOperator {
     /**
      * Waits JToggleButton in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JToggleButton instance.
-     * @throws TimeoutExpiredException
      */
     public static JToggleButton waitJToggleButton(Container cont, ComponentChooser chooser, int index) {
         return (JToggleButton) waitAbstractButton(cont, new JToggleButtonFinder(chooser), index);
@@ -204,10 +150,7 @@ public class JToggleButtonOperator extends AbstractButtonOperator {
     /**
      * Waits 0'th JToggleButton in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JToggleButton instance.
-     * @throws TimeoutExpiredException
      */
     public static JToggleButton waitJToggleButton(Container cont, ComponentChooser chooser) {
         return waitJToggleButton(cont, chooser, 0);
@@ -216,14 +159,8 @@ public class JToggleButtonOperator extends AbstractButtonOperator {
     /**
      * Waits JToggleButton by text.
      *
-     * @param cont Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return JToggleButton instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static JToggleButton waitJToggleButton(Container cont, String text, boolean ce, boolean ccs, int index) {
         return (waitJToggleButton(
@@ -236,21 +173,13 @@ public class JToggleButtonOperator extends AbstractButtonOperator {
     /**
      * Waits JToggleButton by text.
      *
-     * @param cont Container to search component in.
-     * @param text Button text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return JToggleButton instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static JToggleButton waitJToggleButton(Container cont, String text, boolean ce, boolean ccs) {
         return waitJToggleButton(cont, text, ce, ccs, 0);
     }
 
-    /**
-     * Prepares the button to click.
-     */
     protected void prepareToClick() {
         makeComponentVisible();
     }
@@ -262,8 +191,6 @@ public class JToggleButtonOperator extends AbstractButtonOperator {
 
         /**
          * Constructs JToggleButtonFinder.
-         *
-         * @param sf other searching criteria.
          */
         public JToggleButtonFinder(ComponentChooser sf) {
             super(JToggleButton.class, sf);

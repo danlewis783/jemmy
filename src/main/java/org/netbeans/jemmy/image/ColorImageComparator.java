@@ -29,8 +29,6 @@ import java.awt.image.BufferedImage;
 /**
  * Compares two images with color mapping defined by {@code ColorModel}
  * implementation.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class ColorImageComparator extends StrictImageComparator {
 
@@ -68,9 +66,6 @@ public class ColorImageComparator extends StrictImageComparator {
      * constructor behaves like {@code StrictImageComparator}. Object
      * created works faster because it does not create intermediate images for
      * another comparator.
-     *
-     * @param leftMap Map applied to the left image during comparision.
-     * @param rightMap Map applied to the right image during comparision.
      */
     public ColorImageComparator(ColorMap leftMap, ColorMap rightMap) {
         this.leftMap = leftMap;
@@ -81,8 +76,6 @@ public class ColorImageComparator extends StrictImageComparator {
      * Creates a comparator with two color maps. Actual comparision perfomed by
      * {@code comparator} parameter.
      *
-     * @param leftMap Map applied to the left image during comparision.
-     * @param rightMap Map applied to the right image during comparision.
      * @param subComparator comporator to perform a comparision of to images
      * with mapped colors.
      */
@@ -128,7 +121,6 @@ public class ColorImageComparator extends StrictImageComparator {
         /**
          * Maps one color into another.
          *
-         * @param rgb an original color.
          * @return a converted color.
          */
         public int mapColor(int rgb);
@@ -141,11 +133,6 @@ public class ColorImageComparator extends StrictImageComparator {
 
         int foreground;
 
-        /**
-         * Constructs a ColorImageComparator$ForegroundColorMap object.
-         *
-         * @param foreground Foreground color.
-         */
         public ForegroundColorMap(int foreground) {
             this.foreground = foreground;
         }
@@ -163,11 +150,6 @@ public class ColorImageComparator extends StrictImageComparator {
 
         int background;
 
-        /**
-         * Constructs a ColorImageComparator$BackgroundColorMap object.
-         *
-         * @param background Background color.
-         */
         public BackgroundColorMap(int background) {
             this.background = background;
         }

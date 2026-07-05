@@ -39,9 +39,6 @@ import org.netbeans.jemmy.TestOut;
 /**
  * Auxiliary class to find an event sequence which should be posted to reproduce
  * user actions.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
- *
  */
 public class TrialListenerManager implements Outputable {
 
@@ -53,8 +50,6 @@ public class TrialListenerManager implements Outputable {
 
     /**
      * Contructor.
-     *
-     * @param comp Component to display event sequence for.
      */
     public TrialListenerManager(Component comp) {
         this.comp = comp;

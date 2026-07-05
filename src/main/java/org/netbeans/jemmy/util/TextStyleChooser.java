@@ -33,8 +33,6 @@ import javax.swing.text.StyledDocument;
  * Defines searching criteria for {@code javax.swing.text.StyledDocument}
  * <a href="JTextComponentOperator.java">JTextComponentOperator.getPositionByText(String,
  * JTextComponentOperator.TextChooser, int)</a>.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class TextStyleChooser extends AbstractTextStyleChooser {
 
@@ -48,17 +46,12 @@ public class TextStyleChooser extends AbstractTextStyleChooser {
     Color background = null;
     Color foreground = null;
 
-    /**
-     * Constructor.
-     */
     public TextStyleChooser() {
         super();
     }
 
     /**
      * Adds boldness checking to the criteria.
-     *
-     * @param bold Specifies if font needs to be bold.
      */
     public void setBold(boolean bold) {
         this.bold = bold ? Boolean.TRUE : Boolean.FALSE;
@@ -73,8 +66,6 @@ public class TextStyleChooser extends AbstractTextStyleChooser {
 
     /**
      * Adds italic style checking to the criteria.
-     *
-     * @param italic Specifies if font needs to be italic.
      */
     public void setItalic(boolean italic) {
         this.italic = italic ? Boolean.TRUE : Boolean.FALSE;
@@ -89,8 +80,6 @@ public class TextStyleChooser extends AbstractTextStyleChooser {
 
     /**
      * Adds strikeness checking to the criteria.
-     *
-     * @param strike Specifies if font needs to be striked.
      */
     public void setStrike(boolean strike) {
         this.strike = strike ? Boolean.TRUE : Boolean.FALSE;
@@ -105,8 +94,6 @@ public class TextStyleChooser extends AbstractTextStyleChooser {
 
     /**
      * Adds understrikeness checking to the criteria.
-     *
-     * @param understrike Specifies if font needs to be understriked.
      */
     public void setUnderstrike(boolean understrike) {
         this.understrike = understrike ? Boolean.TRUE : Boolean.FALSE;
@@ -121,8 +108,6 @@ public class TextStyleChooser extends AbstractTextStyleChooser {
 
     /**
      * Adds font size checking to the criteria.
-     *
-     * @param fontSize Specifies a font size.
      */
     public void setFontSize(int fontSize) {
         this.fontSize = Integer.valueOf(fontSize);
@@ -137,8 +122,6 @@ public class TextStyleChooser extends AbstractTextStyleChooser {
 
     /**
      * Adds alignment checking to the criteria.
-     *
-     * @param alignment Specifies a text alignment.
      */
     public void setAlignment(int alignment) {
         this.alignment = Integer.valueOf(alignment);
@@ -153,8 +136,6 @@ public class TextStyleChooser extends AbstractTextStyleChooser {
 
     /**
      * Adds font family checking to the criteria.
-     *
-     * @param fontFamily Specifies a font family.
      */
     public void setFontFamily(String fontFamily) {
         this.fontFamily = fontFamily;
@@ -169,8 +150,6 @@ public class TextStyleChooser extends AbstractTextStyleChooser {
 
     /**
      * Adds backgroung color checking to the criteria.
-     *
-     * @param background Specifies a background color.
      */
     public void setBackground(Color background) {
         this.background = background;
@@ -185,8 +164,6 @@ public class TextStyleChooser extends AbstractTextStyleChooser {
 
     /**
      * Adds foregroung color checking to the criteria.
-     *
-     * @param foreground Specifies a foreground color.
      */
     public void setForeground(Color foreground) {
         this.foreground = foreground;

@@ -32,32 +32,26 @@ import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
-import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.Timeoutable;
 import org.netbeans.jemmy.Timeouts;
 
 /**
- *
- * Class provides basic functions to operate with JTextArea (selection, typing,
- * deleting)
- *
- * <BR><BR>Timeouts used: <BR>
- * JTextComponentOperator.PushKeyTimeout - time between key pressing and
- * releasing during text typing <BR>
- * JTextComponentOperator.BetweenKeysTimeout - time to sleep between two chars
- * typing <BR>
- * JTextComponentOperator.ChangeCaretPositionTimeout - maximum time to chenge
- * caret position <BR>
- * JTextComponentOperator.TypeTextTimeout - maximum time to type text <BR>
- * ComponentOperator.WaitComponentTimeout - time to wait component displayed
- * <BR>
- * ComponentOperator.WaitFocusTimeout - time to wait component focus <BR>
- * JScrollBarOperator.OneScrollClickTimeout - time for one scroll click <BR>
- * JScrollBarOperator.WholeScrollTimeout - time for the whole scrolling <BR>.
+ * Class provides basic functions to operate with JTextArea (selection, typing, deleting)
+ * <p>
+ * Timeouts used:
+ * <ul>
+ * <li>JTextComponentOperator.PushKeyTimeout - time between key pressing and releasing during text typing</li>
+ * <li>JTextComponentOperator.BetweenKeysTimeout - time to sleep between two chars typing</li>
+ * <li>JTextComponentOperator.ChangeCaretPositionTimeout - maximum time to chenge caret position</li>
+ * <li>JTextComponentOperator.TypeTextTimeout - maximum time to type text</li>
+ * <li>ComponentOperator.WaitComponentTimeout - time to wait component displayed</li>
+ * <li>ComponentOperator.WaitFocusTimeout - time to wait component focus</li>
+ * <li>JScrollBarOperator.OneScrollClickTimeout - time for one scroll click</li>
+ * <li>JScrollBarOperator.WholeScrollTimeout - time for the whole scrolling</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
  *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class JTextAreaOperator extends JTextComponentOperator implements Timeoutable, Outputable {
 
@@ -78,46 +72,24 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
     private Timeouts timeouts;
     private TestOut output;
 
-    /**
-     * Constructor.
-     *
-     * @param b a component
-     */
     public JTextAreaOperator(JTextArea b) {
         super(b);
     }
 
-    /**
-     * Constructs a JTextAreaOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public JTextAreaOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((JTextArea) cont.waitSubComponent(new JTextAreaFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a JTextAreaOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public JTextAreaOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Button text.
-     * @param index Ordinal component index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public JTextAreaOperator(ContainerOperator<?> cont, String text, int index) {
         this((JTextArea) waitComponent(
@@ -128,25 +100,18 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Button text.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public JTextAreaOperator(ContainerOperator<?> cont, String text) {
         this(cont, text, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     * @param index Ordinal component index.
-     * @throws TimeoutExpiredException
      */
     public JTextAreaOperator(ContainerOperator<?> cont, int index) {
         this((JTextArea) waitComponent(cont, new JTextAreaFinder(), index));
@@ -154,11 +119,8 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     * @throws TimeoutExpiredException
      */
     public JTextAreaOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -167,9 +129,6 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
     /**
      * Searches JTextArea in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index Ordinal component index.
      * @return JTextArea instance or null if component was not found.
      */
     public static JTextArea findJTextArea(Container cont, ComponentChooser chooser, int index) {
@@ -179,8 +138,6 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
     /**
      * Searches JTextArea in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser a component chooser specifying searching criteria.
      * @return JTextArea instance or null if component was not found.
      */
     public static JTextArea findJTextArea(Container cont, ComponentChooser chooser) {
@@ -190,11 +147,6 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
     /**
      * Searches JTextArea by text.
      *
-     * @param cont Container to search component in.
-     * @param text Component text.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return JTextArea instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -209,10 +161,6 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
     /**
      * Searches JTextArea by text.
      *
-     * @param cont Container to search component in.
-     * @param text Component text.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return JTextArea instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -223,11 +171,7 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
     /**
      * Waits JTextArea in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index Ordinal component index.
      * @return JTextArea instance.
-     * @throws TimeoutExpiredException
      */
     public static JTextArea waitJTextArea(Container cont, ComponentChooser chooser, int index) {
         return (JTextArea) waitJTextComponent(cont, new JTextAreaFinder(chooser), index);
@@ -236,10 +180,7 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
     /**
      * Waits JTextArea in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser a component chooser specifying searching criteria.
      * @return JTextArea instance.
-     * @throws TimeoutExpiredException
      */
     public static JTextArea waitJTextArea(Container cont, ComponentChooser chooser) {
         return waitJTextArea(cont, chooser, 0);
@@ -248,14 +189,8 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
     /**
      * Waits JTextArea by text.
      *
-     * @param cont Container to search component in.
-     * @param text Component text.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return JTextArea instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static JTextArea waitJTextArea(Container cont, String text, boolean ce, boolean ccs, int index) {
         return (waitJTextArea(
@@ -268,13 +203,8 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
     /**
      * Waits JTextArea by text.
      *
-     * @param cont Container to search component in.
-     * @param text Component text.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return JTextArea instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static JTextArea waitJTextArea(Container cont, String text, boolean ce, boolean ccs) {
         return waitJTextArea(cont, text, ce, ccs, 0);
@@ -306,7 +236,6 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
      * Notifies whether "PageUp" and "PageDown" should be used to change caret
      * position. If can be useful if text takes some pages.
      *
-     * @param yesOrNo if page navigation keys need to be used.
      * @deprecated All text operations are performed by TextDriver regitered for
      * this operator type.
      */
@@ -316,11 +245,9 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
     /**
      * Moves caret to line.
      *
-     * @param row Line to move caret to.
      * @see JTextComponentOperator#changeCaretPosition(int)
      * @see #changeCaretPosition(int)
      * @see #changeCaretPosition(int, int)
-     * @throws TimeoutExpiredException
      */
     public void changeCaretRow(int row) {
         changeCaretPosition(row, getCaretPosition() - getLineStartOffset(getLineOfOffset(getCaretPosition())));
@@ -329,12 +256,9 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
     /**
      * Moves caret.
      *
-     * @param row Line to move caret to.
-     * @param column Column to move caret to.
      * @see JTextComponentOperator#changeCaretPosition(int)
      * @see #changeCaretRow(int)
      * @see #changeCaretPosition(int, int)
-     * @throws TimeoutExpiredException
      */
     public void changeCaretPosition(int row, int column) {
         int startOffset = getLineStartOffset(row);
@@ -346,11 +270,7 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
     /**
      * Types text.
      *
-     * @param text Text to be typed.
-     * @param row Line to type text in.
-     * @param column Column to type text from.
      * @see JTextComponentOperator#typeText(String, int)
-     * @throws TimeoutExpiredException
      */
     public void typeText(String text, int row, int column) {
         if (!hasFocus()) {
@@ -363,13 +283,8 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
     /**
      * Select a part of text.
      *
-     * @param startRow Start position row.
-     * @param startColumn Start position column.
-     * @param endRow End position row.
-     * @param endColumn End position column.
      * @see JTextComponentOperator#selectText(int, int)
      * @see #selectLines(int, int)
-     * @throws TimeoutExpiredException
      */
     public void selectText(int startRow, int startColumn, int endRow, int endColumn) {
         int startPos = 0;
@@ -394,11 +309,8 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
     /**
      * Select some text lines.
      *
-     * @param startLine start selection
-     * @param endLine end selection
      * @see JTextComponentOperator#selectText(int, int)
      * @see #selectText(int, int, int, int)
-     * @throws TimeoutExpiredException
      */
     public void selectLines(int startLine, int endLine) {
         if (!hasFocus()) {
@@ -420,9 +332,6 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code JTextArea.append(String)} through queue
-     */
     public void append(final String string) {
         runMapping(new MapVoidAction("append") {
             @Override
@@ -432,9 +341,6 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
         });
     }
 
-    /**
-     * Maps {@code JTextArea.getColumns()} through queue
-     */
     public int getColumns() {
         return (runMapping(new MapIntegerAction("getColumns") {
             @Override
@@ -444,9 +350,6 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
         }));
     }
 
-    /**
-     * Maps {@code JTextArea.getLineCount()} through queue
-     */
     public int getLineCount() {
         return (runMapping(new MapIntegerAction("getLineCount") {
             @Override
@@ -456,9 +359,6 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
         }));
     }
 
-    /**
-     * Maps {@code JTextArea.getLineEndOffset(int)} through queue
-     */
     public int getLineEndOffset(final int i) {
         return (runMapping(new MapIntegerAction("getLineEndOffset") {
             @Override
@@ -468,9 +368,6 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
         }));
     }
 
-    /**
-     * Maps {@code JTextArea.getLineOfOffset(int)} through queue
-     */
     public int getLineOfOffset(final int i) {
         return (runMapping(new MapIntegerAction("getLineOfOffset") {
             @Override
@@ -480,9 +377,6 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
         }));
     }
 
-    /**
-     * Maps {@code JTextArea.getLineStartOffset(int)} through queue
-     */
     public int getLineStartOffset(final int i) {
         return (runMapping(new MapIntegerAction("getLineStartOffset") {
             @Override
@@ -492,9 +386,6 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
         }));
     }
 
-    /**
-     * Maps {@code JTextArea.getLineWrap()} through queue
-     */
     public boolean getLineWrap() {
         return (runMapping(new MapBooleanAction("getLineWrap") {
             @Override
@@ -504,9 +395,6 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
         }));
     }
 
-    /**
-     * Maps {@code JTextArea.getRows()} through queue
-     */
     public int getRows() {
         return (runMapping(new MapIntegerAction("getRows") {
             @Override
@@ -516,9 +404,6 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
         }));
     }
 
-    /**
-     * Maps {@code JTextArea.getTabSize()} through queue
-     */
     public int getTabSize() {
         return (runMapping(new MapIntegerAction("getTabSize") {
             @Override
@@ -528,9 +413,6 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
         }));
     }
 
-    /**
-     * Maps {@code JTextArea.getWrapStyleWord()} through queue
-     */
     public boolean getWrapStyleWord() {
         return (runMapping(new MapBooleanAction("getWrapStyleWord") {
             @Override
@@ -540,9 +422,6 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
         }));
     }
 
-    /**
-     * Maps {@code JTextArea.insert(String, int)} through queue
-     */
     public void insert(final String string, final int i) {
         runMapping(new MapVoidAction("insert") {
             @Override
@@ -552,9 +431,6 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
         });
     }
 
-    /**
-     * Maps {@code JTextArea.replaceRange(String, int, int)} through queue
-     */
     public void replaceRange(final String string, final int i, final int i1) {
         runMapping(new MapVoidAction("replaceRange") {
             @Override
@@ -564,9 +440,6 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
         });
     }
 
-    /**
-     * Maps {@code JTextArea.setColumns(int)} through queue
-     */
     public void setColumns(final int i) {
         runMapping(new MapVoidAction("setColumns") {
             @Override
@@ -576,9 +449,6 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
         });
     }
 
-    /**
-     * Maps {@code JTextArea.setLineWrap(boolean)} through queue
-     */
     public void setLineWrap(final boolean b) {
         runMapping(new MapVoidAction("setLineWrap") {
             @Override
@@ -588,9 +458,6 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
         });
     }
 
-    /**
-     * Maps {@code JTextArea.setRows(int)} through queue
-     */
     public void setRows(final int i) {
         runMapping(new MapVoidAction("setRows") {
             @Override
@@ -600,9 +467,6 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
         });
     }
 
-    /**
-     * Maps {@code JTextArea.setTabSize(int)} through queue
-     */
     public void setTabSize(final int i) {
         runMapping(new MapVoidAction("setTabSize") {
             @Override
@@ -612,9 +476,6 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
         });
     }
 
-    /**
-     * Maps {@code JTextArea.setWrapStyleWord(boolean)} through queue
-     */
     public void setWrapStyleWord(final boolean b) {
         runMapping(new MapVoidAction("setWrapStyleWord") {
             @Override
@@ -633,8 +494,6 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
 
         /**
          * Constructs JTextAreaFinder.
-         *
-         * @param sf other searching criteria.
          */
         public JTextAreaFinder(ComponentChooser sf) {
             super(JTextArea.class, sf);

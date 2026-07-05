@@ -36,20 +36,18 @@ import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
-import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.Timeoutable;
 import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.Waitable;
 import org.netbeans.jemmy.Waiter;
 
 /**
- * <BR><BR>Timeouts used: <BR>
- * ComponentOperator.WaitComponentTimeout - time to wait container displayed
- * <BR>.
+ * Timeouts used:
+ * <ul>
+ * <li>ComponentOperator.WaitComponentTimeout - time to wait container displayed</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
 public class ContainerOperator<T extends Container> extends ComponentOperator implements Timeoutable, Outputable {
@@ -60,46 +58,24 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
     private Timeouts timeouts;
     private TestOut output;
 
-    /**
-     * Constructor.
-     *
-     * @param b Container component.
-     */
     public ContainerOperator(Container b) {
         super(b);
         searcher = new ComponentSearcher(b);
         searcher.setOutput(TestOut.getNullOutput());
     }
 
-    /**
-     * Constructs a ContainerOperator object.
-     *
-     * @param cont container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public ContainerOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((Container) cont.waitSubComponent(new ContainerFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a ContainerOperator object.
-     *
-     * @param cont container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public ContainerOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont Operator pointing a container to search component in.
-     * @param index Ordinal component index.
-     * @throws TimeoutExpiredException
      */
     public ContainerOperator(ContainerOperator<?> cont, int index) {
         this((Container) waitComponent(cont, new ContainerFinder(), index));
@@ -107,11 +83,8 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont Operator pointing a container to search component in.
-     * @throws TimeoutExpiredException
      */
     public ContainerOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -120,9 +93,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
     /**
      * Searches Container in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return Container instance or null if component was not found.
      */
     public static Container findContainer(Container cont, ComponentChooser chooser, int index) {
@@ -132,8 +102,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
     /**
      * Searches 0'th Container in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return Container instance or null if component was not found.
      */
     public static Container findContainer(Container cont, ComponentChooser chooser) {
@@ -143,8 +111,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
     /**
      * Searches Container in container.
      *
-     * @param cont Container to search component in.
-     * @param index Ordinal component index.
      * @return Container instance or null if component was not found.
      */
     public static Container findContainer(Container cont, int index) {
@@ -155,7 +121,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
     /**
      * Searches 0'th Container in container.
      *
-     * @param cont Container to search component in.
      * @return Container instance or null if component was not found.
      */
     public static Container findContainer(Container cont) {
@@ -165,8 +130,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
     /**
      * Searches Container object which component lies on.
      *
-     * @param comp Component to find Container under.
-     * @param chooser a chooser specifying searching criteria.
      * @return Container instance or null if component was not found.
      */
     public static Container findContainerUnder(Component comp, ComponentChooser chooser) {
@@ -176,7 +139,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
     /**
      * Searches Container object which component lies on.
      *
-     * @param comp Component to find Container under.
      * @return Container instance or null if component was not found.
      */
     public static Container findContainerUnder(Component comp) {
@@ -186,11 +148,7 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
     /**
      * Waits Container in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return Container instance.
-     * @throws TimeoutExpiredException
      */
     public static Container waitContainer(Container cont, ComponentChooser chooser, int index) {
         return (Container) waitComponent(cont, new ContainerFinder(chooser), index);
@@ -199,10 +157,7 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
     /**
      * Waits 0'th Container in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return Container instance.
-     * @throws TimeoutExpiredException
      */
     public static Container waitContainer(Container cont, ComponentChooser chooser) {
         return waitContainer(cont, chooser, 0);
@@ -211,10 +166,7 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
     /**
      * Waits Container in container.
      *
-     * @param cont Container to search component in.
-     * @param index Ordinal component index.
      * @return Container instance.
-     * @throws TimeoutExpiredException
      */
     public static Container waitContainer(Container cont, int index) {
         return waitContainer(
@@ -224,9 +176,7 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
     /**
      * Waits 0'th Container in container.
      *
-     * @param cont Container to search component in.
      * @return Container instance.
-     * @throws TimeoutExpiredException
      */
     public static Container waitContainer(Container cont) {
         return waitContainer(cont, 0);
@@ -261,8 +211,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
     /**
      * Searches for a subcomponent.
      *
-     * @param chooser a chooser specifying searching criteria.
-     * @param index Ordinal component index.
      * @return Component instance.
      */
     public Component findSubComponent(ComponentChooser chooser, int index) {
@@ -273,7 +221,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
     /**
      * Searches for a subcomponent.
      *
-     * @param chooser a chooser specifying searching criteria.
      * @return Component instance.
      */
     public Component findSubComponent(ComponentChooser chooser) {
@@ -283,8 +230,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
     /**
      * Waits for a subcomponent.
      *
-     * @param chooser a chooser specifying searching criteria.
-     * @param index Ordinal component index.
      * @return Component instance.
      */
     public Component waitSubComponent(final ComponentChooser chooser, final int index) {
@@ -320,7 +265,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
     /**
      * Waits for a subcomponent.
      *
-     * @param chooser a chooser specifying searching criteria.
      * @return Component instance.
      */
     public Component waitSubComponent(ComponentChooser chooser) {
@@ -330,8 +274,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
     /**
      * Waits for a subcomponent and creates an operator.
      *
-     * @param chooser a chooser specifying searching criteria.
-     * @param index Ordinal component index.
      * @return Component instance.
      */
     public ComponentOperator createSubOperator(ComponentChooser chooser, int index) {
@@ -341,7 +283,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
     /**
      * Waits for a subcomponent and creates an operator.
      *
-     * @param chooser a chooser specifying searching criteria.
      * @return Component instance.
      */
     public ComponentOperator createSubOperator(ComponentChooser chooser) {
@@ -350,9 +291,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code Container.add(Component)} through queue
-     */
     public Component add(final Component component) {
         return (runMapping(new MapAction<Component>("add") {
             @Override
@@ -362,9 +300,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
         }));
     }
 
-    /**
-     * Maps {@code Container.add(Component, int)} through queue
-     */
     public Component add(final Component component, final int i) {
         return (runMapping(new MapAction<Component>("add") {
             @Override
@@ -374,9 +309,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
         }));
     }
 
-    /**
-     * Maps {@code Container.add(Component, Object)} through queue
-     */
     public void add(final Component component, final Object object) {
         runMapping(new MapVoidAction("add") {
             @Override
@@ -386,9 +318,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
         });
     }
 
-    /**
-     * Maps {@code Container.add(Component, Object, int)} through queue
-     */
     public void add(final Component component, final Object object, final int i) {
         runMapping(new MapVoidAction("add") {
             @Override
@@ -398,9 +327,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
         });
     }
 
-    /**
-     * Maps {@code Container.add(String, Component)} through queue
-     */
     public Component add(final String string, final Component component) {
         return (runMapping(new MapAction<Component>("add") {
             @Override
@@ -410,10 +336,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
         }));
     }
 
-    /**
-     * Maps {@code Container.addContainerListener(ContainerListener)}
-     * through queue
-     */
     public void addContainerListener(final ContainerListener containerListener) {
         runMapping(new MapVoidAction("addContainerListener") {
             @Override
@@ -423,9 +345,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
         });
     }
 
-    /**
-     * Maps {@code Container.findComponentAt(int, int)} through queue
-     */
     public Component findComponentAt(final int i, final int i1) {
         return (runMapping(new MapAction<Component>("findComponentAt") {
             @Override
@@ -435,9 +354,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
         }));
     }
 
-    /**
-     * Maps {@code Container.findComponentAt(Point)} through queue
-     */
     public Component findComponentAt(final Point point) {
         return (runMapping(new MapAction<Component>("findComponentAt") {
             @Override
@@ -447,9 +363,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
         }));
     }
 
-    /**
-     * Maps {@code Container.getComponent(int)} through queue
-     */
     public Component getComponent(final int i) {
         return (runMapping(new MapAction<Component>("getComponent") {
             @Override
@@ -459,9 +372,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
         }));
     }
 
-    /**
-     * Maps {@code Container.getComponentCount()} through queue
-     */
     public int getComponentCount() {
         return (runMapping(new MapIntegerAction("getComponentCount") {
             @Override
@@ -471,9 +381,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
         }));
     }
 
-    /**
-     * Maps {@code Container.getComponents()} through queue
-     */
     public Component[] getComponents() {
         return ((Component[]) runMapping(new MapAction<Object>("getComponents") {
             @Override
@@ -483,9 +390,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
         }));
     }
 
-    /**
-     * Maps {@code Container.getInsets()} through queue
-     */
     public Insets getInsets() {
         return (runMapping(new MapAction<Insets>("getInsets") {
             @Override
@@ -495,9 +399,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
         }));
     }
 
-    /**
-     * Maps {@code Container.getLayout()} through queue
-     */
     public LayoutManager getLayout() {
         return (runMapping(new MapAction<LayoutManager>("getLayout") {
             @Override
@@ -507,9 +408,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
         }));
     }
 
-    /**
-     * Maps {@code Container.isAncestorOf(Component)} through queue
-     */
     public boolean isAncestorOf(final Component component) {
         return (runMapping(new MapBooleanAction("isAncestorOf") {
             @Override
@@ -519,9 +417,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
         }));
     }
 
-    /**
-     * Maps {@code Container.paintComponents(Graphics)} through queue
-     */
     public void paintComponents(final Graphics graphics) {
         runMapping(new MapVoidAction("paintComponents") {
             @Override
@@ -531,9 +426,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
         });
     }
 
-    /**
-     * Maps {@code Container.printComponents(Graphics)} through queue
-     */
     public void printComponents(final Graphics graphics) {
         runMapping(new MapVoidAction("printComponents") {
             @Override
@@ -543,9 +435,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
         });
     }
 
-    /**
-     * Maps {@code Container.remove(int)} through queue
-     */
     public void remove(final int i) {
         runMapping(new MapVoidAction("remove") {
             @Override
@@ -555,9 +444,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
         });
     }
 
-    /**
-     * Maps {@code Container.remove(Component)} through queue
-     */
     public void remove(final Component component) {
         runMapping(new MapVoidAction("remove") {
             @Override
@@ -567,9 +453,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
         });
     }
 
-    /**
-     * Maps {@code Container.removeAll()} through queue
-     */
     public void removeAll() {
         runMapping(new MapVoidAction("removeAll") {
             @Override
@@ -579,10 +462,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
         });
     }
 
-    /**
-     * Maps {@code Container.removeContainerListener(ContainerListener)}
-     * through queue
-     */
     public void removeContainerListener(final ContainerListener containerListener) {
         runMapping(new MapVoidAction("removeContainerListener") {
             @Override
@@ -592,9 +471,6 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
         });
     }
 
-    /**
-     * Maps {@code Container.setLayout(LayoutManager)} through queue
-     */
     public void setLayout(final LayoutManager layoutManager) {
         runMapping(new MapVoidAction("setLayout") {
             @Override
@@ -611,18 +487,10 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
      */
     public static class ContainerFinder extends Finder {
 
-        /**
-         * Constructs ContainerFinder.
-         *
-         * @param sf other searching criteria.
-         */
         public ContainerFinder(ComponentChooser sf) {
             super(Container.class, sf);
         }
 
-        /**
-         * Constructs ContainerFinder.
-         */
         public ContainerFinder() {
             super(Container.class);
         }

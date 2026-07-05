@@ -25,7 +25,7 @@
 /**
  * <h1>Util package</h1>
  * Contains different util classes and additional implementations of some Jemmy
- * interfaces.<br>
+ * interfaces.
  *
  * @since 02/28/2002
  * <hr>

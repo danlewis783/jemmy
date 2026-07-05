@@ -34,18 +34,11 @@ import org.netbeans.jemmy.operators.Operator;
 
 /**
  * ScrollDriver for awt components.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public abstract class AWTScrollDriver extends AbstractScrollDriver {
 
     private QueueTool queueTool;
 
-    /**
-     * Constructs a ChoiceDriver.
-     *
-     * @param supported an array of supported class names
-     */
     public AWTScrollDriver(String[] supported) {
         super(supported);
         queueTool = new QueueTool();
@@ -149,12 +142,6 @@ public abstract class AWTScrollDriver extends AbstractScrollDriver {
      * Defines a click point which needs to be used in order to
      * increase/decrease scroller value.
      *
-     * @param oper an operator.
-     * @param direction - one of the ScrollAdjister.INCREASE_SCROLL_DIRECTION,
-     * ScrollAdjister.DECREASE_SCROLL_DIRECTION,
-     * ScrollAdjister.DO_NOT_TOUCH_SCROLL_DIRECTION values.
-     * @param orientation one of the Adjustable.HORIZONTAL or
-     * Adjustable.VERTICAL values.
      * @return a point to click.
      */
     protected abstract Point getClickPoint(ComponentOperator oper, int direction, int orientation);

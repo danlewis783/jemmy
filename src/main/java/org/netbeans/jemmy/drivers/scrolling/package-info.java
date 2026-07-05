@@ -24,7 +24,7 @@
  */
 /**
  * <h1>Scrolling drivers</h1>
- * Different drivers to perform a scrolling operations.<br>
+ * Different drivers to perform a scrolling operations.
  *
  * @since 17 Apr 2002
  * <hr>

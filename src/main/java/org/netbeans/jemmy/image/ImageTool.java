@@ -35,15 +35,12 @@ import org.netbeans.jemmy.JemmyException;
 
 /**
  * Contains util methods to work with images.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class ImageTool {
 
     /**
      * Gets an image from a rectange on screen.
      *
-     * @param rect a rectangle on screen in absolute screen coordinates.
      * @return a captured image.
      */
     public static BufferedImage getImage(Rectangle rect) {
@@ -57,7 +54,6 @@ public class ImageTool {
     /**
      * Gets an image from a component.
      *
-     * @param comp a visible component.
      * @return a captured image.
      */
     public static BufferedImage getImage(Component comp) {
@@ -76,8 +72,6 @@ public class ImageTool {
     /**
      * Increases image.
      *
-     * @param image an image to enlarge.
-     * @param zoom A scale.
      * @return a result image.
      */
     public static BufferedImage enlargeImage(BufferedImage image, int zoom) {
@@ -100,8 +94,6 @@ public class ImageTool {
 
     /**
      * @deprecated Use subtractImage(BufferedImage, BufferedImage) instead.
-     * @param minuend an image to subtract from.
-     * @param deduction an image to subtract.
      * @return a result image.
      */
     @Deprecated
@@ -113,8 +105,6 @@ public class ImageTool {
      * Subtracts second image from first one. Could be used to save file
      * difference for future analysis.
      *
-     * @param minuend an image to subtract from.
-     * @param deduction an image to subtract.
      * @return a result image.
      */
     public static BufferedImage subtractImage(BufferedImage minuend, BufferedImage deduction) {
@@ -124,8 +114,6 @@ public class ImageTool {
     /**
      * @deprecated Use subtractImage(BufferedImage, BufferedImage, int, int)
      * instead.
-     * @param minuend an image to subtract from.
-     * @param deduction an image to subtract.
      * @return a result image.
      */
     @Deprecated
@@ -138,10 +126,6 @@ public class ImageTool {
      * Subtracts subimage from image. Could be used to save file difference for
      * future analysis.
      *
-     * @param minuend an image to subtract from.
-     * @param deduction an image to subtract.
-     * @param relativeX - deduction-in-minuend X coordinate
-     * @param relativeY - deduction-in-minuend Y coordinate
      * @return a result image.
      */
     public static BufferedImage subtractImage(

@@ -47,20 +47,18 @@ import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
-import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.Timeoutable;
 import org.netbeans.jemmy.Timeouts;
 
 /**
- * <BR><BR>Timeouts used: <BR>
- * JComponentOperator.WaitToolTipTimeout - time to wait tool tip displayed <BR>
- * JComponentOperator.ShowToolTipTimeout - time to show tool tip <BR>
- * ComponentOperator.WaitComponentTimeout - time to wait component displayed
- * <BR>.
+ * Timeouts used:
+ * <ul>
+ * <li>JComponentOperator.WaitToolTipTimeout - time to wait tool tip displayed</li>
+ * <li>JComponentOperator.ShowToolTipTimeout - time to show tool tip</li>
+ * <li>ComponentOperator.WaitComponentTimeout - time to wait component displayed</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
 public class JComponentOperator extends ContainerOperator<Container> implements Timeoutable, Outputable {
@@ -82,44 +80,22 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
     private Timeouts timeouts;
     private TestOut output;
 
-    /**
-     * Constructor.
-     *
-     * @param b a component
-     */
     public JComponentOperator(JComponent b) {
         super(b);
     }
 
-    /**
-     * Constructs a JComponentOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public JComponentOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((JComponent) cont.waitSubComponent(new JComponentFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a JComponentOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public JComponentOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont Operator pointing a container to search component in.
-     * @param index Ordinal component index.
-     * @throws TimeoutExpiredException
      */
     public JComponentOperator(ContainerOperator<?> cont, int index) {
         this((JComponent)
@@ -128,11 +104,8 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont Operator pointing a container to search component in.
-     * @throws TimeoutExpiredException
      */
     public JComponentOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -141,9 +114,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
     /**
      * Searches JComponent in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JComponent instance or null if component was not found.
      */
     public static JComponent findJComponent(Container cont, ComponentChooser chooser, int index) {
@@ -153,8 +123,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
     /**
      * Searches 0'th JComponent in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JComponent instance or null if component was not found.
      */
     public static JComponent findJComponent(Container cont, ComponentChooser chooser) {
@@ -164,11 +132,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
     /**
      * Searches JComponent by tooltip text.
      *
-     * @param cont Container to search component in.
-     * @param toolTipText Tooltip text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return JComponent instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -180,10 +143,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
     /**
      * Searches JComponent by tooltip text.
      *
-     * @param cont Container to search component in.
-     * @param toolTipText Tooltip text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return JComponent instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -194,11 +153,7 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
     /**
      * Waits JComponent in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JComponent instance or null if component was not found.
-     * @throws TimeoutExpiredException
      */
     public static JComponent waitJComponent(Container cont, ComponentChooser chooser, final int index) {
         return (JComponent) waitComponent(cont, new JComponentFinder(chooser), index);
@@ -207,10 +162,7 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
     /**
      * Waits 0'th JComponent in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JComponent instance or null if component was not found.
-     * @throws TimeoutExpiredException
      */
     public static JComponent waitJComponent(Container cont, ComponentChooser chooser) {
         return waitJComponent(cont, chooser, 0);
@@ -219,14 +171,8 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
     /**
      * Waits JComponent by tooltip text.
      *
-     * @param cont Container to search component in.
-     * @param toolTipText Tooltip text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return JComponent instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static JComponent waitJComponent(Container cont, String toolTipText, boolean ce, boolean ccs, int index) {
         return waitJComponent(
@@ -236,13 +182,8 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
     /**
      * Waits JComponent by tooltip text.
      *
-     * @param cont Container to search component in.
-     * @param toolTipText Tooltip text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return JComponent instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static JComponent waitJComponent(Container cont, String toolTipText, boolean ce, boolean ccs) {
         return waitJComponent(cont, toolTipText, ce, ccs, 0);
@@ -291,7 +232,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
      * Showes tool tip.
      *
      * @return JToolTip component.
-     * @throws TimeoutExpiredException
      */
     public JToolTip showToolTip() {
         enterMouse();
@@ -360,10 +300,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code JComponent.addAncestorListener(AncestorListener)}
-     * through queue
-     */
     public void addAncestorListener(final AncestorListener ancestorListener) {
         runMapping(new MapVoidAction("addAncestorListener") {
             @Override
@@ -373,11 +309,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps
-     * {@code JComponent.addVetoableChangeListener(VetoableChangeListener)}
-     * through queue
-     */
     public void addVetoableChangeListener(final VetoableChangeListener vetoableChangeListener) {
         runMapping(new MapVoidAction("addVetoableChangeListener") {
             @Override
@@ -387,9 +318,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.computeVisibleRect(Rectangle)} through queue
-     */
     public void computeVisibleRect(final Rectangle rectangle) {
         runMapping(new MapVoidAction("computeVisibleRect") {
             @Override
@@ -399,9 +327,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.createToolTip()} through queue
-     */
     public JToolTip createToolTip() {
         return (runMapping(new MapAction<JToolTip>("createToolTip") {
             @Override
@@ -411,10 +336,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         }));
     }
 
-    /**
-     * Maps {@code JComponent.firePropertyChange(String, byte, byte)}
-     * through queue
-     */
     public void firePropertyChange(final String string, final byte b, final byte b1) {
         runMapping(new MapVoidAction("firePropertyChange") {
             @Override
@@ -424,10 +345,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.firePropertyChange(String, char, char)}
-     * through queue
-     */
     public void firePropertyChange(final String string, final char c, final char c1) {
         runMapping(new MapVoidAction("firePropertyChange") {
             @Override
@@ -437,10 +354,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.firePropertyChange(String, double, double)}
-     * through queue
-     */
     public void firePropertyChange(final String string, final double d, final double d1) {
         runMapping(new MapVoidAction("firePropertyChange") {
             @Override
@@ -450,10 +363,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.firePropertyChange(String, float, float)}
-     * through queue
-     */
     public void firePropertyChange(final String string, final float f, final float f1) {
         runMapping(new MapVoidAction("firePropertyChange") {
             @Override
@@ -463,9 +372,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.firePropertyChange(String, int, int)} through queue
-     */
     public void firePropertyChange(final String string, final int i, final int i1) {
         runMapping(new MapVoidAction("firePropertyChange") {
             @Override
@@ -475,10 +381,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.firePropertyChange(String, long, long)}
-     * through queue
-     */
     public void firePropertyChange(final String string, final long l, final long l1) {
         runMapping(new MapVoidAction("firePropertyChange") {
             @Override
@@ -488,10 +390,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.firePropertyChange(String, short, short)}
-     * through queue
-     */
     public void firePropertyChange(final String string, final short s, final short s1) {
         runMapping(new MapVoidAction("firePropertyChange") {
             @Override
@@ -501,10 +399,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.firePropertyChange(String, boolean, boolean)}
-     * through queue
-     */
     public void firePropertyChange(final String string, final boolean b, final boolean b1) {
         runMapping(new MapVoidAction("firePropertyChange") {
             @Override
@@ -514,9 +408,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.getAccessibleContext()} through queue
-     */
     public AccessibleContext getAccessibleContext() {
         return (runMapping(new MapAction<AccessibleContext>("getAccessibleContext") {
             @Override
@@ -526,9 +417,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         }));
     }
 
-    /**
-     * Maps {@code JComponent.getActionForKeyStroke(KeyStroke)} through queue
-     */
     public ActionListener getActionForKeyStroke(final KeyStroke keyStroke) {
         return (runMapping(new MapAction<ActionListener>("getActionForKeyStroke") {
             @Override
@@ -538,9 +426,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         }));
     }
 
-    /**
-     * Maps {@code JComponent.getAutoscrolls()} through queue
-     */
     public boolean getAutoscrolls() {
         return (runMapping(new MapBooleanAction("getAutoscrolls") {
             @Override
@@ -550,9 +435,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         }));
     }
 
-    /**
-     * Maps {@code JComponent.getBorder()} through queue
-     */
     public Border getBorder() {
         return (runMapping(new MapAction<Border>("getBorder") {
             @Override
@@ -562,9 +444,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         }));
     }
 
-    /**
-     * Maps {@code JComponent.getClientProperty(Object)} through queue
-     */
     public Object getClientProperty(final Object object) {
         return (runMapping(new MapAction<Object>("getClientProperty") {
             @Override
@@ -574,9 +453,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         }));
     }
 
-    /**
-     * Maps {@code JComponent.getConditionForKeyStroke(KeyStroke)} through queue
-     */
     public int getConditionForKeyStroke(final KeyStroke keyStroke) {
         return (runMapping(new MapIntegerAction("getConditionForKeyStroke") {
             @Override
@@ -586,9 +462,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         }));
     }
 
-    /**
-     * Maps {@code JComponent.getDebugGraphicsOptions()} through queue
-     */
     public int getDebugGraphicsOptions() {
         return (runMapping(new MapIntegerAction("getDebugGraphicsOptions") {
             @Override
@@ -598,9 +471,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         }));
     }
 
-    /**
-     * Maps {@code JComponent.getInsets(Insets)} through queue
-     */
     public Insets getInsets(final Insets insets) {
         return (runMapping(new MapAction<Insets>("getInsets") {
             @Override
@@ -610,9 +480,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         }));
     }
 
-    /**
-     * Maps {@code JComponent.getNextFocusableComponent()} through queue
-     */
     @Deprecated
     public Component getNextFocusableComponent() {
         return (runMapping(new MapAction<Component>("getNextFocusableComponent") {
@@ -623,9 +490,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         }));
     }
 
-    /**
-     * Maps {@code JComponent.getRegisteredKeyStrokes()} through queue
-     */
     public KeyStroke[] getRegisteredKeyStrokes() {
         return ((KeyStroke[]) runMapping(new MapAction<Object>("getRegisteredKeyStrokes") {
             @Override
@@ -635,9 +499,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         }));
     }
 
-    /**
-     * Maps {@code JComponent.getRootPane()} through queue
-     */
     public JRootPane getRootPane() {
         return (runMapping(new MapAction<JRootPane>("getRootPane") {
             @Override
@@ -647,9 +508,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         }));
     }
 
-    /**
-     * Maps {@code JComponent.getToolTipLocation(MouseEvent)} through queue
-     */
     public Point getToolTipLocation(final MouseEvent mouseEvent) {
         return (runMapping(new MapAction<Point>("getToolTipLocation") {
             @Override
@@ -659,9 +517,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         }));
     }
 
-    /**
-     * Maps {@code JComponent.getToolTipText()} through queue
-     */
     public String getToolTipText() {
         return (runMapping(new MapAction<String>("getToolTipText") {
             @Override
@@ -671,9 +526,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         }));
     }
 
-    /**
-     * Maps {@code JComponent.getToolTipText(MouseEvent)} through queue
-     */
     public String getToolTipText(final MouseEvent mouseEvent) {
         return (runMapping(new MapAction<String>("getToolTipText") {
             @Override
@@ -683,9 +535,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         }));
     }
 
-    /**
-     * Maps {@code JComponent.getTopLevelAncestor()} through queue
-     */
     public Container getTopLevelAncestor() {
         return (runMapping(new MapAction<Container>("getTopLevelAncestor") {
             @Override
@@ -695,9 +544,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         }));
     }
 
-    /**
-     * Maps {@code JComponent.getUIClassID()} through queue
-     */
     public String getUIClassID() {
         return (runMapping(new MapAction<String>("getUIClassID") {
             @Override
@@ -707,9 +553,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         }));
     }
 
-    /**
-     * Maps {@code JComponent.getVisibleRect()} through queue
-     */
     public Rectangle getVisibleRect() {
         return (runMapping(new MapAction<Rectangle>("getVisibleRect") {
             @Override
@@ -719,9 +562,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         }));
     }
 
-    /**
-     * Maps {@code JComponent.grabFocus()} through queue
-     */
     public void grabFocus() {
         runMapping(new MapVoidAction("grabFocus") {
             @Override
@@ -731,9 +571,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.isFocusCycleRoot()} through queue
-     */
     public boolean isFocusCycleRoot() {
         return (runMapping(new MapBooleanAction("isFocusCycleRoot") {
             @Override
@@ -743,9 +580,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         }));
     }
 
-    /**
-     * Maps {@code JComponent.isManagingFocus()} through queue
-     */
     @Deprecated
     public boolean isManagingFocus() {
         return (runMapping(new MapBooleanAction("isManagingFocus") {
@@ -756,9 +590,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         }));
     }
 
-    /**
-     * Maps {@code JComponent.isOptimizedDrawingEnabled()} through queue
-     */
     public boolean isOptimizedDrawingEnabled() {
         return (runMapping(new MapBooleanAction("isOptimizedDrawingEnabled") {
             @Override
@@ -768,9 +599,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         }));
     }
 
-    /**
-     * Maps {@code JComponent.isPaintingTile()} through queue
-     */
     public boolean isPaintingTile() {
         return (runMapping(new MapBooleanAction("isPaintingTile") {
             @Override
@@ -780,9 +608,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         }));
     }
 
-    /**
-     * Maps {@code JComponent.isRequestFocusEnabled()} through queue
-     */
     public boolean isRequestFocusEnabled() {
         return (runMapping(new MapBooleanAction("isRequestFocusEnabled") {
             @Override
@@ -792,9 +617,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         }));
     }
 
-    /**
-     * Maps {@code JComponent.isValidateRoot()} through queue
-     */
     public boolean isValidateRoot() {
         return (runMapping(new MapBooleanAction("isValidateRoot") {
             @Override
@@ -804,9 +626,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         }));
     }
 
-    /**
-     * Maps {@code JComponent.paintImmediately(int, int, int, int)} through queue
-     */
     public void paintImmediately(final int i, final int i1, final int i2, final int i3) {
         runMapping(new MapVoidAction("paintImmediately") {
             @Override
@@ -816,9 +635,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.paintImmediately(Rectangle)} through queue
-     */
     public void paintImmediately(final Rectangle rectangle) {
         runMapping(new MapVoidAction("paintImmediately") {
             @Override
@@ -828,9 +644,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.putClientProperty(Object, Object)} through queue
-     */
     public void putClientProperty(final Object object, final Object object1) {
         runMapping(new MapVoidAction("putClientProperty") {
             @Override
@@ -840,11 +653,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps
-     * {@code JComponent.registerKeyboardAction(ActionListener, String, KeyStroke, int)}
-     * through queue
-     */
     public void registerKeyboardAction(
             final ActionListener actionListener, final String string, final KeyStroke keyStroke, final int i) {
         runMapping(new MapVoidAction("registerKeyboardAction") {
@@ -855,11 +663,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps
-     * {@code JComponent.registerKeyboardAction(ActionListener, KeyStroke, int)}
-     * through queue
-     */
     public void registerKeyboardAction(final ActionListener actionListener, final KeyStroke keyStroke, final int i) {
         runMapping(new MapVoidAction("registerKeyboardAction") {
             @Override
@@ -869,10 +672,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.removeAncestorListener(AncestorListener)}
-     * through queue
-     */
     public void removeAncestorListener(final AncestorListener ancestorListener) {
         runMapping(new MapVoidAction("removeAncestorListener") {
             @Override
@@ -882,11 +681,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps
-     * {@code JComponent.removeVetoableChangeListener(VetoableChangeListener)}
-     * through queue
-     */
     public void removeVetoableChangeListener(final VetoableChangeListener vetoableChangeListener) {
         runMapping(new MapVoidAction("removeVetoableChangeListener") {
             @Override
@@ -896,9 +690,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.repaint(Rectangle)} through queue
-     */
     public void repaint(final Rectangle rectangle) {
         runMapping(new MapVoidAction("repaint") {
             @Override
@@ -908,9 +699,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.requestDefaultFocus()} through queue
-     */
     @Deprecated
     public boolean requestDefaultFocus() {
         return (runMapping(new MapBooleanAction("requestDefaultFocus") {
@@ -921,9 +709,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         }));
     }
 
-    /**
-     * Maps {@code JComponent.resetKeyboardActions()} through queue
-     */
     public void resetKeyboardActions() {
         runMapping(new MapVoidAction("resetKeyboardActions") {
             @Override
@@ -933,9 +718,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.revalidate()} through queue
-     */
     public void revalidate() {
         runMapping(new MapVoidAction("revalidate") {
             @Override
@@ -945,9 +727,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.scrollRectToVisible(Rectangle)} through queue
-     */
     public void scrollRectToVisible(final Rectangle rectangle) {
         runMapping(new MapVoidAction("scrollRectToVisible") {
             @Override
@@ -957,9 +736,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.setAlignmentX(float)} through queue
-     */
     public void setAlignmentX(final float f) {
         runMapping(new MapVoidAction("setAlignmentX") {
             @Override
@@ -969,9 +745,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.setAlignmentY(float)} through queue
-     */
     public void setAlignmentY(final float f) {
         runMapping(new MapVoidAction("setAlignmentY") {
             @Override
@@ -981,9 +754,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.setAutoscrolls(boolean)} through queue
-     */
     public void setAutoscrolls(final boolean b) {
         runMapping(new MapVoidAction("setAutoscrolls") {
             @Override
@@ -993,9 +763,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.setBorder(Border)} through queue
-     */
     public void setBorder(final Border border) {
         runMapping(new MapVoidAction("setBorder") {
             @Override
@@ -1005,9 +772,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.setDebugGraphicsOptions(int)} through queue
-     */
     public void setDebugGraphicsOptions(final int i) {
         runMapping(new MapVoidAction("setDebugGraphicsOptions") {
             @Override
@@ -1017,9 +781,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.setDoubleBuffered(boolean)} through queue
-     */
     public void setDoubleBuffered(final boolean b) {
         runMapping(new MapVoidAction("setDoubleBuffered") {
             @Override
@@ -1029,9 +790,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.setMaximumSize(Dimension)} through queue
-     */
     public void setMaximumSize(final Dimension dimension) {
         runMapping(new MapVoidAction("setMaximumSize") {
             @Override
@@ -1041,9 +799,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.setMinimumSize(Dimension)} through queue
-     */
     public void setMinimumSize(final Dimension dimension) {
         runMapping(new MapVoidAction("setMinimumSize") {
             @Override
@@ -1053,9 +808,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.setNextFocusableComponent(Component)} through queue
-     */
     @Deprecated
     public void setNextFocusableComponent(final Component component) {
         runMapping(new MapVoidAction("setNextFocusableComponent") {
@@ -1066,9 +818,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.setOpaque(boolean)} through queue
-     */
     public void setOpaque(final boolean b) {
         runMapping(new MapVoidAction("setOpaque") {
             @Override
@@ -1078,9 +827,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.setPreferredSize(Dimension)} through queue
-     */
     public void setPreferredSize(final Dimension dimension) {
         runMapping(new MapVoidAction("setPreferredSize") {
             @Override
@@ -1090,9 +836,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.setRequestFocusEnabled(boolean)} through queue
-     */
     public void setRequestFocusEnabled(final boolean b) {
         runMapping(new MapVoidAction("setRequestFocusEnabled") {
             @Override
@@ -1102,9 +845,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.setToolTipText(String)} through queue
-     */
     public void setToolTipText(final String string) {
         runMapping(new MapVoidAction("setToolTipText") {
             @Override
@@ -1114,9 +854,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.unregisterKeyboardAction(KeyStroke)} through queue
-     */
     public void unregisterKeyboardAction(final KeyStroke keyStroke) {
         runMapping(new MapVoidAction("unregisterKeyboardAction") {
             @Override
@@ -1126,9 +863,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         });
     }
 
-    /**
-     * Maps {@code JComponent.updateUI()} through queue
-     */
     public void updateUI() {
         runMapping(new MapVoidAction("updateUI") {
             @Override
@@ -1151,9 +885,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
 
         /**
          * Constructs JComponentByTipFinder.
-         *
-         * @param lb a text pattern
-         * @param comparator specifies string comparision algorithm.
          */
         public JComponentByTipFinder(String lb, StringComparator comparator) {
             label = lb;
@@ -1162,8 +893,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
 
         /**
          * Constructs JComponentByTipFinder.
-         *
-         * @param lb a text pattern
          */
         public JComponentByTipFinder(String lb) {
             this(lb, Operator.getDefaultStringComparator());
@@ -1197,8 +926,6 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
 
         /**
          * Constructs JComponentFinder.
-         *
-         * @param sf other searching criteria.
          */
         public JComponentFinder(ComponentChooser sf) {
             super(JComponent.class, sf);

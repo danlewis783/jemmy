@@ -31,16 +31,11 @@ import org.netbeans.jemmy.operators.ScrollbarOperator;
 
 /**
  * ScrollDriver for java.awt.Scrollbar component type.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class ScrollbarDriver extends AWTScrollDriver {
 
     private static final int CLICK_OFFSET = 5;
 
-    /**
-     * Constructs a ScrollbarDriver.
-     */
     public ScrollbarDriver() {
         super(new String[] {"org.netbeans.jemmy.operators.ScrollbarOperator"});
     }

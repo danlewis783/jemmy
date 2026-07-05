@@ -36,7 +36,6 @@ import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
-import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.Timeoutable;
 import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.drivers.DriverManager;
@@ -45,19 +44,15 @@ import org.netbeans.jemmy.drivers.scrolling.ScrollAdjuster;
 import org.netbeans.jemmy.util.EmptyVisualizer;
 
 /**
- * <BR><BR>Timeouts used: <BR>
- * JSplitPaneOperator.ScrollClickTimeout - time for simple scroll click <BR>
- * JSplitPaneOperator.BetweenClickTimeout - time to sleep between scroll clicks
- * <BR>
- * JSplitPaneOperator.WholeScrollTimeout - time for the whole scrolling <BR>
- * ComponentOperator.WaitComponentTimeout - time to wait component displayed
- * <BR>.
+ * Timeouts used:
+ * <ul>
+ * <li>JSplitPaneOperator.ScrollClickTimeout - time for simple scroll click</li>
+ * <li>JSplitPaneOperator.BetweenClickTimeout - time to sleep between scroll clicks</li>
+ * <li>JSplitPaneOperator.WholeScrollTimeout - time for the whole scrolling</li>
+ * <li>ComponentOperator.WaitComponentTimeout - time to wait component displayed</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
- *
- * Class to operate with javax.swing.JSplitPane component
  *
  */
 public class JSplitPaneOperator extends JComponentOperator implements Timeoutable, Outputable {
@@ -120,45 +115,23 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
     private ContainerOperator<?> divider;
     private ScrollDriver driver;
 
-    /**
-     * Constructor.
-     *
-     * @param b JSplitPane component.
-     */
     public JSplitPaneOperator(JSplitPane b) {
         super(b);
         driver = DriverManager.getScrollDriver(getClass());
     }
 
-    /**
-     * Constructs a JSplitPaneOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public JSplitPaneOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((JSplitPane) cont.waitSubComponent(new JSplitPaneFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a JSplitPaneOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public JSplitPaneOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont Operator pointing a container to search component in.
-     * @param index Ordinal component index.
-     * @throws TimeoutExpiredException
      */
     public JSplitPaneOperator(ContainerOperator<?> cont, int index) {
         this((JSplitPane) waitComponent(cont, new JSplitPaneFinder(), index));
@@ -166,11 +139,8 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont Operator pointing a container to search component in.
-     * @throws TimeoutExpiredException
      */
     public JSplitPaneOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -179,9 +149,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
     /**
      * Searches JSplitPane in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JSplitPane instance or null if component was not found.
      */
     public static JSplitPane findJSplitPane(Container cont, ComponentChooser chooser, int index) {
@@ -191,8 +158,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
     /**
      * Searches 0'th JSplitPane in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JSplitPane instance or null if component was not found.
      */
     public static JSplitPane findJSplitPane(Container cont, ComponentChooser chooser) {
@@ -202,8 +167,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
     /**
      * Searches JSplitPane in container.
      *
-     * @param cont Container to search component in.
-     * @param index Ordinal component index.
      * @return JSplitPane instance or null if component was not found.
      */
     public static JSplitPane findJSplitPane(Container cont, int index) {
@@ -214,7 +177,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
     /**
      * Searches 0'th JSplitPane in container.
      *
-     * @param cont Container to search component in.
      * @return JSplitPane instance or null if component was not found.
      */
     public static JSplitPane findJSplitPane(Container cont) {
@@ -224,8 +186,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
     /**
      * Searches JSplitPane object which component lies on.
      *
-     * @param comp Component to find JSplitPane under.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JSplitPane instance or null if component was not found.
      */
     public static JSplitPane findJSplitPaneUnder(Component comp, ComponentChooser chooser) {
@@ -235,7 +195,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
     /**
      * Searches JSplitPane object which component lies on.
      *
-     * @param comp Component to find JSplitPane under.
      * @return JSplitPane instance or null if component was not found.
      */
     public static JSplitPane findJSplitPaneUnder(Component comp) {
@@ -245,11 +204,7 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
     /**
      * Waits JSplitPane in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return JSplitPane instance or null if component was not displayed.
-     * @throws TimeoutExpiredException
      */
     public static JSplitPane waitJSplitPane(Container cont, ComponentChooser chooser, int index) {
         return (JSplitPane) waitComponent(cont, new JSplitPaneFinder(chooser), index);
@@ -258,10 +213,7 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
     /**
      * Waits 0'th JSplitPane in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JSplitPane instance or null if component was not displayed.
-     * @throws TimeoutExpiredException
      */
     public static JSplitPane waitJSplitPane(Container cont, ComponentChooser chooser) {
         return waitJSplitPane(cont, chooser, 0);
@@ -270,10 +222,7 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
     /**
      * Waits JSplitPane in container.
      *
-     * @param cont Container to search component in.
-     * @param index Ordinal component index.
      * @return JSplitPane instance or null if component was not displayed.
-     * @throws TimeoutExpiredException
      */
     public static JSplitPane waitJSplitPane(Container cont, int index) {
         return waitJSplitPane(
@@ -283,9 +232,7 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
     /**
      * Waits 0'th JSplitPane in container.
      *
-     * @param cont Container to search component in.
      * @return JSplitPane instance or null if component was not displayed.
-     * @throws TimeoutExpiredException
      */
     public static JSplitPane waitJSplitPane(Container cont) {
         return waitJSplitPane(cont, 0);
@@ -370,9 +317,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
 
     /**
      * Scrolls to the position defined by a ScrollAdjuster implementation.
-     *
-     * @param adj defines scrolling direction, and so on.
-     * @throws TimeoutExpiredException
      */
     public void scrollTo(final ScrollAdjuster adj) {
         produceTimeRestricted(
@@ -398,8 +342,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
 
     /**
      * Changes divider location.
-     *
-     * @param dividerLocation location to move divider to.
      */
     public void moveDivider(int dividerLocation) {
         output.printTrace("Move JSplitPane divider to " + Integer.toString(dividerLocation)
@@ -479,8 +421,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
 
     /**
      * Pushes one time right(bottom) expand button.
-     *
-     * @throws TimeoutExpiredException
      */
     public void expandRight() {
         String mess = "Expand ";
@@ -496,8 +436,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
 
     /**
      * Pushes one time left(top) expand button.
-     *
-     * @throws TimeoutExpiredException
      */
     public void expandLeft() {
         String mess = "Expand ";
@@ -528,9 +466,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code JSplitPane.getBottomComponent()} through queue
-     */
     public Component getBottomComponent() {
         return (runMapping(new MapAction<Component>("getBottomComponent") {
             @Override
@@ -540,9 +475,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
         }));
     }
 
-    /**
-     * Maps {@code JSplitPane.getDividerLocation()} through queue
-     */
     public int getDividerLocation() {
         return (runMapping(new MapIntegerAction("getDividerLocation") {
             @Override
@@ -552,9 +484,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
         }));
     }
 
-    /**
-     * Maps {@code JSplitPane.getDividerSize()} through queue
-     */
     public int getDividerSize() {
         return (runMapping(new MapIntegerAction("getDividerSize") {
             @Override
@@ -564,9 +493,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
         }));
     }
 
-    /**
-     * Maps {@code JSplitPane.getLastDividerLocation()} through queue
-     */
     public int getLastDividerLocation() {
         return (runMapping(new MapIntegerAction("getLastDividerLocation") {
             @Override
@@ -576,9 +502,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
         }));
     }
 
-    /**
-     * Maps {@code JSplitPane.getLeftComponent()} through queue
-     */
     public Component getLeftComponent() {
         return (runMapping(new MapAction<Component>("getLeftComponent") {
             @Override
@@ -588,9 +511,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
         }));
     }
 
-    /**
-     * Maps {@code JSplitPane.getMaximumDividerLocation()} through queue
-     */
     public int getMaximumDividerLocation() {
         return (runMapping(new MapIntegerAction("getMaximumDividerLocation") {
             @Override
@@ -600,9 +520,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
         }));
     }
 
-    /**
-     * Maps {@code JSplitPane.getMinimumDividerLocation()} through queue
-     */
     public int getMinimumDividerLocation() {
         return (runMapping(new MapIntegerAction("getMinimumDividerLocation") {
             @Override
@@ -612,9 +529,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
         }));
     }
 
-    /**
-     * Maps {@code JSplitPane.getOrientation()} through queue
-     */
     public int getOrientation() {
         return (runMapping(new MapIntegerAction("getOrientation") {
             @Override
@@ -624,9 +538,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
         }));
     }
 
-    /**
-     * Maps {@code JSplitPane.getRightComponent()} through queue
-     */
     public Component getRightComponent() {
         return (runMapping(new MapAction<Component>("getRightComponent") {
             @Override
@@ -636,9 +547,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
         }));
     }
 
-    /**
-     * Maps {@code JSplitPane.getTopComponent()} through queue
-     */
     public Component getTopComponent() {
         return (runMapping(new MapAction<Component>("getTopComponent") {
             @Override
@@ -648,9 +556,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
         }));
     }
 
-    /**
-     * Maps {@code JSplitPane.getUI()} through queue
-     */
     public SplitPaneUI getUI() {
         return (runMapping(new MapAction<SplitPaneUI>("getUI") {
             @Override
@@ -660,9 +565,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
         }));
     }
 
-    /**
-     * Maps {@code JSplitPane.isContinuousLayout()} through queue
-     */
     public boolean isContinuousLayout() {
         return (runMapping(new MapBooleanAction("isContinuousLayout") {
             @Override
@@ -672,9 +574,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
         }));
     }
 
-    /**
-     * Maps {@code JSplitPane.isOneTouchExpandable()} through queue
-     */
     public boolean isOneTouchExpandable() {
         return (runMapping(new MapBooleanAction("isOneTouchExpandable") {
             @Override
@@ -684,9 +583,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
         }));
     }
 
-    /**
-     * Maps {@code JSplitPane.resetToPreferredSizes()} through queue
-     */
     public void resetToPreferredSizes() {
         runMapping(new MapVoidAction("resetToPreferredSizes") {
             @Override
@@ -696,9 +592,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
         });
     }
 
-    /**
-     * Maps {@code JSplitPane.setBottomComponent(Component)} through queue
-     */
     public void setBottomComponent(final Component component) {
         runMapping(new MapVoidAction("setBottomComponent") {
             @Override
@@ -708,9 +601,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
         });
     }
 
-    /**
-     * Maps {@code JSplitPane.setContinuousLayout(boolean)} through queue
-     */
     public void setContinuousLayout(final boolean b) {
         runMapping(new MapVoidAction("setContinuousLayout") {
             @Override
@@ -720,9 +610,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
         });
     }
 
-    /**
-     * Maps {@code JSplitPane.setDividerLocation(double)} through queue
-     */
     public void setDividerLocation(final double d) {
         runMapping(new MapVoidAction("setDividerLocation") {
             @Override
@@ -732,9 +619,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
         });
     }
 
-    /**
-     * Maps {@code JSplitPane.setDividerLocation(int)} through queue
-     */
     public void setDividerLocation(final int i) {
         runMapping(new MapVoidAction("setDividerLocation") {
             @Override
@@ -744,9 +628,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
         });
     }
 
-    /**
-     * Maps {@code JSplitPane.setDividerSize(int)} through queue
-     */
     public void setDividerSize(final int i) {
         runMapping(new MapVoidAction("setDividerSize") {
             @Override
@@ -756,9 +637,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
         });
     }
 
-    /**
-     * Maps {@code JSplitPane.setLastDividerLocation(int)} through queue
-     */
     public void setLastDividerLocation(final int i) {
         runMapping(new MapVoidAction("setLastDividerLocation") {
             @Override
@@ -768,9 +646,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
         });
     }
 
-    /**
-     * Maps {@code JSplitPane.setLeftComponent(Component)} through queue
-     */
     public void setLeftComponent(final Component component) {
         runMapping(new MapVoidAction("setLeftComponent") {
             @Override
@@ -780,9 +655,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
         });
     }
 
-    /**
-     * Maps {@code JSplitPane.setOneTouchExpandable(boolean)} through queue
-     */
     public void setOneTouchExpandable(final boolean b) {
         runMapping(new MapVoidAction("setOneTouchExpandable") {
             @Override
@@ -792,9 +664,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
         });
     }
 
-    /**
-     * Maps {@code JSplitPane.setOrientation(int)} through queue
-     */
     public void setOrientation(final int i) {
         runMapping(new MapVoidAction("setOrientation") {
             @Override
@@ -804,9 +673,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
         });
     }
 
-    /**
-     * Maps {@code JSplitPane.setRightComponent(Component)} through queue
-     */
     public void setRightComponent(final Component component) {
         runMapping(new MapVoidAction("setRightComponent") {
             @Override
@@ -816,9 +682,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
         });
     }
 
-    /**
-     * Maps {@code JSplitPane.setTopComponent(Component)} through queue
-     */
     public void setTopComponent(final Component component) {
         runMapping(new MapVoidAction("setTopComponent") {
             @Override
@@ -828,9 +691,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
         });
     }
 
-    /**
-     * Maps {@code JSplitPane.setUI(SplitPaneUI)} through queue
-     */
     public void setUI(final SplitPaneUI splitPaneUI) {
         runMapping(new MapVoidAction("setUI") {
             @Override
@@ -859,8 +719,6 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
 
         /**
          * Constructs JSplitPaneFinder.
-         *
-         * @param sf other searching criteria.
          */
         public JSplitPaneFinder(ComponentChooser sf) {
             super(JSplitPane.class, sf);

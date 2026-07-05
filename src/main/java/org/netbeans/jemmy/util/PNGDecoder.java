@@ -35,18 +35,11 @@ import org.netbeans.jemmy.JemmyException;
 
 /**
  * Allows to load PNG graphical file.
- *
- * @author Alexandre Iline
  */
 public class PNGDecoder extends Object {
 
     InputStream in;
 
-    /**
-     * Constructs a PNGDecoder object.
-     *
-     * @param in input stream to read PNG image from.
-     */
     public PNGDecoder(InputStream in) {
         this.in = in;
     }
@@ -210,7 +203,6 @@ public class PNGDecoder extends Object {
     /**
      * Decodes image from file.
      *
-     * @param fileName a file to read image from
      * @return a BufferedImage instance.
      */
     public static BufferedImage decode(String fileName) {

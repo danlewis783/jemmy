@@ -38,8 +38,6 @@ import org.netbeans.jemmy.operators.ComponentOperator;
  * allowed operations in this order: "jump", "drag'n'drop", "push'n'wait",
  * "step". Repeats "step" scrolling while scroller value is not equal to the
  * necessary value, but no more than {@code ADJUST_CLICK_COUNT}.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public abstract class AbstractScrollDriver extends LightSupportiveDriver implements ScrollDriver {
 
@@ -55,11 +53,6 @@ public abstract class AbstractScrollDriver extends LightSupportiveDriver impleme
         JemmyProperties.getProperties().initTimeout(SCROLL_FREEZE_TIMEOUT, 1000);
     }
 
-    /**
-     * Constructs an AbstractScrollDriver.
-     *
-     * @param supported an array of supported class names
-     */
     public AbstractScrollDriver(String[] supported) {
         super(supported);
     }
@@ -86,73 +79,39 @@ public abstract class AbstractScrollDriver extends LightSupportiveDriver impleme
 
     /**
      * Performs minimal scrolling step.
-     *
-     * @param oper an operator.
-     * @param adj a scroll adjuster
      */
     protected abstract void step(ComponentOperator oper, ScrollAdjuster adj);
 
     /**
      * Performs maximal scroll step.
-     *
-     * @param oper an operator.
-     * @param adj a scroll adjuster
      */
     protected abstract void jump(ComponentOperator oper, ScrollAdjuster adj);
 
     /**
      * Presses something like a scroll button.
-     *
-     * @param oper an operator.
-     * @param direction - one of the ScrollAdjister.INCREASE_SCROLL_DIRECTION,
-     * ScrollAdjister.DECREASE_SCROLL_DIRECTION,
-     * ScrollAdjister.DO_NOT_TOUCH_SCROLL_DIRECTION values.
-     * @param orientation one of the Adjustable.HORIZONTAL or
-     * Adjustable.VERTICAL values.
      */
     protected abstract void startPushAndWait(ComponentOperator oper, int direction, int orientation);
 
     /**
      * Releases something like a scroll button.
-     *
-     * @param oper an operator.
-     * @param direction - one of the ScrollAdjister.INCREASE_SCROLL_DIRECTION,
-     * ScrollAdjister.DECREASE_SCROLL_DIRECTION,
-     * ScrollAdjister.DO_NOT_TOUCH_SCROLL_DIRECTION values.
-     * @param orientation one of the Adjustable.HORIZONTAL or
-     * Adjustable.VERTICAL values.
      */
     protected abstract void stopPushAndWait(ComponentOperator oper, int direction, int orientation);
 
     /**
      * Starts drag'n'drop scrolling.
      *
-     * @param oper an operator.
      * @return start drugging point.
      */
     protected abstract Point startDragging(ComponentOperator oper);
 
-    /**
-     * Drop at a specified point.
-     *
-     * @param oper an operator.
-     * @param pnt the point to drop.
-     */
     protected abstract void drop(ComponentOperator oper, Point pnt);
 
-    /**
-     * Drag to a specified point.
-     *
-     * @param oper an operator.
-     * @param pnt the point to drag to.
-     */
     protected abstract void drag(ComponentOperator oper, Point pnt);
 
     /**
      * Returns a timeout for sleeping between verifications during "push and
      * wait" scrolling.
      *
-     * @param oper an operator.
      * @return a timeout
      */
     protected abstract Timeout getScrollDeltaTimeout(ComponentOperator oper);
@@ -160,7 +119,6 @@ public abstract class AbstractScrollDriver extends LightSupportiveDriver impleme
     /**
      * Tells if this driver allows to perform drag'n'drop scrolling.
      *
-     * @param oper an operator.
      * @return true if this driver allows to drag'n'drop.
      */
     protected abstract boolean canDragAndDrop(ComponentOperator oper);
@@ -168,7 +126,6 @@ public abstract class AbstractScrollDriver extends LightSupportiveDriver impleme
     /**
      * Tells if this driver allows to perform jumps.
      *
-     * @param oper an operator.
      * @return true if this driver allows to jump.
      */
     protected abstract boolean canJump(ComponentOperator oper);
@@ -176,7 +133,6 @@ public abstract class AbstractScrollDriver extends LightSupportiveDriver impleme
     /**
      * Tells if this driver allows to perform "push and wait" scrolling.
      *
-     * @param oper an operator.
      * @return true if this driver allows to "push and wait".
      */
     protected abstract boolean canPushAndWait(ComponentOperator oper);
@@ -184,7 +140,6 @@ public abstract class AbstractScrollDriver extends LightSupportiveDriver impleme
     /**
      * Returns a number of pixels in one drag and drop scrolling.
      *
-     * @param oper an operator.
      * @return drag'n'drop step length.
      */
     protected abstract int getDragAndDropStepLength(ComponentOperator oper);
@@ -192,9 +147,6 @@ public abstract class AbstractScrollDriver extends LightSupportiveDriver impleme
     /**
      * Performs drag'n'drop scrolling till scroller's value does not cross
      * required value.
-     *
-     * @param oper an operator.
-     * @param adj a scroll adjuster
      */
     protected void doDragAndDrop(ComponentOperator oper, ScrollAdjuster adj) {
         int direction = adj.getScrollDirection();
@@ -210,9 +162,6 @@ public abstract class AbstractScrollDriver extends LightSupportiveDriver impleme
     /**
      * Performs jump scrolling till scroller's value does not cross required
      * value.
-     *
-     * @param oper an operator.
-     * @param adj a scroll adjuster
      */
     protected void doJumps(ComponentOperator oper, ScrollAdjuster adj) {
         int direction = adj.getScrollDirection();
@@ -228,9 +177,6 @@ public abstract class AbstractScrollDriver extends LightSupportiveDriver impleme
     /**
      * Performs "push and wait" scrolling till scroller's value does not cross
      * required value.
-     *
-     * @param oper an operator.
-     * @param adj a scroll adjuster
      */
     protected boolean doPushAndWait(ComponentOperator oper, ScrollAdjuster adj, long freezeTimeout) {
         int direction = adj.getScrollDirection();
@@ -258,9 +204,6 @@ public abstract class AbstractScrollDriver extends LightSupportiveDriver impleme
     /**
      * Performs minimal scrollings till scroller's value does not cross required
      * value.
-     *
-     * @param oper an operator.
-     * @param adj a scroll adjuster
      */
     protected void doSteps(ComponentOperator oper, ScrollAdjuster adj) {
         int direction = adj.getScrollDirection();

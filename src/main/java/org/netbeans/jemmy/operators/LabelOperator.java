@@ -29,16 +29,14 @@ import java.awt.Container;
 import java.awt.Label;
 import java.util.Hashtable;
 import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.TimeoutExpiredException;
 
 /**
- * <BR><BR>Timeouts used: <BR>
- * ComponentOperator.WaitComponentTimeout - time to wait component displayed
- * <BR>.
+ * Timeouts used:
+ * <ul>
+ * <li>ComponentOperator.WaitComponentTimeout - time to wait component displayed</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
- * @author Alexandre Iline (alexandre.iline@oracle.com)
- *
  */
 public class LabelOperator extends ComponentOperator {
 
@@ -49,46 +47,24 @@ public class LabelOperator extends ComponentOperator {
      */
     public static final String TEXT_DPROP = "Text";
 
-    /**
-     * Constructor.
-     *
-     * @param b a component
-     */
     public LabelOperator(Label b) {
         super(b);
     }
 
-    /**
-     * Constructs a LabelOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public LabelOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((Label) cont.waitSubComponent(new LabelFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a LabelOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public LabelOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Button text.
-     * @param index Ordinal component index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public LabelOperator(ContainerOperator<?> cont, String text, int index) {
         this((Label) waitComponent(cont, new LabelByLabelFinder(text, cont.getComparator()), index));
@@ -96,25 +72,18 @@ public class LabelOperator extends ComponentOperator {
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Button text.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public LabelOperator(ContainerOperator<?> cont, String text) {
         this(cont, text, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     * @param index Ordinal component index.
-     * @throws TimeoutExpiredException
      */
     public LabelOperator(ContainerOperator<?> cont, int index) {
         this((Label) waitComponent(cont, new LabelFinder(), index));
@@ -122,11 +91,8 @@ public class LabelOperator extends ComponentOperator {
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     * @throws TimeoutExpiredException
      */
     public LabelOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -135,9 +101,6 @@ public class LabelOperator extends ComponentOperator {
     /**
      * Searches Label in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index Ordinal component index.
      * @return Label instance or null if component was not found.
      */
     public static Label findLabel(Container cont, ComponentChooser chooser, int index) {
@@ -147,8 +110,6 @@ public class LabelOperator extends ComponentOperator {
     /**
      * Searches Label in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser a component chooser specifying searching criteria.
      * @return Label instance or null if component was not found.
      */
     public static Label findLabel(Container cont, ComponentChooser chooser) {
@@ -158,11 +119,6 @@ public class LabelOperator extends ComponentOperator {
     /**
      * Searches Label by text.
      *
-     * @param cont Container to search component in.
-     * @param text Component text.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return Label instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -173,10 +129,6 @@ public class LabelOperator extends ComponentOperator {
     /**
      * Searches Label by text.
      *
-     * @param cont Container to search component in.
-     * @param text Component text.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return Label instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -187,11 +139,7 @@ public class LabelOperator extends ComponentOperator {
     /**
      * Waits Label in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index Ordinal component index.
      * @return Label instance.
-     * @throws TimeoutExpiredException
      */
     public static Label waitLabel(final Container cont, final ComponentChooser chooser, final int index) {
         return (Label) waitComponent(cont, new LabelFinder(chooser), index);
@@ -200,10 +148,7 @@ public class LabelOperator extends ComponentOperator {
     /**
      * Waits Label in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser a component chooser specifying searching criteria.
      * @return Label instance.
-     * @throws TimeoutExpiredException
      */
     public static Label waitLabel(Container cont, ComponentChooser chooser) {
         return waitLabel(cont, chooser, 0);
@@ -212,14 +157,8 @@ public class LabelOperator extends ComponentOperator {
     /**
      * Waits Label by text.
      *
-     * @param cont Container to search component in.
-     * @param text Component text.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return Label instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static Label waitLabel(Container cont, String text, boolean ce, boolean ccs, int index) {
         return waitLabel(cont, new LabelByLabelFinder(text, new DefaultStringComparator(ce, ccs)), index);
@@ -228,13 +167,8 @@ public class LabelOperator extends ComponentOperator {
     /**
      * Waits Label by text.
      *
-     * @param cont Container to search component in.
-     * @param text Component text.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return Label instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     * @throws TimeoutExpiredException
      */
     public static Label waitLabel(Container cont, String text, boolean ce, boolean ccs) {
         return waitLabel(cont, text, ce, ccs, 0);
@@ -253,9 +187,6 @@ public class LabelOperator extends ComponentOperator {
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code Label.getAlignment()} through queue
-     */
     public int getAlignment() {
         return (runMapping(new MapIntegerAction("getAlignment") {
             @Override
@@ -265,9 +196,6 @@ public class LabelOperator extends ComponentOperator {
         }));
     }
 
-    /**
-     * Maps {@code Label.getText()} through queue
-     */
     public String getText() {
         return (runMapping(new MapAction<String>("getText") {
             @Override
@@ -277,9 +205,6 @@ public class LabelOperator extends ComponentOperator {
         }));
     }
 
-    /**
-     * Maps {@code Label.setAlignment(int)} through queue
-     */
     public void setAlignment(final int i) {
         runMapping(new MapVoidAction("setAlignment") {
             @Override
@@ -289,9 +214,6 @@ public class LabelOperator extends ComponentOperator {
         });
     }
 
-    /**
-     * Maps {@code Label.setText(String)} through queue
-     */
     public void setText(final String string) {
         runMapping(new MapVoidAction("setText") {
             @Override
@@ -311,22 +233,11 @@ public class LabelOperator extends ComponentOperator {
         String label;
         StringComparator comparator;
 
-        /**
-         * Constructs LabelByLabelFinder.
-         *
-         * @param lb a text pattern
-         * @param comparator specifies string comparison algorithm.
-         */
         public LabelByLabelFinder(String lb, StringComparator comparator) {
             label = lb;
             this.comparator = comparator;
         }
 
-        /**
-         * Constructs LabelByLabelFinder.
-         *
-         * @param lb a text pattern
-         */
         public LabelByLabelFinder(String lb) {
             this(lb, Operator.getDefaultStringComparator());
         }
@@ -357,18 +268,10 @@ public class LabelOperator extends ComponentOperator {
      */
     public static class LabelFinder extends Finder {
 
-        /**
-         * Constructs LabelFinder.
-         *
-         * @param sf other searching criteria.
-         */
         public LabelFinder(ComponentChooser sf) {
             super(Label.class, sf);
         }
 
-        /**
-         * Constructs LabelFinder.
-         */
         public LabelFinder() {
             super(Label.class);
         }

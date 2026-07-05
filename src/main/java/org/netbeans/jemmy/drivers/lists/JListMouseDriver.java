@@ -36,16 +36,11 @@ import org.netbeans.jemmy.operators.Operator;
 
 /**
  * List driver for javax.swing.JList component type.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class JListMouseDriver extends LightSupportiveDriver implements MultiSelListDriver {
 
     QueueTool queueTool;
 
-    /**
-     * Constructs a JListMouseDriver.
-     */
     public JListMouseDriver() {
         super(new String[] {"org.netbeans.jemmy.operators.JListOperator"});
         queueTool = new QueueTool();
@@ -64,12 +59,6 @@ public class JListMouseDriver extends LightSupportiveDriver implements MultiSelL
         }
     }
 
-    /**
-     * Clicks on a list item.
-     *
-     * @param oper an operator to click on.
-     * @param index item index.
-     */
     protected void clickOnItem(JListOperator oper, int index) {
         clickOnItem(oper, index, 0);
     }
@@ -77,8 +66,6 @@ public class JListMouseDriver extends LightSupportiveDriver implements MultiSelL
     /**
      * Clicks on a list item.
      *
-     * @param oper an operator to click on.
-     * @param index item index.
      * @param modifiers a combination of {@code InputEvent.*_MASK} fields.
      */
     protected void clickOnItem(final JListOperator oper, final int index, final int modifiers) {

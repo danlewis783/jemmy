@@ -40,12 +40,12 @@ import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 
 /**
- * This class allows to encode BufferedImage into B/W, greyscale or true color
- * PNG image format with maximum compression.<br>
- * It also provides complete functionality for capturing full screen, part of
- * screen or single component, encoding and saving captured image info PNG file.
+ * This class allows to encode BufferedImage into B/W, greyscale or true color PNG image format with maximum
+ * compression.
+ * <p>
+ * It also provides complete functionality for capturing full screen, part of screen or single component, encoding and
+ * saving captured image info PNG file.
  *
- * @author Adam Sotona
  * @version 1.0
  */
 public class PNGEncoder extends Object {
@@ -80,7 +80,6 @@ public class PNGEncoder extends Object {
      * public constructor of PNGEncoder class.
      *
      * @param out output stream for PNG image format to write into
-     * @param mode BW_MODE, GREYSCALE_MODE or COLOR_MODE
      */
     public PNGEncoder(OutputStream out, byte mode) {
         crc = new CRC32();
@@ -104,7 +103,6 @@ public class PNGEncoder extends Object {
     /**
      * main encoding method (stays blocked till encoding is finished).
      *
-     * @param image BufferedImage to encode
      * @throws IOException IOException
      */
     public void encode(BufferedImage image) throws IOException {
@@ -214,9 +212,6 @@ public class PNGEncoder extends Object {
     /**
      * Static method performing screen capture into PNG image format file with
      * given fileName.
-     *
-     * @param rect Rectangle of screen to be captured
-     * @param fileName file name for screen capture PNG image file
      */
     public static void captureScreen(Rectangle rect, String fileName) {
         captureScreen(rect, fileName, GREYSCALE_MODE);
@@ -225,10 +220,6 @@ public class PNGEncoder extends Object {
     /**
      * Static method performing screen capture into PNG image format file with
      * given fileName.
-     *
-     * @param rect Rectangle of screen to be captured
-     * @param mode image color mode
-     * @param fileName file name for screen capture PNG image file
      */
     public static void captureScreen(Rectangle rect, String fileName, byte mode) {
         try {
@@ -246,9 +237,6 @@ public class PNGEncoder extends Object {
     /**
      * Static method performing one component screen capture into PNG image
      * format file with given fileName.
-     *
-     * @param comp Component to be captured
-     * @param fileName String image target filename
      */
     public static void captureScreen(Component comp, String fileName) {
         captureScreen(comp, fileName, GREYSCALE_MODE);
@@ -257,10 +245,6 @@ public class PNGEncoder extends Object {
     /**
      * Static method performing one component screen capture into PNG image
      * format file with given fileName.
-     *
-     * @param comp Component to be captured
-     * @param fileName String image target filename
-     * @param mode image color mode
      */
     public static void captureScreen(Component comp, String fileName, byte mode) {
         captureScreen(new Rectangle(comp.getLocationOnScreen(), comp.getSize()), fileName, mode);
@@ -269,8 +253,6 @@ public class PNGEncoder extends Object {
     /**
      * Static method performing whole screen capture into PNG image format file
      * with given fileName.
-     *
-     * @param fileName String image target filename
      */
     public static void captureScreen(String fileName) {
         captureScreen(fileName, GREYSCALE_MODE);
@@ -279,9 +261,6 @@ public class PNGEncoder extends Object {
     /**
      * Static method performing whole screen capture into PNG image format file
      * with given fileName.
-     *
-     * @param fileName String image target filename
-     * @param mode image color mode
      */
     public static void captureScreen(String fileName, byte mode) {
         captureScreen(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()), fileName, mode);

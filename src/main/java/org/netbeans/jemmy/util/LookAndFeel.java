@@ -36,7 +36,7 @@ public class LookAndFeel {
      * Checking whether the current look and feel is Metal L&F
      *
      * @return returns true if current look and feel is Metal L&F,
-     *         otherwise false
+     * otherwise false
      */
     public static boolean isMetal() {
         return isLookAndFeel("Metal");
@@ -46,7 +46,7 @@ public class LookAndFeel {
      * Checking whether the current look and feel is Nimbus L&F
      *
      * @return returns true if current look and feel is Nimbus L&F,
-     *         otherwise false
+     * otherwise false
      */
     public static boolean isNimbus() {
         return isLookAndFeel("Nimbus");
@@ -56,7 +56,7 @@ public class LookAndFeel {
      * Checking whether the current look and feel is Motif L&F
      *
      * @return returns true if current look and feel is Motif L&F,
-     *         otherwise false
+     * otherwise false
      */
     public static boolean isMotif() {
         return isLookAndFeel("Motif");
@@ -66,7 +66,7 @@ public class LookAndFeel {
      * Checking whether the current look and feel is GTK L&F
      *
      * @return returns true if current look and feel is GTK L&F,
-     *         otherwise false
+     * otherwise false
      */
     public static boolean isGTK() {
         return isLookAndFeel("GTK");
@@ -76,7 +76,7 @@ public class LookAndFeel {
      * Checking whether the current look and feel is Aqua L&F
      *
      * @return returns true if current look and feel is Aqua L&F,
-     *         otherwise false
+     * otherwise false
      */
     public static boolean isAqua() {
         return isLookAndFeel("Aqua");
@@ -86,7 +86,7 @@ public class LookAndFeel {
      * Checking whether the current look and feel is Windows L&F
      *
      * @return returns true if current look and feel is Windows L&F,
-     *         otherwise false
+     * otherwise false
      */
     public static boolean isWindows() {
         return UIManager.getLookAndFeel().getClass().getSimpleName().equals("WindowsLookAndFeel");
@@ -96,7 +96,7 @@ public class LookAndFeel {
      * Checking whether the current look and feel is WindowsClassic L&F
      *
      * @return returns true if current look and feel is WindowsClassic L&F,
-     *         otherwise false
+     * otherwise false
      */
     public static boolean isWindowsClassic() {
         return UIManager.getLookAndFeel().getClass().getSimpleName().equals("WindowsClassicLookAndFeel");

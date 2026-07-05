@@ -30,23 +30,19 @@ import java.awt.Window;
 import java.util.stream.Stream;
 
 /**
- * A WindowWaiter is a utility class used to look or wait for Windows. It
- * contains methods to search for a Window among the currently showing Windows
- * as well as methods that wait for a Window to show within an allotted time
- * period.
- *
- * Searches and waits always involve search criteria applied by a
- * ComponentChooser instance. Searches and waits can both be restricted to
- * windows owned by a given window.
- *
- * <BR>Timeouts used: <BR>
- * WindowWaiter.WaitWindowTimeout - time to wait window displayed <BR>
- * WindowWaiter.AfterWindowTimeout - time to sleep after window has been
- * dispayed <BR>
+ * A WindowWaiter is a utility class used to look or wait for Windows. It contains methods to search for a Window among
+ * the currently showing Windows as well as methods that wait for a Window to show within an allotted time period.
+ * Searches and waits always involve search criteria applied by a ComponentChooser instance. Searches and waits can both
+ * be restricted to windows owned by a given window.
+ * <p>
+ * Timeouts used:
+ * <ul>
+ * <li>WindowWaiter.WaitWindowTimeout - time to wait window displayed</li>
+ * <li>WindowWaiter.AfterWindowTimeout - time to sleep after window has been dispayed</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
  *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
 
@@ -60,9 +56,6 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
     private int index = 0;
     private Timeouts timeouts;
 
-    /**
-     * Constructor.
-     */
     public WindowWaiter() {
         super();
         setTimeouts(JemmyProperties.getProperties().getTimeouts());
@@ -147,7 +140,6 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
     /**
      * Defines current timeouts.
      *
-     * @param timeouts A collection of timeout assignments.
      * @see org.netbeans.jemmy.Timeoutable
      * @see org.netbeans.jemmy.Timeouts
      * @see #getTimeouts
@@ -180,7 +172,6 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
      * on window ownership, ordinal index, and search criteria defined by an
      * instance of {@code org.netbeans.jemmy.ComponentChooser}.
      *
-     * @param obj Not used.
      * @return the window waited upon. If a window cannot be found then a
      * {@code null} reference is returned.
      * @see org.netbeans.jemmy.Action
@@ -203,7 +194,6 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
      * that meets the search criteria. If fewer than {@code index+1}
      * windows show up in the allotted time period then a {@code null}
      * reference is returned.
-     * @throws TimeoutExpiredException
      * @see #actionProduced(Object)
      * @exception InterruptedException
      */
@@ -224,7 +214,6 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
      * @return a reference to the first window that shows and that meets the
      * search criteria. If no such window can be found within the time period
      * allotted, a {@code null} reference is returned.
-     * @throws TimeoutExpiredException
      * @see #actionProduced(Object)
      * @exception InterruptedException
      */
@@ -248,7 +237,6 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
      * has the proper window ownership, and that meets the search criteria. If
      * there are fewer than {@code index+1} windows, a {@code null}
      * reference is returned.
-     * @throws TimeoutExpiredException
      * @see #actionProduced(Object)
      * @exception InterruptedException
      */
@@ -271,7 +259,6 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
      * @return a reference to the first window to show that has the proper
      * window ownership, and that meets the search criteria. If there is no such
      * window, a {@code null} reference is returned.
-     * @throws TimeoutExpiredException
      * @see #actionProduced(Object)
      * @exception InterruptedException
      */
@@ -374,7 +361,6 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
     /**
      * Method can be used by a subclass to define chooser.
      *
-     * @param ch a chooser specifying searching criteria.
      * @see #getComponentChooser
      */
     protected void setComponentChooser(ComponentChooser ch) {
@@ -394,7 +380,6 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
     /**
      * Method can be used by a subclass to define window owner.
      *
-     * @param owner Window-owner of the set of windows.
      * @see #getOwner
      */
     protected void setOwner(Window owner) {
@@ -423,7 +408,6 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
      * Overrides Waiter.getTimeoutExpiredMessage.
      *
      * @see org.netbeans.jemmy.Waiter#getTimeoutExpiredMessage(long)
-     * @param timeSpent time from waiting start (milliseconds)
      * @return a message.
      */
     @Override
@@ -435,8 +419,6 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
      * Overrides Waiter.getActionProducedMessage.
      *
      * @see org.netbeans.jemmy.Waiter#getActionProducedMessage(long, Object)
-     * @param timeSpent time from waiting start (milliseconds)
-     * @param result result of Waitable.actionproduced method.
      * @return a message.
      */
     @Override

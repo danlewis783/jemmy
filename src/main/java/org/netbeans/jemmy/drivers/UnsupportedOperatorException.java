@@ -28,19 +28,11 @@ import org.netbeans.jemmy.JemmyException;
 
 /**
  * Is thrown as a result of attempt to use driver for unsupported operator type.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class UnsupportedOperatorException extends JemmyException {
 
     private static final long serialVersionUID = 42L;
 
-    /**
-     * Constructor.
-     *
-     * @param driver a driver
-     * @param operator an operator
-     */
     public UnsupportedOperatorException(Class<?> driver, Class<?> operator) {
         super(driver.getName() + " operators are not supported by " + operator.getName() + " driver!");
     }
@@ -48,9 +40,6 @@ public class UnsupportedOperatorException extends JemmyException {
     /**
      * Checks if operator class is in the list of supported classes.
      *
-     * @param driver Driver class
-     * @param supported Supported classes.
-     * @param operator Operator class.
      * @throws UnsupportedOperatorException if class is not supported.
      */
     public static void checkSupported(Class<?> driver, Class<?>[] supported, Class<?> operator) {
@@ -65,9 +54,6 @@ public class UnsupportedOperatorException extends JemmyException {
     /**
      * Checks if operator class name is in the list of supported classes names.
      *
-     * @param driver Driver class
-     * @param supported Supported classes names.
-     * @param operator Operator class.
      * @throws UnsupportedOperatorException if class is not supported.
      */
     public static void checkSupported(Class<?> driver, String[] supported, Class<?> operator) {

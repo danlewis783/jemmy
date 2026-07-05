@@ -33,9 +33,6 @@ public interface MultiSelListDriver extends ListDriver {
 
     /**
      * Selects some items.
-     *
-     * @param oper List operator.
-     * @param indices Item indices.
      */
     public void selectItems(ComponentOperator oper, int[] indices);
 }

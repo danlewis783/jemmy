@@ -26,8 +26,6 @@ package org.netbeans.jemmy;
 
 /**
  * Represents one timeout.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class Timeout extends Object {
 
@@ -35,12 +33,6 @@ public class Timeout extends Object {
     private long value;
     private long startTime;
 
-    /**
-     * Constructor.
-     *
-     * @param name Timeout name.
-     * @param value Timeout value in milliseconds.
-     */
     public Timeout(String name, long value) {
         this.name = name;
         this.value = value;
@@ -64,9 +56,6 @@ public class Timeout extends Object {
         return value;
     }
 
-    /**
-     * Sleeps for timeout value.
-     */
     public void sleep() {
         if (getValue() > 0) {
             try {

@@ -24,7 +24,7 @@
  */
 /**
  * <h1>Table drivers</h1>
- * Different drivers to perform a table operations.<br>
+ * Different drivers to perform a table operations.
  *
  * @since 17 Apr 2002
  * <hr>

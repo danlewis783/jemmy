@@ -36,16 +36,11 @@ import org.netbeans.jemmy.operators.Operator;
 
 /**
  * A scroll driver serving JSlider component.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class JSliderDriver extends AbstractScrollDriver {
 
     private QueueTool queueTool;
 
-    /**
-     * Constructs a JSliderDriver object.
-     */
     public JSliderDriver() {
         super(new String[] {"org.netbeans.jemmy.operators.JSliderOperator"});
         queueTool = new QueueTool();

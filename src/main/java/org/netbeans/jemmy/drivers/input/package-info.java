@@ -24,7 +24,7 @@
  */
 /**
  * <h1>Mouse and keyboard drivers</h1>
- * Contains low-level drivers to perform user input.<br>
+ * Contains low-level drivers to perform user input.
  *
  * @since 17 Apr 2002
  * <hr>

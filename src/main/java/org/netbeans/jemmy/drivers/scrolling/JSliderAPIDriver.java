@@ -31,16 +31,11 @@ import org.netbeans.jemmy.operators.JSliderOperator;
 
 /**
  * A scroll driver serving JSlider component.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class JSliderAPIDriver extends AbstractScrollDriver {
 
     private static final int SMALL_INCREMENT = 1;
 
-    /**
-     * Constructs a JSliderDriver object.
-     */
     public JSliderAPIDriver() {
         super(new String[] {"org.netbeans.jemmy.operators.JSliderOperator"});
     }

@@ -31,11 +31,7 @@ import org.netbeans.jemmy.TestOut;
 import org.netbeans.jemmy.TimeoutExpiredException;
 
 /**
- *
  * Class to display step comments.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
- *
  */
 public class Demonstrator {
 
@@ -44,7 +40,6 @@ public class Demonstrator {
 
     /**
      * Notifies current CommentWindow implementation to change title.
-     * @param title new CommentWindow's title
      */
     public static void setTitle(String title) {
         displayer.setTitle(title);
@@ -52,7 +47,6 @@ public class Demonstrator {
 
     /**
      * Changes current CommentWindow.
-     * @param cw CommentWindow instance.
      */
     public static void setCommentWindow(CommentWindow cw) {
         displayer = cw;
@@ -60,7 +54,6 @@ public class Demonstrator {
 
     /**
      * Notifies current CommentWindow implementation to display comments for a new step.
-     * @param stepComment New step comments
      */
     public static void nextStep(String stepComment) {
         getDisplayer().nextStep(stepComment);
@@ -85,7 +78,6 @@ public class Demonstrator {
 
     /**
      * Notifies current CommentWindow implementation to display final comments.
-     * @param stepComment New step comments
      */
     public static void showFinalComment(String stepComment) {
         getDisplayer().showFinalComment(stepComment);

@@ -24,7 +24,7 @@
  */
 /**
  * <h1>List drivers</h1>
- * Different drivers to perform a list operations.<br>
+ * Different drivers to perform a list operations.
  *
  * @since 4/17/2002
  * <hr>

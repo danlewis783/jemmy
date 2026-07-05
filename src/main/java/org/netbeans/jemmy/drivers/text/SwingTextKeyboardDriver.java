@@ -36,14 +36,9 @@ import org.netbeans.jemmy.operators.JTextComponentOperator;
 
 /**
  * TextDriver for swing text component types. Uses keyboard operations.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class SwingTextKeyboardDriver extends TextKeyboardDriver {
 
-    /**
-     * Constructs a SwingTextKeyboardDriver.
-     */
     public SwingTextKeyboardDriver() {
         super(new String[] {"org.netbeans.jemmy.operators.JTextComponentOperator"});
     }

@@ -36,16 +36,11 @@ import org.netbeans.jemmy.operators.Operator;
 
 /**
  * List driver for javax.swing.JTabbedPane component type.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class JTabMouseDriver extends LightSupportiveDriver implements ListDriver {
 
     private QueueTool queueTool;
 
-    /**
-     * Constructs a JTabMouseDriver.
-     */
     public JTabMouseDriver() {
         super(new String[] {"org.netbeans.jemmy.operators.JTabbedPaneOperator"});
         queueTool = new QueueTool();

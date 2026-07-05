@@ -34,7 +34,6 @@ import org.netbeans.jemmy.operators.Operator;
 import org.netbeans.jemmy.operators.WindowOperator;
 
 /**
- *
  * Does
  * {@code super.activate(org.netbeans.jemmy.operators.WindowOperator)}.
  * Then, if java version is appropriate (1.3 or later) activates windows by
@@ -44,11 +43,9 @@ import org.netbeans.jemmy.operators.WindowOperator;
  * org.netbeans.jemmy.operators.Operator#setVisualizer(Operator.ComponentVisualizer)
  * @see org.netbeans.jemmy.operators.Operator.ComponentVisualizer
  *
- * <BR><BR>Timeouts used: <BR>
+ *   Timeouts used:
  * MouseVisualiser.BeforeClickTimeout - time to let a window manager to move a
- * window as it wants<BR>
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
+ * window as it wants
  *
  */
 public class MouseVisualizer extends DefaultVisualizer {
@@ -102,8 +99,6 @@ public class MouseVisualizer extends DefaultVisualizer {
      * pointLocation, height - depth) coordinates.
      *
      * @param place One of the predefined value: TOP, BOTTOM, LEFT, RIGHT
-     * @param pointLocation Proportional coordinates to click.
-     * @param depth Distance from the border.
      * @param checkMouse Check if there is any java component under mouse
      * (currently ignored)
      */

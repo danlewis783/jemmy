@@ -34,22 +34,16 @@ import java.lang.reflect.Modifier;
 import java.util.Vector;
 
 /**
- *
- * Provides methods to check last dispatched events, to wait for events of
- * specific types, or to guarantee that events of specific types are not
- * dispatched during some time frame.
- * <BR><BR>
- * All possible listeners are added during this class initialization in case if
- * "jemmy.event_listening" system property is not equal to "no", so, by default,
- * all events are listened.
- *
- * Uses timeouts:<BR>
- * EventTool.WaitEventTimeout - time to wait for AWT events.<BR>
- * EventTool.WaitNoEventTimeout - when checking for the absence of incoming AWT
- * events.<BR>
- * EventTool.EventCheckingDelta - time delta between checks for AWT events.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
+ * Provides methods to check last dispatched events, to wait for events of specific types, or to guarantee that events
+ * of specific types are not dispatched during some time frame.
+ * <p>
+ * All possible listeners are added during this class initialization in case if "jemmy.event_listening" system property
+ * is not equal to "no", so, by default, all events are listened. Uses timeouts:
+ * <ul>
+ * <li>EventTool.WaitEventTimeout - time to wait for AWT events.</li>
+ * <li>EventTool.WaitNoEventTimeout - when checking for the absence of incoming AWT events.</li>
+ * <li>EventTool.EventCheckingDelta - time delta between checks for AWT events.</li>
+ * </ul>
  */
 public class EventTool implements Timeoutable, Outputable {
 
@@ -63,9 +57,6 @@ public class EventTool implements Timeoutable, Outputable {
     private TestOut output;
     private Timeouts timeouts;
 
-    /**
-     * Constructor.
-     */
     public EventTool() {
         setOutput(JemmyProperties.getProperties().getOutput());
         setTimeouts(JemmyProperties.getProperties().getTimeouts());
@@ -188,7 +179,6 @@ public class EventTool implements Timeoutable, Outputable {
     /**
      * Defines current timeouts.
      *
-     * @param ts ?t? A collection of timeout assignments.
      * @see org.netbeans.jemmy.Timeouts
      * @see org.netbeans.jemmy.Timeoutable
      * @see #getTimeouts
@@ -246,7 +236,6 @@ public class EventTool implements Timeoutable, Outputable {
      * {@code AWTEvent.*_EVENT_MASK} fields combination.
      * @return an AWTEvent object
      * @see #waitEvent()
-     * @throws TimeoutExpiredException
      */
     public AWTEvent waitEvent(long eventMask) {
         return (waitEvent(eventMask, timeouts.getTimeout("EventTool.WaitEventTimeout"), output.createErrorOutput()));
@@ -259,7 +248,6 @@ public class EventTool implements Timeoutable, Outputable {
      * @return an AWTEvent object
      * @see #waitEvent(long)
      * @see #getTheWholeEventMask()
-     * @throws TimeoutExpiredException
      */
     public AWTEvent waitEvent() {
         return waitEvent(listenerSet.getTheWholeMask());
@@ -270,7 +258,6 @@ public class EventTool implements Timeoutable, Outputable {
      *
      * @param eventMask Mask to wait events under.
      * {@code AWTEvent.*_EVENT_MASK} fields combination.
-     * @param waitTime Quiet time (millisecons).
      * @return true if no event ahs found.
      * @see #checkNoEvent(long)
      */
@@ -281,7 +268,6 @@ public class EventTool implements Timeoutable, Outputable {
     /**
      * Check that no event will be dispatched during time specified.
      *
-     * @param waitTime Quiet time (millisecons).
      * @return true if no event ahs found.
      * @see #checkNoEvent(long, long)
      * @see #getTheWholeEventMask()
@@ -296,10 +282,8 @@ public class EventTool implements Timeoutable, Outputable {
      *
      * @param eventMask Mask to wait events under.
      * {@code AWTEvent.*_EVENT_MASK} fields combination.
-     * @param waitTime Quiet time (millisecons).
      * @see #checkNoEvent(long, long)
      * @see #waitNoEvent(long)
-     * @throws TimeoutExpiredException
      */
     public void waitNoEvent(long eventMask, long waitTime) {
         NoEventWaiter waiter = new NoEventWaiter(eventMask, waitTime);
@@ -317,10 +301,8 @@ public class EventTool implements Timeoutable, Outputable {
      * During {@code EventTool.WaitNoEventTimeout} time waits for true
      * result of {@code checkNoEvent(long)} method.
      *
-     * @param waitTime Quiet time (millisecons).
      * @see #checkNoEvent(long)
      * @see #waitNoEvent(long, long)
-     * @throws TimeoutExpiredException
      */
     public void waitNoEvent(long waitTime) {
         ListenerSet ls = listenerSet;

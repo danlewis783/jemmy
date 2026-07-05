@@ -29,19 +29,19 @@ import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 
 /**
- *
- * Jemmy itself provides a way to create tests. Test should implement
- * org.netbeans.jemmy.Scenario interface.
- *
- * Test can be executed from command line:<BR>
- * {@code java [application options] [jemmy options] org.netbeans.jemmy.Test [full name of test class] [test args]}<BR>
- * Test elso can be executed by one of the run(...) methods or by <BR>
- * {@code new Test([test class name]).startTest([test args]);}<BR>
- *
- * <BR><BR>Timeouts used: <BR>
- * Test.WholeTestTimeout - time for the whole test<BR>
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
+ * Jemmy itself provides a way to create tests. Test should implement org.netbeans.jemmy.Scenario interface. Test can be
+ * executed from command line:
+ * <p>
+ * {@code java [application options] [jemmy options] org.netbeans.jemmy.Test [full name of test class] [test args]}
+ * <p>
+ * Test elso can be executed by one of the run(...) methods or by
+ * <p>
+ * {@code new Test([test class name]).startTest([test args]);}
+ * <p>
+ * Timeouts used:
+ * <ul>
+ * <li>Test.WholeTestTimeout - time for the whole test</li>
+ * </ul>
  */
 public class Test extends ActionProducer<Object, Object> implements Timeoutable, Outputable, Scenario {
 
@@ -62,14 +62,8 @@ public class Test extends ActionProducer<Object, Object> implements Timeoutable,
      */
     public static int TEST_PASSED_STATUS = 0;
 
-    /**
-     * Test timeouts.
-     */
     protected Timeouts timeouts;
 
-    /**
-     * Test output.
-     */
     protected TestOut output;
 
     private Scenario scenario;
@@ -79,8 +73,6 @@ public class Test extends ActionProducer<Object, Object> implements Timeoutable,
      * of {@code ActionProducer} and {@code java.lang.Thread} that
      * runs in a separate thread of execution and waits for execution to finish.
      * The current output stream assignments and timeouts are used.
-     *
-     * @param testClassName Full test class name
      */
     public Test(String testClassName) {
         super(true);
@@ -96,7 +88,6 @@ public class Test extends ActionProducer<Object, Object> implements Timeoutable,
      * and waits for execution to finish. The current output stream assignments
      * and timeouts are used.
      *
-     * @param scenario a test scenario
      * @see org.netbeans.jemmy.Scenario
      */
     public Test(Scenario scenario) {
@@ -124,7 +115,6 @@ public class Test extends ActionProducer<Object, Object> implements Timeoutable,
      * pass/fail status and a short status {@code java.lang.String}. Can by
      * invoked from test to abort test execution.
      *
-     * @param status If 0 - test passed, otherwise failed.
      * @throws TestCompletedException all of the time.
      */
     public static void closeDown(int status) {
@@ -170,7 +160,6 @@ public class Test extends ActionProducer<Object, Object> implements Timeoutable,
      *
      * @param argv First element should be a test class name, all others - test
      * args.
-     * @param output Stream to put test output and errput into.
      * @return test status.
      */
     public static int run(String[] argv, PrintStream output) {
@@ -183,8 +172,6 @@ public class Test extends ActionProducer<Object, Object> implements Timeoutable,
      *
      * @param argv First element should be a test class name, all others - test
      * args.
-     * @param output Stream to put test output into.
-     * @param errput Stream to put test errput into.
      * @return test status.
      */
     public static int run(String[] argv, PrintStream output, PrintStream errput) {
@@ -197,7 +184,6 @@ public class Test extends ActionProducer<Object, Object> implements Timeoutable,
      *
      * @param argv First element should be a test class name, all others - test
      * args.
-     * @param output Writer to put test output and errput into.
      * @return test status.
      */
     public static int run(String[] argv, PrintWriter output) {
@@ -210,8 +196,6 @@ public class Test extends ActionProducer<Object, Object> implements Timeoutable,
      *
      * @param argv First element should be a test class name, all others - test
      * args.
-     * @param output Writer to put test output into.
-     * @param errput Writer to put test errput into.
      * @return test status.
      */
     public static int run(String[] argv, PrintWriter output, PrintWriter errput) {
@@ -237,7 +221,6 @@ public class Test extends ActionProducer<Object, Object> implements Timeoutable,
     /**
      * Creates an instance of a class named by the parameter.
      *
-     * @param testName Full test class name
      * @return an instance of the test {@code Scenario} to launch.
      * @see org.netbeans.jemmy.Scenario
      */
@@ -267,7 +250,6 @@ public class Test extends ActionProducer<Object, Object> implements Timeoutable,
     /**
      * Set the timeouts used by this {@code Test}.
      *
-     * @param timeouts A collection of timeout assignments.
      * @see org.netbeans.jemmy.Timeoutable
      * @see org.netbeans.jemmy.Timeouts
      * @see #getTimeouts
@@ -413,11 +395,6 @@ public class Test extends ActionProducer<Object, Object> implements Timeoutable,
         return 0;
     }
 
-    /**
-     * Sleeps.
-     *
-     * @param time The sleep time in milliseconds.
-     */
     protected void doSleep(long time) {
         try {
             Thread.sleep(time);

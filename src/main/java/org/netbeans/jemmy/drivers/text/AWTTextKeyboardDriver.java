@@ -32,14 +32,9 @@ import org.netbeans.jemmy.operators.TextComponentOperator;
 
 /**
  * TextDriver for AWT text component types. Uses keyboard operations.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class AWTTextKeyboardDriver extends TextKeyboardDriver {
 
-    /**
-     * Constructs a AWTTextKeyboardDriver.
-     */
     public AWTTextKeyboardDriver() {
         super(new String[] {"org.netbeans.jemmy.operators.TextComponentOperator"});
     }

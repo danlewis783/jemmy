@@ -26,13 +26,8 @@ package org.netbeans.jemmy.drivers;
 
 /**
  * Specifies an interface for objects defining path searching criteria.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public interface DescriptablePathChooser extends PathChooser {
 
-    /**
-     * Gives path description.
-     */
     public String getDescription();
 }

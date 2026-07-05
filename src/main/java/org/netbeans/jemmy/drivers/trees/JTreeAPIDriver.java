@@ -36,14 +36,9 @@ import org.netbeans.jemmy.operators.JTreeOperator;
 
 /**
  * TreeDriver for javax.swing.JTree component type. Uses API calls.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class JTreeAPIDriver extends LightSupportiveDriver implements TreeDriver {
 
-    /**
-     * Constructs a JTreeAPIDriver.
-     */
     public JTreeAPIDriver() {
         super(new String[] {"org.netbeans.jemmy.operators.JTreeOperator"});
     }

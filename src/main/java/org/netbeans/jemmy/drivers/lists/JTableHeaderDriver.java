@@ -36,16 +36,11 @@ import org.netbeans.jemmy.operators.Operator;
 
 /**
  * List driver for javax.swing.table.JTableHeader component type.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class JTableHeaderDriver extends LightSupportiveDriver implements OrderedListDriver {
 
     private QueueTool queueTool;
 
-    /**
-     * Constructs a JTableHeaderDriver.
-     */
     public JTableHeaderDriver() {
         super(new String[] {"org.netbeans.jemmy.operators.JTableHeaderOperator"});
         queueTool = new QueueTool();
@@ -73,9 +68,6 @@ public class JTableHeaderDriver extends LightSupportiveDriver implements Ordered
 
     /**
      * Clicks on a column header.
-     *
-     * @param oper an operator to click on.
-     * @param index column index.
      */
     protected void clickOnHeader(JTableHeaderOperator oper, int index) {
         clickOnHeader(oper, index, 0);
@@ -84,8 +76,6 @@ public class JTableHeaderDriver extends LightSupportiveDriver implements Ordered
     /**
      * Clicks on a column header.
      *
-     * @param oper an operator to click on.
-     * @param index column index.
      * @param modifiers a combination of {@code InputEvent.*_MASK} fields.
      */
     protected void clickOnHeader(final JTableHeaderOperator oper, final int index, final int modifiers) {

@@ -31,16 +31,11 @@ import org.netbeans.jemmy.operators.JScrollBarOperator;
 
 /**
  * ScrollDriver for javax.swing.JScrollBar component type.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class JScrollBarAPIDriver extends AbstractScrollDriver {
 
     private static final int SMALL_INCREMENT = 1;
 
-    /**
-     * Constructs a JScrollBarDriver.
-     */
     public JScrollBarAPIDriver() {
         super(new String[] {"org.netbeans.jemmy.operators.JScrollBarOperator"});
     }

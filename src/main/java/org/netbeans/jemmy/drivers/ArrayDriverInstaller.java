@@ -26,8 +26,6 @@ package org.netbeans.jemmy.drivers;
 
 /**
  * Auxiliary class making driver registration easier.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class ArrayDriverInstaller implements DriverInstaller {
 
@@ -39,9 +37,6 @@ public class ArrayDriverInstaller implements DriverInstaller {
      * have same length, {@code drivers} must keep instances of
      * <a href = "Driver.html">Driver</a> or
      * <a href = "Driver.html">LightDriver</a> implementations.
-     *
-     * @param ids an array of driver IDs
-     * @param drivers an array of drivers.
      */
     public ArrayDriverInstaller(String[] ids, Object[] drivers) {
         this.ids = ids;

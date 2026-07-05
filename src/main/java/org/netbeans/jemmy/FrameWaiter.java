@@ -28,20 +28,18 @@ import java.awt.Component;
 import java.awt.Frame;
 
 /**
- *
- * Contains methods to search and wait Frame. A FrameWaiter is a utility class
- * used to look or wait for Frames. It contains methods to search for a Frame
- * among the currently showing Frames as well as methods that wait for a Frame
- * to show within an allotted time period.
- *
- * <BR><BR>Timeouts used: <BR>
- * FrameWaiter.WaitFrameTimeout - time to wait frame displayed. <BR>
- * FrameWaiter.AfterFrameTimeout - time to sleep after frame has been displayed.
- * <BR>
+ * Contains methods to search and wait Frame. A FrameWaiter is a utility class used to look or wait for Frames. It
+ * contains methods to search for a Frame among the currently showing Frames as well as methods that wait for a Frame to
+ * show within an allotted time period.
+ * <p>
+ * Timeouts used:
+ * <ul>
+ * <li>FrameWaiter.WaitFrameTimeout - time to wait frame displayed.</li>
+ * <li>FrameWaiter.AfterFrameTimeout - time to sleep after frame has been displayed.</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
  *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class FrameWaiter extends WindowWaiter implements Timeoutable, Outputable {
 
@@ -51,9 +49,6 @@ public class FrameWaiter extends WindowWaiter implements Timeoutable, Outputable
     private Timeouts timeouts;
     private TestOut output;
 
-    /**
-     * Constructor.
-     */
     public FrameWaiter() {
         super();
         setTimeouts(JemmyProperties.getProperties().getTimeouts());
@@ -96,7 +91,6 @@ public class FrameWaiter extends WindowWaiter implements Timeoutable, Outputable
      * Searches for a Frame by title. The search proceeds among the currently
      * showing Frames for the first with a suitable title.
      *
-     * @param title Frame title or subtitle.
      * @param ce If {@code true} and the search is case sensitive, then a
      * match occurs when the {@code title} argument is a substring of a
      * Frame title. If {@code false} and the search is case sensitive, then
@@ -122,7 +116,6 @@ public class FrameWaiter extends WindowWaiter implements Timeoutable, Outputable
      * {@code index+1}'th Frame among the currently showing Frames that
      * possess a suitable title.
      *
-     * @param title Frame title or subtitle.
      * @param ce If {@code true} and the search is case sensitive, then a
      * match occurs when the {@code title} argument is a substring of a
      * Frame title. If {@code false} and the search is case sensitive, then
@@ -153,7 +146,6 @@ public class FrameWaiter extends WindowWaiter implements Timeoutable, Outputable
     /**
      * Defines current timeouts.
      *
-     * @param timeouts A collection of timeout assignments.
      * @see org.netbeans.jemmy.Timeoutable
      * @see org.netbeans.jemmy.Timeouts
      * @see #getTimeouts
@@ -221,7 +213,6 @@ public class FrameWaiter extends WindowWaiter implements Timeoutable, Outputable
      * that meets the search criteria. If fewer than {@code index+1} Frames
      * show up in the allotted time period then a {@code null} reference is
      * returned.
-     * @throws TimeoutExpiredException
      * @see org.netbeans.jemmy.WindowWaiter#actionProduced(Object)
      * @exception InterruptedException
      */
@@ -240,7 +231,6 @@ public class FrameWaiter extends WindowWaiter implements Timeoutable, Outputable
      * @return a reference to the first Frame that shows and that meets the
      * search criteria. If no such Frame can be found within the time period
      * allotted, a {@code null} reference is returned.
-     * @throws TimeoutExpiredException
      * @see org.netbeans.jemmy.WindowWaiter#actionProduced(Object)
      * @exception InterruptedException
      */
@@ -252,7 +242,6 @@ public class FrameWaiter extends WindowWaiter implements Timeoutable, Outputable
      * Waits for a Frame to show. Wait for the {@code index+1}'th Frame to
      * show with a suitable title.
      *
-     * @param title Frame title or subtitle.
      * @param compareExactly If {@code true} and the search is case
      * sensitive, then a match occurs when the {@code title} argument is a
      * substring of a Frame title. If {@code false} and the search is case
@@ -271,7 +260,6 @@ public class FrameWaiter extends WindowWaiter implements Timeoutable, Outputable
      * @return a reference to the {@code index+1}'th Frame to show and that
      * has a suitable title. If no such Frame can be found within the time
      * period allotted, a {@code null} reference is returned.
-     * @throws TimeoutExpiredException
      * @see org.netbeans.jemmy.WindowWaiter#actionProduced(Object)
      * @exception InterruptedException
      */
@@ -284,7 +272,6 @@ public class FrameWaiter extends WindowWaiter implements Timeoutable, Outputable
      * Waits for a Frame to show. Wait for the first Frame to show with a
      * suitable title.
      *
-     * @param title Frame title or subtitle.
      * @param compareExactly If {@code true} and the search is case
      * sensitive, then a match occurs when the {@code title} argument is a
      * substring of a Frame title. If {@code false} and the search is case
@@ -300,7 +287,6 @@ public class FrameWaiter extends WindowWaiter implements Timeoutable, Outputable
      * @return a reference to the first Frame to show and that has a suitable
      * title. If no such Frame can be found within the time period allotted, a
      * {@code null} reference is returned.
-     * @throws TimeoutExpiredException
      * @see org.netbeans.jemmy.WindowWaiter#actionProduced(Object)
      * @exception InterruptedException
      */
@@ -321,7 +307,6 @@ public class FrameWaiter extends WindowWaiter implements Timeoutable, Outputable
      * Overrides WindowWaiter.getTimeoutExpiredMessage. Returns the timeout
      * expired message value.
      *
-     * @param timeSpent Time spent for waiting
      * @return a message tring
      * @see Waiter#getTimeoutExpiredMessage(long)
      */
@@ -335,8 +320,6 @@ public class FrameWaiter extends WindowWaiter implements Timeoutable, Outputable
      * Overrides WindowWaiter.getActionProducedMessage. Returns the action
      * produced message value.
      *
-     * @param timeSpent Time spent for waiting.
-     * @param result A message string.
      * @return a message tring
      * @see Waiter#getActionProducedMessage(long, Object)
      */

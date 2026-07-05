@@ -35,65 +35,40 @@ import javax.swing.text.StyledDocument;
 import org.netbeans.jemmy.ComponentChooser;
 
 /**
- * <BR><BR>Timeouts used: <BR>
- * JTextComponentOperator.PushKeyTimeout - time between key pressing and
- * releasing during text typing <BR>
- * JTextComponentOperator.BetweenKeysTimeout - time to sleep between two chars
- * typing <BR>
- * JTextComponentOperator.ChangeCaretPositionTimeout - maximum time to chenge
- * caret position <BR>
- * JTextComponentOperator.TypeTextTimeout - maximum time to type text <BR>
- * ComponentOperator.WaitComponentTimeout - time to wait component displayed
- * <BR>
- * ComponentOperator.WaitFocusTimeout - time to wait component focus <BR>
- * JScrollBarOperator.OneScrollClickTimeout - time for one scroll click <BR>
- * JScrollBarOperator.WholeScrollTimeout - time for the whole scrolling <BR>.
+ * Timeouts used:
+ * <ul>
+ * <li>JTextComponentOperator.PushKeyTimeout - time between key pressing and releasing during text typing</li>
+ * <li>JTextComponentOperator.BetweenKeysTimeout - time to sleep between two chars typing</li>
+ * <li>JTextComponentOperator.ChangeCaretPositionTimeout - maximum time to chenge caret position</li>
+ * <li>JTextComponentOperator.TypeTextTimeout - maximum time to type text</li>
+ * <li>ComponentOperator.WaitComponentTimeout - time to wait component displayed</li>
+ * <li>ComponentOperator.WaitFocusTimeout - time to wait component focus</li>
+ * <li>JScrollBarOperator.OneScrollClickTimeout - time for one scroll click</li>
+ * <li>JScrollBarOperator.WholeScrollTimeout - time for the whole scrolling</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
 public class JTextPaneOperator extends JEditorPaneOperator {
 
-    /**
-     * Constructor.
-     *
-     * @param b a component
-     */
     public JTextPaneOperator(JTextPane b) {
         super(b);
     }
 
-    /**
-     * Constructs a JTextPaneOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public JTextPaneOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((JTextPane) cont.waitSubComponent(new JTextPaneFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a JTextPaneOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public JTextPaneOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Button text.
-     * @param index Ordinal component index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public JTextPaneOperator(ContainerOperator<?> cont, String text, int index) {
@@ -105,11 +80,9 @@ public class JTextPaneOperator extends JEditorPaneOperator {
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Button text.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public JTextPaneOperator(ContainerOperator<?> cont, String text) {
@@ -117,11 +90,8 @@ public class JTextPaneOperator extends JEditorPaneOperator {
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     * @param index Ordinal component index.
      */
     public JTextPaneOperator(ContainerOperator<?> cont, int index) {
         this((JTextPane) waitComponent(cont, new JTextPaneFinder(), index));
@@ -129,10 +99,8 @@ public class JTextPaneOperator extends JEditorPaneOperator {
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
      */
     public JTextPaneOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -141,9 +109,6 @@ public class JTextPaneOperator extends JEditorPaneOperator {
     /**
      * Searches JTextPane in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index Ordinal component index.
      * @return JTextPane instance or null if component was not found.
      */
     public static JTextPane findJTextPane(Container cont, ComponentChooser chooser, int index) {
@@ -153,8 +118,6 @@ public class JTextPaneOperator extends JEditorPaneOperator {
     /**
      * Searches JTextPane in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser a component chooser specifying searching criteria.
      * @return JTextPane instance or null if component was not found.
      */
     public static JTextPane findJTextPane(Container cont, ComponentChooser chooser) {
@@ -164,11 +127,6 @@ public class JTextPaneOperator extends JEditorPaneOperator {
     /**
      * Searches JTextPane by text.
      *
-     * @param cont Container to search component in.
-     * @param text Component text.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return JTextPane instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -183,10 +141,6 @@ public class JTextPaneOperator extends JEditorPaneOperator {
     /**
      * Searches JTextPane by text.
      *
-     * @param cont Container to search component in.
-     * @param text Component text.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return JTextPane instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -197,9 +151,6 @@ public class JTextPaneOperator extends JEditorPaneOperator {
     /**
      * Waits JTextPane in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index Ordinal component index.
      * @return JTextPane instance.
      */
     public static JTextPane waitJTextPane(Container cont, ComponentChooser chooser, int index) {
@@ -209,8 +160,6 @@ public class JTextPaneOperator extends JEditorPaneOperator {
     /**
      * Waits JTextPane in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser a component chooser specifying searching criteria.
      * @return JTextPane instance.
      */
     public static JTextPane waitJTextPane(Container cont, ComponentChooser chooser) {
@@ -220,11 +169,6 @@ public class JTextPaneOperator extends JEditorPaneOperator {
     /**
      * Waits JTextPane by text.
      *
-     * @param cont Container to search component in.
-     * @param text Component text.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return JTextPane instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -239,10 +183,6 @@ public class JTextPaneOperator extends JEditorPaneOperator {
     /**
      * Waits JTextPane by text.
      *
-     * @param cont Container to search component in.
-     * @param text Component text.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return JTextPane instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -252,9 +192,6 @@ public class JTextPaneOperator extends JEditorPaneOperator {
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code JTextPane.addStyle(String, Style)} through queue
-     */
     public Style addStyle(final String string, final Style style) {
         return (runMapping(new MapAction<Style>("addStyle") {
             @Override
@@ -264,9 +201,6 @@ public class JTextPaneOperator extends JEditorPaneOperator {
         }));
     }
 
-    /**
-     * Maps {@code JTextPane.getCharacterAttributes()} through queue
-     */
     public AttributeSet getCharacterAttributes() {
         return (runMapping(new MapAction<AttributeSet>("getCharacterAttributes") {
             @Override
@@ -276,9 +210,6 @@ public class JTextPaneOperator extends JEditorPaneOperator {
         }));
     }
 
-    /**
-     * Maps {@code JTextPane.getInputAttributes()} through queue
-     */
     public MutableAttributeSet getInputAttributes() {
         return (runMapping(new MapAction<MutableAttributeSet>("getInputAttributes") {
             @Override
@@ -288,9 +219,6 @@ public class JTextPaneOperator extends JEditorPaneOperator {
         }));
     }
 
-    /**
-     * Maps {@code JTextPane.getLogicalStyle()} through queue
-     */
     public Style getLogicalStyle() {
         return (runMapping(new MapAction<Style>("getLogicalStyle") {
             @Override
@@ -300,9 +228,6 @@ public class JTextPaneOperator extends JEditorPaneOperator {
         }));
     }
 
-    /**
-     * Maps {@code JTextPane.getParagraphAttributes()} through queue
-     */
     public AttributeSet getParagraphAttributes() {
         return (runMapping(new MapAction<AttributeSet>("getParagraphAttributes") {
             @Override
@@ -312,9 +237,6 @@ public class JTextPaneOperator extends JEditorPaneOperator {
         }));
     }
 
-    /**
-     * Maps {@code JTextPane.getStyle(String)} through queue
-     */
     public Style getStyle(final String string) {
         return (runMapping(new MapAction<Style>("getStyle") {
             @Override
@@ -324,9 +246,6 @@ public class JTextPaneOperator extends JEditorPaneOperator {
         }));
     }
 
-    /**
-     * Maps {@code JTextPane.getStyledDocument()} through queue
-     */
     public StyledDocument getStyledDocument() {
         return (runMapping(new MapAction<StyledDocument>("getStyledDocument") {
             @Override
@@ -336,9 +255,6 @@ public class JTextPaneOperator extends JEditorPaneOperator {
         }));
     }
 
-    /**
-     * Maps {@code JTextPane.insertComponent(Component)} through queue
-     */
     public void insertComponent(final Component component) {
         runMapping(new MapVoidAction("insertComponent") {
             @Override
@@ -348,9 +264,6 @@ public class JTextPaneOperator extends JEditorPaneOperator {
         });
     }
 
-    /**
-     * Maps {@code JTextPane.insertIcon(Icon)} through queue
-     */
     public void insertIcon(final Icon icon) {
         runMapping(new MapVoidAction("insertIcon") {
             @Override
@@ -360,9 +273,6 @@ public class JTextPaneOperator extends JEditorPaneOperator {
         });
     }
 
-    /**
-     * Maps {@code JTextPane.removeStyle(String)} through queue
-     */
     public void removeStyle(final String string) {
         runMapping(new MapVoidAction("removeStyle") {
             @Override
@@ -372,10 +282,6 @@ public class JTextPaneOperator extends JEditorPaneOperator {
         });
     }
 
-    /**
-     * Maps {@code JTextPane.setCharacterAttributes(AttributeSet, boolean)}
-     * through queue
-     */
     public void setCharacterAttributes(final AttributeSet attributeSet, final boolean b) {
         runMapping(new MapVoidAction("setCharacterAttributes") {
             @Override
@@ -385,9 +291,6 @@ public class JTextPaneOperator extends JEditorPaneOperator {
         });
     }
 
-    /**
-     * Maps {@code JTextPane.setLogicalStyle(Style)} through queue
-     */
     public void setLogicalStyle(final Style style) {
         runMapping(new MapVoidAction("setLogicalStyle") {
             @Override
@@ -397,10 +300,6 @@ public class JTextPaneOperator extends JEditorPaneOperator {
         });
     }
 
-    /**
-     * Maps {@code JTextPane.setParagraphAttributes(AttributeSet, boolean)}
-     * through queue
-     */
     public void setParagraphAttributes(final AttributeSet attributeSet, final boolean b) {
         runMapping(new MapVoidAction("setParagraphAttributes") {
             @Override
@@ -410,9 +309,6 @@ public class JTextPaneOperator extends JEditorPaneOperator {
         });
     }
 
-    /**
-     * Maps {@code JTextPane.setStyledDocument(StyledDocument)} through queue
-     */
     public void setStyledDocument(final StyledDocument styledDocument) {
         runMapping(new MapVoidAction("setStyledDocument") {
             @Override
@@ -431,8 +327,6 @@ public class JTextPaneOperator extends JEditorPaneOperator {
 
         /**
          * Constructs JTextPaneFinder.
-         *
-         * @param sf other searching criteria.
          */
         public JTextPaneFinder(ComponentChooser sf) {
             super(JTextPane.class, sf);

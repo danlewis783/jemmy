@@ -37,16 +37,11 @@ import org.netbeans.jemmy.operators.Operator;
 
 /**
  * List driver for java.awt.Choice component type.
- *
- * @author Alexandre Iline(alexandre.iline@oracle.com)
  */
 public class ChoiceDriver extends LightSupportiveDriver implements ListDriver {
 
     private static final int RIGHT_INDENT = 10;
 
-    /**
-     * Constructs a ChoiceDriver.
-     */
     public ChoiceDriver() {
         super(new String[] {"org.netbeans.jemmy.operators.ChoiceOperator"});
     }

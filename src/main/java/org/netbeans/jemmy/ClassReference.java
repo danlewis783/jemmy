@@ -30,21 +30,13 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 
 /**
- *
  * Allows access to classes by reflection.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class ClassReference {
 
     private Class<?> cl;
     private Object instance;
 
-    /**
-     * Constructor.
-     *
-     * @param o Object to work with.
-     */
     public ClassReference(Object o) {
         super();
         instance = o;
@@ -55,7 +47,6 @@ public class ClassReference {
      * Contructor. The object created by this constructor can be used to access
      * static methods and fields only.
      *
-     * @param className name of class
      * @exception ClassNotFoundException
      */
     public ClassReference(String className) throws ClassNotFoundException {
@@ -104,12 +95,9 @@ public class ClassReference {
     /**
      * Locates method by name and parameter types and executes it.
      *
-     * @param method_name Name of method.
-     * @param params Method parameters.
-     * @param params_classes Method parameters types.
-     * @return the return value from an invocation of the Method.<BR>
+     * @return the return value from an invocation of the Method.
      * If {@code method_name} method is void, {@code null} is
-     * returned.<BR>
+     * returned.
      * If {@code method_name} method returns a primitive type, then return
      * wrapper class instance.
      * @throws InvocationTargetException when the invoked method throws an
@@ -137,8 +125,6 @@ public class ClassReference {
     /**
      * Locates constructor by parameter types and creates an instance.
      *
-     * @param params An array of Method parameters.
-     * @param params_classes An array of Method parameter types.
      * @return a new class instance.
      * @throws InvocationTargetException when the invoked constructor throws an
      * exception.
@@ -169,7 +155,6 @@ public class ClassReference {
     /**
      * Returns the field value.
      *
-     * @param field_name The name of the field.
      * @return the field value
      * @see #setField
      * @throws NoSuchFieldException when the field cannot be found.
@@ -186,8 +171,6 @@ public class ClassReference {
     /**
      * Change a field's value.
      *
-     * @param field_name The name of the field.
-     * @param newValue The fields new value.
      * @see #getField
      * @throws NoSuchFieldException when the field cannot be found.
      * @throws IllegalAccessException when access to the class or constructor is

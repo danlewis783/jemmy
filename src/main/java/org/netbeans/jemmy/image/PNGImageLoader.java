@@ -31,14 +31,9 @@ import org.netbeans.jemmy.util.PNGDecoder;
 
 /**
  * Allowes to process PNF image format.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class PNGImageLoader implements ImageLoader {
 
-    /**
-     * Loads an image from a PNG image file.
-     */
     @Override
     public BufferedImage load(String fileName) throws IOException {
         return new PNGDecoder(new FileInputStream(fileName)).decode();

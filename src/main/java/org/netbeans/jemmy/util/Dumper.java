@@ -44,16 +44,11 @@ import org.netbeans.jemmy.operators.Operator;
 /**
  * Allows to "dump" current GUI state into XML file. Uses operators' getDump
  * methods to gather the information.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
- *
  */
 public class Dumper {
 
     /**
      * Prints XML DTD information.
-     *
-     * @param writer a writer to write to.
      */
     public static void printDTD(PrintWriter writer) {
         printDTD(writer, "");
@@ -61,8 +56,6 @@ public class Dumper {
 
     /**
      * Prints XML DTD information.
-     *
-     * @param writer a stream to write to.
      */
     public static void printDTD(PrintStream writer) {
         printDTD(new PrintWriter(writer));
@@ -71,7 +64,6 @@ public class Dumper {
     /**
      * Prints XML DTD information into file.
      *
-     * @param fileName a file to write to.
      * @throws FileNotFoundException
      */
     public static void printDTD(String fileName) throws FileNotFoundException {
@@ -81,9 +73,6 @@ public class Dumper {
     /**
      * Prints component hierarchy (GUI dump) starting from {@code comp}
      * component.
-     *
-     * @param comp a component to get information from.
-     * @param writer a writer to write to.
      */
     public static void dumpComponent(Component comp, final PrintWriter writer, final DumpController listener) {
         QueueTool qt = new QueueTool();
@@ -123,9 +112,6 @@ public class Dumper {
     /**
      * Prints component hierarchy (GUI dump). starting from {@code comp}
      * component.
-     *
-     * @param comp a component to get information from.
-     * @param writer a stream to write to.
      */
     public static void dumpComponent(Component comp, PrintStream writer) {
         dumpComponent(comp, new PrintWriter(writer));
@@ -138,8 +124,6 @@ public class Dumper {
     /**
      * Prints component hierarchy (GUI dump) into file.
      *
-     * @param comp a component to get information from.
-     * @param fileName a file to write to.
      * @throws FileNotFoundException
      */
     public static void dumpComponent(Component comp, String fileName) throws FileNotFoundException {
@@ -153,8 +137,6 @@ public class Dumper {
 
     /**
      * Prints all component hierarchy (GUI dump).
-     *
-     * @param writer a writer to write to.
      */
     public static void dumpAll(PrintWriter writer) {
         dumpComponent(null, writer);
@@ -166,8 +148,6 @@ public class Dumper {
 
     /**
      * Prints all component hierarchy (GUI dump).
-     *
-     * @param writer a stream to write to.
      */
     public static void dumpAll(PrintStream writer) {
         dumpAll(new PrintWriter(writer));
@@ -180,7 +160,6 @@ public class Dumper {
     /**
      * Prints component hierarchy (GUI dump) into file.
      *
-     * @param fileName a file to write to.
      * @throws FileNotFoundException
      */
     public static void dumpAll(String fileName) throws FileNotFoundException {

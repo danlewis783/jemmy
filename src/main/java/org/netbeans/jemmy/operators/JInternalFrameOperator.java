@@ -59,23 +59,19 @@ import org.netbeans.jemmy.util.LookAndFeel;
 import org.netbeans.jemmy.util.Platform;
 
 /**
- * Class provides necessary functionality to operate with
- * javax.swing.JInternalFrame component.
- *
- * Some methods can throw WrongInternalFrameStateException exception.
- *
- * <BR><BR>Timeouts used: <BR>
- * ComponentOperator.WaitComponentTimeout - time to wait component displayed
- * <BR>
- * ComponentOperator.MouseClickTimeout - time between mouse pressing and
- * releasing <BR>
- * AbstractButtonOperator.PushButtonTimeout - time between button pressing and
- * releasing<BR>
- * JScrollBarOperator.WholeScrollTimeout - time for the whole scrolling <BR>.
+ * Class provides necessary functionality to operate with javax.swing.JInternalFrame component. Some methods can throw
+ * WrongInternalFrameStateException exception.
+ * <p>
+ * Timeouts used:
+ * <ul>
+ * <li>ComponentOperator.WaitComponentTimeout - time to wait component displayed</li>
+ * <li>ComponentOperator.MouseClickTimeout - time between mouse pressing and releasing</li>
+ * <li>AbstractButtonOperator.PushButtonTimeout - time between button pressing and releasing</li>
+ * <li>JScrollBarOperator.WholeScrollTimeout - time for the whole scrolling</li>
+ * </ul>
  *
  * @see org.netbeans.jemmy.Timeouts
  * @see WrongInternalFrameStateException
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class JInternalFrameOperator extends JComponentOperator implements Outputable, Timeoutable {
 
@@ -150,26 +146,14 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
      */
     public static final String MINIMIZE_BUTTON_TOOLTIP = UIManager.getString("InternalFrame.iconButtonToolTip");
 
-    /**
-     * A minimizing button.
-     */
     protected JButtonOperator minOper = null;
 
-    /**
-     * A maximizing button.
-     */
     protected JButtonOperator maxOper = null;
 
-    /**
-     * A close button.
-     */
     protected JButtonOperator closeOper = null;
 
     protected JButtonOperator popupButtonOper = null;
 
-    /**
-     * A title operator.
-     */
     protected ContainerOperator<?> titleOperator = null;
 
     private TestOut output;
@@ -180,11 +164,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
     FrameDriver fDriver;
     InternalFrameDriver iDriver;
 
-    /**
-     * Constructor.
-     *
-     * @param b a component
-     */
     public JInternalFrameOperator(JInternalFrame b) {
         super(b);
         wDriver = DriverManager.getWindowDriver(getClass());
@@ -192,37 +171,20 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         iDriver = DriverManager.getInternalFrameDriver(getClass());
     }
 
-    /**
-     * Constructs a JInternalFrameOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public JInternalFrameOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this(waitJInternalFrame((Container) cont.getSource(), chooser, index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a JInternalFrameOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public JInternalFrameOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Button text.
-     * @param index Ordinal component index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     *
      */
     public JInternalFrameOperator(ContainerOperator<?> cont, String text, int index) {
         this(findOne(cont, text, index));
@@ -230,25 +192,18 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
-     * @param cont a container
-     * @param text Button text.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     *
      */
     public JInternalFrameOperator(ContainerOperator<?> cont, String text) {
         this(cont, text, 0);
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     * @param index Ordinal component index.
-     *
      */
     public JInternalFrameOperator(ContainerOperator<?> cont, int index) {
         this(waitJInternalFrame((Container) cont.getSource(), new JInternalFrameFinder(), index));
@@ -256,11 +211,8 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
-     *
-     * @param cont a container
-     *
      */
     public JInternalFrameOperator(ContainerOperator<?> cont) {
         this(cont, 0);
@@ -269,9 +221,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
     /**
      * Searches JInternalframe in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index Ordinal component index.
      * @return JInternalframe instance or null if component was not found.
      */
     public static JInternalFrame findJInternalFrame(Container cont, ComponentChooser chooser, int index) {
@@ -288,8 +237,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
     /**
      * Searches JInternalframe in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser a component chooser specifying searching criteria.
      * @return JInternalframe instance or null if component was not found.
      */
     public static JInternalFrame findJInternalFrame(Container cont, ComponentChooser chooser) {
@@ -299,11 +246,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
     /**
      * Searches JInternalframe by title.
      *
-     * @param cont Container to search component in.
-     * @param text Component text.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return JInternalframe instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -315,10 +257,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
     /**
      * Searches JInternalframe by title.
      *
-     * @param cont Container to search component in.
-     * @param text Component text.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return JInternalframe instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -329,8 +267,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
     /**
      * Searches JInternalFrame object which component lies on.
      *
-     * @param comp Component to find JInternalFrame under.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return JInternalFrame instance or null if component was not found.
      */
     public static JInternalFrame findJInternalFrameUnder(Component comp, ComponentChooser chooser) {
@@ -340,7 +276,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
     /**
      * Searches JInternalFrame object which component lies on.
      *
-     * @param comp Component to find JInternalFrame under.
      * @return JInternalFrame instance or null if component was not found.
      */
     public static JInternalFrame findJInternalFrameUnder(Component comp) {
@@ -350,11 +285,7 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
     /**
      * Waits JInternalframe in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index Ordinal component index.
      * @return JInternalframe instance.
-     *
      */
     public static JInternalFrame waitJInternalFrame(
             final Container cont, final ComponentChooser chooser, final int index) {
@@ -371,10 +302,7 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
     /**
      * Waits JInternalframe in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser a component chooser specifying searching criteria.
      * @return JInternalframe instance.
-     *
      */
     public static JInternalFrame waitJInternalFrame(Container cont, ComponentChooser chooser) {
         return waitJInternalFrame(cont, chooser, 0);
@@ -383,14 +311,8 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
     /**
      * Waits JInternalframe by title.
      *
-     * @param cont Container to search component in.
-     * @param text Component text.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return JInternalframe instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     *
      */
     public static JInternalFrame waitJInternalFrame(Container cont, String text, boolean ce, boolean ccs, int index) {
         return (waitJInternalFrame(
@@ -400,13 +322,8 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
     /**
      * Waits JInternalframe by title.
      *
-     * @param cont Container to search component in.
-     * @param text Component text.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return JInternalframe instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
-     *
      */
     public static JInternalFrame waitJInternalFrame(Container cont, String text, boolean ce, boolean ccs) {
         return waitJInternalFrame(cont, text, ce, ccs, 0);
@@ -439,7 +356,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
      * iconifiable.
      *
      * @throws WrongInternalFrameStateException
-     *
      */
     public void iconify() {
         output.printLine("Iconify JInternalFrame\n    : " + toStringSource());
@@ -456,7 +372,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
      * Deiconifies frame. Note: frame should be iconified.
      *
      * @throws WrongInternalFrameStateException
-     *
      */
     public void deiconify() {
         output.printLine("Deiconify JInternalFrame\n    : " + toStringSource());
@@ -503,8 +418,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
     /**
      * Moves frame to new location. Note: frame should not be iconified.
      *
-     * @param x X coordinate of a new frame location.
-     * @param y Y coordinate of a new frame location.
      * @throws WrongInternalFrameStateException
      */
     public void move(int x, int y) {
@@ -528,8 +441,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
     /**
      * Resizes frame. Note: frame should not be iconified.
      *
-     * @param width New frame width.
-     * @param height New frame height.
      * @throws WrongInternalFrameStateException
      */
     public void resize(int width, int height) {
@@ -562,9 +473,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         }
     }
 
-    /**
-     * Closes the frame.
-     */
     public void close() {
         checkIconified(false);
         wDriver.requestClose(this);
@@ -575,12 +483,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
 
     /**
      * Scrolls to internal frame's rectangle.
-     *
-     * @param x Horizontal rectangle coordinate
-     * @param y Vertical rectangle coordinate
-     * @param width rectangle width
-     * @param height rectangle height
-     *
      */
     public void scrollToRectangle(int x, int y, int width, int height) {
         output.printTrace("Scroll desktop pane to make \"" + getTitle() + "\" internal frame visible");
@@ -606,17 +508,11 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
 
     /**
      * Scrolls to internal frame's rectangle.
-     *
-     * @param rect a rectangle to scroll to.
      */
     public void scrollToRectangle(Rectangle rect) {
         scrollToRectangle(rect.x, rect.y, rect.width, rect.height);
     }
 
-    /**
-     * Scrolls to internal frame.
-     *
-     */
     public void scrollToFrame() {
         if (isIcon()) {
             scrollToRectangle(0, 0, iconOperator.getWidth(), iconOperator.getHeight());
@@ -732,9 +628,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         });
     }
 
-    /**
-     * Waits for the frame to be closed.
-     */
     public void waitClosed() {
         waitStateOnQueue(new ComponentChooser() {
             @Override
@@ -801,11 +694,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps
-     * {@code JInternalFrame.addInternalFrameListener(InternalFrameListener)}
-     * through queue
-     */
     public void addInternalFrameListener(final InternalFrameListener internalFrameListener) {
         runMapping(new MapVoidAction("addInternalFrameListener") {
             @Override
@@ -815,9 +703,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         });
     }
 
-    /**
-     * Maps {@code JInternalFrame.dispose()} through queue
-     */
     public void dispose() {
         runMapping(new MapVoidAction("dispose") {
             @Override
@@ -827,9 +712,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         });
     }
 
-    /**
-     * Maps {@code JInternalFrame.getContentPane()} through queue
-     */
     public Container getContentPane() {
         return (runMapping(new MapAction<Container>("getContentPane") {
             @Override
@@ -839,9 +721,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         }));
     }
 
-    /**
-     * Maps {@code JInternalFrame.getDefaultCloseOperation()} through queue
-     */
     public int getDefaultCloseOperation() {
         return (runMapping(new MapIntegerAction("getDefaultCloseOperation") {
             @Override
@@ -851,9 +730,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         }));
     }
 
-    /**
-     * Maps {@code JInternalFrame.getDesktopIcon()} through queue
-     */
     public JDesktopIcon getDesktopIcon() {
         return (runMapping(new MapAction<JDesktopIcon>("getDesktopIcon") {
             @Override
@@ -863,9 +739,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         }));
     }
 
-    /**
-     * Maps {@code JInternalFrame.getDesktopPane()} through queue
-     */
     public JDesktopPane getDesktopPane() {
         return (runMapping(new MapAction<JDesktopPane>("getDesktopPane") {
             @Override
@@ -875,9 +748,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         }));
     }
 
-    /**
-     * Maps {@code JInternalFrame.getFrameIcon()} through queue
-     */
     public Icon getFrameIcon() {
         return (runMapping(new MapAction<Icon>("getFrameIcon") {
             @Override
@@ -887,9 +757,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         }));
     }
 
-    /**
-     * Maps {@code JInternalFrame.getGlassPane()} through queue
-     */
     public Component getGlassPane() {
         return (runMapping(new MapAction<Component>("getGlassPane") {
             @Override
@@ -899,9 +766,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         }));
     }
 
-    /**
-     * Maps {@code JInternalFrame.getJMenuBar()} through queue
-     */
     public JMenuBar getJMenuBar() {
         return (runMapping(new MapAction<JMenuBar>("getJMenuBar") {
             @Override
@@ -911,9 +775,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         }));
     }
 
-    /**
-     * Maps {@code JInternalFrame.getLayer()} through queue
-     */
     public int getLayer() {
         return (runMapping(new MapIntegerAction("getLayer") {
             @Override
@@ -923,9 +784,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         }));
     }
 
-    /**
-     * Maps {@code JInternalFrame.getLayeredPane()} through queue
-     */
     public JLayeredPane getLayeredPane() {
         return (runMapping(new MapAction<JLayeredPane>("getLayeredPane") {
             @Override
@@ -935,9 +793,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         }));
     }
 
-    /**
-     * Maps {@code JInternalFrame.getTitle()} through queue
-     */
     public String getTitle() {
         return (runMapping(new MapAction<String>("getTitle") {
             @Override
@@ -947,9 +802,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         }));
     }
 
-    /**
-     * Maps {@code JInternalFrame.getUI()} through queue
-     */
     public InternalFrameUI getUI() {
         return (runMapping(new MapAction<InternalFrameUI>("getUI") {
             @Override
@@ -959,9 +811,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         }));
     }
 
-    /**
-     * Maps {@code JInternalFrame.getWarningString()} through queue
-     */
     public String getWarningString() {
         return (runMapping(new MapAction<String>("getWarningString") {
             @Override
@@ -971,9 +820,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         }));
     }
 
-    /**
-     * Maps {@code JInternalFrame.isClosable()} through queue
-     */
     public boolean isClosable() {
         return (runMapping(new MapBooleanAction("isClosable") {
             @Override
@@ -983,9 +829,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         }));
     }
 
-    /**
-     * Maps {@code JInternalFrame.isClosed()} through queue
-     */
     public boolean isClosed() {
         return (runMapping(new MapBooleanAction("isClosed") {
             @Override
@@ -995,9 +838,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         }));
     }
 
-    /**
-     * Maps {@code JInternalFrame.isIcon()} through queue
-     */
     public boolean isIcon() {
         return (runMapping(new MapBooleanAction("isIcon") {
             @Override
@@ -1007,9 +847,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         }));
     }
 
-    /**
-     * Maps {@code JInternalFrame.isIconifiable()} through queue
-     */
     public boolean isIconifiable() {
         return (runMapping(new MapBooleanAction("isIconifiable") {
             @Override
@@ -1019,9 +856,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         }));
     }
 
-    /**
-     * Maps {@code JInternalFrame.isMaximizable()} through queue
-     */
     public boolean isMaximizable() {
         return (runMapping(new MapBooleanAction("isMaximizable") {
             @Override
@@ -1031,9 +865,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         }));
     }
 
-    /**
-     * Maps {@code JInternalFrame.isMaximum()} through queue
-     */
     public boolean isMaximum() {
         return (runMapping(new MapBooleanAction("isMaximum") {
             @Override
@@ -1043,9 +874,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         }));
     }
 
-    /**
-     * Maps {@code JInternalFrame.isResizable()} through queue
-     */
     public boolean isResizable() {
         return (runMapping(new MapBooleanAction("isResizable") {
             @Override
@@ -1055,9 +883,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         }));
     }
 
-    /**
-     * Maps {@code JInternalFrame.isSelected()} through queue
-     */
     public boolean isSelected() {
         return (runMapping(new MapBooleanAction("isSelected") {
             @Override
@@ -1067,9 +892,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         }));
     }
 
-    /**
-     * Maps {@code JInternalFrame.moveToBack()} through queue
-     */
     public void moveToBack() {
         runMapping(new MapVoidAction("moveToBack") {
             @Override
@@ -1079,9 +901,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         });
     }
 
-    /**
-     * Maps {@code JInternalFrame.moveToFront()} through queue
-     */
     public void moveToFront() {
         runMapping(new MapVoidAction("moveToFront") {
             @Override
@@ -1091,9 +910,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         });
     }
 
-    /**
-     * Maps {@code JInternalFrame.pack()} through queue
-     */
     public void pack() {
         runMapping(new MapVoidAction("pack") {
             @Override
@@ -1103,11 +919,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         });
     }
 
-    /**
-     * Maps
-     * {@code JInternalFrame.removeInternalFrameListener(InternalFrameListener)}
-     * through queue
-     */
     public void removeInternalFrameListener(final InternalFrameListener internalFrameListener) {
         runMapping(new MapVoidAction("removeInternalFrameListener") {
             @Override
@@ -1117,9 +928,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         });
     }
 
-    /**
-     * Maps {@code JInternalFrame.setClosable(boolean)} through queue
-     */
     public void setClosable(final boolean b) {
         runMapping(new MapVoidAction("setClosable") {
             @Override
@@ -1129,9 +937,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         });
     }
 
-    /**
-     * Maps {@code JInternalFrame.setClosed(boolean)} through queue
-     */
     public void setClosed(final boolean b) {
         runMapping(new MapVoidAction("setClosed") {
             @Override
@@ -1141,9 +946,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         });
     }
 
-    /**
-     * Maps {@code JInternalFrame.setContentPane(Container)} through queue
-     */
     public void setContentPane(final Container container) {
         runMapping(new MapVoidAction("setContentPane") {
             @Override
@@ -1153,9 +955,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         });
     }
 
-    /**
-     * Maps {@code JInternalFrame.setDefaultCloseOperation(int)} through queue
-     */
     public void setDefaultCloseOperation(final int i) {
         runMapping(new MapVoidAction("setDefaultCloseOperation") {
             @Override
@@ -1165,9 +964,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         });
     }
 
-    /**
-     * Maps {@code JInternalFrame.setDesktopIcon(JDesktopIcon)} through queue
-     */
     public void setDesktopIcon(final JDesktopIcon jDesktopIcon) {
         runMapping(new MapVoidAction("setDesktopIcon") {
             @Override
@@ -1177,9 +973,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         });
     }
 
-    /**
-     * Maps {@code JInternalFrame.setFrameIcon(Icon)} through queue
-     */
     public void setFrameIcon(final Icon icon) {
         runMapping(new MapVoidAction("setFrameIcon") {
             @Override
@@ -1189,9 +982,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         });
     }
 
-    /**
-     * Maps {@code JInternalFrame.setGlassPane(Component)} through queue
-     */
     public void setGlassPane(final Component component) {
         runMapping(new MapVoidAction("setGlassPane") {
             @Override
@@ -1201,9 +991,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         });
     }
 
-    /**
-     * Maps {@code JInternalFrame.setIcon(boolean)} through queue
-     */
     public void setIcon(final boolean b) {
         runMapping(new MapVoidAction("setIcon") {
             @Override
@@ -1213,9 +1000,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         });
     }
 
-    /**
-     * Maps {@code JInternalFrame.setIconifiable(boolean)} through queue
-     */
     public void setIconifiable(final boolean b) {
         runMapping(new MapVoidAction("setIconifiable") {
             @Override
@@ -1225,9 +1009,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         });
     }
 
-    /**
-     * Maps {@code JInternalFrame.setJMenuBar(JMenuBar)} through queue
-     */
     public void setJMenuBar(final JMenuBar jMenuBar) {
         runMapping(new MapVoidAction("setJMenuBar") {
             @Override
@@ -1237,9 +1018,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         });
     }
 
-    /**
-     * Maps {@code JInternalFrame.setLayer(Integer)} through queue
-     */
     public void setLayer(final Integer integer) {
         runMapping(new MapVoidAction("setLayer") {
             @Override
@@ -1249,9 +1027,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         });
     }
 
-    /**
-     * Maps {@code JInternalFrame.setLayeredPane(JLayeredPane)} through queue
-     */
     public void setLayeredPane(final JLayeredPane jLayeredPane) {
         runMapping(new MapVoidAction("setLayeredPane") {
             @Override
@@ -1261,9 +1036,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         });
     }
 
-    /**
-     * Maps {@code JInternalFrame.setMaximizable(boolean)} through queue
-     */
     public void setMaximizable(final boolean b) {
         runMapping(new MapVoidAction("setMaximizable") {
             @Override
@@ -1273,9 +1045,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         });
     }
 
-    /**
-     * Maps {@code JInternalFrame.setMaximum(boolean)} through queue
-     */
     public void setMaximum(final boolean b) {
         runMapping(new MapVoidAction("setMaximum") {
             @Override
@@ -1285,9 +1054,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         });
     }
 
-    /**
-     * Maps {@code JInternalFrame.setResizable(boolean)} through queue
-     */
     public void setResizable(final boolean b) {
         runMapping(new MapVoidAction("setResizable") {
             @Override
@@ -1297,9 +1063,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         });
     }
 
-    /**
-     * Maps {@code JInternalFrame.setSelected(boolean)} through queue
-     */
     public void setSelected(final boolean b) {
         runMapping(new MapVoidAction("setSelected") {
             @Override
@@ -1309,9 +1072,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         });
     }
 
-    /**
-     * Maps {@code JInternalFrame.setTitle(String)} through queue
-     */
     public void setTitle(final String string) {
         runMapping(new MapVoidAction("setTitle") {
             @Override
@@ -1321,9 +1081,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         });
     }
 
-    /**
-     * Maps {@code JInternalFrame.setUI(InternalFrameUI)} through queue
-     */
     public void setUI(final InternalFrameUI internalFrameUI) {
         runMapping(new MapVoidAction("setUI") {
             @Override
@@ -1333,9 +1090,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         });
     }
 
-    /**
-     * Maps {@code JInternalFrame.toBack()} through queue
-     */
     public void toBack() {
         runMapping(new MapVoidAction("toBack") {
             @Override
@@ -1345,9 +1099,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         });
     }
 
-    /**
-     * Maps {@code JInternalFrame.toFront()} through queue
-     */
     public void toFront() {
         runMapping(new MapVoidAction("toFront") {
             @Override
@@ -1368,9 +1119,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         return (Container) iDriver.getTitlePane(this);
     }
 
-    /**
-     * Initialize icon operator
-     */
     protected void initIconOperator() {
         iconOperator = new JDesktopIconOperator(((JInternalFrame) getSource()).getDesktopIcon());
         iconOperator.copyEnvironment(this);
@@ -1475,9 +1223,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
         /**
          * Constructs a JInternalFrameOperator$WrongInternalFrameStateException
          * object.
-         *
-         * @param message an exception message.
-         * @param comp an internal frame.
          */
         public WrongInternalFrameStateException(String message, Component comp) {
             super(message, comp);
@@ -1494,9 +1239,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
 
         /**
          * Constructs JInternalFrameByTitleFinder.
-         *
-         * @param lb a text pattern
-         * @param comparator specifies string comparision algorithm.
          */
         public JInternalFrameByTitleFinder(String lb, StringComparator comparator) {
             label = lb;
@@ -1505,8 +1247,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
 
         /**
          * Constructs JInternalFrameByTitleFinder.
-         *
-         * @param lb a text pattern
          */
         public JInternalFrameByTitleFinder(String lb) {
             this(lb, Operator.getDefaultStringComparator());
@@ -1551,8 +1291,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
 
         /**
          * Constructs JDesktopIconOperator.
-         *
-         * @param b a component
          */
         public JDesktopIconOperator(JInternalFrame.JDesktopIcon b) {
             super(b);
@@ -1613,8 +1351,6 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
 
         /**
          * Constructs JInternalFrameFinder.
-         *
-         * @param sf other searching criteria.
          */
         public JInternalFrameFinder(ComponentChooser sf) {
             this.sf = sf;

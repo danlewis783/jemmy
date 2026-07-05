@@ -33,6 +33,7 @@ import org.netbeans.jemmy.Timeouts;
 public class TimeoutsGetSetTest {
     /**
      * Previously there was an NPE while getting a value from hashmap in setTimeout()
+     *
      * @throws InterruptedException
      */
     @Test

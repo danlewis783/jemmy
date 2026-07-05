@@ -37,12 +37,9 @@ import org.netbeans.jemmy.Timeoutable;
 import org.netbeans.jemmy.Timeouts;
 
 /**
- *
  * This operator type covers java.awt.TextField component.
  *
  * @see org.netbeans.jemmy.Timeouts
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
 public class TextFieldOperator extends TextComponentOperator implements Timeoutable, Outputable {
@@ -63,38 +60,23 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
     private TestOut output;
 
     /**
-     * Constructor.
-     *
      * @param b The {@code java.awt.TextField} managed by this instance.
      */
     public TextFieldOperator(TextField b) {
         super(b);
     }
 
-    /**
-     * Constructs a TextFieldOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     * @param index an index between appropriate ones.
-     */
     public TextFieldOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
         this((TextField) cont.waitSubComponent(new TextFieldFinder(chooser), index));
         copyEnvironment(cont);
     }
 
-    /**
-     * Constructs a TextFieldOperator object.
-     *
-     * @param cont a container
-     * @param chooser a component chooser specifying searching criteria.
-     */
     public TextFieldOperator(ContainerOperator<?> cont, ComponentChooser chooser) {
         this(cont, chooser, 0);
     }
 
     /**
-     * Constructor. Waits for a component in a container to show. The component
+     * Waits for a component in a container to show. The component
      * is identified as the {@code index+1}'th
      * {@code java.awt.TextField} that shows, lies below the container in
      * the display containment hierarchy, and that has the desired text. Uses
@@ -102,7 +84,6 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
      *
      * @param cont The operator for a container containing the sought for
      * textField.
-     * @param text TextField text.
      * @param index Ordinal component index. The first component has
      * {@code index} 0.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
@@ -113,7 +94,7 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
     }
 
     /**
-     * Constructor. Waits for a component in a container to show. The component
+     * Waits for a component in a container to show. The component
      * is identified as the first {@code java.awt.TextField} that shows,
      * lies below the container in the display containment hierarchy, and that
      * has the desired text. Uses cont's timeout and output for waiting and to
@@ -121,7 +102,6 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
      *
      * @param cont The operator for a container containing the sought for
      * textField.
-     * @param text TextField text.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public TextFieldOperator(ContainerOperator<?> cont, String text) {
@@ -129,12 +109,11 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
      * @param cont The operator for a container containing the sought for
      * textField.
-     * @param index Ordinal component index.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public TextFieldOperator(ContainerOperator<?> cont, int index) {
@@ -143,7 +122,7 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
     }
 
     /**
-     * Constructor. Waits component in container first. Uses cont's timeout and
+     * Waits component in container first. Uses cont's timeout and
      * output for waiting and to init operator.
      *
      * @param cont The operator for a container containing the sought for
@@ -160,8 +139,6 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
      * @param cont Container in which to search for the component. The container
      * lies above the component in the display containment hierarchy. The
      * containment need not be direct.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation,
-     * defining and applying search criteria.
      * @param index Ordinal component index. The first {@code index} is 0.
      * @return TextField instance or null if component was not found.
      */
@@ -175,8 +152,6 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
      * @param cont Container in which to search for the component. The container
      * lies above the component in the display containment hierarchy. The
      * containment need not be direct.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation,
-     * defining and applying search criteria.
      * @return TextField instance or null if component was not found.
      */
     public static TextField findTextField(Container cont, ComponentChooser chooser) {
@@ -186,11 +161,6 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
     /**
      * Searches TextField by text.
      *
-     * @param cont Container to search component in.
-     * @param text TextField text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return TextField instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -201,10 +171,6 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
     /**
      * Searches TextField by text.
      *
-     * @param cont Container to search component in.
-     * @param text TextField text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return TextField instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -215,9 +181,6 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
     /**
      * Waits TextField in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
-     * @param index Ordinal component index.
      * @return TextField instance.
      */
     public static TextField waitTextField(Container cont, ComponentChooser chooser, int index) {
@@ -227,8 +190,6 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
     /**
      * Waits 0'th TextField in container.
      *
-     * @param cont Container to search component in.
-     * @param chooser org.netbeans.jemmy.ComponentChooser implementation.
      * @return TextField instance.
      */
     public static TextField waitTextField(Container cont, ComponentChooser chooser) {
@@ -238,11 +199,6 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
     /**
      * Waits TextField by text.
      *
-     * @param cont Container to search component in.
-     * @param text TextField text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
-     * @param index Ordinal component index.
      * @return TextField instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -253,10 +209,6 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
     /**
      * Waits TextField by text.
      *
-     * @param cont Container to search component in.
-     * @param text TextField text. If null, contents is not checked.
-     * @param ce Compare text exactly.
-     * @param ccs Compare text case sensitively.
      * @return TextField instance.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
@@ -302,9 +254,6 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
 
     ////////////////////////////////////////////////////////
     // Mapping                                             //
-    /**
-     * Maps {@code TextField.addActionListener(ActionListener)} through queue
-     */
     public void addActionListener(final ActionListener actionListener) {
         runMapping(new MapVoidAction("addActionListener") {
             @Override
@@ -314,9 +263,6 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code TextField.echoCharIsSet()} through queue
-     */
     public boolean echoCharIsSet() {
         return (runMapping(new MapBooleanAction("echoCharIsSet") {
             @Override
@@ -326,9 +272,6 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code TextField.getColumns()} through queue
-     */
     public int getColumns() {
         return (runMapping(new MapIntegerAction("getColumns") {
             @Override
@@ -338,9 +281,6 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code TextField.getEchoChar()} through queue
-     */
     public char getEchoChar() {
         return (runMapping(new MapCharacterAction("getEchoChar") {
             @Override
@@ -350,9 +290,6 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code TextField.getMinimumSize(int)} through queue
-     */
     public Dimension getMinimumSize(final int i) {
         return (runMapping(new MapAction<Dimension>("getMinimumSize") {
             @Override
@@ -362,9 +299,6 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code TextField.getPreferredSize(int)} through queue
-     */
     public Dimension getPreferredSize(final int i) {
         return (runMapping(new MapAction<Dimension>("getPreferredSize") {
             @Override
@@ -374,9 +308,6 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
         }));
     }
 
-    /**
-     * Maps {@code TextField.removeActionListener(ActionListener)} through queue
-     */
     public void removeActionListener(final ActionListener actionListener) {
         runMapping(new MapVoidAction("removeActionListener") {
             @Override
@@ -386,9 +317,6 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
         });
     }
 
-    /**
-     * Maps {@code TextField.setColumns(int)} through queue
-     */
     public void setColumns(final int i) {
         runMapping(new MapVoidAction("setColumns") {
             @Override
@@ -408,22 +336,11 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
         String label;
         StringComparator comparator;
 
-        /**
-         * Constructs TextFieldByTextFinder.
-         *
-         * @param lb a text pattern
-         * @param comparator specifies string comparision algorithm.
-         */
         public TextFieldByTextFinder(String lb, StringComparator comparator) {
             label = lb;
             this.comparator = comparator;
         }
 
-        /**
-         * Constructs TextFieldByTextFinder.
-         *
-         * @param lb a text pattern
-         */
         public TextFieldByTextFinder(String lb) {
             this(lb, Operator.getDefaultStringComparator());
         }
@@ -454,18 +371,10 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
      */
     public static class TextFieldFinder extends Finder {
 
-        /**
-         * Constructs TextFieldFinder.
-         *
-         * @param sf other searching criteria.
-         */
         public TextFieldFinder(ComponentChooser sf) {
             super(TextField.class, sf);
         }
 
-        /**
-         * Constructs TextFieldFinder.
-         */
         public TextFieldFinder() {
             super(TextField.class);
         }

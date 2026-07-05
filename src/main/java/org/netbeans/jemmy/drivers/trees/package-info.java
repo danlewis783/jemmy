@@ -24,7 +24,7 @@
  */
 /**
  * <h1>Tree drivers</h1>
- * Different drivers to perform a tree operations.<br>
+ * Different drivers to perform a tree operations.
  *
  * @since 17 Apr 2002
  * <hr>

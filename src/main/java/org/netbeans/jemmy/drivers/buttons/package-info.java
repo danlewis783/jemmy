@@ -24,7 +24,7 @@
  */
 /**
  * <h1>Button drivers</h1>
- * Different drivers to push a button.<br>
+ * Different drivers to push a button.
  *
  * @since 4/17/2002
  * <hr>

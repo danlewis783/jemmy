@@ -25,19 +25,13 @@
 package org.netbeans.jemmy;
 
 /**
- *
  * Exception can be throwht as a result of attempt to produce a mouse pressing
  * when mouse is not over the java component.
- *
- * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
 public class NoComponentUnderMouseException extends RuntimeException {
 
     private static final long serialVersionUID = 42L;
 
-    /**
-     * Constructor.
-     */
     public NoComponentUnderMouseException() {
         super("No component under the mouse!");
     }
