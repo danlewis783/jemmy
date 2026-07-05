@@ -1,6 +1,6 @@
 plugins {
     `java-library`
-    `maven-publish`
+    `java-test-fixtures`
 }
 
 group = "io.github.danlewis783"
@@ -11,7 +11,6 @@ java {
         languageVersion = JavaLanguageVersion.of(8)
     }
     withSourcesJar()
-    withJavadocJar()
 }
 
 repositories {
@@ -20,6 +19,7 @@ repositories {
 
 dependencies {
     api(libs.jspecify)
+    implementation(libs.slf4j)
 }
 
 testing {
@@ -27,7 +27,17 @@ testing {
         named<JvmTestSuite>("test") {
             useJUnitJupiter(libs.versions.junit.jupiter.get())
             dependencies {
-                implementation(libs.assertj)
+                implementation(libs.assertj.core)
+                implementation(testFixtures(project()))
+                runtimeOnly(libs.logback.classic)
+            }
+
+            targets {
+                all {
+                    testTask.configure {
+                        systemProperty("logback.configurationFile", "logback-automated-test.xml")
+                    }
+                }
             }
         }
 
@@ -35,8 +45,12 @@ testing {
             useJUnitJupiter(libs.versions.junit.jupiter.get())
             dependencies {
                 implementation(project())
-                implementation(libs.assertj)
+                implementation(testFixtures(project()))
+                implementation(libs.assertj.core)
+                runtimeOnly(libs.logback.classic)
+
             }
+
             targets {
                 all {
                     testTask.configure {
@@ -45,6 +59,7 @@ testing {
                         maxParallelForks = 1
                         forkEvery = 1
                         shouldRunAfter(tasks.test)
+                        systemProperty("logback.configurationFile", "logback-automated-test.xml")
                     }
                 }
             }
@@ -58,46 +73,4 @@ tasks.named("check") {
 
 tasks.withType<JavaCompile>().configureEach {
     options.encoding = "UTF-8"
-}
-
-tasks.processResources {
-    val buildNumber = version.toString()
-    filesMatching("org/netbeans/jemmy/version_info") {
-        filter(mapOf("tokens" to mapOf("BUILD_NUMBER" to buildNumber)),
-            org.apache.tools.ant.filters.ReplaceTokens::class.java)
-    }
-}
-
-tasks.jar {
-    manifest {
-        attributes(
-            "Main-Class" to "org.netbeans.jemmy.JemmyProperties",
-        )
-    }
-}
-
-tasks.javadoc {
-    (options as StandardJavadocDocletOptions).apply {
-        encoding = "UTF-8"
-        addStringOption("Xdoclint:none", "-quiet")
-    }
-}
-
-publishing {
-    publications {
-        create<MavenPublication>("mavenJava") {
-            from(components["java"])
-            pom {
-                name = "Jemmy"
-                description = "Jemmy - a UI automation library for AWT/Swing applications (fork of openjdk/jemmy-v2)"
-                url = "https://github.com/openjdk/jemmy-v2"
-                licenses {
-                    license {
-                        name = "GNU General Public License, version 2, with the Classpath Exception"
-                        url = "https://openjdk.org/legal/gplv2+ce.html"
-                    }
-                }
-            }
-        }
-    }
 }

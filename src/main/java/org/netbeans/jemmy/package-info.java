@@ -31,4 +31,8 @@
  * @since 02/23/2002
  * <hr>
  */
+@NullMarked
+
 package org.netbeans.jemmy;
+
+import org.jspecify.annotations.NullMarked;
