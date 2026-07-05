@@ -26,7 +26,6 @@
 package org.netbeans.jemmy.demo;
 
 import java.io.PrintStream;
-
 import org.netbeans.jemmy.TestCompletedException;
 
 /**
@@ -37,7 +36,6 @@ import org.netbeans.jemmy.TestCompletedException;
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
-
 public class DemoInterruptedException extends TestCompletedException {
 
     /**

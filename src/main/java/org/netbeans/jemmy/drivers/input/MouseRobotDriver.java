@@ -92,8 +92,8 @@ public class MouseRobotDriver extends RobotDriver implements MouseDriver {
     }
 
     @Override
-    public void clickMouse(ComponentOperator oper, int x, int y, int clickCount, int mouseButton,
-            int modifiers, Timeout mouseClick) {
+    public void clickMouse(
+            ComponentOperator oper, int x, int y, int clickCount, int mouseButton, int modifiers, Timeout mouseClick) {
         clickMouse(getAbsoluteX(oper, x), getAbsoluteY(oper, y), clickCount, mouseButton, modifiers, mouseClick);
         MouseDriver.mouseMoved(oper, x, y);
     }
@@ -105,10 +105,25 @@ public class MouseRobotDriver extends RobotDriver implements MouseDriver {
     }
 
     @Override
-    public void dragNDrop(ComponentOperator oper, int start_x, int start_y, int end_x, int end_y,
-            int mouseButton, int modifiers, Timeout before, Timeout after) {
-        dragNDrop(getAbsoluteX(oper, start_x), getAbsoluteY(oper, start_y), getAbsoluteX(oper, end_x),
-                getAbsoluteY(oper, end_y), mouseButton, modifiers, before, after);
+    public void dragNDrop(
+            ComponentOperator oper,
+            int start_x,
+            int start_y,
+            int end_x,
+            int end_y,
+            int mouseButton,
+            int modifiers,
+            Timeout before,
+            Timeout after) {
+        dragNDrop(
+                getAbsoluteX(oper, start_x),
+                getAbsoluteY(oper, start_y),
+                getAbsoluteX(oper, end_x),
+                getAbsoluteY(oper, end_y),
+                mouseButton,
+                modifiers,
+                before,
+                after);
         MouseDriver.mouseMoved(oper, end_x, end_y);
     }
 
@@ -120,9 +135,9 @@ public class MouseRobotDriver extends RobotDriver implements MouseDriver {
 
     @Override
     public void exitMouse(ComponentOperator oper) {
-        //better not go anywhere
-        //exit will be executed during the next
-        //mouse move anyway.
+        // better not go anywhere
+        // exit will be executed during the next
+        // mouse move anyway.
         //        moveMouse(oper, -1, -1);
     }
 

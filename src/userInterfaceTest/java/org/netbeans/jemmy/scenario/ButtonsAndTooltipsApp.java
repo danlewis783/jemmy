@@ -24,21 +24,20 @@
  */
 package org.netbeans.jemmy.scenario;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 
 public class ButtonsAndTooltipsApp extends TestFrame {
 
-    private final static int BUTTON_NUMBER = 4;
+    private static final int BUTTON_NUMBER = 4;
     private final JLabel buttonLabel;
     private final JProgressBar progress;
-
 
     public ButtonsAndTooltipsApp() {
         super("ButtonsAndTooltipsApp");
@@ -82,4 +81,3 @@ public class ButtonsAndTooltipsApp extends TestFrame {
         (new ButtonsAndTooltipsApp()).show();
     }
 }
-

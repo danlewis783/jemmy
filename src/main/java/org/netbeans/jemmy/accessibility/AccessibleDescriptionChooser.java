@@ -25,7 +25,6 @@
 package org.netbeans.jemmy.accessibility;
 
 import javax.accessibility.AccessibleContext;
-
 import org.netbeans.jemmy.operators.Operator;
 import org.netbeans.jemmy.operators.Operator.StringComparator;
 

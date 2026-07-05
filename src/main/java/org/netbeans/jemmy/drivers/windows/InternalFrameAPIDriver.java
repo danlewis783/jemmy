@@ -26,7 +26,6 @@
 package org.netbeans.jemmy.drivers.windows;
 
 import java.awt.Component;
-
 import org.netbeans.jemmy.drivers.FrameDriver;
 import org.netbeans.jemmy.drivers.InternalFrameDriver;
 import org.netbeans.jemmy.drivers.LightSupportiveDriver;
@@ -44,7 +43,7 @@ public class InternalFrameAPIDriver extends LightSupportiveDriver
         implements WindowDriver, FrameDriver, InternalFrameDriver {
 
     public InternalFrameAPIDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.JInternalFrameOperator"});
+        super(new String[] {"org.netbeans.jemmy.operators.JInternalFrameOperator"});
     }
 
     @Override
@@ -104,8 +103,7 @@ public class InternalFrameAPIDriver extends LightSupportiveDriver
 
     @Override
     public Component getTitlePane(ComponentOperator oper) {
-        throw new UnsupportedOperationException(
-                "There is no way to get title pane of an internal frame.");
+        throw new UnsupportedOperationException("There is no way to get title pane of an internal frame.");
     }
 
     @Override

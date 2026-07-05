@@ -26,7 +26,6 @@ package org.netbeans.jemmy.drivers.input;
 
 import java.awt.AWTEvent;
 import java.awt.Component;
-
 import org.netbeans.jemmy.ComponentIsNotVisibleException;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.drivers.LightSupportiveDriver;
@@ -51,7 +50,7 @@ public class EventDriver extends LightSupportiveDriver {
      * Constructs an EventDriver object suporting ComponentOperator.
      */
     public EventDriver() {
-        this(new String[]{"org.netbeans.jemmy.operators.ComponentOperator"});
+        this(new String[] {"org.netbeans.jemmy.operators.ComponentOperator"});
     }
 
     /**
@@ -61,7 +60,7 @@ public class EventDriver extends LightSupportiveDriver {
      * @param event an event to dispatch.
      */
     public void dispatchEvent(Component comp, AWTEvent event) {
-//        checkVisibility(comp);
+        //        checkVisibility(comp);
         QueueTool.processEvent(event);
     }
 

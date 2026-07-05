@@ -24,13 +24,13 @@
  */
 package org.netbeans.jemmy.operators;
 
+import java.awt.Dimension;
+import java.awt.HeadlessException;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import java.awt.Dimension;
-import java.awt.HeadlessException;
 
 public class MenuApp extends JFrame {
 
@@ -43,11 +43,11 @@ public class MenuApp extends JFrame {
         label = new JLabel();
         JMenuItem item = new JMenuItem("item");
         item.addActionListener(e -> label.setText("menu pushed"));
-        JMenu subsubmenu  = new JMenu("subsubmenu");
+        JMenu subsubmenu = new JMenu("subsubmenu");
         subsubmenu.add(item);
-        JMenu submenu  = new JMenu("submenu");
+        JMenu submenu = new JMenu("submenu");
         submenu.add(subsubmenu);
-        JMenu menu  = new JMenu("menu");
+        JMenu menu = new JMenu("menu");
         menu.add(submenu);
         bar = new JMenuBar();
         bar.add(menu);
@@ -60,7 +60,7 @@ public class MenuApp extends JFrame {
     }
 
     public static void main(String[] args) {
-        if(args[0].equals("native")) System.setProperty("apple.laf.useScreenMenuBar", "true");
+        if (args[0].equals("native")) System.setProperty("apple.laf.useScreenMenuBar", "true");
         new MenuApp().setVisible(true);
     }
 }

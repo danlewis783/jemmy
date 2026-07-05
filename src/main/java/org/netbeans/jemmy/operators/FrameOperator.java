@@ -29,7 +29,6 @@ import java.awt.Frame;
 import java.awt.Image;
 import java.awt.MenuBar;
 import java.util.Hashtable;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.FrameWaiter;
 import org.netbeans.jemmy.JemmyException;
@@ -111,10 +110,7 @@ public class FrameOperator extends WindowOperator implements Outputable {
      * @param env an operator to copy environment from.
      */
     public FrameOperator(ComponentChooser chooser, int index, Operator env) {
-        this(waitFrame(new FrameFinder(chooser),
-                index,
-                env.getTimeouts(),
-                env.getOutput()));
+        this(waitFrame(new FrameFinder(chooser), index, env.getTimeouts(), env.getOutput()));
         copyEnvironment(env);
     }
 
@@ -149,11 +145,7 @@ public class FrameOperator extends WindowOperator implements Outputable {
      * @throws TimeoutExpiredException
      */
     public FrameOperator(String title, int index, Operator env) {
-        this(waitFrame(new FrameByTitleFinder(title,
-                env.getComparator()),
-                index,
-                env.getTimeouts(),
-                env.getOutput()));
+        this(waitFrame(new FrameByTitleFinder(title, env.getComparator()), index, env.getTimeouts(), env.getOutput()));
         copyEnvironment(env);
     }
 
@@ -169,8 +161,7 @@ public class FrameOperator extends WindowOperator implements Outputable {
      * @throws TimeoutExpiredException
      */
     public FrameOperator(String title, int index) {
-        this(title, index,
-                ComponentOperator.getEnvironmentOperator());
+        this(title, index, ComponentOperator.getEnvironmentOperator());
     }
 
     /**
@@ -195,7 +186,8 @@ public class FrameOperator extends WindowOperator implements Outputable {
      * @throws TimeoutExpiredException
      */
     public FrameOperator(int index) {
-        this(waitFrame(new FrameFinder(),
+        this(waitFrame(
+                new FrameFinder(),
                 index,
                 ComponentOperator.getEnvironmentOperator().getTimeouts(),
                 ComponentOperator.getEnvironmentOperator().getOutput()));
@@ -226,11 +218,8 @@ public class FrameOperator extends WindowOperator implements Outputable {
     @Override
     public void copyEnvironment(Operator anotherOperator) {
         super.copyEnvironment(anotherOperator);
-        driver
-                = (FrameDriver) DriverManager.
-                getDriver(DriverManager.FRAME_DRIVER_ID,
-                        getClass(),
-                        anotherOperator.getProperties());
+        driver = (FrameDriver)
+                DriverManager.getDriver(DriverManager.FRAME_DRIVER_ID, getClass(), anotherOperator.getProperties());
     }
 
     /**
@@ -239,8 +228,7 @@ public class FrameOperator extends WindowOperator implements Outputable {
      * @param title Title to wait for.
      */
     public void waitTitle(final String title) {
-        getOutput().printLine("Wait \"" + title + "\" title of frame \n    : "
-                + toStringSource());
+        getOutput().printLine("Wait \"" + title + "\" title of frame \n    : " + toStringSource());
         getOutput().printGolden("Wait \"" + title + "\" title");
         waitState(new FrameByTitleFinder(title, getComparator()));
     }
@@ -299,13 +287,8 @@ public class FrameOperator extends WindowOperator implements Outputable {
      * @param state a state for the frame to have.
      */
     public void waitState(final int state) {
-        getOutput().printLine("Wait frame to have "
-                + Integer.toString(state)
-                + " state \n    : "
-                + toStringSource());
-        getOutput().printGolden("Wait frame to have "
-                + Integer.toString(state)
-                + " state");
+        getOutput().printLine("Wait frame to have " + Integer.toString(state) + " state \n    : " + toStringSource());
+        getOutput().printGolden("Wait frame to have " + Integer.toString(state) + " state");
         waitState(new ComponentChooser() {
             @Override
             public boolean checkComponent(Component comp) {
@@ -333,15 +316,17 @@ public class FrameOperator extends WindowOperator implements Outputable {
         if (((Frame) getSource()).getTitle() != null) {
             result.put(TITLE_DPROP, ((Frame) getSource()).getTitle());
         }
-        result.put(STATE_DPROP,
+        result.put(
+                STATE_DPROP,
                 (((Frame) getSource()).getState() == Frame.ICONIFIED)
-                        ? STATE_ICONIFIED_DPROP_VALUE : STATE_NORMAL_DPROP_VALUE);
+                        ? STATE_ICONIFIED_DPROP_VALUE
+                        : STATE_NORMAL_DPROP_VALUE);
         result.put(IS_RESIZABLE_DPROP, ((Frame) getSource()).isResizable() ? "true" : "false");
         return result;
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code Frame.getIconImage()} through queue
      */
@@ -475,7 +460,6 @@ public class FrameOperator extends WindowOperator implements Outputable {
                 return null;
             }
         });
-
     }
 
     /**
@@ -490,7 +474,7 @@ public class FrameOperator extends WindowOperator implements Outputable {
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * A method to be used from subclasses. Uses timeouts and output passed as
@@ -503,16 +487,15 @@ public class FrameOperator extends WindowOperator implements Outputable {
      * @return Component instance or null if component was not found.
      * @throws TimeoutExpiredException
      */
-    protected static Frame waitFrame(ComponentChooser chooser, int index,
-            Timeouts timeouts, TestOut output) {
+    protected static Frame waitFrame(ComponentChooser chooser, int index, Timeouts timeouts, TestOut output) {
         try {
             FrameWaiter waiter = new FrameWaiter();
             waiter.setTimeouts(timeouts);
             waiter.setOutput(output);
             return waiter.waitFrame(new FrameFinder(chooser), index);
         } catch (InterruptedException e) {
-            throw new JemmyException("Interrupted while waiting for a frame with " +
-                chooser + " and index = " + index, e);
+            throw new JemmyException(
+                    "Interrupted while waiting for a frame with " + chooser + " and index = " + index, e);
         }
     }
 

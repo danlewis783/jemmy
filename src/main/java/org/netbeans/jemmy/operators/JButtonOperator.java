@@ -26,9 +26,7 @@ package org.netbeans.jemmy.operators;
 
 import java.awt.Container;
 import java.util.Hashtable;
-
 import javax.swing.JButton;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.TimeoutExpiredException;
 
@@ -72,9 +70,7 @@ public class JButtonOperator extends AbstractButtonOperator {
      * @param index an index between appropriate ones.
      */
     public JButtonOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JButton) cont.
-                waitSubComponent(new JButtonFinder(chooser),
-                        index));
+        this((JButton) cont.waitSubComponent(new JButtonFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -99,9 +95,9 @@ public class JButtonOperator extends AbstractButtonOperator {
      * @throws TimeoutExpiredException
      */
     public JButtonOperator(ContainerOperator<?> cont, String text, int index) {
-        this((JButton) waitComponent(cont,
-                new JButtonFinder(new AbstractButtonOperator.AbstractButtonByLabelFinder(text,
-                        cont.getComparator())),
+        this((JButton) waitComponent(
+                cont,
+                new JButtonFinder(new AbstractButtonOperator.AbstractButtonByLabelFinder(text, cont.getComparator())),
                 index));
         copyEnvironment(cont);
     }
@@ -128,9 +124,7 @@ public class JButtonOperator extends AbstractButtonOperator {
      * @throws TimeoutExpiredException
      */
     public JButtonOperator(ContainerOperator<?> cont, int index) {
-        this((JButton) waitComponent(cont,
-                new JButtonFinder(),
-                index));
+        this((JButton) waitComponent(cont, new JButtonFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -180,9 +174,10 @@ public class JButtonOperator extends AbstractButtonOperator {
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public static JButton findJButton(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return (findJButton(cont,
-                new JButtonFinder(new AbstractButtonOperator.AbstractButtonByLabelFinder(text,
-                        new DefaultStringComparator(ce, ccs))),
+        return (findJButton(
+                cont,
+                new JButtonFinder(new AbstractButtonOperator.AbstractButtonByLabelFinder(
+                        text, new DefaultStringComparator(ce, ccs))),
                 index));
     }
 
@@ -238,9 +233,10 @@ public class JButtonOperator extends AbstractButtonOperator {
      * @throws TimeoutExpiredException
      */
     public static JButton waitJButton(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return (waitJButton(cont,
-                new JButtonFinder(new AbstractButtonOperator.AbstractButtonByLabelFinder(text,
-                        new DefaultStringComparator(ce, ccs))),
+        return (waitJButton(
+                cont,
+                new JButtonFinder(new AbstractButtonOperator.AbstractButtonByLabelFinder(
+                        text, new DefaultStringComparator(ce, ccs))),
                 index));
     }
 
@@ -271,7 +267,7 @@ public class JButtonOperator extends AbstractButtonOperator {
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code JButton.isDefaultButton()} through queue
      */
@@ -308,7 +304,7 @@ public class JButtonOperator extends AbstractButtonOperator {
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Prepares the button to click.

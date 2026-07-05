@@ -30,7 +30,6 @@ import java.awt.Insets;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.Hashtable;
-
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -40,10 +39,8 @@ import javax.swing.MenuElement;
 import javax.swing.MenuSelectionManager;
 import javax.swing.SingleSelectionModel;
 import javax.swing.plaf.MenuBarUI;
-
 import org.netbeans.jemmy.Action;
 import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
 import org.netbeans.jemmy.TimeoutExpiredException;
@@ -51,7 +48,6 @@ import org.netbeans.jemmy.Timeoutable;
 import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.drivers.DriverManager;
 import org.netbeans.jemmy.drivers.MenuDriver;
-import org.netbeans.jemmy.util.Platform;
 
 /**
  * <BR><BR>Timeouts used: <BR>
@@ -64,8 +60,7 @@ import org.netbeans.jemmy.util.Platform;
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
-public class JMenuBarOperator extends JComponentOperator
-        implements Outputable, Timeoutable {
+public class JMenuBarOperator extends JComponentOperator implements Outputable, Timeoutable {
 
     /**
      * Identifier for a "submenu" properties.
@@ -96,9 +91,7 @@ public class JMenuBarOperator extends JComponentOperator
      * @param index an index between appropriate ones.
      */
     public JMenuBarOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JMenuBar) cont.
-                waitSubComponent(new JMenuBarFinder(chooser),
-                        index));
+        this((JMenuBar) cont.waitSubComponent(new JMenuBarFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -120,9 +113,7 @@ public class JMenuBarOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public JMenuBarOperator(ContainerOperator<?> cont) {
-        this((JMenuBar) waitComponent(cont,
-                new JMenuBarFinder(),
-                0));
+        this((JMenuBar) waitComponent(cont, new JMenuBarFinder(), 0));
         copyEnvironment(cont);
     }
 
@@ -190,7 +181,7 @@ public class JMenuBarOperator extends JComponentOperator
     }
 
     static {
-        //necessary to init timeouts
+        // necessary to init timeouts
         JMenuOperator.performInit();
     }
 
@@ -231,27 +222,28 @@ public class JMenuBarOperator extends JComponentOperator
      */
     public JMenuItem pushMenu(final ComponentChooser[] choosers) {
         makeComponentVisible();
-        return ((JMenuItem) produceTimeRestricted(new Action<Object, Void>() {
-            @Override
-            public Object launch(Void obj) {
-                //TDB 1.5 menu workaround
-                getQueueTool().waitEmpty();
-                Object result = driver.pushMenu(JMenuBarOperator.this,
-                        JMenuOperator.converChoosers(choosers));
-                getQueueTool().waitEmpty();
-                return result;
-            }
+        return ((JMenuItem) produceTimeRestricted(
+                new Action<Object, Void>() {
+                    @Override
+                    public Object launch(Void obj) {
+                        // TDB 1.5 menu workaround
+                        getQueueTool().waitEmpty();
+                        Object result = driver.pushMenu(JMenuBarOperator.this, JMenuOperator.converChoosers(choosers));
+                        getQueueTool().waitEmpty();
+                        return result;
+                    }
 
-            @Override
-            public String getDescription() {
-                return JMenuOperator.createDescription(choosers);
-            }
+                    @Override
+                    public String getDescription() {
+                        return JMenuOperator.createDescription(choosers);
+                    }
 
-            @Override
-            public String toString() {
-                return "JMenuBarOperator.pushMenu.Action{description = " + getDescription() + '}';
-            }
-        }, "JMenuOperator.PushMenuTimeout"));
+                    @Override
+                    public String toString() {
+                        return "JMenuBarOperator.pushMenu.Action{description = " + getDescription() + '}';
+                    }
+                },
+                "JMenuOperator.PushMenuTimeout"));
     }
 
     /**
@@ -265,10 +257,9 @@ public class JMenuBarOperator extends JComponentOperator
         produceNoBlocking(new NoBlockingAction<Object, Void>("Menu pushing") {
             @Override
             public Object doAction(Void param) {
-                //TDB 1.5 menu workaround
+                // TDB 1.5 menu workaround
                 getQueueTool().waitEmpty();
-                Object result = driver.pushMenu(JMenuBarOperator.this,
-                        JMenuOperator.converChoosers(choosers));
+                Object result = driver.pushMenu(JMenuBarOperator.this, JMenuOperator.converChoosers(choosers));
                 getQueueTool().waitEmpty();
                 return result;
             }
@@ -677,8 +668,7 @@ public class JMenuBarOperator extends JComponentOperator
         JMenu menu = (JMenu) findSubComponent(new ComponentChooser() {
             @Override
             public boolean checkComponent(Component comp) {
-                return (comp instanceof JMenu
-                        && ((JMenu) comp).isPopupMenuVisible());
+                return (comp instanceof JMenu && ((JMenu) comp).isPopupMenuVisible());
             }
 
             @Override
@@ -714,7 +704,7 @@ public class JMenuBarOperator extends JComponentOperator
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code JMenuBar.add(JMenu)} through queue
      */
@@ -864,7 +854,8 @@ public class JMenuBarOperator extends JComponentOperator
      * {@code JMenuBar.processKeyEvent(KeyEvent, MenuElement[], MenuSelectionManager)}
      * through queue
      */
-    public void processKeyEvent(final KeyEvent keyEvent, final MenuElement[] menuElement, final MenuSelectionManager menuSelectionManager) {
+    public void processKeyEvent(
+            final KeyEvent keyEvent, final MenuElement[] menuElement, final MenuSelectionManager menuSelectionManager) {
         runMapping(new MapVoidAction("processKeyEvent") {
             @Override
             public void map() {
@@ -878,7 +869,10 @@ public class JMenuBarOperator extends JComponentOperator
      * {@code JMenuBar.processMouseEvent(MouseEvent, MenuElement[], MenuSelectionManager)}
      * through queue
      */
-    public void processMouseEvent(final MouseEvent mouseEvent, final MenuElement[] menuElement, final MenuSelectionManager menuSelectionManager) {
+    public void processMouseEvent(
+            final MouseEvent mouseEvent,
+            final MenuElement[] menuElement,
+            final MenuSelectionManager menuSelectionManager) {
         runMapping(new MapVoidAction("processMouseEvent") {
             @Override
             public void map() {
@@ -960,7 +954,7 @@ public class JMenuBarOperator extends JComponentOperator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Checks component type.
@@ -983,5 +977,4 @@ public class JMenuBarOperator extends JComponentOperator
             super(JMenuBar.class);
         }
     }
-
 }

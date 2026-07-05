@@ -24,10 +24,10 @@
  */
 package org.netbeans.jemmy.operators;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class MenuTest {
 
@@ -52,7 +52,7 @@ public class MenuTest {
     public void pushMenuNoBlock(String menuType) {
         MenuApp.main(new String[] {menuType});
         JFrameOperator frame = new JFrameOperator(MenuApp.FRAME_TITLE);
-        try{
+        try {
             JMenuBarOperator menu = new JMenuBarOperator(frame.getJMenuBar());
             menu.pushMenuNoBlock("menu|submenu|subsubmenu|item");
             new JLabelOperator(frame, "menu pushed");
@@ -63,7 +63,6 @@ public class MenuTest {
     }
 
     static String[] menuTypes() {
-        return new String[] {"java"/*, "native"*/};
+        return new String[] {"java" /*, "native"*/};
     }
-
 }

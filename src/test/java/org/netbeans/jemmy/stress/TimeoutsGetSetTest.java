@@ -24,12 +24,11 @@
  */
 package org.netbeans.jemmy.stress;
 
-import org.netbeans.jemmy.Timeouts;
-import org.junit.jupiter.api.Test;
+import static java.lang.System.currentTimeMillis;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import static java.lang.System.currentTimeMillis;
+import org.junit.jupiter.api.Test;
+import org.netbeans.jemmy.Timeouts;
 
 public class TimeoutsGetSetTest {
     /**
@@ -44,20 +43,22 @@ public class TimeoutsGetSetTest {
         long start = currentTimeMillis();
         AtomicBoolean stop = new AtomicBoolean(false);
         new Thread(() -> {
-            while (!stop.get()) {
-                timeouts.setTimeout(timeoutName, 1);
-            }
-        }).start();
+                    while (!stop.get()) {
+                        timeouts.setTimeout(timeoutName, 1);
+                    }
+                })
+                .start();
         new Thread(() -> {
-            while (!stop.get()) {
-                try {
-                    timeouts.getTimeout(timeoutName);
-                } catch (NullPointerException e) {
-                    System.err.println("NPE in " + (currentTimeMillis() - start));
-                    throw e;
-                }
-            }
-        }).start();
+                    while (!stop.get()) {
+                        try {
+                            timeouts.getTimeout(timeoutName);
+                        } catch (NullPointerException e) {
+                            System.err.println("NPE in " + (currentTimeMillis() - start));
+                            throw e;
+                        }
+                    }
+                })
+                .start();
         Thread.sleep(10000);
         stop.set(true);
     }

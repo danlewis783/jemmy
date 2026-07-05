@@ -25,7 +25,6 @@
 package org.netbeans.jemmy.util;
 
 import java.util.StringTokenizer;
-
 import org.netbeans.jemmy.operators.Operator.DefaultStringComparator;
 import org.netbeans.jemmy.operators.Operator.StringComparator;
 
@@ -56,7 +55,8 @@ public class StringPropChooser extends PropChooser {
      * to.
      * @param comparator Defines string comparision criteria.
      */
-    public StringPropChooser(String[] propNames,
+    public StringPropChooser(
+            String[] propNames,
             Object[][] params,
             Class<?>[][] classes,
             String[] results,
@@ -81,12 +81,8 @@ public class StringPropChooser extends PropChooser {
      * if false convert both <value>.toString() and <result> to uppercase before
      * comparison.
      */
-    public StringPropChooser(String[] propNames,
-            Object[][] params,
-            Class<?>[][] classes,
-            String[] results,
-            boolean ce,
-            boolean ccs) {
+    public StringPropChooser(
+            String[] propNames, Object[][] params, Class<?>[][] classes, String[] results, boolean ce, boolean ccs) {
         this(propNames, params, classes, results, new DefaultStringComparator(ce, ccs));
     }
 
@@ -98,9 +94,7 @@ public class StringPropChooser extends PropChooser {
      * to.
      * @param comparator Defines string comparision criteria.
      */
-    public StringPropChooser(String[] propNames,
-            String[] results,
-            StringComparator comparator) {
+    public StringPropChooser(String[] propNames, String[] results, StringComparator comparator) {
         this(propNames, (Object[][]) null, (Class<?>[][]) null, results, comparator);
     }
 
@@ -116,10 +110,7 @@ public class StringPropChooser extends PropChooser {
      * parameters.
      */
     @Deprecated
-    public StringPropChooser(String[] propNames,
-            String[] results,
-            boolean ce,
-            boolean ccs) {
+    public StringPropChooser(String[] propNames, String[] results, boolean ce, boolean ccs) {
         this(propNames, (Object[][]) null, (Class<?>[][]) null, results, ce, ccs);
     }
 
@@ -134,14 +125,19 @@ public class StringPropChooser extends PropChooser {
      * @param classes Parameters classes.
      * @param comparator Defines string comparision criteria.
      */
-    public StringPropChooser(String props,
+    public StringPropChooser(
+            String props,
             String semicolonChar,
             String equalChar,
             Object[][] params,
             Class<?>[][] classes,
             StringComparator comparator) {
-        this(cutToArray(props, semicolonChar, equalChar, true), params, classes,
-                cutToArray(props, semicolonChar, equalChar, false), comparator);
+        this(
+                cutToArray(props, semicolonChar, equalChar, true),
+                params,
+                classes,
+                cutToArray(props, semicolonChar, equalChar, false),
+                comparator);
     }
 
     /**
@@ -159,15 +155,21 @@ public class StringPropChooser extends PropChooser {
      * parameters.
      */
     @Deprecated
-    public StringPropChooser(String props,
+    public StringPropChooser(
+            String props,
             String semicolonChar,
             String equalChar,
             Object[][] params,
             Class<?>[][] classes,
             boolean ce,
             boolean ccs) {
-        this(cutToArray(props, semicolonChar, equalChar, true), params, classes,
-                cutToArray(props, semicolonChar, equalChar, false), ce, ccs);
+        this(
+                cutToArray(props, semicolonChar, equalChar, true),
+                params,
+                classes,
+                cutToArray(props, semicolonChar, equalChar, false),
+                ce,
+                ccs);
     }
 
     /**
@@ -178,10 +180,7 @@ public class StringPropChooser extends PropChooser {
      * @param equalChar Method(field) name - expected value separator.
      * @param comparator Defines string comparision criteria.
      */
-    public StringPropChooser(String props,
-            String semicolonChar,
-            String equalChar,
-            StringComparator comparator) {
+    public StringPropChooser(String props, String semicolonChar, String equalChar, StringComparator comparator) {
         this(props, semicolonChar, equalChar, (Object[][]) null, (Class<?>[][]) null, comparator);
     }
 
@@ -197,11 +196,7 @@ public class StringPropChooser extends PropChooser {
      * parameters.
      */
     @Deprecated
-    public StringPropChooser(String props,
-            String semicolonChar,
-            String equalChar,
-            boolean ce,
-            boolean ccs) {
+    public StringPropChooser(String props, String semicolonChar, String equalChar, boolean ce, boolean ccs) {
         this(props, semicolonChar, equalChar, (Object[][]) null, (Class<?>[][]) null, ce, ccs);
     }
 
@@ -215,10 +210,7 @@ public class StringPropChooser extends PropChooser {
      * @param classes Parameters classes.
      * @param comparator Defines string comparision criteria.
      */
-    public StringPropChooser(String props,
-            Object[][] params,
-            Class<?>[][] classes,
-            StringComparator comparator) {
+    public StringPropChooser(String props, Object[][] params, Class<?>[][] classes, StringComparator comparator) {
         this(props, ";", "=", params, classes, comparator);
     }
 
@@ -236,11 +228,7 @@ public class StringPropChooser extends PropChooser {
      * parameters.
      */
     @Deprecated
-    public StringPropChooser(String props,
-            Object[][] params,
-            Class<?>[][] classes,
-            boolean ce,
-            boolean ccs) {
+    public StringPropChooser(String props, Object[][] params, Class<?>[][] classes, boolean ce, boolean ccs) {
         this(props, ";", "=", params, classes, ce, ccs);
     }
 
@@ -252,8 +240,7 @@ public class StringPropChooser extends PropChooser {
      * "=" is used as a method(field) name - expected value separator.
      * @param comparator Defines string comparision criteria.
      */
-    public StringPropChooser(String props,
-            StringComparator comparator) {
+    public StringPropChooser(String props, StringComparator comparator) {
         this(props, (Object[][]) null, (Class<?>[][]) null, comparator);
     }
 
@@ -269,9 +256,7 @@ public class StringPropChooser extends PropChooser {
      * parameters.
      */
     @Deprecated
-    public StringPropChooser(String props,
-            boolean ce,
-            boolean ccs) {
+    public StringPropChooser(String props, boolean ce, boolean ccs) {
         this(props, (Object[][]) null, (Class<?>[][]) null, ce, ccs);
     }
 
@@ -329,5 +314,4 @@ public class StringPropChooser extends PropChooser {
         }
         return props;
     }
-
 }

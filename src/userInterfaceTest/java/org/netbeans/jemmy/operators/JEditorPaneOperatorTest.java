@@ -32,7 +32,6 @@ import java.awt.Dimension;
 import java.awt.IllegalComponentStateException;
 import java.io.IOException;
 import java.net.URL;
-
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -40,7 +39,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -49,10 +47,10 @@ import org.junit.jupiter.api.TestInstance;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class JEditorPaneOperatorTest {
 
-    private final static String PAGE1 = "page1";
-    private final static String PAGE2 = "page2";
-    private final static String PAGE1_TEXT = "hi";
-    private final static String PAGE2_TEXT = "hello";
+    private static final String PAGE1 = "page1";
+    private static final String PAGE2 = "page2";
+    private static final String PAGE1_TEXT = "hi";
+    private static final String PAGE2_TEXT = "hello";
     private final URL page1URL = getClass().getResource("resources/page1.html");
     private JFrame frame;
     private HyperlinkListener listener = null;
@@ -67,7 +65,7 @@ public class JEditorPaneOperatorTest {
         listener = event -> {
             if (event.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
                 try {
-                    ((JEditorPane)event.getSource()).setPage(event.getURL());
+                    ((JEditorPane) event.getSource()).setPage(event.getURL());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -95,8 +93,7 @@ public class JEditorPaneOperatorTest {
         panel.add(scroller, BorderLayout.CENTER);
         frame.getContentPane().add(panel);
         frame.setVisible(true);
-        JEditorPaneOperator editorPaneOperator =
-                new JEditorPaneOperator(new FrameOperator(frame));
+        JEditorPaneOperator editorPaneOperator = new JEditorPaneOperator(new FrameOperator(frame));
         checkPageLoaded(editorPaneOperator, PAGE1, PAGE1_TEXT);
 
         // Testing reference which doesn't exist
@@ -111,8 +108,8 @@ public class JEditorPaneOperatorTest {
 
             // Testing on a long text page
             editorPaneOperator.clickOnReference(PAGE1);
-            editorPaneOperator.waitStateOnQueue(comp
-                    -> ((JEditorPane)comp).getPage().toString().contains(PAGE1));
+            editorPaneOperator.waitStateOnQueue(
+                    comp -> ((JEditorPane) comp).getPage().toString().contains(PAGE1));
         } finally {
             editorPane.removeHyperlinkListener(listener);
             frame.getContentPane().remove(panel);
@@ -125,8 +122,7 @@ public class JEditorPaneOperatorTest {
         editorPane.setEditable(false);
         frame.getContentPane().add(editorPane);
         frame.setVisible(true);
-        JEditorPaneOperator editorPaneOperator =
-                new JEditorPaneOperator(new JFrameOperator(frame));
+        JEditorPaneOperator editorPaneOperator = new JEditorPaneOperator(new JFrameOperator(frame));
         checkPageLoaded(editorPaneOperator, PAGE1, PAGE1_TEXT);
 
         try {
@@ -138,20 +134,17 @@ public class JEditorPaneOperatorTest {
             // Testing reference on the non-visible area
             assertThatThrownBy(() -> editorPaneOperator.clickOnReference(PAGE1))
                     .isInstanceOf(IllegalComponentStateException.class)
-                    .hasMessage("Component doesn't contain"
-                            + " JScrollPane and Reference is out of visible area");
+                    .hasMessage("Component doesn't contain" + " JScrollPane and Reference is out of visible area");
         } finally {
             editorPaneOperator.removeHyperlinkListener(listener);
             frame.getContentPane().remove(editorPane);
         }
     }
 
-    private void checkPageLoaded(JEditorPaneOperator editorPaneOperator,
-            String page, String text) {
-        editorPaneOperator.waitStateOnQueue(comp
-                -> ((JEditorPane)comp).getPage().toString().contains(page));
+    private void checkPageLoaded(JEditorPaneOperator editorPaneOperator, String page, String text) {
+        editorPaneOperator.waitStateOnQueue(
+                comp -> ((JEditorPane) comp).getPage().toString().contains(page));
         editorPaneOperator.selectText(text);
-        editorPaneOperator.waitStateOnQueue(comp
-                -> text.equals(editorPaneOperator.getSelectedText()));
+        editorPaneOperator.waitStateOnQueue(comp -> text.equals(editorPaneOperator.getSelectedText()));
     }
 }

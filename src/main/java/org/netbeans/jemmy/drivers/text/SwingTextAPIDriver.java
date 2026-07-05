@@ -38,7 +38,7 @@ public class SwingTextAPIDriver extends TextAPIDriver {
      * Constructs a SwingTextAPIDriver.
      */
     public SwingTextAPIDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.JTextComponentOperator"});
+        super(new String[] {"org.netbeans.jemmy.operators.JTextComponentOperator"});
     }
 
     @Override

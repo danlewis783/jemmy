@@ -24,10 +24,10 @@
  */
 package org.netbeans.jemmy.operators;
 
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import java.awt.Dimension;
 import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 
 public class FileChooserApp extends JFrame {
     public FileChooserApp(File path) {
@@ -40,6 +40,7 @@ public class FileChooserApp extends JFrame {
         setLocationRelativeTo(null);
         getContentPane().add(externalChooser);
     }
+
     public static void main(String[] args) {
         show((args.length >= 1) ? new File(args[0]) : new File(System.getProperty("user.dir")));
     }

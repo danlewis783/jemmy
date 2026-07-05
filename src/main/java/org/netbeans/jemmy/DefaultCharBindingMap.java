@@ -87,9 +87,9 @@ public class DefaultCharBindingMap implements CharBindingMap {
     public int[] getKeyAndModifiers(char c) {
         CharKey key = chars.get(c);
         if (key != null) {
-            return new int[]{key.key, key.modifiers};
+            return new int[] {key.key, key.modifiers};
         } else {
-            return new int[]{KeyEvent.VK_UNDEFINED, 0};
+            return new int[] {KeyEvent.VK_UNDEFINED, 0};
         }
     }
 
@@ -130,7 +130,7 @@ public class DefaultCharBindingMap implements CharBindingMap {
 
     private void initMap() {
         chars = new Hashtable<>();
-        //first add latters and digits represented by KeyEvent.VK_. fields
+        // first add latters and digits represented by KeyEvent.VK_. fields
         Field[] fields = KeyEvent.class.getFields();
         for (Field field : fields) {
             String name = field.getName();
@@ -151,7 +151,7 @@ public class DefaultCharBindingMap implements CharBindingMap {
                 }
             }
         }
-        //add special simbols
+        // add special simbols
         addChar('\t', KeyEvent.VK_TAB, 0);
         addChar(' ', KeyEvent.VK_SPACE, 0);
         addChar('!', KeyEvent.VK_1, InputEvent.SHIFT_MASK);
@@ -199,5 +199,4 @@ public class DefaultCharBindingMap implements CharBindingMap {
             this.modifiers = modifiers;
         }
     }
-
 }

@@ -27,7 +27,6 @@ package org.netbeans.jemmy.util;
 import javax.swing.text.Document;
 import javax.swing.text.Element;
 import javax.swing.text.StyledDocument;
-
 import org.netbeans.jemmy.operators.JTextComponentOperator.TextChooser;
 
 /**
@@ -42,8 +41,7 @@ public abstract class AbstractTextStyleChooser implements TextChooser {
     /**
      * Constructor.
      */
-    public AbstractTextStyleChooser() {
-    }
+    public AbstractTextStyleChooser() {}
 
     /**
      * Should return true if position fulfils criteria.
@@ -65,8 +63,7 @@ public abstract class AbstractTextStyleChooser implements TextChooser {
 
     @Override
     public final boolean checkPosition(Document document, int offset) {
-        return (checkElement(((StyledDocument) document),
-                ((StyledDocument) document).getCharacterElement(offset),
-                offset));
+        return (checkElement(
+                ((StyledDocument) document), ((StyledDocument) document).getCharacterElement(offset), offset));
     }
 }

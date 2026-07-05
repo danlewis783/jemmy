@@ -27,12 +27,10 @@ package org.netbeans.jemmy.operators;
 import java.awt.Component;
 import java.awt.Container;
 import java.util.Hashtable;
-
 import javax.swing.BoundedRangeModel;
 import javax.swing.JProgressBar;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.ProgressBarUI;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.JemmyException;
@@ -56,8 +54,7 @@ import org.netbeans.jemmy.Waiter;
  *
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
-public class JProgressBarOperator extends JComponentOperator
-        implements Timeoutable, Outputable {
+public class JProgressBarOperator extends JComponentOperator implements Timeoutable, Outputable {
 
     /**
      * Identifier for a "minimum" property.
@@ -102,9 +99,7 @@ public class JProgressBarOperator extends JComponentOperator
      * @param index an index between appropriate ones.
      */
     public JProgressBarOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JProgressBar) cont.
-                waitSubComponent(new JProgressBarFinder(chooser),
-                        index));
+        this((JProgressBar) cont.waitSubComponent(new JProgressBarFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -127,9 +122,7 @@ public class JProgressBarOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public JProgressBarOperator(ContainerOperator<?> cont, int index) {
-        this((JProgressBar) waitComponent(cont,
-                new JProgressBarFinder(),
-                index));
+        this((JProgressBar) waitComponent(cont, new JProgressBarFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -175,7 +168,8 @@ public class JProgressBarOperator extends JComponentOperator
      * @return JProgressBar instance or null if component was not found.
      */
     public static JProgressBar findJProgressBar(Container cont, int index) {
-        return findJProgressBar(cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th JProgressBar instance"), index);
+        return findJProgressBar(
+                cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th JProgressBar instance"), index);
     }
 
     /**
@@ -222,7 +216,8 @@ public class JProgressBarOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public static JProgressBar waitJProgressBar(Container cont, int index) {
-        return waitJProgressBar(cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th JProgressBar instance"), index);
+        return waitJProgressBar(
+                cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th JProgressBar instance"), index);
     }
 
     /**
@@ -271,16 +266,12 @@ public class JProgressBarOperator extends JComponentOperator
      */
     @Deprecated
     public void waitValue(final ValueChooser chooser) {
-        output.printLine("Wait \"" + chooser.getDescription()
-                + "\" value in progressbar\n    : "
-                + toStringSource());
-        output.printGolden("Wait \"" + chooser.getDescription()
-                + "\" value in progressbar");
+        output.printLine("Wait \"" + chooser.getDescription() + "\" value in progressbar\n    : " + toStringSource());
+        output.printGolden("Wait \"" + chooser.getDescription() + "\" value in progressbar");
         Waiter<String, Void> wt = new Waiter<>(new Waitable<String, Void>() {
             @Override
             public String actionProduced(Void obj) {
-                return (chooser.checkValue(((JProgressBar) getSource()).getValue())
-                        ? "" : null);
+                return (chooser.checkValue(((JProgressBar) getSource()).getValue()) ? "" : null);
             }
 
             @Override
@@ -311,11 +302,8 @@ public class JProgressBarOperator extends JComponentOperator
      * @see Operator#waitState(ComponentChooser)
      */
     public void waitValue(final int value) {
-        output.printLine("Wait \"" + value
-                + "\" value in progressbar\n    : "
-                + toStringSource());
-        output.printGolden("Wait \"" + value
-                + "\" value in progressbar");
+        output.printLine("Wait \"" + value + "\" value in progressbar\n    : " + toStringSource());
+        output.printGolden("Wait \"" + value + "\" value in progressbar");
         waitState(new ComponentChooser() {
             @Override
             public boolean checkComponent(Component comp) {
@@ -341,11 +329,8 @@ public class JProgressBarOperator extends JComponentOperator
      * @see Operator#waitState(ComponentChooser)
      */
     public void waitValue(final String value) {
-        output.printLine("Wait \"" + value
-                + "\" string in progressbar\n    : "
-                + toStringSource());
-        output.printGolden("Wait \"" + value
-                + "\" string in progressbar");
+        output.printLine("Wait \"" + value + "\" string in progressbar\n    : " + toStringSource());
+        output.printGolden("Wait \"" + value + "\" string in progressbar");
         waitState(new ComponentChooser() {
             @Override
             public boolean checkComponent(Component comp) {
@@ -374,7 +359,7 @@ public class JProgressBarOperator extends JComponentOperator
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code JProgressBar.addChangeListener(ChangeListener)} through queue
      */
@@ -628,7 +613,7 @@ public class JProgressBarOperator extends JComponentOperator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Interface to define criteria for {@code waitValue(ValueChooser)}
@@ -677,5 +662,4 @@ public class JProgressBarOperator extends JComponentOperator
             super(JProgressBar.class);
         }
     }
-
 }

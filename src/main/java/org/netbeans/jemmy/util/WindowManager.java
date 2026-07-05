@@ -28,7 +28,6 @@ import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Window;
 import java.util.Vector;
-
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
@@ -82,8 +81,7 @@ public class WindowManager implements Timeoutable, Outputable {
     }
 
     public static void performJob(WindowJob<?, Window> job) {
-        while (manager.performJobOnce(job)) {
-        }
+        while (manager.performJobOnce(job)) {}
     }
 
     static {
@@ -117,9 +115,7 @@ public class WindowManager implements Timeoutable, Outputable {
      * @param job a job to perform.
      */
     public void add(WindowJob<?, Window> job) {
-        output.printLine("Starting job \""
-                + job.getDescription()
-                + "\"");
+        output.printLine("Starting job \"" + job.getDescription() + "\"");
         synchronized (jobs) {
             JobThread thread = new JobThread(job);
             jobs.add(thread);
@@ -133,9 +129,7 @@ public class WindowManager implements Timeoutable, Outputable {
      * @param job a job to remove.
      */
     public void remove(WindowJob<?, ?> job) {
-        output.printLine("Killing job \""
-                + job.getDescription()
-                + "\"");
+        output.printLine("Killing job \"" + job.getDescription() + "\"");
         synchronized (jobs) {
             for (int i = 0; i < jobs.size(); i++) {
                 if (jobs.get(i).job == job) {
@@ -161,8 +155,7 @@ public class WindowManager implements Timeoutable, Outputable {
 
         @Override
         public boolean checkComponent(Component comp) {
-            return (comp instanceof Dialog
-                    && ((Dialog) comp).isModal());
+            return (comp instanceof Dialog && ((Dialog) comp).isModal());
         }
 
         @Override
@@ -203,5 +196,4 @@ public class WindowManager implements Timeoutable, Outputable {
             }
         }
     }
-
 }

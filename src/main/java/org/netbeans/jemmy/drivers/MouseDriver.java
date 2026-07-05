@@ -24,12 +24,11 @@
  */
 package org.netbeans.jemmy.drivers;
 
+import java.awt.Point;
 import org.netbeans.jemmy.Timeout;
 import org.netbeans.jemmy.UIStatus;
 import org.netbeans.jemmy.operators.ComponentOperator;
 import org.netbeans.jemmy.operators.Operator;
-
-import java.awt.Point;
 
 /**
  * Defines how to simulate mouse operations.
@@ -76,8 +75,8 @@ public interface MouseDriver {
      * @param modifiers a combination of {@code InputEvent.*_MASK} fields.
      * @param mouseClick Time between pressing and releasing mouse.
      */
-    public void clickMouse(ComponentOperator oper, int x, int y, int clickCount, int mouseButton,
-            int modifiers, Timeout mouseClick);
+    public void clickMouse(
+            ComponentOperator oper, int x, int y, int clickCount, int mouseButton, int modifiers, Timeout mouseClick);
 
     /**
      * Moves mouse.
@@ -114,8 +113,16 @@ public interface MouseDriver {
      * @param before Time to sleep after taking (before dragging)
      * @param after Time to sleep before dropping (after dragging)
      */
-    public void dragNDrop(ComponentOperator oper, int start_x, int start_y, int end_x, int end_y,
-            int mouseButton, int modifiers, Timeout before, Timeout after);
+    public void dragNDrop(
+            ComponentOperator oper,
+            int start_x,
+            int start_y,
+            int end_x,
+            int end_y,
+            int mouseButton,
+            int modifiers,
+            Timeout before,
+            Timeout after);
 
     /**
      * Moves mouse inside a component.

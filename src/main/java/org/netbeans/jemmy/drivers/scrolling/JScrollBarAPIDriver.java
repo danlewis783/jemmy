@@ -25,7 +25,6 @@
 package org.netbeans.jemmy.drivers.scrolling;
 
 import java.awt.Point;
-
 import org.netbeans.jemmy.Timeout;
 import org.netbeans.jemmy.operators.ComponentOperator;
 import org.netbeans.jemmy.operators.JScrollBarOperator;
@@ -37,13 +36,13 @@ import org.netbeans.jemmy.operators.JScrollBarOperator;
  */
 public class JScrollBarAPIDriver extends AbstractScrollDriver {
 
-    private final static int SMALL_INCREMENT = 1;
+    private static final int SMALL_INCREMENT = 1;
 
     /**
      * Constructs a JScrollBarDriver.
      */
     public JScrollBarAPIDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.JScrollBarOperator"});
+        super(new String[] {"org.netbeans.jemmy.operators.JScrollBarOperator"});
     }
 
     @Override
@@ -68,15 +67,13 @@ public class JScrollBarAPIDriver extends AbstractScrollDriver {
         JScrollBarOperator scroll = (JScrollBarOperator) oper;
         int newValue = -1;
         if (adj.getScrollDirection() == ScrollAdjuster.DECREASE_SCROLL_DIRECTION) {
-            newValue = (scroll.getValue() > scroll.getMinimum()
-                    + scroll.getUnitIncrement())
-                            ? scroll.getValue() - scroll.getUnitIncrement()
-                            : scroll.getMinimum();
+            newValue = (scroll.getValue() > scroll.getMinimum() + scroll.getUnitIncrement())
+                    ? scroll.getValue() - scroll.getUnitIncrement()
+                    : scroll.getMinimum();
         } else if (adj.getScrollDirection() == ScrollAdjuster.INCREASE_SCROLL_DIRECTION) {
-            newValue = (scroll.getValue() < scroll.getMaximum()
-                    - scroll.getVisibleAmount() - scroll.getUnitIncrement())
-                            ? scroll.getValue() + scroll.getUnitIncrement()
-                            : scroll.getMaximum();
+            newValue = (scroll.getValue() < scroll.getMaximum() - scroll.getVisibleAmount() - scroll.getUnitIncrement())
+                    ? scroll.getValue() + scroll.getUnitIncrement()
+                    : scroll.getMaximum();
         }
         setValue(oper, newValue);
     }
@@ -89,8 +86,7 @@ public class JScrollBarAPIDriver extends AbstractScrollDriver {
 
     @Override
     protected Timeout getScrollDeltaTimeout(ComponentOperator oper) {
-        return (oper.getTimeouts().
-                create("JScrollBarOperator.DragAndDropScrollingDelta"));
+        return (oper.getTimeouts().create("JScrollBarOperator.DragAndDropScrollingDelta"));
     }
 
     @Override
@@ -98,13 +94,12 @@ public class JScrollBarAPIDriver extends AbstractScrollDriver {
         JScrollBarOperator scroll = (JScrollBarOperator) oper;
         int newValue = -1;
         if (adj.getScrollDirection() == ScrollAdjuster.DECREASE_SCROLL_DIRECTION) {
-            newValue = (scroll.getValue() > scroll.getMinimum()
-                    + scroll.getBlockIncrement())
-                            ? scroll.getValue() - scroll.getBlockIncrement()
-                            : scroll.getMinimum();
+            newValue = (scroll.getValue() > scroll.getMinimum() + scroll.getBlockIncrement())
+                    ? scroll.getValue() - scroll.getBlockIncrement()
+                    : scroll.getMinimum();
         } else if (adj.getScrollDirection() == ScrollAdjuster.INCREASE_SCROLL_DIRECTION) {
-            newValue = (scroll.getValue() < scroll.getMaximum()
-                    - scroll.getVisibleAmount() - scroll.getBlockIncrement())
+            newValue =
+                    (scroll.getValue() < scroll.getMaximum() - scroll.getVisibleAmount() - scroll.getBlockIncrement())
                             ? scroll.getValue() + scroll.getBlockIncrement()
                             : scroll.getMaximum();
         }
@@ -112,12 +107,10 @@ public class JScrollBarAPIDriver extends AbstractScrollDriver {
     }
 
     @Override
-    protected void startPushAndWait(ComponentOperator oper, int direction, int orientation) {
-    }
+    protected void startPushAndWait(ComponentOperator oper, int direction, int orientation) {}
 
     @Override
-    protected void stopPushAndWait(ComponentOperator oper, int direction, int orientation) {
-    }
+    protected void stopPushAndWait(ComponentOperator oper, int direction, int orientation) {}
 
     @Override
     protected Point startDragging(ComponentOperator oper) {
@@ -125,12 +118,10 @@ public class JScrollBarAPIDriver extends AbstractScrollDriver {
     }
 
     @Override
-    protected void drop(ComponentOperator oper, Point pnt) {
-    }
+    protected void drop(ComponentOperator oper, Point pnt) {}
 
     @Override
-    protected void drag(ComponentOperator oper, Point pnt) {
-    }
+    protected void drag(ComponentOperator oper, Point pnt) {}
 
     @Override
     protected boolean canDragAndDrop(ComponentOperator oper) {
@@ -153,8 +144,6 @@ public class JScrollBarAPIDriver extends AbstractScrollDriver {
     }
 
     private boolean isSmallIncrement(JScrollBarOperator oper) {
-        return (oper.getUnitIncrement(-1) <= SMALL_INCREMENT
-                && oper.getUnitIncrement(1) <= SMALL_INCREMENT);
+        return (oper.getUnitIncrement(-1) <= SMALL_INCREMENT && oper.getUnitIncrement(1) <= SMALL_INCREMENT);
     }
-
 }

@@ -44,8 +44,7 @@ public class ObjectBrowser implements Outputable {
     /**
      * Constructor.
      */
-    public ObjectBrowser() {
-    }
+    public ObjectBrowser() {}
 
     /**
      * Defines print output streams or writers.

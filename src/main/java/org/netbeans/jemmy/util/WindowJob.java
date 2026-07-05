@@ -25,7 +25,6 @@
 package org.netbeans.jemmy.util;
 
 import java.awt.Component;
-
 import org.netbeans.jemmy.Action;
 import org.netbeans.jemmy.ComponentChooser;
 

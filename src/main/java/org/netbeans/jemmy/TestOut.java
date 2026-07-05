@@ -111,10 +111,7 @@ public class TestOut {
      * Creates unstance using System.in, System.out and System.err streams.
      */
     public TestOut() {
-        this(System.in,
-                new PrintWriter(System.out),
-                new PrintWriter(System.err),
-                null);
+        this(System.in, new PrintWriter(System.out), new PrintWriter(System.err), null);
     }
 
     /**

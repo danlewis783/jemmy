@@ -27,11 +27,9 @@ package org.netbeans.jemmy.util;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dialog;
-
 import javax.swing.JInternalFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.JemmyInputException;
 import org.netbeans.jemmy.JemmyProperties;
@@ -42,8 +40,8 @@ import org.netbeans.jemmy.operators.JInternalFrameOperator;
 import org.netbeans.jemmy.operators.JScrollPaneOperator;
 import org.netbeans.jemmy.operators.JTabbedPaneOperator;
 import org.netbeans.jemmy.operators.Operator;
-import org.netbeans.jemmy.operators.WindowOperator;
 import org.netbeans.jemmy.operators.Operator.ComponentVisualizer;
+import org.netbeans.jemmy.operators.WindowOperator;
 
 /**
  *
@@ -64,8 +62,7 @@ public class DefaultVisualizer implements ComponentVisualizer, Cloneable {
     private boolean switchTab = false;
     private boolean modal = false;
 
-    public DefaultVisualizer() {
-    }
+    public DefaultVisualizer() {}
 
     /**
      * Forces vizualizer to check that component is on the top modal dialog or
@@ -202,10 +199,8 @@ public class DefaultVisualizer implements ComponentVisualizer, Cloneable {
         try {
             if (modal) {
                 Dialog modalDialog = JDialogOperator.getTopModalDialog();
-                if (modalDialog != null
-                        && compOper.getWindow() != modalDialog) {
-                    throw (new JemmyInputException("Component is not on top modal dialog.",
-                            compOper.getSource()));
+                if (modalDialog != null && compOper.getWindow() != modalDialog) {
+                    throw (new JemmyInputException("Component is not on top modal dialog.", compOper.getSource()));
                 }
             }
             WindowOperator winOper = new WindowOperator(compOper.getWindow());
@@ -250,9 +245,8 @@ public class DefaultVisualizer implements ComponentVisualizer, Cloneable {
         try {
             return (DefaultVisualizer) super.clone();
         } catch (CloneNotSupportedException e) {
-            //that's impossible
+            // that's impossible
             throw (new JemmyException("Even impossible happens :)", e));
         }
     }
-
 }

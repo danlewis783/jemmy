@@ -29,7 +29,6 @@ import java.awt.Window;
 import java.awt.event.WindowListener;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ResourceBundle;
-
 import org.netbeans.jemmy.ClassReference;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
@@ -55,8 +54,7 @@ import org.netbeans.jemmy.drivers.WindowDriver;
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
-public class WindowOperator extends ContainerOperator<Window>
-        implements Outputable {
+public class WindowOperator extends ContainerOperator<Window> implements Outputable {
 
     TestOut output;
     WindowDriver driver;
@@ -79,9 +77,7 @@ public class WindowOperator extends ContainerOperator<Window>
      * @param index an index between appropriate ones.
      */
     public WindowOperator(WindowOperator owner, ComponentChooser chooser, int index) {
-        this(owner.
-                waitSubWindow(chooser,
-                        index));
+        this(owner.waitSubWindow(chooser, index));
         copyEnvironment(owner);
     }
 
@@ -104,9 +100,7 @@ public class WindowOperator extends ContainerOperator<Window>
      * @throws TimeoutExpiredException
      */
     public WindowOperator(WindowOperator owner, int index) {
-        this(waitWindow(owner,
-                ComponentSearcher.getTrueChooser("Any Window"),
-                index));
+        this(waitWindow(owner, ComponentSearcher.getTrueChooser("Any Window"), index));
         copyEnvironment(owner);
     }
 
@@ -131,8 +125,7 @@ public class WindowOperator extends ContainerOperator<Window>
      * @throws TimeoutExpiredException
      */
     public WindowOperator(int index, Operator env) {
-        this(waitWindow(ComponentSearcher.getTrueChooser("Any Window"),
-                index, env.getTimeouts(), env.getOutput()));
+        this(waitWindow(ComponentSearcher.getTrueChooser("Any Window"), index, env.getTimeouts(), env.getOutput()));
         copyEnvironment(env);
     }
 
@@ -146,8 +139,7 @@ public class WindowOperator extends ContainerOperator<Window>
      * @throws TimeoutExpiredException
      */
     public WindowOperator(int index) {
-        this(index,
-                getEnvironmentOperator());
+        this(index, getEnvironmentOperator());
     }
 
     /**
@@ -215,9 +207,7 @@ public class WindowOperator extends ContainerOperator<Window>
      * @return a window
      */
     public static Window waitWindow(ComponentChooser chooser, int index) {
-        return (waitWindow(chooser, index,
-                JemmyProperties.getCurrentTimeouts(),
-                JemmyProperties.getCurrentOutput()));
+        return (waitWindow(chooser, index, JemmyProperties.getCurrentTimeouts(), JemmyProperties.getCurrentOutput()));
     }
 
     /**
@@ -241,9 +231,8 @@ public class WindowOperator extends ContainerOperator<Window>
      * @return a window
      */
     public static Window waitWindow(Window owner, ComponentChooser chooser, int index) {
-        return (waitWindow(owner, chooser, index,
-                JemmyProperties.getCurrentTimeouts(),
-                JemmyProperties.getCurrentOutput()));
+        return (waitWindow(
+                owner, chooser, index, JemmyProperties.getCurrentTimeouts(), JemmyProperties.getCurrentOutput()));
     }
 
     /**
@@ -272,11 +261,8 @@ public class WindowOperator extends ContainerOperator<Window>
     @Override
     public void copyEnvironment(Operator anotherOperator) {
         super.copyEnvironment(anotherOperator);
-        driver
-                = (WindowDriver) DriverManager.
-                getDriver(DriverManager.WINDOW_DRIVER_ID,
-                        getClass(),
-                        anotherOperator.getProperties());
+        driver = (WindowDriver)
+                DriverManager.getDriver(DriverManager.WINDOW_DRIVER_ID, getClass(), anotherOperator.getProperties());
     }
 
     /**
@@ -367,8 +353,7 @@ public class WindowOperator extends ContainerOperator<Window>
      * @return a subwindow
      */
     public Window findSubWindow(ComponentChooser chooser, int index) {
-        getOutput().printLine("Looking for \"" + chooser.getDescription()
-                + "\" subwindow");
+        getOutput().printLine("Looking for \"" + chooser.getDescription() + "\" subwindow");
         return findWindow((Window) getSource(), chooser, index);
     }
 
@@ -390,16 +375,15 @@ public class WindowOperator extends ContainerOperator<Window>
      * @return a subwindow
      */
     public Window waitSubWindow(ComponentChooser chooser, int index) {
-        getOutput().printLine("Waiting for \"" + chooser.getDescription()
-                + "\" subwindow");
+        getOutput().printLine("Waiting for \"" + chooser.getDescription() + "\" subwindow");
         WindowWaiter ww = new WindowWaiter();
         ww.setOutput(getOutput());
         ww.setTimeouts(getTimeouts());
         try {
             return ww.waitWindow((Window) getSource(), chooser, index);
         } catch (InterruptedException e) {
-            throw (new JemmyException("Waiting for \"" + chooser.getDescription()
-                    + "\" window has been interrupted", e));
+            throw (new JemmyException(
+                    "Waiting for \"" + chooser.getDescription() + "\" window has been interrupted", e));
         }
     }
 
@@ -417,8 +401,7 @@ public class WindowOperator extends ContainerOperator<Window>
      * Waits the window to be closed.
      */
     public void waitClosed() {
-        getOutput().printLine("Wait window to be closed \n    : "
-                + getSource().toString());
+        getOutput().printLine("Wait window to be closed \n    : " + getSource().toString());
         getOutput().printGolden("Wait window to be closed");
         waitState(new ComponentChooser() {
             @Override
@@ -439,7 +422,7 @@ public class WindowOperator extends ContainerOperator<Window>
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code Window.addWindowListener(WindowListener)} through queue
      */
@@ -592,19 +575,18 @@ public class WindowOperator extends ContainerOperator<Window>
      * @return result of {@code Window.getWindows()}
      */
     public static Window[] getWindows() {
-        return new QueueTool().invokeSmoothly(
-                new QueueTool.QueueAction<Window[]>("getWindows") {
-                    @Override
-                    public Window[] launch() throws Exception {
-                        return Window.getWindows();
-                    }
-                });
+        return new QueueTool().invokeSmoothly(new QueueTool.QueueAction<Window[]>("getWindows") {
+            @Override
+            public Window[] launch() throws Exception {
+                return Window.getWindows();
+            }
+        });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////
-    //Mapping 1.4                                         //
+    // Mapping 1.4                                         //
     /**
      * Maps {@code Window.isFocused()} through queue.
      *
@@ -616,8 +598,8 @@ public class WindowOperator extends ContainerOperator<Window>
                 @Override
                 public boolean map() {
                     try {
-                        return (((Boolean) new ClassReference(getSource()).
-                                invokeMethod("isFocused", null, null)).booleanValue());
+                        return (((Boolean) new ClassReference(getSource()).invokeMethod("isFocused", null, null))
+                                .booleanValue());
                     } catch (InvocationTargetException e) {
                         return false;
                     } catch (NoSuchMethodException e) {
@@ -643,8 +625,8 @@ public class WindowOperator extends ContainerOperator<Window>
                 @Override
                 public boolean map() {
                     try {
-                        return (((Boolean) new ClassReference(getSource()).
-                                invokeMethod("isActive", null, null)).booleanValue());
+                        return (((Boolean) new ClassReference(getSource()).invokeMethod("isActive", null, null))
+                                .booleanValue());
                     } catch (InvocationTargetException e) {
                         return false;
                     } catch (NoSuchMethodException e) {
@@ -659,7 +641,7 @@ public class WindowOperator extends ContainerOperator<Window>
         }
     }
 
-    //End of mapping 1.4                                  //
+    // End of mapping 1.4                                  //
     ////////////////////////////////////////////////////////
     /**
      * A method to be used from subclasses. Uses timeouts and output passed as
@@ -671,8 +653,7 @@ public class WindowOperator extends ContainerOperator<Window>
      * @param output an output to be used during the waiting.
      * @return Component instance or null if component was not found.
      */
-    protected static Window waitWindow(ComponentChooser chooser, int index,
-            Timeouts timeouts, TestOut output) {
+    protected static Window waitWindow(ComponentChooser chooser, int index, Timeouts timeouts, TestOut output) {
         try {
             WindowWaiter waiter = new WindowWaiter();
             waiter.setTimeouts(timeouts);
@@ -694,9 +675,7 @@ public class WindowOperator extends ContainerOperator<Window>
      * @return Component instance or null if component was not found.
      */
     protected static Window waitWindow(WindowOperator owner, ComponentChooser chooser, int index) {
-        return (waitWindow((Window) owner.getSource(),
-                chooser, index,
-                owner.getTimeouts(), owner.getOutput()));
+        return (waitWindow((Window) owner.getSource(), chooser, index, owner.getTimeouts(), owner.getOutput()));
     }
 
     /**
@@ -710,8 +689,8 @@ public class WindowOperator extends ContainerOperator<Window>
      * @param output an output to be used during the waiting.
      * @return Component instance or null if component was not found.
      */
-    protected static Window waitWindow(Window owner, ComponentChooser chooser, int index,
-            Timeouts timeouts, TestOut output) {
+    protected static Window waitWindow(
+            Window owner, ComponentChooser chooser, int index, Timeouts timeouts, TestOut output) {
         try {
             WindowWaiter waiter = new WindowWaiter();
             waiter.setTimeouts(timeouts);
@@ -722,5 +701,4 @@ public class WindowOperator extends ContainerOperator<Window>
             return null;
         }
     }
-
 }

@@ -27,12 +27,10 @@ package org.netbeans.jemmy.operators;
 import java.awt.Component;
 import java.awt.Container;
 import java.util.Hashtable;
-
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.event.MenuListener;
-
 import org.netbeans.jemmy.Action;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.Outputable;
@@ -61,8 +59,7 @@ import org.netbeans.jemmy.drivers.MenuDriver;
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
-public class JMenuOperator extends JMenuItemOperator
-        implements Outputable, Timeoutable {
+public class JMenuOperator extends JMenuItemOperator implements Outputable, Timeoutable {
 
     /**
      * Identifier for a "submenu" properties.
@@ -71,9 +68,9 @@ public class JMenuOperator extends JMenuItemOperator
      */
     public static final String SUBMENU_PREFIX_DPROP = "Submenu";
 
-    private final static long WAIT_POPUP_TIMEOUT = 60000;
-    private final static long WAIT_BEFORE_POPUP_TIMEOUT = 0;
-    private final static long PUSH_MENU_TIMEOUT = 60000;
+    private static final long WAIT_POPUP_TIMEOUT = 60000;
+    private static final long WAIT_BEFORE_POPUP_TIMEOUT = 0;
+    private static final long PUSH_MENU_TIMEOUT = 60000;
 
     private Timeouts timeouts;
     private TestOut output;
@@ -97,9 +94,7 @@ public class JMenuOperator extends JMenuItemOperator
      * @param index an index between appropriate ones.
      */
     public JMenuOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JMenu) cont.
-                waitSubComponent(new JMenuFinder(chooser),
-                        index));
+        this((JMenu) cont.waitSubComponent(new JMenuFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -124,10 +119,7 @@ public class JMenuOperator extends JMenuItemOperator
      * @throws TimeoutExpiredException
      */
     public JMenuOperator(ContainerOperator<?> cont, String text, int index) {
-        this((JMenu) waitComponent(cont,
-                new JMenuByLabelFinder(text,
-                        cont.getComparator()),
-                index));
+        this((JMenu) waitComponent(cont, new JMenuByLabelFinder(text, cont.getComparator()), index));
         copyEnvironment(cont);
     }
 
@@ -153,9 +145,7 @@ public class JMenuOperator extends JMenuItemOperator
      * @throws TimeoutExpiredException
      */
     public JMenuOperator(ContainerOperator<?> cont, int index) {
-        this((JMenu) waitComponent(cont,
-                new JMenuFinder(),
-                index));
+        this((JMenu) waitComponent(cont, new JMenuFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -205,10 +195,7 @@ public class JMenuOperator extends JMenuItemOperator
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public static JMenu findJMenu(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return (findJMenu(cont,
-                new JMenuByLabelFinder(text,
-                        new DefaultStringComparator(ce, ccs)),
-                index));
+        return (findJMenu(cont, new JMenuByLabelFinder(text, new DefaultStringComparator(ce, ccs)), index));
     }
 
     /**
@@ -263,10 +250,7 @@ public class JMenuOperator extends JMenuItemOperator
      * @throws TimeoutExpiredException
      */
     public static JMenu waitJMenu(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return (waitJMenu(cont,
-                new JMenuByLabelFinder(text,
-                        new DefaultStringComparator(ce, ccs)),
-                index));
+        return (waitJMenu(cont, new JMenuByLabelFinder(text, new DefaultStringComparator(ce, ccs)), index));
     }
 
     /**
@@ -330,26 +314,28 @@ public class JMenuOperator extends JMenuItemOperator
      * @throws TimeoutExpiredException
      */
     public JMenuItem pushMenu(final ComponentChooser[] choosers) {
-        return ((JMenuItem) produceTimeRestricted(new Action<Object, Void>() {
-            @Override
-            public Object launch(Void obj) {
-                //TDB 1.5 menu workaround
-                getQueueTool().waitEmpty();
-                Object result = driver.pushMenu(JMenuOperator.this, converChoosers(choosers));
-                getQueueTool().waitEmpty();
-                return result;
-            }
+        return ((JMenuItem) produceTimeRestricted(
+                new Action<Object, Void>() {
+                    @Override
+                    public Object launch(Void obj) {
+                        // TDB 1.5 menu workaround
+                        getQueueTool().waitEmpty();
+                        Object result = driver.pushMenu(JMenuOperator.this, converChoosers(choosers));
+                        getQueueTool().waitEmpty();
+                        return result;
+                    }
 
-            @Override
-            public String getDescription() {
-                return createDescription(choosers);
-            }
+                    @Override
+                    public String getDescription() {
+                        return createDescription(choosers);
+                    }
 
-            @Override
-            public String toString() {
-                return "JMenuOperator.pushMenu.Action{description = " + getDescription() + '}';
-            }
-        }, "JMenuOperator.PushMenuTimeout"));
+                    @Override
+                    public String toString() {
+                        return "JMenuOperator.pushMenu.Action{description = " + getDescription() + '}';
+                    }
+                },
+                "JMenuOperator.PushMenuTimeout"));
     }
 
     /**
@@ -362,7 +348,7 @@ public class JMenuOperator extends JMenuItemOperator
         produceNoBlocking(new NoBlockingAction<Object, Void>("Menu pushing") {
             @Override
             public Object doAction(Void param) {
-                //TDB 1.5 menu workaround
+                // TDB 1.5 menu workaround
                 getQueueTool().waitEmpty();
                 Object result = driver.pushMenu(JMenuOperator.this, converChoosers(choosers));
                 getQueueTool().waitEmpty();
@@ -791,7 +777,7 @@ public class JMenuOperator extends JMenuItemOperator
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code JMenu.add(String)} through queue
      */
@@ -1092,7 +1078,7 @@ public class JMenuOperator extends JMenuItemOperator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     static String createDescription(ComponentChooser[] choosers) {
         StringBuilder description = new StringBuilder("(");
@@ -1162,8 +1148,7 @@ public class JMenuOperator extends JMenuItemOperator
         public boolean checkComponent(Component comp) {
             if (comp instanceof JMenu) {
                 if (((JMenu) comp).getText() != null) {
-                    return (comparator.equals(((JMenu) comp).getText(),
-                            label));
+                    return (comparator.equals(((JMenu) comp).getText(), label));
                 }
             }
             return false;

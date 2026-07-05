@@ -30,13 +30,11 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.util.Hashtable;
-
 import javax.swing.AbstractButton;
 import javax.swing.ButtonModel;
 import javax.swing.Icon;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.ButtonUI;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.Outputable;
@@ -62,8 +60,7 @@ import org.netbeans.jemmy.drivers.DriverManager;
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
-public class AbstractButtonOperator extends JComponentOperator
-        implements Timeoutable, Outputable {
+public class AbstractButtonOperator extends JComponentOperator implements Timeoutable, Outputable {
 
     /**
      * Identifier for a text property.
@@ -82,7 +79,7 @@ public class AbstractButtonOperator extends JComponentOperator
     /**
      * Default value for AbstractButtonOperator.PushButtonTimeout timeout.
      */
-    private final static long PUSH_BUTTON_TIMEOUT = 0;
+    private static final long PUSH_BUTTON_TIMEOUT = 0;
 
     private Timeouts timeouts;
     private TestOut output;
@@ -108,9 +105,7 @@ public class AbstractButtonOperator extends JComponentOperator
      * @param index an index between appropriate ones.
      */
     public AbstractButtonOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((AbstractButton) cont.
-                waitSubComponent(new AbstractButtonFinder(chooser),
-                        index));
+        this((AbstractButton) cont.waitSubComponent(new AbstractButtonFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -141,10 +136,7 @@ public class AbstractButtonOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public AbstractButtonOperator(ContainerOperator<?> cont, String text, int index) {
-        this((AbstractButton) waitComponent(cont,
-                new AbstractButtonByLabelFinder(text,
-                        cont.getComparator()),
-                index));
+        this((AbstractButton) waitComponent(cont, new AbstractButtonByLabelFinder(text, cont.getComparator()), index));
         copyEnvironment(cont);
     }
 
@@ -176,9 +168,7 @@ public class AbstractButtonOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public AbstractButtonOperator(ContainerOperator<?> cont, int index) {
-        this((AbstractButton) waitComponent(cont,
-                new AbstractButtonFinder(),
-                index));
+        this((AbstractButton) waitComponent(cont, new AbstractButtonFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -236,7 +226,8 @@ public class AbstractButtonOperator extends JComponentOperator
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public static AbstractButton findAbstractButton(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return findAbstractButton(cont, new AbstractButtonByLabelFinder(text, new DefaultStringComparator(ce, ccs)), index);
+        return findAbstractButton(
+                cont, new AbstractButtonByLabelFinder(text, new DefaultStringComparator(ce, ccs)), index);
     }
 
     /**
@@ -291,7 +282,8 @@ public class AbstractButtonOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public static AbstractButton waitAbstractButton(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return waitAbstractButton(cont, new AbstractButtonByLabelFinder(text, new DefaultStringComparator(ce, ccs)), index);
+        return waitAbstractButton(
+                cont, new AbstractButtonByLabelFinder(text, new DefaultStringComparator(ce, ccs)), index);
     }
 
     /**
@@ -390,13 +382,15 @@ public class AbstractButtonOperator extends JComponentOperator
      * @param selected a button selection.
      */
     public void changeSelectionNoBlock(boolean selected) {
-        produceNoBlocking(new NoBlockingAction<Void, Boolean>("Button selection changing") {
-            @Override
-            public Void doAction(Boolean param) {
-                changeSelection(param);
-                return null;
-            }
-        }, selected ? Boolean.TRUE : Boolean.FALSE);
+        produceNoBlocking(
+                new NoBlockingAction<Void, Boolean>("Button selection changing") {
+                    @Override
+                    public Void doAction(Boolean param) {
+                        changeSelection(param);
+                        return null;
+                    }
+                },
+                selected ? Boolean.TRUE : Boolean.FALSE);
     }
 
     /**
@@ -438,8 +432,7 @@ public class AbstractButtonOperator extends JComponentOperator
      * @param selected a button selection.
      */
     public void waitSelected(final boolean selected) {
-        getOutput().printLine("Wait button to be selected \n    : "
-                + toStringSource());
+        getOutput().printLine("Wait button to be selected \n    : " + toStringSource());
         getOutput().printGolden("Wait button to be selected");
         waitState(new ComponentChooser() {
             @Override
@@ -449,8 +442,7 @@ public class AbstractButtonOperator extends JComponentOperator
 
             @Override
             public String getDescription() {
-                return ("Items has been "
-                        + (selected ? "" : "un") + "selected");
+                return ("Items has been " + (selected ? "" : "un") + "selected");
             }
 
             @Override
@@ -466,8 +458,7 @@ public class AbstractButtonOperator extends JComponentOperator
      * @param text Text to wait for.
      */
     public void waitText(String text) {
-        getOutput().printLine("Wait \"" + text + "\" text in component \n    : "
-                + toStringSource());
+        getOutput().printLine("Wait \"" + text + "\" text in component \n    : " + toStringSource());
         getOutput().printGolden("Wait \"" + text + "\" text");
         waitState(new AbstractButtonByLabelFinder(text, getComparator()));
     }
@@ -486,7 +477,7 @@ public class AbstractButtonOperator extends JComponentOperator
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code AbstractButton.addActionListener(ActionListener)}
      * through queue
@@ -1139,7 +1130,7 @@ public class AbstractButtonOperator extends JComponentOperator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Allows to find component by text.
@@ -1173,8 +1164,7 @@ public class AbstractButtonOperator extends JComponentOperator
         public boolean checkComponent(Component comp) {
             if (comp instanceof AbstractButton) {
                 if (((AbstractButton) comp).getText() != null) {
-                    return (comparator.equals(((AbstractButton) comp).getText(),
-                            label));
+                    return (comparator.equals(((AbstractButton) comp).getText(), label));
                 }
             }
             return false;

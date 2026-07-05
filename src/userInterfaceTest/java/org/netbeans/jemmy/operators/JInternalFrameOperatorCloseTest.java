@@ -25,23 +25,21 @@
 
 package org.netbeans.jemmy.operators;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
+import static org.netbeans.jemmy.drivers.DriverManager.WINDOW_DRIVER_ID;
+
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.UIManager;
-
-import org.netbeans.jemmy.JemmyProperties;
-import org.netbeans.jemmy.TimeoutExpiredException;
-
-import static org.netbeans.jemmy.drivers.DriverManager.WINDOW_DRIVER_ID;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowableOfType;
-
-import org.netbeans.jemmy.drivers.DriverManager;
-import org.netbeans.jemmy.drivers.WindowDriver;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.netbeans.jemmy.JemmyProperties;
+import org.netbeans.jemmy.TimeoutExpiredException;
+import org.netbeans.jemmy.drivers.DriverManager;
+import org.netbeans.jemmy.drivers.WindowDriver;
 
 public class JInternalFrameOperatorCloseTest {
 
@@ -57,50 +55,52 @@ public class JInternalFrameOperatorCloseTest {
         JFrame frame = new JFrame();
         JDesktopPane desktop = new JDesktopPane();
         frame.setContentPane(desktop);
-        JemmyProperties.setCurrentDispatchingModel(
-                JemmyProperties.getCurrentDispatchingModel());
+        JemmyProperties.setCurrentDispatchingModel(JemmyProperties.getCurrentDispatchingModel());
         JInternalFrame internalFrame = new JInternalFrame("JInternalFrameOperatorTest", true, true, true, true);
         internalFrame.setName("JInternalFrameOperatorTest");
         internalFrame.setSize(200, 200);
         internalFrame.setVisible(true);
         desktop.add(internalFrame);
-        frame.setSize(400,400);
+        frame.setSize(400, 400);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frameOper = new JFrameOperator();
-        //override windows driver for the operator to not do anything to close
+        // override windows driver for the operator to not do anything to close
         oldDriver = DriverManager.getWindowDriver(JInternalFrameOperator.class);
-        DriverManager.setDriver(WINDOW_DRIVER_ID, new WindowDriver() {
-            @Override
-            public void activate(ComponentOperator oper) {
-                oldDriver.activate(oper);
-            }
+        DriverManager.setDriver(
+                WINDOW_DRIVER_ID,
+                new WindowDriver() {
+                    @Override
+                    public void activate(ComponentOperator oper) {
+                        oldDriver.activate(oper);
+                    }
 
-            @Override
-            public void requestClose(ComponentOperator oper) {
-                //do nothing here
-            }
+                    @Override
+                    public void requestClose(ComponentOperator oper) {
+                        // do nothing here
+                    }
 
-            @Override
-            public void requestCloseAndThenHide(ComponentOperator oper) {
-                //do nothing here
-            }
+                    @Override
+                    public void requestCloseAndThenHide(ComponentOperator oper) {
+                        // do nothing here
+                    }
 
-            @Override
-            public void close(ComponentOperator oper) {
-                //do nothing here
-            }
+                    @Override
+                    public void close(ComponentOperator oper) {
+                        // do nothing here
+                    }
 
-            @Override
-            public void move(ComponentOperator oper, int x, int y) {
-                oldDriver.move(oper, x, y);
-            }
+                    @Override
+                    public void move(ComponentOperator oper, int x, int y) {
+                        oldDriver.move(oper, x, y);
+                    }
 
-            @Override
-            public void resize(ComponentOperator oper, int width, int height) {
-                oldDriver.resize(oper, width, height);
-            }
-        }, JInternalFrameOperator.class);
+                    @Override
+                    public void resize(ComponentOperator oper, int width, int height) {
+                        oldDriver.resize(oper, width, height);
+                    }
+                },
+                JInternalFrameOperator.class);
         internalFrameOper = new JInternalFrameOperator(frameOper);
         internalFrameOper.setVerification(true);
     }
@@ -116,16 +116,17 @@ public class JInternalFrameOperatorCloseTest {
     @MethodSource("org.netbeans.jemmy.LookAndFeelProvider#availableLookAndFeels")
     public void testClose(String lookAndFeel) throws Exception {
         setUp(lookAndFeel);
-        //trying to close the uncloseable frame
-        //expected to fail by timeout, hence decreasing timeout
+        // trying to close the uncloseable frame
+        // expected to fail by timeout, hence decreasing timeout
         internalFrameOper.getTimeouts().setTimeout("ComponentOperator.WaitStateTimeout", 5000);
-        TimeoutExpiredException e = catchThrowableOfType(TimeoutExpiredException.class,
-                internalFrameOper::close);
-        assertThat(e).as("close() of the uncloseable frame should have timed out").isNotNull();
-        //make sure the exception is coming from the right place
-        assertThat(e.getStackTrace()).anyMatch(ste ->
-                ste.getClassName().equals(JInternalFrameOperator.class.getName()) &&
-                ste.getMethodName().equals("waitClosed"));
+        TimeoutExpiredException e = catchThrowableOfType(TimeoutExpiredException.class, internalFrameOper::close);
+        assertThat(e)
+                .as("close() of the uncloseable frame should have timed out")
+                .isNotNull();
+        // make sure the exception is coming from the right place
+        assertThat(e.getStackTrace())
+                .anyMatch(ste -> ste.getClassName().equals(JInternalFrameOperator.class.getName())
+                        && ste.getMethodName().equals("waitClosed"));
         System.out.println("This exception has been caught, as expected:");
         e.printStackTrace(System.out);
     }

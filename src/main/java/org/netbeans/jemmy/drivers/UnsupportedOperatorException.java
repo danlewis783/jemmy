@@ -42,8 +42,7 @@ public class UnsupportedOperatorException extends JemmyException {
      * @param operator an operator
      */
     public UnsupportedOperatorException(Class<?> driver, Class<?> operator) {
-        super(driver.getName() + " operators are not supported by "
-                + operator.getName() + " driver!");
+        super(driver.getName() + " operators are not supported by " + operator.getName() + " driver!");
     }
 
     /**

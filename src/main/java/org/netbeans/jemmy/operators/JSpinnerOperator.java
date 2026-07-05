@@ -30,7 +30,6 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
-
 import javax.swing.JComponent;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
@@ -40,7 +39,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.SpinnerUI;
-
 import org.netbeans.jemmy.Action;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
@@ -64,8 +62,7 @@ import org.netbeans.jemmy.drivers.scrolling.ScrollAdjuster;
  *
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
-public class JSpinnerOperator extends JComponentOperator
-        implements Timeoutable, Outputable {
+public class JSpinnerOperator extends JComponentOperator implements Timeoutable, Outputable {
 
     /**
      * Identifier for a "value" property.
@@ -74,7 +71,7 @@ public class JSpinnerOperator extends JComponentOperator
      */
     public static final String VALUE_DPROP = "Value";
 
-    private final static long WHOLE_SCROLL_TIMEOUT = 60000;
+    private static final long WHOLE_SCROLL_TIMEOUT = 60000;
 
     private Timeouts timeouts;
     private TestOut output;
@@ -103,9 +100,7 @@ public class JSpinnerOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public JSpinnerOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JSpinner) cont.
-                waitSubComponent(new JSpinnerFinder(chooser),
-                        index));
+        this((JSpinner) cont.waitSubComponent(new JSpinnerFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -131,10 +126,7 @@ public class JSpinnerOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public JSpinnerOperator(ContainerOperator<?> cont, String text, int index) {
-        this((JSpinner) waitComponent(cont,
-                new JSpinnerByTextFinder(text,
-                        cont.getComparator()),
-                index));
+        this((JSpinner) waitComponent(cont, new JSpinnerByTextFinder(text, cont.getComparator()), index));
         copyEnvironment(cont);
     }
 
@@ -159,9 +151,7 @@ public class JSpinnerOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public JSpinnerOperator(ContainerOperator<?> cont, int index) {
-        this((JSpinner) waitComponent(cont,
-                new JSpinnerFinder(),
-                index));
+        this((JSpinner) waitComponent(cont, new JSpinnerFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -207,7 +197,8 @@ public class JSpinnerOperator extends JComponentOperator
      * @return JSpinner instance or null if component was not found.
      */
     public static JSpinner findJSpinner(Container cont, int index) {
-        return findJSpinner(cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th JSpinner instance"), index);
+        return findJSpinner(
+                cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th JSpinner instance"), index);
     }
 
     /**
@@ -254,7 +245,8 @@ public class JSpinnerOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public static JSpinner waitJSpinner(Container cont, int index) {
-        return waitJSpinner(cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th JSpinner instance"), index);
+        return waitJSpinner(
+                cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th JSpinner instance"), index);
     }
 
     /**
@@ -278,8 +270,7 @@ public class JSpinnerOperator extends JComponentOperator
      */
     public static void checkModel(JSpinnerOperator oper, Class<?> modelClass) {
         if (!modelClass.isInstance(oper.getModel())) {
-            throw (new SpinnerModelException("JSpinner model is not a " + modelClass.getName(),
-                    oper.getSource()));
+            throw (new SpinnerModelException("JSpinner model is not a " + modelClass.getName(), oper.getSource()));
         }
     }
 
@@ -357,23 +348,25 @@ public class JSpinnerOperator extends JComponentOperator
      * @param adj scrolling criteria.
      */
     public void scrollTo(final ScrollAdjuster adj) {
-        produceTimeRestricted(new Action<Void, Void>() {
-            @Override
-            public Void launch(Void obj) {
-                driver.scroll(JSpinnerOperator.this, adj);
-                return null;
-            }
+        produceTimeRestricted(
+                new Action<Void, Void>() {
+                    @Override
+                    public Void launch(Void obj) {
+                        driver.scroll(JSpinnerOperator.this, adj);
+                        return null;
+                    }
 
-            @Override
-            public String getDescription() {
-                return "Scrolling";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "Scrolling";
+                    }
 
-            @Override
-            public String toString() {
-                return "JSpinnerOperator.scrollTo.Action{description = " + getDescription() + '}';
-            }
-        }, "JSpinnerOperator.WholeScrollTimeout");
+                    @Override
+                    public String toString() {
+                        return "JSpinnerOperator.scrollTo.Action{description = " + getDescription() + '}';
+                    }
+                },
+                "JSpinnerOperator.WholeScrollTimeout");
     }
 
     /**
@@ -383,23 +376,25 @@ public class JSpinnerOperator extends JComponentOperator
      * maximum value.
      */
     public void scrollToMaximum() {
-        produceTimeRestricted(new Action<Void, Void>() {
-            @Override
-            public Void launch(Void obj) {
-                driver.scrollToMaximum(JSpinnerOperator.this, SwingConstants.VERTICAL);
-                return null;
-            }
+        produceTimeRestricted(
+                new Action<Void, Void>() {
+                    @Override
+                    public Void launch(Void obj) {
+                        driver.scrollToMaximum(JSpinnerOperator.this, SwingConstants.VERTICAL);
+                        return null;
+                    }
 
-            @Override
-            public String getDescription() {
-                return "Scrolling";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "Scrolling";
+                    }
 
-            @Override
-            public String toString() {
-                return "JSpinnerOperator.scrollToMaximum.Action{description = " + getDescription() + '}';
-            }
-        }, "JSpinnerOperator.WholeScrollTimeout");
+                    @Override
+                    public String toString() {
+                        return "JSpinnerOperator.scrollToMaximum.Action{description = " + getDescription() + '}';
+                    }
+                },
+                "JSpinnerOperator.WholeScrollTimeout");
     }
 
     /**
@@ -409,23 +404,25 @@ public class JSpinnerOperator extends JComponentOperator
      * minimum value.
      */
     public void scrollToMinimum() {
-        produceTimeRestricted(new Action<Void, Void>() {
-            @Override
-            public Void launch(Void obj) {
-                driver.scrollToMinimum(JSpinnerOperator.this, SwingConstants.VERTICAL);
-                return null;
-            }
+        produceTimeRestricted(
+                new Action<Void, Void>() {
+                    @Override
+                    public Void launch(Void obj) {
+                        driver.scrollToMinimum(JSpinnerOperator.this, SwingConstants.VERTICAL);
+                        return null;
+                    }
 
-            @Override
-            public String getDescription() {
-                return "Scrolling";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "Scrolling";
+                    }
 
-            @Override
-            public String toString() {
-                return "JSpinnerOperator.scrollToMinimum.Action{description = " + getDescription() + '}';
-            }
-        }, "JSpinnerOperator.WholeScrollTimeout");
+                    @Override
+                    public String toString() {
+                        return "JSpinnerOperator.scrollToMinimum.Action{description = " + getDescription() + '}';
+                    }
+                },
+                "JSpinnerOperator.WholeScrollTimeout");
     }
 
     /**
@@ -545,7 +542,7 @@ public class JSpinnerOperator extends JComponentOperator
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code JSpinner.getValue()} through queue
      */
@@ -714,7 +711,7 @@ public class JSpinnerOperator extends JComponentOperator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Allows to find component by text.
@@ -748,8 +745,7 @@ public class JSpinnerOperator extends JComponentOperator
         public boolean checkComponent(Component comp) {
             if (comp instanceof JSpinner) {
                 if (((JSpinner) comp).getValue() != null) {
-                    return (comparator.equals(((JSpinner) comp).getValue().toString(),
-                            label));
+                    return (comparator.equals(((JSpinner) comp).getValue().toString(), label));
                 }
             }
             return false;
@@ -912,7 +908,8 @@ public class JSpinnerOperator extends JComponentOperator
 
         @Override
         public String toString() {
-            return "ListScrollAdjuster{" + "model=" + model + ", itemIndex=" + itemIndex + ", elements=" + elements + '}';
+            return "ListScrollAdjuster{" + "model=" + model + ", itemIndex=" + itemIndex + ", elements=" + elements
+                    + '}';
         }
     }
 
@@ -992,10 +989,8 @@ public class JSpinnerOperator extends JComponentOperator
         public int getScrollDirection() {
             if (reached(model.getValue())) {
                 return ScrollAdjuster.DO_NOT_TOUCH_SCROLL_DIRECTION;
-            } else if (direction == ScrollAdjuster.INCREASE_SCROLL_DIRECTION
-                    && model.getNextValue() != null
-                    || direction == ScrollAdjuster.DECREASE_SCROLL_DIRECTION
-                    && model.getPreviousValue() != null) {
+            } else if (direction == ScrollAdjuster.INCREASE_SCROLL_DIRECTION && model.getNextValue() != null
+                    || direction == ScrollAdjuster.DECREASE_SCROLL_DIRECTION && model.getPreviousValue() != null) {
                 return direction;
             } else {
                 return ScrollAdjuster.DO_NOT_TOUCH_SCROLL_DIRECTION;
@@ -1069,7 +1064,8 @@ public class JSpinnerOperator extends JComponentOperator
          * @param direction a scrolling direction - one of
          * {@code ScrollAdjuster.*_SCROLL_DIRECTION} fields.
          */
-        public ToStringScrollAdjuster(JSpinnerOperator oper, String pattern, StringComparator comparator, int direction) {
+        public ToStringScrollAdjuster(
+                JSpinnerOperator oper, String pattern, StringComparator comparator, int direction) {
             super(oper, direction);
             this.pattern = pattern;
             this.comparator = comparator;

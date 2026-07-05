@@ -25,7 +25,6 @@
 package org.netbeans.jemmy.drivers.scrolling;
 
 import java.awt.Point;
-
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.Timeout;
 import org.netbeans.jemmy.drivers.DriverManager;
@@ -60,12 +59,15 @@ public abstract class AWTScrollDriver extends AbstractScrollDriver {
                 public Void launch() {
                     Point clickPoint = getClickPoint(oper, adj.getScrollDirection(), adj.getScrollOrientation());
                     if (clickPoint != null) {
-                        DriverManager.getMouseDriver(oper).
-                                clickMouse(oper, clickPoint.x, clickPoint.y, 1,
+                        DriverManager.getMouseDriver(oper)
+                                .clickMouse(
+                                        oper,
+                                        clickPoint.x,
+                                        clickPoint.y,
+                                        1,
                                         Operator.getDefaultMouseButton(),
                                         0,
-                                        oper.getTimeouts().
-                                        create("ComponentOperator.MouseClickTimeout"));
+                                        oper.getTimeouts().create("ComponentOperator.MouseClickTimeout"));
                     }
                     return null;
                 }
@@ -74,8 +76,7 @@ public abstract class AWTScrollDriver extends AbstractScrollDriver {
     }
 
     @Override
-    protected void jump(ComponentOperator oper, ScrollAdjuster adj) {
-    }
+    protected void jump(ComponentOperator oper, ScrollAdjuster adj) {}
 
     @Override
     protected void startPushAndWait(final ComponentOperator oper, final int direction, final int orientation) {
@@ -86,9 +87,7 @@ public abstract class AWTScrollDriver extends AbstractScrollDriver {
                 if (clickPoint != null) {
                     MouseDriver mdriver = DriverManager.getMouseDriver(oper);
                     mdriver.moveMouse(oper, clickPoint.x, clickPoint.y);
-                    mdriver.pressMouse(oper, clickPoint.x, clickPoint.y,
-                            Operator.getDefaultMouseButton(),
-                            0);
+                    mdriver.pressMouse(oper, clickPoint.x, clickPoint.y, Operator.getDefaultMouseButton(), 0);
                 }
                 return null;
             }
@@ -103,9 +102,7 @@ public abstract class AWTScrollDriver extends AbstractScrollDriver {
                 Point clickPoint = getClickPoint(oper, direction, orientation);
                 if (clickPoint != null) {
                     MouseDriver mdriver = DriverManager.getMouseDriver(oper);
-                    mdriver.releaseMouse(oper, clickPoint.x, clickPoint.y,
-                            Operator.getDefaultMouseButton(),
-                            0);
+                    mdriver.releaseMouse(oper, clickPoint.x, clickPoint.y, Operator.getDefaultMouseButton(), 0);
                 }
                 return null;
             }
@@ -118,17 +115,14 @@ public abstract class AWTScrollDriver extends AbstractScrollDriver {
     }
 
     @Override
-    protected void drop(ComponentOperator oper, Point pnt) {
-    }
+    protected void drop(ComponentOperator oper, Point pnt) {}
 
     @Override
-    protected void drag(ComponentOperator oper, Point pnt) {
-    }
+    protected void drag(ComponentOperator oper, Point pnt) {}
 
     @Override
     protected Timeout getScrollDeltaTimeout(ComponentOperator oper) {
-        return (oper.getTimeouts().
-                create("ScrollbarOperator.DragAndDropScrollingDelta"));
+        return (oper.getTimeouts().create("ScrollbarOperator.DragAndDropScrollingDelta"));
     }
 
     @Override

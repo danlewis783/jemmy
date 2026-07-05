@@ -25,9 +25,7 @@
 package org.netbeans.jemmy.operators;
 
 import java.awt.Container;
-
 import javax.swing.JRadioButton;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.TimeoutExpiredException;
 
@@ -64,9 +62,7 @@ public class JRadioButtonOperator extends JToggleButtonOperator {
      * @param index an index between appropriate ones.
      */
     public JRadioButtonOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JRadioButton) cont.
-                waitSubComponent(new JRadioButtonFinder(chooser),
-                        index));
+        this((JRadioButton) cont.waitSubComponent(new JRadioButtonFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -91,9 +87,10 @@ public class JRadioButtonOperator extends JToggleButtonOperator {
      * @throws TimeoutExpiredException
      */
     public JRadioButtonOperator(ContainerOperator<?> cont, String text, int index) {
-        this((JRadioButton) waitComponent(cont,
-                new JRadioButtonFinder(new AbstractButtonOperator.AbstractButtonByLabelFinder(text,
-                        cont.getComparator())),
+        this((JRadioButton) waitComponent(
+                cont,
+                new JRadioButtonFinder(
+                        new AbstractButtonOperator.AbstractButtonByLabelFinder(text, cont.getComparator())),
                 index));
         copyEnvironment(cont);
     }
@@ -120,9 +117,7 @@ public class JRadioButtonOperator extends JToggleButtonOperator {
      * @throws TimeoutExpiredException
      */
     public JRadioButtonOperator(ContainerOperator<?> cont, int index) {
-        this((JRadioButton) waitComponent(cont,
-                new JRadioButtonFinder(),
-                index));
+        this((JRadioButton) waitComponent(cont, new JRadioButtonFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -172,9 +167,10 @@ public class JRadioButtonOperator extends JToggleButtonOperator {
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public static JRadioButton findJRadioButton(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return (findJRadioButton(cont,
-                new JRadioButtonFinder(new AbstractButtonOperator.AbstractButtonByLabelFinder(text,
-                        new DefaultStringComparator(ce, ccs))),
+        return (findJRadioButton(
+                cont,
+                new JRadioButtonFinder(new AbstractButtonOperator.AbstractButtonByLabelFinder(
+                        text, new DefaultStringComparator(ce, ccs))),
                 index));
     }
 
@@ -230,9 +226,10 @@ public class JRadioButtonOperator extends JToggleButtonOperator {
      * @throws TimeoutExpiredException
      */
     public static JRadioButton waitJRadioButton(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return (waitJRadioButton(cont,
-                new JRadioButtonFinder(new AbstractButtonOperator.AbstractButtonByLabelFinder(text,
-                        new DefaultStringComparator(ce, ccs))),
+        return (waitJRadioButton(
+                cont,
+                new JRadioButtonFinder(new AbstractButtonOperator.AbstractButtonByLabelFinder(
+                        text, new DefaultStringComparator(ce, ccs))),
                 index));
     }
 

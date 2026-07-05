@@ -35,7 +35,6 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Objects;
-
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.QueueTool.QueueAction;
@@ -75,8 +74,7 @@ public class Dumper {
      * @param fileName a file to write to.
      * @throws FileNotFoundException
      */
-    public static void printDTD(String fileName)
-            throws FileNotFoundException {
+    public static void printDTD(String fileName) throws FileNotFoundException {
         printDTD(new PrintWriter(new FileOutputStream(fileName)));
     }
 
@@ -144,8 +142,7 @@ public class Dumper {
      * @param fileName a file to write to.
      * @throws FileNotFoundException
      */
-    public static void dumpComponent(Component comp, String fileName)
-            throws FileNotFoundException {
+    public static void dumpComponent(Component comp, String fileName) throws FileNotFoundException {
         dumpComponent(comp, new PrintWriter(new FileOutputStream(fileName)));
     }
 
@@ -186,13 +183,11 @@ public class Dumper {
      * @param fileName a file to write to.
      * @throws FileNotFoundException
      */
-    public static void dumpAll(String fileName)
-            throws FileNotFoundException {
+    public static void dumpAll(String fileName) throws FileNotFoundException {
         dumpAll(new PrintWriter(new FileOutputStream(fileName)));
     }
 
-    public static void dumpAll(String fileName, DumpController listener)
-            throws FileNotFoundException {
+    public static void dumpAll(String fileName, DumpController listener) throws FileNotFoundException {
         dumpAll(new PrintWriter(new FileOutputStream(fileName)), listener);
     }
 
@@ -223,7 +218,7 @@ public class Dumper {
     }
 
     private static void dumpCommon(PrintWriter writer, String tab) {
-        //dump common info
+        // dump common info
         printTagStart(writer, "common", tab);
         printEmptyTagOpening(writer, "property", tab + tabIncrease);
         writer.print(" name=\""
@@ -238,11 +233,11 @@ public class Dumper {
         printTagEnd(writer, "common", tab);
     }
 
-    private static void dumpSome(String tag, Component[] comps, PrintWriter writer, String tab, DumpController listener) {
+    private static void dumpSome(
+            String tag, Component[] comps, PrintWriter writer, String tab, DumpController listener) {
         if (comps.length > 0 || tag.equals("dump")) {
             printTagStart(writer, tag, tab);
-            if(tag.equals("dump"))
-                dumpCommon(writer, tab + tabIncrease);
+            if (tag.equals("dump")) dumpCommon(writer, tab + tabIncrease);
             if (comps.length > 0)
                 for (Component comp : comps) {
                     dumpOne(comp, writer, tab + tabIncrease, listener);
@@ -252,15 +247,14 @@ public class Dumper {
     }
 
     private static void dumpOne(Component component, PrintWriter writer, String tab, DumpController listener) {
-        //whether to dump at all
+        // whether to dump at all
         boolean toDump = listener.onComponentDump(component);
         if (toDump) {
             try {
                 Operator oper = Operator.createOperator(component);
                 Hashtable<String, Object> componentDump = oper.getDump();
                 printTagOpening(writer, "component", tab);
-                writer.print(" operator=\""
-                        + oper.getClass().getName() + "\"");
+                writer.print(" operator=\"" + oper.getClass().getName() + "\"");
                 printTagClosing(writer, "component");
                 Object[] keys = componentDump.keySet().toArray();
                 Arrays.sort(keys);
@@ -270,9 +264,7 @@ public class Dumper {
                     value = ((String) componentDump.get(key));
                     if (listener.onPropertyDump(component, name, value)) {
                         printEmptyTagOpening(writer, "property", tab + tabIncrease);
-                        writer.print(" name=\""
-                                + escape(name) + "\" value=\""
-                                + escape(value) + "\"");
+                        writer.print(" name=\"" + escape(name) + "\" value=\"" + escape(value) + "\"");
                         printEmptyTagClosing(writer, "property");
                     }
                 }
@@ -280,8 +272,7 @@ public class Dumper {
                 JemmyProperties.getCurrentOutput().printStackTrace(e);
                 printTagStart(writer, "component", tab);
                 printEmptyTagOpening(writer, "exception", tab + tabIncrease);
-                writer.print(" toString=\""
-                        + escape(e.toString()) + "\"");
+                writer.print(" toString=\"" + escape(e.toString()) + "\"");
                 printEmptyTagClosing(writer, "exception");
             }
         }
@@ -321,7 +312,9 @@ public class Dumper {
     }
 
     public static String escape(String str) {
-        return str.replaceAll("&", "&amp;").replaceAll("<", "&lt;")
-                .replaceAll(">", "&gt;").replaceAll("\"", "&quot;");
+        return str.replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll("\"", "&quot;");
     }
 }

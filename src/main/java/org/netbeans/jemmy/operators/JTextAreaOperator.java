@@ -26,10 +26,8 @@ package org.netbeans.jemmy.operators;
 
 import java.awt.Container;
 import java.util.Hashtable;
-
 import javax.swing.JTextArea;
 import javax.swing.text.BadLocationException;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.Outputable;
@@ -61,8 +59,7 @@ import org.netbeans.jemmy.Timeouts;
  *
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
-public class JTextAreaOperator extends JTextComponentOperator
-        implements Timeoutable, Outputable {
+public class JTextAreaOperator extends JTextComponentOperator implements Timeoutable, Outputable {
 
     /**
      * Identifier for a "column count" property.
@@ -98,9 +95,7 @@ public class JTextAreaOperator extends JTextComponentOperator
      * @param index an index between appropriate ones.
      */
     public JTextAreaOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JTextArea) cont.
-                waitSubComponent(new JTextAreaFinder(chooser),
-                        index));
+        this((JTextArea) cont.waitSubComponent(new JTextAreaFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -125,9 +120,9 @@ public class JTextAreaOperator extends JTextComponentOperator
      * @throws TimeoutExpiredException
      */
     public JTextAreaOperator(ContainerOperator<?> cont, String text, int index) {
-        this((JTextArea) waitComponent(cont,
-                new JTextAreaFinder(new JTextComponentOperator.JTextComponentByTextFinder(text,
-                        cont.getComparator())),
+        this((JTextArea) waitComponent(
+                cont,
+                new JTextAreaFinder(new JTextComponentOperator.JTextComponentByTextFinder(text, cont.getComparator())),
                 index));
         copyEnvironment(cont);
     }
@@ -154,9 +149,7 @@ public class JTextAreaOperator extends JTextComponentOperator
      * @throws TimeoutExpiredException
      */
     public JTextAreaOperator(ContainerOperator<?> cont, int index) {
-        this((JTextArea) waitComponent(cont,
-                new JTextAreaFinder(),
-                index));
+        this((JTextArea) waitComponent(cont, new JTextAreaFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -206,9 +199,10 @@ public class JTextAreaOperator extends JTextComponentOperator
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public static JTextArea findJTextArea(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return (findJTextArea(cont,
-                new JTextAreaFinder(new JTextComponentOperator.JTextComponentByTextFinder(text,
-                        new DefaultStringComparator(ce, ccs))),
+        return (findJTextArea(
+                cont,
+                new JTextAreaFinder(new JTextComponentOperator.JTextComponentByTextFinder(
+                        text, new DefaultStringComparator(ce, ccs))),
                 index));
     }
 
@@ -264,9 +258,10 @@ public class JTextAreaOperator extends JTextComponentOperator
      * @throws TimeoutExpiredException
      */
     public static JTextArea waitJTextArea(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return (waitJTextArea(cont,
-                new JTextAreaFinder(new JTextComponentOperator.JTextComponentByTextFinder(text,
-                        new DefaultStringComparator(ce, ccs))),
+        return (waitJTextArea(
+                cont,
+                new JTextAreaFinder(new JTextComponentOperator.JTextComponentByTextFinder(
+                        text, new DefaultStringComparator(ce, ccs))),
                 index));
     }
 
@@ -316,8 +311,7 @@ public class JTextAreaOperator extends JTextComponentOperator
      * this operator type.
      */
     @Deprecated
-    public void usePageNavigationKeys(boolean yesOrNo) {
-    }
+    public void usePageNavigationKeys(boolean yesOrNo) {}
 
     /**
      * Moves caret to line.
@@ -329,8 +323,7 @@ public class JTextAreaOperator extends JTextComponentOperator
      * @throws TimeoutExpiredException
      */
     public void changeCaretRow(int row) {
-        changeCaretPosition(row, getCaretPosition()
-                - getLineStartOffset(getLineOfOffset(getCaretPosition())));
+        changeCaretPosition(row, getCaretPosition() - getLineStartOffset(getLineOfOffset(getCaretPosition())));
     }
 
     /**
@@ -346,10 +339,8 @@ public class JTextAreaOperator extends JTextComponentOperator
     public void changeCaretPosition(int row, int column) {
         int startOffset = getLineStartOffset(row);
         int endOffset = getLineEndOffset(row);
-        super.changeCaretPosition(getLineStartOffset(row)
-                + ((column <= (endOffset - startOffset))
-                        ? column
-                        : (endOffset - startOffset)));
+        super.changeCaretPosition(
+                getLineStartOffset(row) + ((column <= (endOffset - startOffset)) ? column : (endOffset - startOffset)));
     }
 
     /**
@@ -380,8 +371,7 @@ public class JTextAreaOperator extends JTextComponentOperator
      * @see #selectLines(int, int)
      * @throws TimeoutExpiredException
      */
-    public void selectText(int startRow, int startColumn,
-            int endRow, int endColumn) {
+    public void selectText(int startRow, int startColumn, int endRow, int endColumn) {
         int startPos = 0;
         try {
             startPos = getLineStartOffset(startRow) + startColumn;
@@ -429,7 +419,7 @@ public class JTextAreaOperator extends JTextComponentOperator
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code JTextArea.append(String)} through queue
      */
@@ -634,7 +624,7 @@ public class JTextAreaOperator extends JTextComponentOperator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Checks component type.

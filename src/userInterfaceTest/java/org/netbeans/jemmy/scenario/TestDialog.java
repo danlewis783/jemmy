@@ -24,9 +24,11 @@
  */
 package org.netbeans.jemmy.scenario;
 
-import javax.swing.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 /**
  * Created by shura on 6/30/17.
@@ -52,18 +54,24 @@ public class TestDialog extends JDialog {
     public void addDisposeListener() {
         addWindowListener(new WindowListener() {
             public void windowActivated(WindowEvent e) {}
+
             public void windowClosed(WindowEvent e) {}
+
             public void windowClosing(WindowEvent e) {
                 dispose();
                 try {
                     finalize();
-                } catch(Throwable ex) {
+                } catch (Throwable ex) {
                     ex.printStackTrace();
                 }
             }
+
             public void windowDeactivated(WindowEvent e) {}
+
             public void windowDeiconified(WindowEvent e) {}
+
             public void windowIconified(WindowEvent e) {}
+
             public void windowOpened(WindowEvent e) {}
         });
     }

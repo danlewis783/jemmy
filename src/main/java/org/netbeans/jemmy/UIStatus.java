@@ -24,10 +24,9 @@
  */
 package org.netbeans.jemmy;
 
-import org.netbeans.jemmy.operators.Operator;
-
 import java.awt.Point;
 import java.util.Arrays;
+import org.netbeans.jemmy.operators.Operator;
 
 public class UIStatus {
     /**
@@ -36,10 +35,12 @@ public class UIStatus {
      * @see org.netbeans.jemmy.util.Dumper#dumpAll(String)
      */
     public static final String LAST_MOUSE_MOVE_DPROP = "Last mouse move location";
+
     public static final String LAST_MOUSE_MOVE_OPERATOR_DPROP = "Last operator moved the mouse";
 
     private static volatile Point lastMouseMove;
     private static volatile Operator lastMouseMoveOperator;
+
     public static void mouseMoved(Operator oper, Point location) {
         Arrays.stream(Thread.currentThread().getStackTrace()).forEach(System.out::println);
         lastMouseMoveOperator = oper;

@@ -35,7 +35,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.beans.VetoableChangeListener;
 import java.util.Hashtable;
-
 import javax.accessibility.AccessibleContext;
 import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
@@ -44,7 +43,6 @@ import javax.swing.JToolTip;
 import javax.swing.KeyStroke;
 import javax.swing.border.Border;
 import javax.swing.event.AncestorListener;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.Outputable;
@@ -65,8 +63,7 @@ import org.netbeans.jemmy.Timeouts;
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
-public class JComponentOperator extends ContainerOperator<Container>
-        implements Timeoutable, Outputable {
+public class JComponentOperator extends ContainerOperator<Container> implements Timeoutable, Outputable {
 
     /**
      * Identifier for a "tooltip text" property.
@@ -74,12 +71,13 @@ public class JComponentOperator extends ContainerOperator<Container>
      * @see #getDump
      */
     public static final String TOOLTIP_TEXT_DPROP = "Tooltip text";
+
     public static final String A11Y_DATA = "Accessible data (yes/no)";
     public static final String A11Y_NAME_DPROP = "Accessible name";
     public static final String A11Y_DESCRIPTION_DPROP = "Accessible decription";
 
-    private final static long WAIT_TOOL_TIP_TIMEOUT = 10000;
-    private final static long SHOW_TOOL_TIP_TIMEOUT = 0;
+    private static final long WAIT_TOOL_TIP_TIMEOUT = 10000;
+    private static final long SHOW_TOOL_TIP_TIMEOUT = 0;
 
     private Timeouts timeouts;
     private TestOut output;
@@ -101,9 +99,7 @@ public class JComponentOperator extends ContainerOperator<Container>
      * @param index an index between appropriate ones.
      */
     public JComponentOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JComponent) cont.
-                waitSubComponent(new JComponentFinder(chooser),
-                        index));
+        this((JComponent) cont.waitSubComponent(new JComponentFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -126,9 +122,8 @@ public class JComponentOperator extends ContainerOperator<Container>
      * @throws TimeoutExpiredException
      */
     public JComponentOperator(ContainerOperator<?> cont, int index) {
-        this((JComponent) waitComponent(cont,
-                new JComponentFinder(ComponentSearcher.getTrueChooser("Any JComponent")),
-                index));
+        this((JComponent)
+                waitComponent(cont, new JComponentFinder(ComponentSearcher.getTrueChooser("Any JComponent")), index));
         copyEnvironment(cont);
     }
 
@@ -178,7 +173,8 @@ public class JComponentOperator extends ContainerOperator<Container>
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public static JComponent findJComponent(Container cont, String toolTipText, boolean ce, boolean ccs, int index) {
-        return findJComponent(cont, new JComponentByTipFinder(toolTipText, new DefaultStringComparator(ce, ccs)), index);
+        return findJComponent(
+                cont, new JComponentByTipFinder(toolTipText, new DefaultStringComparator(ce, ccs)), index);
     }
 
     /**
@@ -233,7 +229,8 @@ public class JComponentOperator extends ContainerOperator<Container>
      * @throws TimeoutExpiredException
      */
     public static JComponent waitJComponent(Container cont, String toolTipText, boolean ce, boolean ccs, int index) {
-        return waitJComponent(cont, new JComponentByTipFinder(toolTipText, new DefaultStringComparator(ce, ccs)), index);
+        return waitJComponent(
+                cont, new JComponentByTipFinder(toolTipText, new DefaultStringComparator(ce, ccs)), index);
     }
 
     /**
@@ -281,15 +278,13 @@ public class JComponentOperator extends ContainerOperator<Container>
     @Override
     public int getCenterXForClick() {
         Rectangle rect = getVisibleRect();
-        return ((int) rect.getX()
-                + (int) rect.getWidth() / 2);
+        return ((int) rect.getX() + (int) rect.getWidth() / 2);
     }
 
     @Override
     public int getCenterYForClick() {
         Rectangle rect = getVisibleRect();
-        return ((int) rect.getY()
-                + (int) rect.getHeight() / 2);
+        return ((int) rect.getY() + (int) rect.getHeight() / 2);
     }
 
     /**
@@ -300,8 +295,7 @@ public class JComponentOperator extends ContainerOperator<Container>
      */
     public JToolTip showToolTip() {
         enterMouse();
-        moveMouse(getCenterXForClick(),
-                getCenterYForClick());
+        moveMouse(getCenterXForClick(), getCenterYForClick());
         return waitToolTip();
     }
 
@@ -322,8 +316,7 @@ public class JComponentOperator extends ContainerOperator<Container>
             resultComp = getContainer(new ComponentChooser() {
                 @Override
                 public boolean checkComponent(Component comp) {
-                    return (comp instanceof Window
-                            || comp instanceof JInternalFrame);
+                    return (comp instanceof Window || comp instanceof JInternalFrame);
                 }
 
                 @Override
@@ -348,7 +341,7 @@ public class JComponentOperator extends ContainerOperator<Container>
         if (getToolTipText() != null) {
             result.put(TOOLTIP_TEXT_DPROP, getToolTipText());
         }
-        //System.out.println("Dump a11y = " + System.getProperty("jemmy.dump.a11y"));
+        // System.out.println("Dump a11y = " + System.getProperty("jemmy.dump.a11y"));
         if (System.getProperty("jemmy.dump.a11y") != null
                 && System.getProperty("jemmy.dump.a11y").equals("on")) {
             AccessibleContext a11y = getSource().getAccessibleContext();
@@ -366,7 +359,7 @@ public class JComponentOperator extends ContainerOperator<Container>
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code JComponent.addAncestorListener(AncestorListener)}
      * through queue
@@ -852,7 +845,8 @@ public class JComponentOperator extends ContainerOperator<Container>
      * {@code JComponent.registerKeyboardAction(ActionListener, String, KeyStroke, int)}
      * through queue
      */
-    public void registerKeyboardAction(final ActionListener actionListener, final String string, final KeyStroke keyStroke, final int i) {
+    public void registerKeyboardAction(
+            final ActionListener actionListener, final String string, final KeyStroke keyStroke, final int i) {
         runMapping(new MapVoidAction("registerKeyboardAction") {
             @Override
             public void map() {
@@ -1144,7 +1138,7 @@ public class JComponentOperator extends ContainerOperator<Container>
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Allows to find component by tooltip.
@@ -1179,8 +1173,7 @@ public class JComponentOperator extends ContainerOperator<Container>
         public boolean checkComponent(Component comp) {
             if (comp instanceof JComponent) {
                 if (((JComponent) comp).getToolTipText() != null) {
-                    return (comparator.equals(((JComponent) comp).getToolTipText(),
-                            label));
+                    return (comparator.equals(((JComponent) comp).getToolTipText(), label));
                 }
             }
             return false;
@@ -1218,5 +1211,4 @@ public class JComponentOperator extends ContainerOperator<Container>
             super(JComponent.class);
         }
     }
-
 }

@@ -31,7 +31,6 @@ import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.awt.Point;
 import java.awt.event.ContainerListener;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.JemmyException;
@@ -53,10 +52,9 @@ import org.netbeans.jemmy.Waiter;
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
-public class ContainerOperator<T extends Container> extends ComponentOperator
-        implements Timeoutable, Outputable {
+public class ContainerOperator<T extends Container> extends ComponentOperator implements Timeoutable, Outputable {
 
-    private final static long WAIT_SUBCOMPONENT_TIMEOUT = 60000;
+    private static final long WAIT_SUBCOMPONENT_TIMEOUT = 60000;
 
     private ComponentSearcher searcher;
     private Timeouts timeouts;
@@ -81,9 +79,7 @@ public class ContainerOperator<T extends Container> extends ComponentOperator
      * @param index an index between appropriate ones.
      */
     public ContainerOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((Container) cont.
-                waitSubComponent(new ContainerFinder(chooser),
-                        index));
+        this((Container) cont.waitSubComponent(new ContainerFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -106,9 +102,7 @@ public class ContainerOperator<T extends Container> extends ComponentOperator
      * @throws TimeoutExpiredException
      */
     public ContainerOperator(ContainerOperator<?> cont, int index) {
-        this((Container) waitComponent(cont,
-                new ContainerFinder(),
-                index));
+        this((Container) waitComponent(cont, new ContainerFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -154,7 +148,8 @@ public class ContainerOperator<T extends Container> extends ComponentOperator
      * @return Container instance or null if component was not found.
      */
     public static Container findContainer(Container cont, int index) {
-        return findContainer(cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th Container instance"), index);
+        return findContainer(
+                cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th Container instance"), index);
     }
 
     /**
@@ -175,8 +170,7 @@ public class ContainerOperator<T extends Container> extends ComponentOperator
      * @return Container instance or null if component was not found.
      */
     public static Container findContainerUnder(Component comp, ComponentChooser chooser) {
-        return (new ComponentOperator(comp).
-                getContainer(new ContainerFinder(chooser)));
+        return (new ComponentOperator(comp).getContainer(new ContainerFinder(chooser)));
     }
 
     /**
@@ -223,7 +217,8 @@ public class ContainerOperator<T extends Container> extends ComponentOperator
      * @throws TimeoutExpiredException
      */
     public static Container waitContainer(Container cont, int index) {
-        return waitContainer(cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th Container instance"), index);
+        return waitContainer(
+                cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th Container instance"), index);
     }
 
     /**
@@ -271,8 +266,7 @@ public class ContainerOperator<T extends Container> extends ComponentOperator
      * @return Component instance.
      */
     public Component findSubComponent(ComponentChooser chooser, int index) {
-        getOutput().printLine("Looking for \"" + chooser.getDescription()
-                + "\" subcomponent");
+        getOutput().printLine("Looking for \"" + chooser.getDescription() + "\" subcomponent");
         return searcher.findComponent(chooser, index);
     }
 
@@ -294,8 +288,7 @@ public class ContainerOperator<T extends Container> extends ComponentOperator
      * @return Component instance.
      */
     public Component waitSubComponent(final ComponentChooser chooser, final int index) {
-        getOutput().printLine("Waiting for \"" + chooser.getDescription()
-                + "\" subcomponent");
+        getOutput().printLine("Waiting for \"" + chooser.getDescription() + "\" subcomponent");
         final ComponentSearcher searcher = new ComponentSearcher((Container) getSource());
         searcher.setOutput(getOutput().createErrorOutput());
         Waiter<Component, Void> waiter = new Waiter<>(new Waitable<Component, Void>() {
@@ -306,8 +299,7 @@ public class ContainerOperator<T extends Container> extends ComponentOperator
 
             @Override
             public String getDescription() {
-                return ("Wait for \"" + chooser.getDescription()
-                        + "\" subcomponent to be displayed");
+                return ("Wait for \"" + chooser.getDescription() + "\" subcomponent to be displayed");
             }
 
             @Override
@@ -320,8 +312,8 @@ public class ContainerOperator<T extends Container> extends ComponentOperator
         try {
             return waiter.waitAction(null);
         } catch (InterruptedException e) {
-            throw (new JemmyException("Waiting for \"" + chooser.getDescription()
-                    + "\" component has been interrupted", e));
+            throw (new JemmyException(
+                    "Waiting for \"" + chooser.getDescription() + "\" component has been interrupted", e));
         }
     }
 
@@ -357,7 +349,7 @@ public class ContainerOperator<T extends Container> extends ComponentOperator
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code Container.add(Component)} through queue
      */
@@ -612,7 +604,7 @@ public class ContainerOperator<T extends Container> extends ComponentOperator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Checks component type.

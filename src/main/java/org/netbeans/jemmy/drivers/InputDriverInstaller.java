@@ -65,9 +65,7 @@ public class InputDriverInstaller {
      * robot drivers.
      */
     public InputDriverInstaller(boolean useEventDrivers) {
-        this(useEventDrivers,
-                JemmyProperties.getCurrentTimeouts().
-                create("EventDispatcher.RobotAutoDelay"));
+        this(useEventDrivers, JemmyProperties.getCurrentTimeouts().create("EventDispatcher.RobotAutoDelay"));
     }
 
     /**
@@ -90,8 +88,7 @@ public class InputDriverInstaller {
      * method.
      */
     public InputDriverInstaller(Timeout robotAutoDelay) {
-        this(true,
-                robotAutoDelay);
+        this(true, robotAutoDelay);
     }
 
     /**
@@ -113,32 +110,27 @@ public class InputDriverInstaller {
         if (useEventDrivers) {
             LightDriver keyE = new KeyEventDriver();
             LightDriver mouseE = new MouseEventDriver();
-            DriverManager.removeDriver(DriverManager.KEY_DRIVER_ID,
-                    keyE.getSupported());
-            DriverManager.removeDriver(DriverManager.MOUSE_DRIVER_ID,
-                    mouseE.getSupported());
+            DriverManager.removeDriver(DriverManager.KEY_DRIVER_ID, keyE.getSupported());
+            DriverManager.removeDriver(DriverManager.MOUSE_DRIVER_ID, mouseE.getSupported());
             DriverManager.setDriver(DriverManager.KEY_DRIVER_ID, keyE);
             DriverManager.setDriver(DriverManager.MOUSE_DRIVER_ID, mouseE);
             try {
-                String[] awtOperators
-                        = {
-                            "org.netbeans.jemmy.operators.ButtonOperator",
-                            "org.netbeans.jemmy.operators.CheckboxOperator",
-                            "org.netbeans.jemmy.operators.ChoiceOperator",
-                            "org.netbeans.jemmy.operators.LabelOperator",
-                            "org.netbeans.jemmy.operators.ListOperator",
-                            "org.netbeans.jemmy.operators.ScrollPaneOperator",
-                            "org.netbeans.jemmy.operators.ScrollbarOperator",
-                            "org.netbeans.jemmy.operators.TextAreaOperator",
-                            "org.netbeans.jemmy.operators.TextComponentOperator",
-                            "org.netbeans.jemmy.operators.TextFieldOperator"
-                        };
+                String[] awtOperators = {
+                    "org.netbeans.jemmy.operators.ButtonOperator",
+                    "org.netbeans.jemmy.operators.CheckboxOperator",
+                    "org.netbeans.jemmy.operators.ChoiceOperator",
+                    "org.netbeans.jemmy.operators.LabelOperator",
+                    "org.netbeans.jemmy.operators.ListOperator",
+                    "org.netbeans.jemmy.operators.ScrollPaneOperator",
+                    "org.netbeans.jemmy.operators.ScrollbarOperator",
+                    "org.netbeans.jemmy.operators.TextAreaOperator",
+                    "org.netbeans.jemmy.operators.TextComponentOperator",
+                    "org.netbeans.jemmy.operators.TextFieldOperator"
+                };
                 LightDriver keyR = new KeyRobotDriver(robotAutoDelay, awtOperators);
                 LightDriver mouseR = new MouseRobotDriver(robotAutoDelay, awtOperators);
-                DriverManager.removeDriver(DriverManager.KEY_DRIVER_ID,
-                        keyR.getSupported());
-                DriverManager.removeDriver(DriverManager.MOUSE_DRIVER_ID,
-                        mouseR.getSupported());
+                DriverManager.removeDriver(DriverManager.KEY_DRIVER_ID, keyR.getSupported());
+                DriverManager.removeDriver(DriverManager.MOUSE_DRIVER_ID, mouseR.getSupported());
                 DriverManager.setDriver(DriverManager.KEY_DRIVER_ID, keyR);
                 DriverManager.setDriver(DriverManager.MOUSE_DRIVER_ID, mouseR);
             } catch (JemmyException e) {
@@ -149,10 +141,8 @@ public class InputDriverInstaller {
         } else {
             LightDriver keyR = new KeyRobotDriver(robotAutoDelay);
             LightDriver mouseR = new MouseRobotDriver(robotAutoDelay, smooth);
-            DriverManager.removeDriver(DriverManager.KEY_DRIVER_ID,
-                    keyR.getSupported());
-            DriverManager.removeDriver(DriverManager.MOUSE_DRIVER_ID,
-                    mouseR.getSupported());
+            DriverManager.removeDriver(DriverManager.KEY_DRIVER_ID, keyR.getSupported());
+            DriverManager.removeDriver(DriverManager.MOUSE_DRIVER_ID, mouseR.getSupported());
             DriverManager.setDriver(DriverManager.KEY_DRIVER_ID, keyR);
             DriverManager.setDriver(DriverManager.MOUSE_DRIVER_ID, mouseR);
         }

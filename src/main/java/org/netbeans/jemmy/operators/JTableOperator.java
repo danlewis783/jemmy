@@ -32,7 +32,6 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.EventObject;
 import java.util.Hashtable;
-
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -48,7 +47,6 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.JemmyException;
@@ -79,8 +77,7 @@ import org.netbeans.jemmy.util.EmptyVisualizer;
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
-public class JTableOperator extends JComponentOperator
-        implements Outputable, Timeoutable {
+public class JTableOperator extends JComponentOperator implements Outputable, Timeoutable {
 
     /**
      * Identifier for a "cell" property.
@@ -124,7 +121,7 @@ public class JTableOperator extends JComponentOperator
      */
     public static final String ROW_COUNT_DPROP = "Row count";
 
-    private final static long WAIT_EDITING_TIMEOUT = 60000;
+    private static final long WAIT_EDITING_TIMEOUT = 60000;
 
     private TestOut output;
     private Timeouts timeouts;
@@ -149,9 +146,7 @@ public class JTableOperator extends JComponentOperator
      * @param index an index between appropriate ones.
      */
     public JTableOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JTable) cont.
-                waitSubComponent(new JTableFinder(chooser),
-                        index));
+        this((JTable) cont.waitSubComponent(new JTableFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -178,10 +173,7 @@ public class JTableOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public JTableOperator(ContainerOperator<?> cont, String text, int row, int column, int index) {
-        this((JTable) waitComponent(cont,
-                new JTableByCellFinder(text, row, column,
-                        cont.getComparator()),
-                index));
+        this((JTable) waitComponent(cont, new JTableByCellFinder(text, row, column, cont.getComparator()), index));
         copyEnvironment(cont);
     }
 
@@ -236,9 +228,7 @@ public class JTableOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public JTableOperator(ContainerOperator<?> cont, int index) {
-        this((JTable) waitComponent(cont,
-                new JTableFinder(),
-                index));
+        this((JTable) waitComponent(cont, new JTableFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -254,7 +244,7 @@ public class JTableOperator extends JComponentOperator
     }
 
     ////////////////////////////////////////////////////////
-    //Static finds                                        //
+    // Static finds                                        //
     ////////////////////////////////////////////////////////
     /**
      * Searches JTable in container.
@@ -293,7 +283,8 @@ public class JTableOperator extends JComponentOperator
      * @return JTable instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JTable findJTable(Container cont, String text, boolean ce, boolean ccs, int row, int column, int index) {
+    public static JTable findJTable(
+            Container cont, String text, boolean ce, boolean ccs, int row, int column, int index) {
         return findJTable(cont, new JTableByCellFinder(text, row, column, new DefaultStringComparator(ce, ccs)), index);
     }
 
@@ -354,7 +345,8 @@ public class JTableOperator extends JComponentOperator
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @throws TimeoutExpiredException
      */
-    public static JTable waitJTable(Container cont, String text, boolean ce, boolean ccs, int row, int column, int index) {
+    public static JTable waitJTable(
+            Container cont, String text, boolean ce, boolean ccs, int row, int column, int index) {
         return waitJTable(cont, new JTableByCellFinder(text, row, column, new DefaultStringComparator(ce, ccs)), index);
     }
 
@@ -381,7 +373,7 @@ public class JTableOperator extends JComponentOperator
     }
 
     ////////////////////////////////////////////////////////
-    //Environment                                         //
+    // Environment                                         //
     ////////////////////////////////////////////////////////
     @Override
     public void setTimeouts(Timeouts times) {
@@ -408,17 +400,14 @@ public class JTableOperator extends JComponentOperator
     @Override
     public void copyEnvironment(Operator anotherOperator) {
         super.copyEnvironment(anotherOperator);
-        driver
-                = (TableDriver) DriverManager.
-                getDriver(DriverManager.TABLE_DRIVER_ID,
-                        getClass(),
-                        anotherOperator.getProperties());
+        driver = (TableDriver)
+                DriverManager.getDriver(DriverManager.TABLE_DRIVER_ID, getClass(), anotherOperator.getProperties());
     }
 
     ////////////////////////////////////////////////////////
-    //Find methods                                        //
+    // Find methods                                        //
     ////////////////////////////////////////////////////////
-    //text, comparator and index
+    // text, comparator and index
     /**
      * Searches cell coordinates.
      *
@@ -428,9 +417,7 @@ public class JTableOperator extends JComponentOperator
      * @return Point indicating coordinates (x - column, y - row)
      */
     public Point findCell(String text, StringComparator comparator, int index) {
-        return (findCell(new BySubStringTableCellChooser(text,
-                comparator),
-                index));
+        return (findCell(new BySubStringTableCellChooser(text, comparator), index));
     }
 
     /**
@@ -470,7 +457,7 @@ public class JTableOperator extends JComponentOperator
      * @return a row index.
      */
     public int findCellRow(String text, StringComparator comparator, int column, int index) {
-        return findCell(text, comparator, null, new int[]{column}, index).y;
+        return findCell(text, comparator, null, new int[] {column}, index).y;
     }
 
     /**
@@ -496,10 +483,10 @@ public class JTableOperator extends JComponentOperator
      * @return a column index.
      */
     public int findCellColumn(String text, StringComparator comparator, int row, int index) {
-        return findCell(text, comparator, new int[]{row}, null, index).x;
+        return findCell(text, comparator, new int[] {row}, null, index).x;
     }
 
-    //booleans - deprecated
+    // booleans - deprecated
     /**
      * Searches cell row by cell text.
      *
@@ -566,7 +553,7 @@ public class JTableOperator extends JComponentOperator
         return findCellColumn(text, ce, ccs, 0);
     }
 
-    //text and comparator only
+    // text and comparator only
     /**
      * Searches cell row index.
      *
@@ -589,7 +576,7 @@ public class JTableOperator extends JComponentOperator
         return findCellColumn(text, comparator, 0);
     }
 
-    //text and index
+    // text and index
     /**
      * Searches cell row by cell text.
      *
@@ -611,7 +598,7 @@ public class JTableOperator extends JComponentOperator
      * @return a row index.
      */
     public int findCellRow(String text, int column, int index) {
-        return findCell(text, null, new int[]{column}, index).y;
+        return findCell(text, null, new int[] {column}, index).y;
     }
 
     /**
@@ -635,7 +622,7 @@ public class JTableOperator extends JComponentOperator
      * @return a column index.
      */
     public int findCellColumn(String text, int row, int index) {
-        return findCell(text, new int[]{row}, null, index).x;
+        return findCell(text, new int[] {row}, null, index).x;
     }
 
     /**
@@ -662,7 +649,7 @@ public class JTableOperator extends JComponentOperator
         return findCell(new BySubStringTableCellChooser(text, getComparator()), rows, columns, index);
     }
 
-    //text only
+    // text only
     /**
      * Searches first cell row by cell text.
      *
@@ -683,7 +670,7 @@ public class JTableOperator extends JComponentOperator
         return findCellColumn(text, 0);
     }
 
-    //component chooser and index
+    // component chooser and index
     /**
      * Searches cell row by rendered component.
      *
@@ -705,7 +692,7 @@ public class JTableOperator extends JComponentOperator
      * @return a row index.
      */
     public int findCellRow(ComponentChooser chooser, int column, int index) {
-        return findCell(chooser, null, new int[]{column}, index).y;
+        return findCell(chooser, null, new int[] {column}, index).y;
     }
 
     /**
@@ -729,7 +716,7 @@ public class JTableOperator extends JComponentOperator
      * @return a column index.
      */
     public int findCellColumn(ComponentChooser chooser, int row, int index) {
-        return findCell(chooser, new int[]{row}, null, index).x;
+        return findCell(chooser, new int[] {row}, null, index).x;
     }
 
     /**
@@ -756,7 +743,7 @@ public class JTableOperator extends JComponentOperator
         return findCell(new ByRenderedComponentTableCellChooser(chooser), rows, columns, index);
     }
 
-    //component chooser only
+    // component chooser only
     /**
      * Searches cell row by rendered component.
      *
@@ -787,7 +774,7 @@ public class JTableOperator extends JComponentOperator
         return findCell(chooser, 0);
     }
 
-    //cell chooser and index
+    // cell chooser and index
     /**
      * Searches cell row by TableCellChooser.
      *
@@ -809,7 +796,7 @@ public class JTableOperator extends JComponentOperator
      * @return a row index.
      */
     public int findCellRow(TableCellChooser chooser, int column, int index) {
-        return findCell(chooser, null, new int[]{column}, index).y;
+        return findCell(chooser, null, new int[] {column}, index).y;
     }
 
     /**
@@ -833,7 +820,7 @@ public class JTableOperator extends JComponentOperator
      * @return a column index.
      */
     public int findCellColumn(TableCellChooser chooser, int row, int index) {
-        return findCell(chooser, new int[]{row}, null, index).x;
+        return findCell(chooser, new int[] {row}, null, index).x;
     }
 
     /**
@@ -891,7 +878,7 @@ public class JTableOperator extends JComponentOperator
         return new Point(-1, -1);
     }
 
-    //cell chooser only
+    // cell chooser only
     /**
      * Searches cell row by TableCellChooser.
      *
@@ -923,7 +910,7 @@ public class JTableOperator extends JComponentOperator
     }
 
     ////////////////////////////////////////////////////////
-    //Actions                                             //
+    // Actions                                             //
     ////////////////////////////////////////////////////////
     /**
      * Does mouse click on the cell.
@@ -934,11 +921,9 @@ public class JTableOperator extends JComponentOperator
      * @param button a mouse button (value of InputEvent.BUTTON*_MASK field)
      * @param modifiers Modifiers (combination of InputEvent.*_MASK values)
      */
-    public void clickOnCell(final int row, final int column, final int clickCount, final int button, final int modifiers) {
-        output.printLine("Click on ("
-                + Integer.toString(row) + ", "
-                + Integer.toString(column)
-                + ") cell");
+    public void clickOnCell(
+            final int row, final int column, final int clickCount, final int button, final int modifiers) {
+        output.printLine("Click on (" + Integer.toString(row) + ", " + Integer.toString(column) + ") cell");
         output.printGolden("Click on cell");
         makeComponentVisible();
         scrollToCell(row, column);
@@ -1035,12 +1020,11 @@ public class JTableOperator extends JComponentOperator
         output.printTrace("Scroll JTable to (" + Integer.toString(row)
                 + "," + Integer.toString(column) + ") cell\n    : "
                 + toStringSource());
-        output.printGolden("Scroll JTable to (" + Integer.toString(row)
-                + "," + Integer.toString(column) + ")");
+        output.printGolden("Scroll JTable to (" + Integer.toString(row) + "," + Integer.toString(column) + ")");
         makeComponentVisible();
-        //try to find JScrollPane under.
-        JScrollPane scroll = (JScrollPane) getContainer(new JScrollPaneOperator.JScrollPaneFinder(ComponentSearcher.
-                getTrueChooser("JScrollPane")));
+        // try to find JScrollPane under.
+        JScrollPane scroll = (JScrollPane) getContainer(
+                new JScrollPaneOperator.JScrollPaneFinder(ComponentSearcher.getTrueChooser("JScrollPane")));
         if (scroll == null) {
             return;
         }
@@ -1048,11 +1032,8 @@ public class JTableOperator extends JComponentOperator
         scroller.copyEnvironment(this);
         scroller.setVisualizer(new EmptyVisualizer());
         Rectangle rect = getCellRect(row, column, false);
-        scroller.scrollToComponentRectangle(getSource(),
-                (int) rect.getX(),
-                (int) rect.getY(),
-                (int) rect.getWidth(),
-                (int) rect.getHeight());
+        scroller.scrollToComponentRectangle(
+                getSource(), (int) rect.getX(), (int) rect.getY(), (int) rect.getWidth(), (int) rect.getHeight());
     }
 
     /**
@@ -1075,8 +1056,7 @@ public class JTableOperator extends JComponentOperator
     public int findColumn(String name, StringComparator comparator) {
         int columnCount = getColumnCount();
         for (int i = 0; i < columnCount; i++) {
-            if (comparator.equals(getColumnName(i),
-                    name)) {
+            if (comparator.equals(getColumnName(i), name)) {
                 return i;
             }
         }
@@ -1105,14 +1085,12 @@ public class JTableOperator extends JComponentOperator
         output.printGolden("Call popup on cell");
         makeComponentVisible();
         Point point = getPointToClick(row, column);
-        return (JPopupMenuOperator.callPopup(getSource(),
-                (int) point.getX(),
-                (int) point.getY(),
-                getPopupMouseButton()));
+        return (JPopupMenuOperator.callPopup(
+                getSource(), (int) point.getX(), (int) point.getY(), getPopupMouseButton()));
     }
 
     ////////////////////////////////////////////////////////
-    //Gets                                                //
+    // Gets                                                //
     ////////////////////////////////////////////////////////
     /**
      * Ask renderer for component to be displayed.
@@ -1124,13 +1102,9 @@ public class JTableOperator extends JComponentOperator
      * @return Component to be displayed.
      */
     public Component getRenderedComponent(int row, int column, boolean isSelected, boolean cellHasFocus) {
-        return (getCellRenderer(row, column).
-                getTableCellRendererComponent((JTable) getSource(),
-                        getValueAt(row, column),
-                        isSelected,
-                        cellHasFocus,
-                        row,
-                        column));
+        return (getCellRenderer(row, column)
+                .getTableCellRendererComponent(
+                        (JTable) getSource(), getValueAt(row, column), isSelected, cellHasFocus, row, column));
     }
 
     /**
@@ -1143,8 +1117,7 @@ public class JTableOperator extends JComponentOperator
      * @return Component to be displayed.
      */
     public Component getRenderedComponent(int row, int column) {
-        return (getRenderedComponent(row, column, isCellSelected(row, column),
-                false));
+        return (getRenderedComponent(row, column, isCellSelected(row, column), false));
     }
 
     /**
@@ -1156,8 +1129,7 @@ public class JTableOperator extends JComponentOperator
      */
     public Point getPointToClick(int row, int column) {
         Rectangle rect = getCellRect(row, column, false);
-        return (new Point((int) (rect.getX() + rect.getWidth() / 2),
-                (int) (rect.getY() + rect.getHeight() / 2)));
+        return (new Point((int) (rect.getX() + rect.getWidth() / 2), (int) (rect.getY() + rect.getHeight() / 2)));
     }
 
     /**
@@ -1198,15 +1170,17 @@ public class JTableOperator extends JComponentOperator
      * @param column cell column visible index. If -1, selected one is checked.
      */
     public void waitCell(String cellText, int row, int column) {
-        getOutput().printLine("Wait \"" + cellText + "\" text at ("
-                + Integer.toString(row) + ","
-                + Integer.toString(column) + ")"
-                + " position in component \n    : "
-                + toStringSource());
-        getOutput().printGolden("Wait  \"" + cellText + "\" text at ("
-                + Integer.toString(row) + ","
-                + Integer.toString(column) + ")"
-                + " position");
+        getOutput()
+                .printLine("Wait \"" + cellText + "\" text at ("
+                        + Integer.toString(row) + ","
+                        + Integer.toString(column) + ")"
+                        + " position in component \n    : "
+                        + toStringSource());
+        getOutput()
+                .printGolden("Wait  \"" + cellText + "\" text at ("
+                        + Integer.toString(row) + ","
+                        + Integer.toString(column) + ")"
+                        + " position");
         waitState(new JTableByCellFinder(cellText, row, column, getComparator()));
     }
 
@@ -1253,7 +1227,7 @@ public class JTableOperator extends JComponentOperator
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code JTable.addColumn(TableColumn)} through queue
      */
@@ -2544,7 +2518,7 @@ public class JTableOperator extends JComponentOperator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     private Point findCell(String text, boolean ce, boolean ccs, int index) {
         return findCell(text, new DefaultStringComparator(ce, ccs), index);
@@ -2586,10 +2560,7 @@ public class JTableOperator extends JComponentOperator
         @Override
         public boolean checkCell(JTableOperator oper, int row, int column) {
             Object value = ((JTable) oper.getSource()).getModel().getValueAt(row, column);
-            return (comparator.equals((value != null)
-                    ? value.toString()
-                    : null,
-                    subString));
+            return (comparator.equals((value != null) ? value.toString() : null, subString));
         }
 
         @Override
@@ -2696,8 +2667,7 @@ public class JTableOperator extends JComponentOperator
                     if (value == null) {
                         return false;
                     }
-                    return (comparator.equals(value.toString(),
-                            label));
+                    return (comparator.equals(value.toString(), label));
                 }
             }
             return false;
@@ -2705,14 +2675,13 @@ public class JTableOperator extends JComponentOperator
 
         @Override
         public String getDescription() {
-            return ("JTable with text \"" + label + "\" in ("
-                    + row + ", "
-                    + column + ") cell");
+            return ("JTable with text \"" + label + "\" in (" + row + ", " + column + ") cell");
         }
 
         @Override
         public String toString() {
-            return "JTableByCellFinder{" + "label=" + label + ", row=" + row + ", column=" + column + ", comparator=" + comparator + '}';
+            return "JTableByCellFinder{" + "label=" + label + ", row=" + row + ", column=" + column + ", comparator="
+                    + comparator + '}';
         }
     }
 
@@ -2753,8 +2722,7 @@ public class JTableOperator extends JComponentOperator
         public Component actionProduced(Void obj) {
             Point pnt = getPointToClick(row, column);
             Component comp = getComponentAt(pnt.x, pnt.y);
-            if (comp != null
-                    && chooser.checkComponent(comp)) {
+            if (comp != null && chooser.checkComponent(comp)) {
                 return comp;
             } else {
                 return null;

@@ -49,8 +49,8 @@ import java.awt.Window;
  */
 public class DialogWaiter extends WindowWaiter implements Timeoutable, Outputable {
 
-    private final static long WAIT_TIME = 60000;
-    private final static long AFTER_WAIT_TIME = 0;
+    private static final long WAIT_TIME = 60000;
+    private static final long AFTER_WAIT_TIME = 0;
 
     private Timeouts timeouts;
     private TestOut output;
@@ -260,10 +260,8 @@ public class DialogWaiter extends WindowWaiter implements Timeoutable, Outputabl
     public void setTimeouts(Timeouts timeouts) {
         this.timeouts = timeouts;
         Timeouts times = timeouts.cloneThis();
-        times.setTimeout("WindowWaiter.WaitWindowTimeout",
-                timeouts.getTimeout("DialogWaiter.WaitDialogTimeout"));
-        times.setTimeout("WindowWaiter.AfterWindowTimeout",
-                timeouts.getTimeout("DialogWaiter.AfterDialogTimeout"));
+        times.setTimeout("WindowWaiter.WaitWindowTimeout", timeouts.getTimeout("DialogWaiter.WaitDialogTimeout"));
+        times.setTimeout("WindowWaiter.AfterWindowTimeout", timeouts.getTimeout("DialogWaiter.AfterDialogTimeout"));
         super.setTimeouts(times);
     }
 
@@ -326,8 +324,7 @@ public class DialogWaiter extends WindowWaiter implements Timeoutable, Outputabl
      * @see org.netbeans.jemmy.WindowWaiter#actionProduced(Object)
      * @exception InterruptedException
      */
-    public Dialog waitDialog(ComponentChooser ch, int index)
-            throws InterruptedException {
+    public Dialog waitDialog(ComponentChooser ch, int index) throws InterruptedException {
         setTimeouts(timeouts);
         return (Dialog) waitWindow(new DialogSubChooser(ch), index);
     }
@@ -346,8 +343,7 @@ public class DialogWaiter extends WindowWaiter implements Timeoutable, Outputabl
      * @see org.netbeans.jemmy.WindowWaiter#actionProduced(Object)
      * @exception InterruptedException
      */
-    public Dialog waitDialog(ComponentChooser ch)
-            throws InterruptedException {
+    public Dialog waitDialog(ComponentChooser ch) throws InterruptedException {
         return waitDialog(ch, 0);
     }
 
@@ -432,8 +428,7 @@ public class DialogWaiter extends WindowWaiter implements Timeoutable, Outputabl
      * @see org.netbeans.jemmy.WindowWaiter#actionProduced(Object)
      * @exception InterruptedException
      */
-    public Dialog waitDialog(Window owner, ComponentChooser ch, int index)
-            throws InterruptedException {
+    public Dialog waitDialog(Window owner, ComponentChooser ch, int index) throws InterruptedException {
         setTimeouts(timeouts);
         return (Dialog) waitWindow(owner, new DialogSubChooser(ch), index);
     }
@@ -454,8 +449,7 @@ public class DialogWaiter extends WindowWaiter implements Timeoutable, Outputabl
      * @see org.netbeans.jemmy.WindowWaiter#actionProduced(Object)
      * @exception InterruptedException
      */
-    public Dialog waitDialog(Window owner, ComponentChooser ch)
-            throws InterruptedException {
+    public Dialog waitDialog(Window owner, ComponentChooser ch) throws InterruptedException {
         return waitDialog(owner, ch, 0);
     }
 
@@ -486,7 +480,8 @@ public class DialogWaiter extends WindowWaiter implements Timeoutable, Outputabl
      * @see org.netbeans.jemmy.WindowWaiter#actionProduced(Object)
      * @exception InterruptedException
      */
-    public Dialog waitDialog(Window owner, String title, boolean compareExactly, boolean compareCaseSensitive, int index)
+    public Dialog waitDialog(
+            Window owner, String title, boolean compareExactly, boolean compareCaseSensitive, int index)
             throws InterruptedException {
         return waitDialog(owner, new DialogByTitleChooser(title, compareExactly, compareCaseSensitive), index);
     }
@@ -539,8 +534,8 @@ public class DialogWaiter extends WindowWaiter implements Timeoutable, Outputabl
      */
     @Override
     protected String getTimeoutExpiredMessage(long spendedTime) {
-        return ("Dialog \"" + getComponentChooser().getDescription() + "\" has not been opened in "
-                + spendedTime + " milliseconds");
+        return ("Dialog \"" + getComponentChooser().getDescription() + "\" has not been opened in " + spendedTime
+                + " milliseconds");
     }
 
     /**
@@ -557,14 +552,12 @@ public class DialogWaiter extends WindowWaiter implements Timeoutable, Outputabl
         String resultToString;
         if (result instanceof Component) {
             // run toString in dispatch thread
-            resultToString = new QueueTool().invokeSmoothly(
-                    new QueueTool.QueueAction<String>("result.toString()") {
+            resultToString = new QueueTool().invokeSmoothly(new QueueTool.QueueAction<String>("result.toString()") {
                 @Override
                 public String launch() {
                     return result.toString();
                 }
-            }
-            );
+            });
         } else {
             resultToString = result.toString();
         }
@@ -668,7 +661,8 @@ public class DialogWaiter extends WindowWaiter implements Timeoutable, Outputabl
 
         @Override
         public String toString() {
-            return "DialogByTitleChooser{" + "title=" + title + ", compareExactly=" + compareExactly + ", compareCaseSensitive=" + compareCaseSensitive + '}';
+            return "DialogByTitleChooser{" + "title=" + title + ", compareExactly=" + compareExactly
+                    + ", compareCaseSensitive=" + compareCaseSensitive + '}';
         }
     }
 }

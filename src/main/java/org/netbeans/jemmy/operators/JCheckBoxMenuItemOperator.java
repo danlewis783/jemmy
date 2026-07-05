@@ -25,9 +25,7 @@
 package org.netbeans.jemmy.operators;
 
 import java.awt.Component;
-
 import javax.swing.JCheckBoxMenuItem;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyProperties;
 
@@ -66,9 +64,7 @@ public class JCheckBoxMenuItemOperator extends JMenuItemOperator {
      * @param index an index between appropriate ones.
      */
     public JCheckBoxMenuItemOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JCheckBoxMenuItem) cont.
-                waitSubComponent(new JCheckBoxMenuItemFinder(chooser),
-                        index));
+        this((JCheckBoxMenuItem) cont.waitSubComponent(new JCheckBoxMenuItemFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -92,10 +88,8 @@ public class JCheckBoxMenuItemOperator extends JMenuItemOperator {
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public JCheckBoxMenuItemOperator(ContainerOperator<?> cont, String text, int index) {
-        this((JCheckBoxMenuItem) waitComponent(cont,
-                new JCheckBoxMenuItemByLabelFinder(text,
-                        cont.getComparator()),
-                index));
+        this((JCheckBoxMenuItem)
+                waitComponent(cont, new JCheckBoxMenuItemByLabelFinder(text, cont.getComparator()), index));
         setTimeouts(cont.getTimeouts());
         setOutput(cont.getOutput());
     }
@@ -120,9 +114,7 @@ public class JCheckBoxMenuItemOperator extends JMenuItemOperator {
      * @param index Ordinal component index.
      */
     public JCheckBoxMenuItemOperator(ContainerOperator<?> cont, int index) {
-        this((JCheckBoxMenuItem) waitComponent(cont,
-                new JCheckBoxMenuItemFinder(),
-                index));
+        this((JCheckBoxMenuItem) waitComponent(cont, new JCheckBoxMenuItemFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -137,7 +129,7 @@ public class JCheckBoxMenuItemOperator extends JMenuItemOperator {
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code JCheckBoxMenuItem.getState()} through queue
      */
@@ -162,7 +154,7 @@ public class JCheckBoxMenuItemOperator extends JMenuItemOperator {
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Allows to find component by text.
@@ -196,8 +188,7 @@ public class JCheckBoxMenuItemOperator extends JMenuItemOperator {
         public boolean checkComponent(Component comp) {
             if (comp instanceof JCheckBoxMenuItem) {
                 if (((JCheckBoxMenuItem) comp).getText() != null) {
-                    return (comparator.equals(((JCheckBoxMenuItem) comp).getText(),
-                            label));
+                    return (comparator.equals(((JCheckBoxMenuItem) comp).getText(), label));
                 }
             }
             return false;

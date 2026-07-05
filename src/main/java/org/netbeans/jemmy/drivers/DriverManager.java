@@ -98,9 +98,8 @@ public class DriverManager {
      */
     public static final String MENU_DRIVER_ID = DRIVER_ID + "menu";
 
-    //cannot be instantiated!
-    private DriverManager() {
-    }
+    // cannot be instantiated!
+    private DriverManager() {}
 
     /**
      * Searches a driver.
@@ -144,8 +143,8 @@ public class DriverManager {
     public static Object getDriver(String id, Class<?> operatorClass) {
         Object result = getADriver(id, operatorClass, JemmyProperties.getProperties());
         if (result == null) {
-            throw (new JemmyException("No \"" + id + "\" driver registered for "
-                    + operatorClass.getName() + " class!"));
+            throw (new JemmyException(
+                    "No \"" + id + "\" driver registered for " + operatorClass.getName() + " class!"));
         } else {
             return result;
         }
@@ -160,14 +159,14 @@ public class DriverManager {
      * @see #getDriver
      */
     public static void setDriver(String id, Object driver, Class<?> operatorClass) {
-        JemmyProperties.
-                setCurrentProperty(makeID(id, operatorClass), driver);
+        JemmyProperties.setCurrentProperty(makeID(id, operatorClass), driver);
         if (Boolean.getBoolean(DRIVER_ID + "trace_output")) {
-            JemmyProperties.getCurrentOutput().printLine("Installing "
-                    + driver.getClass().getName()
-                    + " drifer for "
-                    + operatorClass.getName()
-                    + " operators.");
+            JemmyProperties.getCurrentOutput()
+                    .printLine("Installing "
+                            + driver.getClass().getName()
+                            + " drifer for "
+                            + operatorClass.getName()
+                            + " operators.");
         }
     }
 
@@ -180,14 +179,14 @@ public class DriverManager {
      * @see #getDriver
      */
     public static void setDriver(String id, Object driver, String operatorClassName) {
-        JemmyProperties.
-                setCurrentProperty(makeID(id, operatorClassName), driver);
+        JemmyProperties.setCurrentProperty(makeID(id, operatorClassName), driver);
         if (Boolean.getBoolean(DRIVER_ID + "trace_output")) {
-            JemmyProperties.getCurrentOutput().printLine("Installing "
-                    + driver.getClass().getName()
-                    + " drifer for "
-                    + operatorClassName
-                    + " operators.");
+            JemmyProperties.getCurrentOutput()
+                    .printLine("Installing "
+                            + driver.getClass().getName()
+                            + " drifer for "
+                            + operatorClassName
+                            + " operators.");
         }
     }
 
@@ -226,12 +225,10 @@ public class DriverManager {
      * @param operatorClass Class to remove driver for.
      */
     public static void removeDriver(String id, Class<?> operatorClass) {
-        JemmyProperties.
-                removeCurrentProperty(makeID(id, operatorClass));
+        JemmyProperties.removeCurrentProperty(makeID(id, operatorClass));
         if (Boolean.getBoolean(DRIVER_ID + "trace_output")) {
-            JemmyProperties.getCurrentOutput().printLine("Uninstalling a drifer for "
-                    + operatorClass.getName()
-                    + " operators.");
+            JemmyProperties.getCurrentOutput()
+                    .printLine("Uninstalling a drifer for " + operatorClass.getName() + " operators.");
         }
     }
 
@@ -242,12 +239,10 @@ public class DriverManager {
      * @param operatorClassName A name of operator class.
      */
     public static void removeDriver(String id, String operatorClassName) {
-        JemmyProperties.
-                removeCurrentProperty(makeID(id, operatorClassName));
+        JemmyProperties.removeCurrentProperty(makeID(id, operatorClassName));
         if (Boolean.getBoolean(DRIVER_ID + "trace_output")) {
-            JemmyProperties.getCurrentOutput().printLine("Uninstalling a drifer for "
-                    + operatorClassName
-                    + " operators.");
+            JemmyProperties.getCurrentOutput()
+                    .printLine("Uninstalling a drifer for " + operatorClassName + " operators.");
         }
     }
 
@@ -284,8 +279,7 @@ public class DriverManager {
         String[] keys = JemmyProperties.getCurrentKeys();
         for (String key : keys) {
             if (key.startsWith(id)) {
-                JemmyProperties.
-                        removeCurrentProperty(key);
+                JemmyProperties.removeCurrentProperty(key);
             }
         }
     }
@@ -776,12 +770,11 @@ public class DriverManager {
         } else if (driver instanceof LightDriver) {
             setDriver(id, (LightDriver) driver);
         } else {
-            throw (new JemmyException("Driver is neither Driver nor LightDriver "
-                    + driver.toString()));
+            throw (new JemmyException("Driver is neither Driver nor LightDriver " + driver.toString()));
         }
     }
 
-    //creates driver id
+    // creates driver id
     private static String makeID(String id, Class<?> operatorClass) {
         return makeID(id, operatorClass.getName());
     }
@@ -790,18 +783,16 @@ public class DriverManager {
         return id + "." + operatorClassName;
     }
 
-    //returns a driver
+    // returns a driver
     private static Object getADriver(String id, Class<?> operatorClass, JemmyProperties props) {
         Class<?> superClass = operatorClass;
         Object drvr;
         do {
-            drvr = props.
-                    getProperty(makeID(id, superClass));
+            drvr = props.getProperty(makeID(id, superClass));
             if (drvr != null) {
                 return drvr;
             }
-        } while (ComponentOperator.class.
-                isAssignableFrom(superClass = superClass.getSuperclass()));
+        } while (ComponentOperator.class.isAssignableFrom(superClass = superClass.getSuperclass()));
         return null;
     }
 

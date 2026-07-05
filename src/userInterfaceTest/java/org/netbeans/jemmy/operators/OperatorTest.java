@@ -30,7 +30,6 @@ import java.awt.Checkbox;
 import java.awt.EventQueue;
 import java.awt.Frame;
 import java.util.concurrent.atomic.AtomicBoolean;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

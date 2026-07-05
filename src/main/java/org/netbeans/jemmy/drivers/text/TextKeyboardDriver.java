@@ -26,7 +26,6 @@ package org.netbeans.jemmy.drivers.text;
 
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-
 import org.netbeans.jemmy.CharBindingMap;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.Timeout;
@@ -107,8 +106,7 @@ public abstract class TextKeyboardDriver extends LightSupportiveDriver implement
     @Override
     public void enterText(ComponentOperator oper, String text) {
         changeText(oper, text);
-        DriverManager.getKeyDriver(oper).pushKey(oper, KeyEvent.VK_ENTER, 0,
-                new Timeout("", 0));
+        DriverManager.getKeyDriver(oper).pushKey(oper, KeyEvent.VK_ENTER, 0, new Timeout("", 0));
     }
 
     /**
@@ -188,8 +186,11 @@ public abstract class TextKeyboardDriver extends LightSupportiveDriver implement
     }
 
     private void push(ComponentOperator oper, NavigationKey key, int preModifiers) {
-        DriverManager.getKeyDriver(oper).
-                pushKey(oper, key.getKeyCode(), key.getModifiers() | preModifiers,
+        DriverManager.getKeyDriver(oper)
+                .pushKey(
+                        oper,
+                        key.getKeyCode(),
+                        key.getModifiers() | preModifiers,
                         oper.getTimeouts().create("ComponentOperator.PushKeyTimeout"));
         getBetweenTimeout(oper).sleep();
     }

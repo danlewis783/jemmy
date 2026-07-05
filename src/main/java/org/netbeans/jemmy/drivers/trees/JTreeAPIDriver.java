@@ -25,7 +25,6 @@
 package org.netbeans.jemmy.drivers.trees;
 
 import javax.swing.text.JTextComponent;
-
 import org.netbeans.jemmy.Timeout;
 import org.netbeans.jemmy.drivers.DriverManager;
 import org.netbeans.jemmy.drivers.LightSupportiveDriver;
@@ -46,12 +45,12 @@ public class JTreeAPIDriver extends LightSupportiveDriver implements TreeDriver 
      * Constructs a JTreeAPIDriver.
      */
     public JTreeAPIDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.JTreeOperator"});
+        super(new String[] {"org.netbeans.jemmy.operators.JTreeOperator"});
     }
 
     @Override
     public void selectItem(ComponentOperator oper, int index) {
-        selectItems(oper, new int[]{index});
+        selectItems(oper, new int[] {index});
     }
 
     @Override
@@ -87,13 +86,13 @@ public class JTreeAPIDriver extends LightSupportiveDriver implements TreeDriver 
         startEditingAndReturnEditor(oper, index, waitEditorTime);
     }
 
-    private JTextComponentOperator startEditingAndReturnEditor(ComponentOperator oper, int index, Timeout waitEditorTime) {
+    private JTextComponentOperator startEditingAndReturnEditor(
+            ComponentOperator oper, int index, Timeout waitEditorTime) {
         checkSupported(oper);
         JTreeOperator toper = (JTreeOperator) oper;
         toper.startEditingAtPath(toper.getPathForRow(index));
-        toper.getTimeouts().
-                setTimeout("ComponentOperator.WaitComponentTimeout", waitEditorTime.getValue());
-        return (new JTextComponentOperator((JTextComponent) toper.
-                waitSubComponent(new JTextComponentOperator.JTextComponentFinder())));
+        toper.getTimeouts().setTimeout("ComponentOperator.WaitComponentTimeout", waitEditorTime.getValue());
+        return (new JTextComponentOperator(
+                (JTextComponent) toper.waitSubComponent(new JTextComponentOperator.JTextComponentFinder())));
     }
 }

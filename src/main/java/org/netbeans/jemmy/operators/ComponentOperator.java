@@ -58,7 +58,7 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.Hashtable;
 import java.util.Locale;
-
+import javax.accessibility.AccessibleContext;
 import org.netbeans.jemmy.CharBindingMap;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
@@ -77,8 +77,6 @@ import org.netbeans.jemmy.drivers.DriverManager;
 import org.netbeans.jemmy.drivers.FocusDriver;
 import org.netbeans.jemmy.drivers.KeyDriver;
 import org.netbeans.jemmy.drivers.MouseDriver;
-
-import javax.accessibility.AccessibleContext;
 
 /**
  * Root class for all component operators.
@@ -114,8 +112,7 @@ import javax.accessibility.AccessibleContext;
  *
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
-public class ComponentOperator extends Operator
-        implements Timeoutable, Outputable {
+public class ComponentOperator extends Operator implements Timeoutable, Outputable {
 
     /**
      * Identifier for a name property.
@@ -226,9 +223,7 @@ public class ComponentOperator extends Operator
      * @param index an index between appropriate ones.
      */
     public ComponentOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this(waitComponent((Container) cont.getSource(),
-                chooser,
-                index, cont.getTimeouts(), cont.getOutput()));
+        this(waitComponent((Container) cont.getSource(), chooser, index, cont.getTimeouts(), cont.getOutput()));
         copyEnvironment(cont);
     }
 
@@ -303,9 +298,8 @@ public class ComponentOperator extends Operator
      * @throws TimeoutExpiredException
      */
     public static Component waitComponent(Container cont, ComponentChooser chooser, int index) {
-        return (waitComponent(cont, chooser, index,
-                JemmyProperties.getCurrentTimeouts(),
-                JemmyProperties.getCurrentOutput()));
+        return (waitComponent(
+                cont, chooser, index, JemmyProperties.getCurrentTimeouts(), JemmyProperties.getCurrentOutput()));
     }
 
     /**
@@ -330,12 +324,9 @@ public class ComponentOperator extends Operator
      * @return Component instance or null if component was not found.
      * @throws TimeoutExpiredException
      */
-    protected static Component waitComponent(ContainerOperator<?> contOper,
-            ComponentChooser chooser, int index) {
-        return (waitComponent((Container) contOper.getSource(),
-                chooser, index,
-                contOper.getTimeouts(),
-                contOper.getOutput()));
+    protected static Component waitComponent(ContainerOperator<?> contOper, ComponentChooser chooser, int index) {
+        return (waitComponent(
+                (Container) contOper.getSource(), chooser, index, contOper.getTimeouts(), contOper.getOutput()));
     }
 
     /**
@@ -350,16 +341,17 @@ public class ComponentOperator extends Operator
      * @return Component instance or null if component was not found.
      * @throws TimeoutExpiredException
      */
-    protected static Component waitComponent(final Container cont,
+    protected static Component waitComponent(
+            final Container cont,
             final ComponentChooser chooser,
             final int index,
-            Timeouts timeouts, final TestOut output) {
+            Timeouts timeouts,
+            final TestOut output) {
         try {
             Waiter<Component, Void> waiter = new Waiter<>(new Waitable<Component, Void>() {
                 @Override
                 public Component actionProduced(Void obj) {
-                    return findComponent(cont, new VisibleComponentFinder(chooser), index,
-                            output.createErrorOutput());
+                    return findComponent(cont, new VisibleComponentFinder(chooser), index, output.createErrorOutput());
                 }
 
                 @Override
@@ -399,7 +391,8 @@ public class ComponentOperator extends Operator
     }
 
     private static Component findComponent(Container cont, ComponentChooser chooser, int index, boolean supressOutout) {
-        return findComponent(cont, chooser, index, JemmyProperties.getCurrentOutput().createErrorOutput());
+        return findComponent(
+                cont, chooser, index, JemmyProperties.getCurrentOutput().createErrorOutput());
     }
 
     static {
@@ -433,7 +426,7 @@ public class ComponentOperator extends Operator
     }
 
     ////////////////////////////////////////////////////////
-    //Environment                                         //
+    // Environment                                         //
     ////////////////////////////////////////////////////////
     @Override
     public void setOutput(TestOut out) {
@@ -466,22 +459,16 @@ public class ComponentOperator extends Operator
     @Override
     public void copyEnvironment(Operator anotherOperator) {
         super.copyEnvironment(anotherOperator);
-        kDriver = (KeyDriver) DriverManager.
-                getDriver(DriverManager.KEY_DRIVER_ID,
-                        getClass(),
-                        anotherOperator.getProperties());
-        mDriver = (MouseDriver) DriverManager.
-                getDriver(DriverManager.MOUSE_DRIVER_ID,
-                        getClass(),
-                        anotherOperator.getProperties());
-        fDriver = (FocusDriver) DriverManager.
-                getDriver(DriverManager.FOCUS_DRIVER_ID,
-                        getClass(),
-                        anotherOperator.getProperties());
+        kDriver = (KeyDriver)
+                DriverManager.getDriver(DriverManager.KEY_DRIVER_ID, getClass(), anotherOperator.getProperties());
+        mDriver = (MouseDriver)
+                DriverManager.getDriver(DriverManager.MOUSE_DRIVER_ID, getClass(), anotherOperator.getProperties());
+        fDriver = (FocusDriver)
+                DriverManager.getDriver(DriverManager.FOCUS_DRIVER_ID, getClass(), anotherOperator.getProperties());
     }
 
     ////////////////////////////////////////////////////////
-    //Mouse operations
+    // Mouse operations
     ////////////////////////////////////////////////////////
     /**
      * Makes mouse click.
@@ -493,12 +480,23 @@ public class ComponentOperator extends Operator
      * @param modifiers Modifiers (combination of InputEvent.*_MASK values)
      * @param forPopup signals that click is intended to call popup.
      */
-    public void clickMouse(final int x, final int y, final int clickCount, final int mouseButton,
-            final int modifiers, final boolean forPopup) {
+    public void clickMouse(
+            final int x,
+            final int y,
+            final int clickCount,
+            final int mouseButton,
+            final int modifiers,
+            final boolean forPopup) {
         getQueueTool().invokeSmoothly(new QueueTool.QueueAction<Void>("Path selecting") {
             @Override
             public Void launch() {
-                mDriver.clickMouse(ComponentOperator.this, x, y, clickCount, mouseButton, modifiers,
+                mDriver.clickMouse(
+                        ComponentOperator.this,
+                        x,
+                        y,
+                        clickCount,
+                        mouseButton,
+                        modifiers,
                         timeouts.create("ComponentOperator.MouseClickTimeout"));
                 return null;
             }
@@ -623,7 +621,14 @@ public class ComponentOperator extends Operator
      * @param modifiers Modifiers
      */
     public void dragNDrop(int start_x, int start_y, int end_x, int end_y, int mouseButton, int modifiers) {
-        mDriver.dragNDrop(this, start_x, start_y, end_x, end_y, mouseButton, modifiers,
+        mDriver.dragNDrop(
+                this,
+                start_x,
+                start_y,
+                end_x,
+                end_y,
+                mouseButton,
+                modifiers,
                 timeouts.create("ComponentOperator.BeforeDragTimeout"),
                 timeouts.create("ComponentOperator.AfterDragTimeout"));
     }
@@ -782,7 +787,7 @@ public class ComponentOperator extends Operator
     }
 
     ////////////////////////////////////////////////////////
-    //Keyboard operations
+    // Keyboard operations
     ////////////////////////////////////////////////////////
     /**
      * Press key.
@@ -889,7 +894,7 @@ public class ComponentOperator extends Operator
     }
 
     ////////////////////////////////////////////////////////
-    //Util
+    // Util
     ////////////////////////////////////////////////////////
     /**
      * Activates component's window.
@@ -982,8 +987,7 @@ public class ComponentOperator extends Operator
 
             @Override
             public String getDescription() {
-                return ("Component enabled: "
-                        + getSource().getClass().toString());
+                return ("Component enabled: " + getSource().getClass().toString());
             }
 
             @Override
@@ -1137,7 +1141,8 @@ public class ComponentOperator extends Operator
 
             @Override
             public String toString() {
-                return "ComponentOperator.waitComponentVisible.ComponentChooser{description = " + getDescription() + '}';
+                return "ComponentOperator.waitComponentVisible.ComponentChooser{description = " + getDescription()
+                        + '}';
             }
         });
     }
@@ -1156,7 +1161,8 @@ public class ComponentOperator extends Operator
 
             @Override
             public String toString() {
-                return "ComponentOperator.waitComponentShowing.ComponentChooser{description = " + getDescription() + '}';
+                return "ComponentOperator.waitComponentShowing.ComponentChooser{description = " + getDescription()
+                        + '}';
             }
         });
     }
@@ -1189,14 +1195,12 @@ public class ComponentOperator extends Operator
 
             @Override
             public String getDescription() {
-                return "Component Size becomes between: " + minSize
-                        + "and " + maxSize;
+                return "Component Size becomes between: " + minSize + "and " + maxSize;
             }
 
             @Override
             public String toString() {
-                return "ComponentOperator.waitComponentSize"
-                        + ".Waitable{description = " + getDescription() + '}';
+                return "ComponentOperator.waitComponentSize" + ".Waitable{description = " + getDescription() + '}';
             }
         });
     }
@@ -1230,14 +1234,12 @@ public class ComponentOperator extends Operator
 
             @Override
             public String getDescription() {
-                return "Component reaches location between :" + minLocation
-                        + "and " + maxLocation;
+                return "Component reaches location between :" + minLocation + "and " + maxLocation;
             }
 
             @Override
             public String toString() {
-                return "ComponentOperator.waitComponentLocation"
-                        + ".Waitable{description = " + getDescription() + '}';
+                return "ComponentOperator.waitComponentLocation" + ".Waitable{description = " + getDescription() + '}';
             }
         });
     }
@@ -1258,8 +1260,7 @@ public class ComponentOperator extends Operator
      * @param minLocation minimum expected location on screen.
      * @param maxLocation maximum expected location on screen.
      */
-    public void waitComponentLocationOnScreen(
-            final Point minLocation, final Point maxLocation) {
+    public void waitComponentLocationOnScreen(final Point minLocation, final Point maxLocation) {
         waitState(new ComponentChooser() {
             @Override
             public boolean checkComponent(Component comp) {
@@ -1272,14 +1273,13 @@ public class ComponentOperator extends Operator
 
             @Override
             public String getDescription() {
-                return "Component location on screen reaches between :"
-                        + minLocation + "and " + maxLocation;
+                return "Component location on screen reaches between :" + minLocation + "and " + maxLocation;
             }
 
             @Override
             public String toString() {
-                return "ComponentOperator.waitComponentLocationOnScreen"
-                        + ".Waitable{description = " + getDescription() + '}';
+                return "ComponentOperator.waitComponentLocationOnScreen" + ".Waitable{description = " + getDescription()
+                        + '}';
             }
         });
     }
@@ -1294,11 +1294,11 @@ public class ComponentOperator extends Operator
             result.put(NAME_DPROP, getSource().getName());
         }
         AccessibleContext context = source.getAccessibleContext();
-        if(context != null) {
-            if(context.getAccessibleName() != null) {
+        if (context != null) {
+            if (context.getAccessibleName() != null) {
                 result.put(ACCESSIBLE_NAME_DPROP, context.getAccessibleName());
             }
-            if(context.getAccessibleDescription() != null) {
+            if (context.getAccessibleDescription() != null) {
                 result.put(ACCESSIBLE_DESCRIPTION_DPROP, context.getAccessibleDescription());
             }
         }
@@ -1313,7 +1313,7 @@ public class ComponentOperator extends Operator
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code Component.add(PopupMenu)} through queue
      */
@@ -2655,7 +2655,7 @@ public class ComponentOperator extends Operator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     private void setEventDispatcher(EventDispatcher dispatcher) {
         dispatcher.setOutput(getOutput().createErrorOutput());
@@ -2689,5 +2689,4 @@ public class ComponentOperator extends Operator
             return "VisibleComponentFinder{" + "subFinder=" + subFinder + '}';
         }
     }
-
 }

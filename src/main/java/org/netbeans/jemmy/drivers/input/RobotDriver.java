@@ -27,7 +27,6 @@ package org.netbeans.jemmy.drivers.input;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.lang.reflect.InvocationTargetException;
-
 import org.netbeans.jemmy.ClassReference;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.JemmyProperties;
@@ -85,7 +84,7 @@ public class RobotDriver extends LightSupportiveDriver {
      * @param autoDelay Time for {@code Robot.setAutoDelay(long)} method.
      */
     public RobotDriver(Timeout autoDelay) {
-        this(autoDelay, new String[]{"org.netbeans.jemmy.operators.ComponentOperator"});
+        this(autoDelay, new String[] {"org.netbeans.jemmy.operators.ComponentOperator"});
     }
 
     public RobotDriver(Timeout autoDelay, boolean smooth) {
@@ -95,23 +94,17 @@ public class RobotDriver extends LightSupportiveDriver {
 
     public void pressMouse(int mouseButton, int modifiers) {
         pressModifiers(modifiers);
-        makeAnOperation("mousePress",
-                new Object[]{mouseButton},
-                new Class<?>[]{Integer.TYPE});
+        makeAnOperation("mousePress", new Object[] {mouseButton}, new Class<?>[] {Integer.TYPE});
     }
 
     public void releaseMouse(int mouseButton, int modifiers) {
-        makeAnOperation("mouseRelease",
-                new Object[]{mouseButton},
-                new Class<?>[]{Integer.TYPE});
+        makeAnOperation("mouseRelease", new Object[] {mouseButton}, new Class<?>[] {Integer.TYPE});
         releaseModifiers(modifiers);
     }
 
     public void moveMouse(int x, int y) {
         if (!smooth) {
-            makeAnOperation("mouseMove",
-                    new Object[]{x, y},
-                    new Class<?>[]{Integer.TYPE, Integer.TYPE});
+            makeAnOperation("mouseMove", new Object[] {x, y}, new Class<?>[] {Integer.TYPE, Integer.TYPE});
         } else {
             double targetX = x;
             double targetY = y;
@@ -120,22 +113,21 @@ public class RobotDriver extends LightSupportiveDriver {
                 double currY = oldY;
                 double vx = 0.0;
                 double vy = 0.0;
-                while (Math.round(currX) != Math.round(targetX)
-                        || Math.round(currY) != Math.round(targetY)) {
+                while (Math.round(currX) != Math.round(targetX) || Math.round(currY) != Math.round(targetY)) {
                     vx = vx * CONSTANT1 + (targetX - currX) / CONSTANT2 * (1.0 - CONSTANT1);
                     vy = vy * CONSTANT1 + (targetY - currY) / CONSTANT2 * (1.0 - CONSTANT1);
                     currX += vx;
                     currY += vy;
-                    makeAnOperation("mouseMove", new Object[]{
-                                    (int) Math.round(currX),
-                                    (int) Math.round(currY)},
-                            new Class<?>[]{Integer.TYPE, Integer.TYPE});
+                    makeAnOperation(
+                            "mouseMove",
+                            new Object[] {(int) Math.round(currX), (int) Math.round(currY)},
+                            new Class<?>[] {Integer.TYPE, Integer.TYPE});
                 }
             } else {
-                makeAnOperation("mouseMove", new Object[]{
-                                (int) Math.round(targetX),
-                                (int) Math.round(targetY)},
-                        new Class<?>[]{Integer.TYPE, Integer.TYPE});
+                makeAnOperation(
+                        "mouseMove",
+                        new Object[] {(int) Math.round(targetX), (int) Math.round(targetY)},
+                        new Class<?>[] {Integer.TYPE, Integer.TYPE});
             }
             haveOldPos = true;
             oldX = targetX;
@@ -143,17 +135,16 @@ public class RobotDriver extends LightSupportiveDriver {
         }
     }
 
-    public void clickMouse(int x, int y, int clickCount, int mouseButton,
-                           int modifiers, Timeout mouseClick) {
+    public void clickMouse(int x, int y, int clickCount, int mouseButton, int modifiers, Timeout mouseClick) {
         pressModifiers(modifiers);
         moveMouse(x, y);
-        makeAnOperation("mousePress", new Object[]{mouseButton}, new Class<?>[]{Integer.TYPE});
+        makeAnOperation("mousePress", new Object[] {mouseButton}, new Class<?>[] {Integer.TYPE});
         for (int i = 1; i < clickCount; i++) {
-            makeAnOperation("mouseRelease", new Object[]{mouseButton}, new Class<?>[]{Integer.TYPE});
-            makeAnOperation("mousePress", new Object[]{mouseButton}, new Class<?>[]{Integer.TYPE});
+            makeAnOperation("mouseRelease", new Object[] {mouseButton}, new Class<?>[] {Integer.TYPE});
+            makeAnOperation("mousePress", new Object[] {mouseButton}, new Class<?>[] {Integer.TYPE});
         }
         mouseClick.sleep();
-        makeAnOperation("mouseRelease", new Object[]{mouseButton}, new Class<?>[]{Integer.TYPE});
+        makeAnOperation("mouseRelease", new Object[] {mouseButton}, new Class<?>[] {Integer.TYPE});
         releaseModifiers(modifiers);
     }
 
@@ -162,8 +153,14 @@ public class RobotDriver extends LightSupportiveDriver {
     }
 
     public void dragNDrop(
-            int start_x, int start_y, int end_x, int end_y,
-            int mouseButton, int modifiers, Timeout before, Timeout after) {
+            int start_x,
+            int start_y,
+            int end_x,
+            int end_y,
+            int mouseButton,
+            int modifiers,
+            Timeout before,
+            Timeout after) {
         moveMouse(start_x, start_y);
         pressMouse(mouseButton, modifiers);
         before.sleep();
@@ -180,9 +177,7 @@ public class RobotDriver extends LightSupportiveDriver {
      */
     public void pressKey(int keyCode, int modifiers) {
         pressModifiers(modifiers);
-        makeAnOperation("keyPress",
-                new Object[]{keyCode},
-                new Class<?>[]{Integer.TYPE});
+        makeAnOperation("keyPress", new Object[] {keyCode}, new Class<?>[] {Integer.TYPE});
     }
 
     /**
@@ -193,9 +188,7 @@ public class RobotDriver extends LightSupportiveDriver {
      */
     public void releaseKey(int keyCode, int modifiers) {
         releaseModifiers(modifiers);
-        makeAnOperation("keyRelease",
-                new Object[]{keyCode},
-                new Class<?>[]{Integer.TYPE});
+        makeAnOperation("keyRelease", new Object[] {keyCode}, new Class<?>[] {Integer.TYPE});
     }
 
     /**
@@ -212,10 +205,7 @@ public class RobotDriver extends LightSupportiveDriver {
         try {
             robotReference.invokeMethod(method, params, paramClasses);
             synchronizeRobot();
-        } catch (InvocationTargetException
-                | IllegalStateException
-                | NoSuchMethodException
-                | IllegalAccessException e) {
+        } catch (InvocationTargetException | IllegalStateException | NoSuchMethodException | IllegalAccessException e) {
             throw (new JemmyException("Exception during java.awt.Robot accessing", e));
         }
     }
@@ -325,11 +315,10 @@ public class RobotDriver extends LightSupportiveDriver {
         try {
             ClassReference robotClassReverence = new ClassReference("java.awt.Robot");
             robotReference = new ClassReference(robotClassReverence.newInstance(null, null));
-            robotReference.invokeMethod("setAutoDelay",
-                    new Object[]{(int) ((autoDelay != null)
-                            ? autoDelay.getValue()
-                            : 0)},
-                    new Class<?>[]{Integer.TYPE});
+            robotReference.invokeMethod(
+                    "setAutoDelay",
+                    new Object[] {(int) ((autoDelay != null) ? autoDelay.getValue() : 0)},
+                    new Class<?>[] {Integer.TYPE});
         } catch (InvocationTargetException
                 | IllegalStateException
                 | NoSuchMethodException
@@ -339,5 +328,4 @@ public class RobotDriver extends LightSupportiveDriver {
             throw (new JemmyException("Exception during java.awt.Robot accessing", e));
         }
     }
-
 }

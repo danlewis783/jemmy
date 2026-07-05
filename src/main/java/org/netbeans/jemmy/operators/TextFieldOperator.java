@@ -30,7 +30,6 @@ import java.awt.Dimension;
 import java.awt.TextField;
 import java.awt.event.ActionListener;
 import java.util.Hashtable;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
@@ -46,8 +45,7 @@ import org.netbeans.jemmy.Timeouts;
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
-public class TextFieldOperator extends TextComponentOperator
-        implements Timeoutable, Outputable {
+public class TextFieldOperator extends TextComponentOperator implements Timeoutable, Outputable {
 
     /**
      * Identifier for a "text" property.
@@ -56,10 +54,10 @@ public class TextFieldOperator extends TextComponentOperator
      */
     public static final String TEXT_DPROP = "Text";
 
-    private final static long PUSH_KEY_TIMEOUT = 0;
-    private final static long BETWEEN_KEYS_TIMEOUT = 0;
-    private final static long CHANGE_CARET_POSITION_TIMEOUT = 60000;
-    private final static long TYPE_TEXT_TIMEOUT = 60000;
+    private static final long PUSH_KEY_TIMEOUT = 0;
+    private static final long BETWEEN_KEYS_TIMEOUT = 0;
+    private static final long CHANGE_CARET_POSITION_TIMEOUT = 60000;
+    private static final long TYPE_TEXT_TIMEOUT = 60000;
 
     private Timeouts timeouts;
     private TestOut output;
@@ -81,9 +79,7 @@ public class TextFieldOperator extends TextComponentOperator
      * @param index an index between appropriate ones.
      */
     public TextFieldOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((TextField) cont.
-                waitSubComponent(new TextFieldFinder(chooser),
-                        index));
+        this((TextField) cont.waitSubComponent(new TextFieldFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -112,10 +108,7 @@ public class TextFieldOperator extends TextComponentOperator
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public TextFieldOperator(ContainerOperator<?> cont, String text, int index) {
-        this((TextField) waitComponent(cont,
-                new TextFieldByTextFinder(text,
-                        cont.getComparator()),
-                index));
+        this((TextField) waitComponent(cont, new TextFieldByTextFinder(text, cont.getComparator()), index));
         copyEnvironment(cont);
     }
 
@@ -145,9 +138,7 @@ public class TextFieldOperator extends TextComponentOperator
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public TextFieldOperator(ContainerOperator<?> cont, int index) {
-        this((TextField) waitComponent(cont,
-                new TextFieldFinder(),
-                index));
+        this((TextField) waitComponent(cont, new TextFieldFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -310,7 +301,7 @@ public class TextFieldOperator extends TextComponentOperator
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code TextField.addActionListener(ActionListener)} through queue
      */
@@ -407,7 +398,7 @@ public class TextFieldOperator extends TextComponentOperator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Allows to find component by text.
@@ -441,8 +432,7 @@ public class TextFieldOperator extends TextComponentOperator
         public boolean checkComponent(Component comp) {
             if (comp instanceof TextField) {
                 if (((TextField) comp).getText() != null) {
-                    return (comparator.equals(((TextField) comp).getText(),
-                            label));
+                    return (comparator.equals(((TextField) comp).getText(), label));
                 }
             }
             return false;

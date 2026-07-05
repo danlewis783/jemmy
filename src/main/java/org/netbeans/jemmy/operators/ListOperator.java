@@ -31,7 +31,6 @@ import java.awt.List;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.util.Hashtable;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
@@ -51,8 +50,7 @@ import org.netbeans.jemmy.drivers.MultiSelListDriver;
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
-public class ListOperator extends ComponentOperator
-        implements Outputable {
+public class ListOperator extends ComponentOperator implements Outputable {
 
     /**
      * Identifier for a "item" properties.
@@ -89,9 +87,7 @@ public class ListOperator extends ComponentOperator
      * @param index an index between appropriate ones.
      */
     public ListOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((List) cont.
-                waitSubComponent(new ListFinder(chooser),
-                        index));
+        this((List) cont.waitSubComponent(new ListFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -116,10 +112,7 @@ public class ListOperator extends ComponentOperator
      * @throws TimeoutExpiredException
      */
     public ListOperator(ContainerOperator<?> cont, String text, int itemIndex, int index) {
-        this((List) waitComponent(cont,
-                new ListByItemFinder(text, itemIndex,
-                        cont.getComparator()),
-                index));
+        this((List) waitComponent(cont, new ListByItemFinder(text, itemIndex, cont.getComparator()), index));
         copyEnvironment(cont);
     }
 
@@ -159,9 +152,7 @@ public class ListOperator extends ComponentOperator
      * @throws TimeoutExpiredException
      */
     public ListOperator(ContainerOperator<?> cont, int index) {
-        this((List) waitComponent(cont,
-                new ListFinder(),
-                index));
+        this((List) waitComponent(cont, new ListFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -213,11 +204,8 @@ public class ListOperator extends ComponentOperator
     @Override
     public void copyEnvironment(Operator anotherOperator) {
         super.copyEnvironment(anotherOperator);
-        driver
-                = (MultiSelListDriver) DriverManager.
-                getDriver(DriverManager.MULTISELLIST_DRIVER_ID,
-                        getClass(),
-                        anotherOperator.getProperties());
+        driver = (MultiSelListDriver) DriverManager.getDriver(
+                DriverManager.MULTISELLIST_DRIVER_ID, getClass(), anotherOperator.getProperties());
     }
 
     private int findItemIndex(String item, StringComparator comparator, int index) {
@@ -284,8 +272,7 @@ public class ListOperator extends ComponentOperator
      * @param index an item index.
      */
     public void selectItem(int index) {
-        output.printLine("Select " + Integer.toString(index) + "`th item in list\n    : "
-                + toStringSource());
+        output.printLine("Select " + Integer.toString(index) + "`th item in list\n    : " + toStringSource());
         output.printGolden("Select " + Integer.toString(index) + "`th item in list");
         driver.selectItem(this, index);
         if (getVerification()) {
@@ -303,9 +290,8 @@ public class ListOperator extends ComponentOperator
         output.printLine("Select items from " + Integer.toString(from)
                 + "`th to " + Integer.toString(from) + "'th in list\n    : "
                 + toStringSource());
-        output.printGolden("Select items from " + Integer.toString(from)
-                + "`th to " + Integer.toString(from) + "'th");
-        driver.selectItems(this, new int[]{from, to});
+        output.printGolden("Select items from " + Integer.toString(from) + "`th to " + Integer.toString(from) + "'th");
+        driver.selectItems(this, new int[] {from, to});
         if (getVerification()) {
             waitItemsSelection(from, to, true);
         }
@@ -319,18 +305,17 @@ public class ListOperator extends ComponentOperator
      * @param selected Selected (true) or unselected (false).
      */
     public void waitItemsSelection(final int from, final int to, final boolean selected) {
-        getOutput().printLine("Wait items to be "
-                + (selected ? "" : "un") + "selected in component \n    : "
-                + toStringSource());
-        getOutput().printGolden("Wait items to be "
-                + (selected ? "" : "un") + "selected");
+        getOutput()
+                .printLine("Wait items to be "
+                        + (selected ? "" : "un") + "selected in component \n    : "
+                        + toStringSource());
+        getOutput().printGolden("Wait items to be " + (selected ? "" : "un") + "selected");
         waitState(new ComponentChooser() {
             @Override
             public boolean checkComponent(Component comp) {
                 int[] indices = getSelectedIndexes();
                 for (int indice : indices) {
-                    if (indice < from
-                            || indice > to) {
+                    if (indice < from || indice > to) {
                         return false;
                     }
                 }
@@ -339,8 +324,7 @@ public class ListOperator extends ComponentOperator
 
             @Override
             public String getDescription() {
-                return ("Items has been "
-                        + (selected ? "" : "un") + "selected");
+                return ("Items has been " + (selected ? "" : "un") + "selected");
             }
 
             @Override
@@ -369,7 +353,7 @@ public class ListOperator extends ComponentOperator
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code List.addActionListener(ActionListener)} through queue
      */
@@ -682,7 +666,7 @@ public class ListOperator extends ComponentOperator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Allows to find component by item text.
@@ -732,8 +716,7 @@ public class ListOperator extends ComponentOperator
                             return false;
                         }
                     }
-                    return (comparator.equals(((List) comp).getItem(ii),
-                            label));
+                    return (comparator.equals(((List) comp).getItem(ii), label));
                 }
             }
             return false;
@@ -741,13 +724,13 @@ public class ListOperator extends ComponentOperator
 
         @Override
         public String getDescription() {
-            return ("List with text \"" + label + "\" in "
-                    + itemIndex + "'th item");
+            return ("List with text \"" + label + "\" in " + itemIndex + "'th item");
         }
 
         @Override
         public String toString() {
-            return "ListByItemFinder{" + "label=" + label + ", itemIndex=" + itemIndex + ", comparator=" + comparator + '}';
+            return "ListByItemFinder{" + "label=" + label + ", itemIndex=" + itemIndex + ", comparator=" + comparator
+                    + '}';
         }
     }
 

@@ -25,7 +25,6 @@
 package org.netbeans.jemmy.drivers.scrolling;
 
 import javax.swing.SwingConstants;
-
 import org.netbeans.jemmy.drivers.LightSupportiveDriver;
 import org.netbeans.jemmy.drivers.ScrollDriver;
 import org.netbeans.jemmy.operators.ComponentOperator;
@@ -43,14 +42,15 @@ public class JSpinnerDriver extends LightSupportiveDriver implements ScrollDrive
      * Constructs a JSpinnerDriver object.
      */
     public JSpinnerDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.JSpinnerOperator"});
+        super(new String[] {"org.netbeans.jemmy.operators.JSpinnerOperator"});
     }
 
     @Override
     public void scrollToMinimum(final ComponentOperator oper, int orientation) {
         Object minimum = ((JSpinnerOperator) oper).getMinimum();
         if (minimum == null) {
-            throw (new JSpinnerOperator.SpinnerModelException("Impossible to get a minimum of JSpinner model.", oper.getSource()));
+            throw (new JSpinnerOperator.SpinnerModelException(
+                    "Impossible to get a minimum of JSpinner model.", oper.getSource()));
         }
         scroll(oper, new ScrollAdjuster() {
             @Override
@@ -83,7 +83,8 @@ public class JSpinnerDriver extends LightSupportiveDriver implements ScrollDrive
     public void scrollToMaximum(final ComponentOperator oper, int orientation) {
         Object maximum = ((JSpinnerOperator) oper).getMaximum();
         if (maximum == null) {
-            throw (new JSpinnerOperator.SpinnerModelException("Impossible to get a maximum of JSpinner model.", oper.getSource()));
+            throw (new JSpinnerOperator.SpinnerModelException(
+                    "Impossible to get a maximum of JSpinner model.", oper.getSource()));
         }
         scroll(oper, new ScrollAdjuster() {
             @Override

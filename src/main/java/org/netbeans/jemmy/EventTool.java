@@ -249,9 +249,7 @@ public class EventTool implements Timeoutable, Outputable {
      * @throws TimeoutExpiredException
      */
     public AWTEvent waitEvent(long eventMask) {
-        return (waitEvent(eventMask,
-                timeouts.getTimeout("EventTool.WaitEventTimeout"),
-                output.createErrorOutput()));
+        return (waitEvent(eventMask, timeouts.getTimeout("EventTool.WaitEventTimeout"), output.createErrorOutput()));
     }
 
     /**
@@ -306,12 +304,8 @@ public class EventTool implements Timeoutable, Outputable {
     public void waitNoEvent(long eventMask, long waitTime) {
         NoEventWaiter waiter = new NoEventWaiter(eventMask, waitTime);
         waiter.setTimeouts(timeouts.cloneThis());
-        waiter.getTimeouts().
-                setTimeout("Waiter.WaitingTime",
-                        timeouts.getTimeout("EventTool.WaitNoEventTimeout"));
-        waiter.getTimeouts().
-                setTimeout("Waiter.TimeDelta",
-                        timeouts.getTimeout("EventTool.EventCheckingDelta"));
+        waiter.getTimeouts().setTimeout("Waiter.WaitingTime", timeouts.getTimeout("EventTool.WaitNoEventTimeout"));
+        waiter.getTimeouts().setTimeout("Waiter.TimeDelta", timeouts.getTimeout("EventTool.EventCheckingDelta"));
         try {
             waiter.waitAction(null);
         } catch (InterruptedException e) {
@@ -341,12 +335,8 @@ public class EventTool implements Timeoutable, Outputable {
         EventWaiter waiter = new EventWaiter(eventMask);
         waiter.setTimeouts(timeouts.cloneThis());
         waiter.setOutput(waiterOutput);
-        waiter.getTimeouts().
-                setTimeout("Waiter.WaitingTime",
-                        waitTime);
-        waiter.getTimeouts().
-                setTimeout("Waiter.TimeDelta",
-                        timeouts.getTimeout("EventTool.EventCheckingDelta"));
+        waiter.getTimeouts().setTimeout("Waiter.WaitingTime", waitTime);
+        waiter.getTimeouts().setTimeout("Waiter.TimeDelta", timeouts.getTimeout("EventTool.EventCheckingDelta"));
         try {
             return waiter.waitAction(null);
         } catch (InterruptedException e) {
@@ -411,8 +401,7 @@ public class EventTool implements Timeoutable, Outputable {
                 theWholeMask = 0;
                 long eventMask;
                 for (Field field : fields) {
-                    if ((field.getModifiers()
-                            & (Modifier.PUBLIC | Modifier.STATIC)) != 0
+                    if ((field.getModifiers() & (Modifier.PUBLIC | Modifier.STATIC)) != 0
                             && field.getType().equals(Long.TYPE)
                             && field.getName().endsWith("_EVENT_MASK")) {
                         eventMask = (Long) field.get(null);
@@ -463,8 +452,7 @@ public class EventTool implements Timeoutable, Outputable {
             long maxTime = -1;
             EventType maxType = null;
             for (EventType et : eventTypes) {
-                if ((eventMask & et.getEventMask()) != 0
-                        && et.getTime() > maxTime) {
+                if ((eventMask & et.getEventMask()) != 0 && et.getTime() > maxTime) {
                     maxType = et;
                     maxTime = maxType.getTime();
                 }
@@ -486,8 +474,7 @@ public class EventTool implements Timeoutable, Outputable {
         @Override
         public AWTEvent actionProduced(Void obj) {
             EventType et = listenerSet.getLastEventType(eventMask);
-            if (et != null
-                    && et.getTime() > startTime) {
+            if (et != null && et.getTime() > startTime) {
                 return et.getEvent();
             } else {
                 return null;
@@ -496,8 +483,7 @@ public class EventTool implements Timeoutable, Outputable {
 
         @Override
         public String getDescription() {
-            return ("Last event under "
-                    + Long.toString(eventMask, 2) + " event mask");
+            return ("Last event under " + Long.toString(eventMask, 2) + " event mask");
         }
 
         @Override
@@ -518,9 +504,7 @@ public class EventTool implements Timeoutable, Outputable {
 
         @Override
         public String actionProduced(Void obj) {
-            return (checkNoEvent(eventMask, waitTime, TestOut.getNullOutput())
-                    ? "Reached!"
-                    : null);
+            return (checkNoEvent(eventMask, waitTime, TestOut.getNullOutput()) ? "Reached!" : null);
         }
 
         @Override

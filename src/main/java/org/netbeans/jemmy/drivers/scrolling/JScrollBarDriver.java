@@ -25,9 +25,7 @@
 package org.netbeans.jemmy.drivers.scrolling;
 
 import java.awt.Point;
-
 import javax.swing.JScrollBar;
-
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.Timeout;
 import org.netbeans.jemmy.drivers.DriverManager;
@@ -44,9 +42,9 @@ import org.netbeans.jemmy.operators.Operator;
  */
 public class JScrollBarDriver extends AbstractScrollDriver {
 
-    private final static int SMALL_INCREMENT = 1;
-    private final static int MINIMAL_DRAGGER_SIZE = 5;
-    private final static int RELATIVE_DRAG_STEP_LENGTH = 20;
+    private static final int SMALL_INCREMENT = 1;
+    private static final int MINIMAL_DRAGGER_SIZE = 5;
+    private static final int RELATIVE_DRAG_STEP_LENGTH = 20;
 
     private QueueTool queueTool;
 
@@ -54,7 +52,7 @@ public class JScrollBarDriver extends AbstractScrollDriver {
      * Constructs a JScrollBarDriver.
      */
     public JScrollBarDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.JScrollBarOperator"});
+        super(new String[] {"org.netbeans.jemmy.operators.JScrollBarOperator"});
         queueTool = new QueueTool();
     }
 
@@ -69,8 +67,7 @@ public class JScrollBarDriver extends AbstractScrollDriver {
         Point pnt = new Point(0, 0);
         drag(oper, pnt);
         Timeout sleepTime = oper.getTimeouts().create("Waiter.TimeDelta");
-        while (((JScrollBarOperator) oper).getValue()
-                > ((JScrollBarOperator) oper).getMinimum()) {
+        while (((JScrollBarOperator) oper).getValue() > ((JScrollBarOperator) oper).getMinimum()) {
             sleepTime.sleep();
         }
         drop(oper, pnt);
@@ -83,8 +80,7 @@ public class JScrollBarDriver extends AbstractScrollDriver {
         drag(oper, pnt);
         Timeout sleepTime = oper.getTimeouts().create("Waiter.TimeDelta");
         while (((JScrollBarOperator) oper).getValue()
-                > (((JScrollBarOperator) oper).getMaximum()
-                - ((JScrollBarOperator) oper).getVisibleAmount())) {
+                > (((JScrollBarOperator) oper).getMaximum() - ((JScrollBarOperator) oper).getVisibleAmount())) {
             sleepTime.sleep();
         }
         drop(oper, pnt);
@@ -135,8 +131,8 @@ public class JScrollBarDriver extends AbstractScrollDriver {
                         default:
                             return null;
                     }
-                    DriverManager.getMouseDriver(oper).
-                            clickMouse(oper, x, y, 1, Operator.getDefaultMouseButton(), 0, new Timeout("", 0));
+                    DriverManager.getMouseDriver(oper)
+                            .clickMouse(oper, x, y, 1, Operator.getDefaultMouseButton(), 0, new Timeout("", 0));
                 }
                 return null;
             }
@@ -159,7 +155,8 @@ public class JScrollBarDriver extends AbstractScrollDriver {
     protected Point startDragging(ComponentOperator oper) {
         JButtonOperator lessButton = findAButton(oper, ScrollAdjuster.DECREASE_SCROLL_DIRECTION);
         JButtonOperator moreButton = findAButton(oper, ScrollAdjuster.INCREASE_SCROLL_DIRECTION);
-        Point pnt = getClickPoint((JScrollBarOperator) oper, lessButton, moreButton, ((JScrollBarOperator) oper).getValue());
+        Point pnt = getClickPoint(
+                (JScrollBarOperator) oper, lessButton, moreButton, ((JScrollBarOperator) oper).getValue());
         MouseDriver mdriver = DriverManager.getMouseDriver(oper);
         mdriver.moveMouse(oper, pnt.x, pnt.y);
         mdriver.pressMouse(oper, pnt.x, pnt.y, Operator.getDefaultMouseButton(), 0);
@@ -168,20 +165,17 @@ public class JScrollBarDriver extends AbstractScrollDriver {
 
     @Override
     protected void drop(ComponentOperator oper, Point pnt) {
-        DriverManager.getMouseDriver(oper).
-                releaseMouse(oper, pnt.x, pnt.y, Operator.getDefaultMouseButton(), 0);
+        DriverManager.getMouseDriver(oper).releaseMouse(oper, pnt.x, pnt.y, Operator.getDefaultMouseButton(), 0);
     }
 
     @Override
     protected void drag(ComponentOperator oper, Point pnt) {
-        DriverManager.getMouseDriver(oper).
-                dragMouse(oper, pnt.x, pnt.y, Operator.getDefaultMouseButton(), 0);
+        DriverManager.getMouseDriver(oper).dragMouse(oper, pnt.x, pnt.y, Operator.getDefaultMouseButton(), 0);
     }
 
     @Override
     protected Timeout getScrollDeltaTimeout(ComponentOperator oper) {
-        return (oper.getTimeouts().
-                create("ScrollbarOperator.DragAndDropScrollingDelta"));
+        return (oper.getTimeouts().create("ScrollbarOperator.DragAndDropScrollingDelta"));
     }
 
     @Override
@@ -226,11 +220,11 @@ public class JScrollBarDriver extends AbstractScrollDriver {
     }
 
     private boolean isSmallIncrement(JScrollBarOperator oper) {
-        return (oper.getUnitIncrement(-1) <= SMALL_INCREMENT
-                && oper.getUnitIncrement(1) <= SMALL_INCREMENT);
+        return (oper.getUnitIncrement(-1) <= SMALL_INCREMENT && oper.getUnitIncrement(1) <= SMALL_INCREMENT);
     }
 
-    private Point getClickPoint(JScrollBarOperator oper, JButtonOperator lessButton, JButtonOperator moreButton, int value) {
+    private Point getClickPoint(
+            JScrollBarOperator oper, JButtonOperator lessButton, JButtonOperator moreButton, int value) {
         int lenght = (oper.getOrientation() == JScrollBar.HORIZONTAL)
                 ? oper.getWidth() - lessButton.getWidth() - moreButton.getWidth()
                 : oper.getHeight() - lessButton.getHeight() - moreButton.getHeight();

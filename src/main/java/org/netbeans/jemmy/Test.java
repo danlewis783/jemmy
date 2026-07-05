@@ -43,10 +43,9 @@ import java.lang.reflect.InvocationTargetException;
  *
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
-public class Test extends ActionProducer<Object, Object>
-        implements Timeoutable, Outputable, Scenario {
+public class Test extends ActionProducer<Object, Object> implements Timeoutable, Outputable, Scenario {
 
-    private final static long WHOLE_TEST_TIMEOUT = 3600000;
+    private static final long WHOLE_TEST_TIMEOUT = 3600000;
 
     /**
      * Status returned by test if wrong parameter was passed.
@@ -132,8 +131,7 @@ public class Test extends ActionProducer<Object, Object>
         if (status == 0) {
             throw (new TestCompletedException(status, "Test passed"));
         } else {
-            throw (new TestCompletedException(status, "Test failed with status "
-                    + Integer.toString(status)));
+            throw (new TestCompletedException(status, "Test failed with status " + Integer.toString(status)));
         }
     }
 
@@ -148,8 +146,7 @@ public class Test extends ActionProducer<Object, Object>
         String[] args = argv;
         JemmyProperties.getProperties().init();
         if (argv.length < 1) {
-            JemmyProperties.getCurrentOutput().
-                    printErrLine("First element of String array should be test classname");
+            JemmyProperties.getCurrentOutput().printErrLine("First element of String array should be test classname");
             return WRONG_PARAMETERS_STATUS;
         }
         JemmyProperties.getCurrentOutput().printLine("Executed test " + argv[0]);
@@ -246,9 +243,8 @@ public class Test extends ActionProducer<Object, Object>
      */
     public Scenario testForName(String testName) {
         try {
-            return ((Scenario) (Class.forName(testName).
-                    getConstructor(new Class<?>[0]).
-                    newInstance()));
+            return ((Scenario)
+                    (Class.forName(testName).getConstructor(new Class<?>[0]).newInstance()));
         } catch (ClassNotFoundException e) {
             output.printErrLine("Class " + testName + " does not exist!");
             output.printStackTrace(e);
@@ -280,8 +276,7 @@ public class Test extends ActionProducer<Object, Object>
     public void setTimeouts(Timeouts timeouts) {
         this.timeouts = timeouts;
         Timeouts times = timeouts.cloneThis();
-        times.setTimeout("ActionProducer.MaxActionTime",
-                timeouts.getTimeout("Test.WholeTestTimeout"));
+        times.setTimeout("ActionProducer.MaxActionTime", timeouts.getTimeout("Test.WholeTestTimeout"));
         super.setTimeouts(times);
     }
 
@@ -334,11 +329,9 @@ public class Test extends ActionProducer<Object, Object>
      */
     public int startTest(Object param) {
         if (scenario != null) {
-            output.printLine("Test " + scenario.getClass().getName()
-                    + " has been started");
+            output.printLine("Test " + scenario.getClass().getName() + " has been started");
         } else {
-            output.printLine("Test " + getClass().getName()
-                    + " has been started");
+            output.printLine("Test " + getClass().getName() + " has been started");
         }
         try {
             return ((Integer) produceAction(param, "Test.WholeTestTimeout")).intValue();
@@ -439,5 +432,4 @@ public class Test extends ActionProducer<Object, Object>
         }
         return result;
     }
-
 }

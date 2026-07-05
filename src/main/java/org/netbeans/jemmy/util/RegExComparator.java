@@ -25,7 +25,6 @@
 package org.netbeans.jemmy.util;
 
 import java.lang.reflect.InvocationTargetException;
-
 import org.netbeans.jemmy.ClassReference;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.operators.Operator.StringComparator;
@@ -50,23 +49,19 @@ public class RegExComparator implements StringComparator {
         }
         if (System.getProperty("java.specification.version").compareTo("1.3") > 0) {
             try {
-                Object result = new ClassReference("java.util.regex.Pattern").
-                        invokeMethod("matches",
-                                new Object[]{match, caption},
-                                new Class<?>[]{String.class, Class.forName("java.lang.CharSequence")});
+                Object result = new ClassReference("java.util.regex.Pattern")
+                        .invokeMethod("matches", new Object[] {match, caption}, new Class<?>[] {
+                            String.class, Class.forName("java.lang.CharSequence")
+                        });
                 return ((Boolean) result).booleanValue();
             } catch (InvocationTargetException e) {
-                throw (new JemmyException("Exception during regexpr using",
-                        e));
+                throw (new JemmyException("Exception during regexpr using", e));
             } catch (ClassNotFoundException e) {
-                throw (new JemmyException("Exception during regexpr using",
-                        e));
+                throw (new JemmyException("Exception during regexpr using", e));
             } catch (NoSuchMethodException e) {
-                throw (new JemmyException("Exception during regexpr using",
-                        e));
+                throw (new JemmyException("Exception during regexpr using", e));
             } catch (IllegalAccessException e) {
-                throw (new JemmyException("Exception during regexpr using",
-                        e));
+                throw (new JemmyException("Exception during regexpr using", e));
             }
         } else {
             return parse(caption, match);
@@ -83,8 +78,7 @@ public class RegExComparator implements StringComparator {
      * @return true if the caption matches the pattern.
      */
     public boolean parse(String caption, String match) {
-        if (match.length() == 0
-                && caption.length() == 0) {
+        if (match.length() == 0 && caption.length() == 0) {
             return true;
         } else if (match.length() == 0) {
             return false;
@@ -118,8 +112,7 @@ public class RegExComparator implements StringComparator {
             shift = shift + 1;
             int i = 0;
             while (i <= caption.length()) {
-                if (i == 0
-                        || checkOne(caption.substring(i - 1), c0)) {
+                if (i == 0 || checkOne(caption.substring(i - 1), c0)) {
                     if (parse(caption.substring(i), match.substring(shift))) {
                         return true;
                     }
@@ -142,8 +135,7 @@ public class RegExComparator implements StringComparator {
     }
 
     private boolean checkOne(String caption, int simbol) {
-        return (simbol == ANY_SIMBOL
-                || simbol == caption.charAt(0));
+        return (simbol == ANY_SIMBOL || simbol == caption.charAt(0));
     }
 
     /**

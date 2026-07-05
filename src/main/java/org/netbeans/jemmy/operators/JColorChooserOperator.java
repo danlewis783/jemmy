@@ -27,14 +27,12 @@ package org.netbeans.jemmy.operators;
 import java.awt.Color;
 import java.awt.Container;
 import java.util.Hashtable;
-
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.colorchooser.ColorSelectionModel;
 import javax.swing.plaf.ColorChooserUI;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.JemmyProperties;
@@ -48,8 +46,7 @@ import org.netbeans.jemmy.TestOut;
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
-public class JColorChooserOperator extends JComponentOperator
-        implements Outputable {
+public class JColorChooserOperator extends JComponentOperator implements Outputable {
 
     /**
      * Identifier for a "color" property.
@@ -115,9 +112,7 @@ public class JColorChooserOperator extends JComponentOperator
      * @param index an index between appropriate ones.
      */
     public JColorChooserOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JColorChooser) cont.
-                waitSubComponent(new JColorChooserFinder(chooser),
-                        index));
+        this((JColorChooser) cont.waitSubComponent(new JColorChooserFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -140,9 +135,7 @@ public class JColorChooserOperator extends JComponentOperator
      *
      */
     public JColorChooserOperator(ContainerOperator<?> cont, int index) {
-        this((JColorChooser) waitComponent(cont,
-                new JColorChooserFinder(),
-                index));
+        this((JColorChooser) waitComponent(cont, new JColorChooserFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -188,7 +181,8 @@ public class JColorChooserOperator extends JComponentOperator
      * @return JColorChooser instance or null if component was not found.
      */
     public static JColorChooser findJColorChooser(Container cont, int index) {
-        return findJColorChooser(cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th JColorChooser instance"), index);
+        return findJColorChooser(
+                cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th JColorChooser instance"), index);
     }
 
     /**
@@ -235,7 +229,8 @@ public class JColorChooserOperator extends JComponentOperator
      *
      */
     public static JColorChooser waitJColorChooser(Container cont, int index) {
-        return waitJColorChooser(cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th JColorChooser instance"), index);
+        return waitJColorChooser(
+                cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th JColorChooser instance"), index);
     }
 
     /**
@@ -264,8 +259,7 @@ public class JColorChooserOperator extends JComponentOperator
      * Switches tab to "RGB" page.
      */
     public void switchToRGB() {
-        if (!tabbed.getTitleAt(tabbed.getSelectedIndex()).
-                equals(RGB_TITLE)) {
+        if (!tabbed.getTitleAt(tabbed.getSelectedIndex()).equals(RGB_TITLE)) {
             tabbed.selectPage(RGB_TITLE);
         }
         blue = new JTextFieldOperator(this, 2);
@@ -369,7 +363,7 @@ public class JColorChooserOperator extends JComponentOperator
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps
      * {@code JColorChooser.addChooserPanel(AbstractColorChooserPanel)}
@@ -428,8 +422,7 @@ public class JColorChooserOperator extends JComponentOperator
      *         tab
      */
     public JSpinnerOperator getHueSpinnerOperator() {
-        return getSpinnerOperator(new String[]{HSV_TITLE, HSL_TITLE},
-                new int[]{HSV_HUE_INDEX, HSL_HUE_INDEX});
+        return getSpinnerOperator(new String[] {HSV_TITLE, HSL_TITLE}, new int[] {HSV_HUE_INDEX, HSL_HUE_INDEX});
     }
 
     /**
@@ -439,8 +432,8 @@ public class JColorChooserOperator extends JComponentOperator
      * @return an operator for Saturation <code>JSpinner<code> inside HSV or HSL tab
      */
     public JSpinnerOperator getSaturationSpinnerOperator() {
-        return getSpinnerOperator(new String[]{HSV_TITLE, HSL_TITLE},
-                new int[]{HSV_SATURATION_INDEX, HSL_SATURATION_INDEX});
+        return getSpinnerOperator(
+                new String[] {HSV_TITLE, HSL_TITLE}, new int[] {HSV_SATURATION_INDEX, HSL_SATURATION_INDEX});
     }
 
     /**
@@ -450,7 +443,7 @@ public class JColorChooserOperator extends JComponentOperator
      * @return an operator for value <code>JSpinner<code> inside HSV tab
      */
     public JSpinnerOperator getValueSpinnerOperator() {
-        return getSpinnerOperator(new String[]{HSV_TITLE}, new int[]{HSV_VALUE_INDEX});
+        return getSpinnerOperator(new String[] {HSV_TITLE}, new int[] {HSV_VALUE_INDEX});
     }
 
     /**
@@ -460,8 +453,8 @@ public class JColorChooserOperator extends JComponentOperator
      * @return an operator for transparency <code>JSpinner<code> inside HSV or HSL tab
      */
     public JSpinnerOperator getTransparencySpinnerOperator() {
-        return getSpinnerOperator(new String[]{HSL_TITLE, HSV_TITLE},
-                new int[]{HSL_TRANSPARENCY_INDEX, HSV_TRANSPARENCY_INDEX});
+        return getSpinnerOperator(
+                new String[] {HSL_TITLE, HSV_TITLE}, new int[] {HSL_TRANSPARENCY_INDEX, HSV_TRANSPARENCY_INDEX});
     }
 
     /**
@@ -471,7 +464,7 @@ public class JColorChooserOperator extends JComponentOperator
      * @return an operator for Lightness <code>JSpinner<code> inside HSL tab
      */
     public JSpinnerOperator getLightnessSpinnerOperator() {
-        return getSpinnerOperator(new String[]{HSL_TITLE}, new int[]{HSL_LIGHTNESS_INDEX});
+        return getSpinnerOperator(new String[] {HSL_TITLE}, new int[] {HSL_LIGHTNESS_INDEX});
     }
 
     /**
@@ -481,7 +474,7 @@ public class JColorChooserOperator extends JComponentOperator
      * @return an operator for Red <code>JSpinner<code> inside RGB tab
      */
     public JSpinnerOperator getRedSpinnerOperator() {
-        return getSpinnerOperator(new String[]{RGB_TITLE}, new int[]{RGB_RED_INDEX});
+        return getSpinnerOperator(new String[] {RGB_TITLE}, new int[] {RGB_RED_INDEX});
     }
 
     /**
@@ -491,7 +484,7 @@ public class JColorChooserOperator extends JComponentOperator
      * @return an operator for Green <code>JSpinner<code> inside RGB tab
      */
     public JSpinnerOperator getGreenSpinnerOperator() {
-        return getSpinnerOperator(new String[]{RGB_TITLE}, new int[]{RGB_GREEN_INDEX});
+        return getSpinnerOperator(new String[] {RGB_TITLE}, new int[] {RGB_GREEN_INDEX});
     }
 
     /**
@@ -501,7 +494,7 @@ public class JColorChooserOperator extends JComponentOperator
      * @return an operator for Blue <code>JSpinner<code> inside RGB tab
      */
     public JSpinnerOperator getBlueSpinnerOperator() {
-        return getSpinnerOperator(new String[]{RGB_TITLE}, new int[]{RGB_BLUE_INDEX});
+        return getSpinnerOperator(new String[] {RGB_TITLE}, new int[] {RGB_BLUE_INDEX});
     }
 
     /**
@@ -512,8 +505,7 @@ public class JColorChooserOperator extends JComponentOperator
      *         tab
      */
     public JSpinnerOperator getAlphaSpinnerOperator() {
-        return getSpinnerOperator(new String[]{RGB_TITLE, CMYK_TITLE},
-                new int[]{RGB_ALPHA_INDEX, CMYK_ALPHA_INDEX});
+        return getSpinnerOperator(new String[] {RGB_TITLE, CMYK_TITLE}, new int[] {RGB_ALPHA_INDEX, CMYK_ALPHA_INDEX});
     }
 
     /**
@@ -523,7 +515,7 @@ public class JColorChooserOperator extends JComponentOperator
      * @return an operator for Cyan <code>JSpinner<code> inside CMYK tab
      */
     public JSpinnerOperator getCyanSpinnerOperator() {
-        return getSpinnerOperator(new String[]{CMYK_TITLE}, new int[]{CMYK_CYAN_INDEX});
+        return getSpinnerOperator(new String[] {CMYK_TITLE}, new int[] {CMYK_CYAN_INDEX});
     }
 
     /**
@@ -533,7 +525,7 @@ public class JColorChooserOperator extends JComponentOperator
      * @return an operator for Magenta <code>JSpinner<code> inside CMYK tab
      */
     public JSpinnerOperator getMagentaSpinnerOperator() {
-        return getSpinnerOperator(new String[]{CMYK_TITLE}, new int[]{CMYK_MAGENTA_INDEX});
+        return getSpinnerOperator(new String[] {CMYK_TITLE}, new int[] {CMYK_MAGENTA_INDEX});
     }
 
     /**
@@ -543,7 +535,7 @@ public class JColorChooserOperator extends JComponentOperator
      * @return an operator for Yellow <code>JSpinner<code> inside CMYK tab
      */
     public JSpinnerOperator getYellowSpinnerOperator() {
-        return getSpinnerOperator(new String[]{CMYK_TITLE}, new int[]{CMYK_YELLOW_INDEX});
+        return getSpinnerOperator(new String[] {CMYK_TITLE}, new int[] {CMYK_YELLOW_INDEX});
     }
 
     /**
@@ -553,7 +545,7 @@ public class JColorChooserOperator extends JComponentOperator
      * @return an operator for Black value <code>JSpinner<code> inside CMYK tab
      */
     public JSpinnerOperator getBlackSpinnerOperator() {
-        return getSpinnerOperator(new String[]{CMYK_TITLE}, new int[]{CMYK_BLACK_INDEX});
+        return getSpinnerOperator(new String[] {CMYK_TITLE}, new int[] {CMYK_BLACK_INDEX});
     }
 
     /**
@@ -564,8 +556,7 @@ public class JColorChooserOperator extends JComponentOperator
      *         tab
      */
     public JSliderOperator getHueSliderOperator() {
-        return getSliderOperator(new String[]{HSV_TITLE, HSL_TITLE},
-                new int[]{HSV_HUE_INDEX, HSL_HUE_INDEX});
+        return getSliderOperator(new String[] {HSV_TITLE, HSL_TITLE}, new int[] {HSV_HUE_INDEX, HSL_HUE_INDEX});
     }
 
     /**
@@ -575,8 +566,8 @@ public class JColorChooserOperator extends JComponentOperator
      * @return an operator for Saturation <code>JSlider<code> inside HSV or HSL tab
      */
     public JSliderOperator getSaturationSliderOperator() {
-        return getSliderOperator(new String[]{HSV_TITLE, HSL_TITLE},
-                new int[]{HSV_SATURATION_INDEX, HSL_SATURATION_INDEX});
+        return getSliderOperator(
+                new String[] {HSV_TITLE, HSL_TITLE}, new int[] {HSV_SATURATION_INDEX, HSL_SATURATION_INDEX});
     }
 
     /**
@@ -586,7 +577,7 @@ public class JColorChooserOperator extends JComponentOperator
      * @return an operator for value <code>JSlider<code> inside HSV tab
      */
     public JSliderOperator getValueSliderOperator() {
-        return getSliderOperator(new String[]{HSV_TITLE}, new int[]{HSV_VALUE_INDEX});
+        return getSliderOperator(new String[] {HSV_TITLE}, new int[] {HSV_VALUE_INDEX});
     }
 
     /**
@@ -596,8 +587,8 @@ public class JColorChooserOperator extends JComponentOperator
      * @return an operator for transparency <code>JSlider<code> inside HSV or HSL tab
      */
     public JSliderOperator getTransparencySliderOperator() {
-        return getSliderOperator(new String[]{HSV_TITLE, HSL_TITLE},
-                new int[]{HSV_TRANSPARENCY_INDEX, HSL_TRANSPARENCY_INDEX});
+        return getSliderOperator(
+                new String[] {HSV_TITLE, HSL_TITLE}, new int[] {HSV_TRANSPARENCY_INDEX, HSL_TRANSPARENCY_INDEX});
     }
 
     /**
@@ -607,7 +598,7 @@ public class JColorChooserOperator extends JComponentOperator
      * @return an operator for Lightness <code>JSlider<code> inside HSL tab
      */
     public JSliderOperator getLightnessSliderOperator() {
-        return getSliderOperator(new String[]{HSL_TITLE}, new int[]{HSL_LIGHTNESS_INDEX});
+        return getSliderOperator(new String[] {HSL_TITLE}, new int[] {HSL_LIGHTNESS_INDEX});
     }
 
     /**
@@ -617,7 +608,7 @@ public class JColorChooserOperator extends JComponentOperator
      * @return an operator for Red <code>JSlider<code> inside RGB tab
      */
     public JSliderOperator getRedSliderOperator() {
-        return getSliderOperator(new String[]{RGB_TITLE}, new int[]{RGB_RED_INDEX});
+        return getSliderOperator(new String[] {RGB_TITLE}, new int[] {RGB_RED_INDEX});
     }
 
     /**
@@ -627,7 +618,7 @@ public class JColorChooserOperator extends JComponentOperator
      * @return an operator for Green <code>JSlider<code> inside RGB tab
      */
     public JSliderOperator getGreenSliderOperator() {
-        return getSliderOperator(new String[]{RGB_TITLE}, new int[]{RGB_GREEN_INDEX});
+        return getSliderOperator(new String[] {RGB_TITLE}, new int[] {RGB_GREEN_INDEX});
     }
 
     /**
@@ -637,7 +628,7 @@ public class JColorChooserOperator extends JComponentOperator
      * @return an operator for Blue <code>JSlider<code> inside RGB tab
      */
     public JSliderOperator getBlueSliderOperator() {
-        return getSliderOperator(new String[]{RGB_TITLE}, new int[]{RGB_BLUE_INDEX});
+        return getSliderOperator(new String[] {RGB_TITLE}, new int[] {RGB_BLUE_INDEX});
     }
 
     /**
@@ -648,8 +639,7 @@ public class JColorChooserOperator extends JComponentOperator
      *         tab
      */
     public JSliderOperator getAlphaSliderOperator() {
-        return getSliderOperator(new String[]{RGB_TITLE, CMYK_TITLE},
-                new int[]{RGB_ALPHA_INDEX, CMYK_ALPHA_INDEX});
+        return getSliderOperator(new String[] {RGB_TITLE, CMYK_TITLE}, new int[] {RGB_ALPHA_INDEX, CMYK_ALPHA_INDEX});
     }
 
     /**
@@ -659,7 +649,7 @@ public class JColorChooserOperator extends JComponentOperator
      * @return an operator for Cyan <code>JSlider<code> inside CMYK tab
      */
     public JSliderOperator getCyanSliderOperator() {
-        return getSliderOperator(new String[]{CMYK_TITLE}, new int[]{CMYK_CYAN_INDEX});
+        return getSliderOperator(new String[] {CMYK_TITLE}, new int[] {CMYK_CYAN_INDEX});
     }
 
     /**
@@ -669,7 +659,7 @@ public class JColorChooserOperator extends JComponentOperator
      * @return an operator for Magenta <code>JSlider<code> inside CMYK tab
      */
     public JSliderOperator getMagentaSliderOperator() {
-        return getSliderOperator(new String[]{CMYK_TITLE}, new int[]{CMYK_MAGENTA_INDEX});
+        return getSliderOperator(new String[] {CMYK_TITLE}, new int[] {CMYK_MAGENTA_INDEX});
     }
 
     /**
@@ -679,7 +669,7 @@ public class JColorChooserOperator extends JComponentOperator
      * @return an operator for Yellow <code>JSlider<code> inside CMYK tab
      */
     public JSliderOperator getYellowSliderOperator() {
-        return getSliderOperator(new String[]{CMYK_TITLE}, new int[]{CMYK_YELLOW_INDEX});
+        return getSliderOperator(new String[] {CMYK_TITLE}, new int[] {CMYK_YELLOW_INDEX});
     }
 
     /**
@@ -689,7 +679,7 @@ public class JColorChooserOperator extends JComponentOperator
      * @return an operator for Black <code>JSlider<code> inside CMYK tab
      */
     public JSliderOperator getBlackSliderOperator() {
-        return getSliderOperator(new String[]{CMYK_TITLE}, new int[]{CMYK_BLACK_INDEX});
+        return getSliderOperator(new String[] {CMYK_TITLE}, new int[] {CMYK_BLACK_INDEX});
     }
 
     /**
@@ -831,7 +821,7 @@ public class JColorChooserOperator extends JComponentOperator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Checks component type.

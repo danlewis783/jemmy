@@ -26,7 +26,6 @@ package org.netbeans.jemmy.drivers.scrolling;
 
 import javax.swing.JButton;
 import javax.swing.JSplitPane;
-
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.drivers.ButtonDriver;
 import org.netbeans.jemmy.drivers.DriverManager;
@@ -49,7 +48,7 @@ public class JSplitPaneDriver extends LightSupportiveDriver implements ScrollDri
      * Constructs a JSplitPaneDriver.
      */
     public JSplitPaneDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.JSplitPaneOperator"});
+        super(new String[] {"org.netbeans.jemmy.operators.JSplitPaneOperator"});
     }
 
     @Override
@@ -83,7 +82,8 @@ public class JSplitPaneDriver extends LightSupportiveDriver implements ScrollDri
         }
     }
 
-    private void moveOnce(JSplitPaneOperator oper,
+    private void moveOnce(
+            JSplitPaneOperator oper,
             ContainerOperator<?> divOper,
             ScrollAdjuster adj,
             int leftPosition,
@@ -103,9 +103,9 @@ public class JSplitPaneDriver extends LightSupportiveDriver implements ScrollDri
             if (currentPosition
                     == ((adj.getScrollOrientation() == JSplitPane.HORIZONTAL_SPLIT)
                             ? (int) (divOper.getLocationOnScreen().getX()
-                            - oper.getLocationOnScreen().getX())
+                                    - oper.getLocationOnScreen().getX())
                             : (int) (divOper.getLocationOnScreen().getY()
-                            - oper.getLocationOnScreen().getY()))) {
+                                    - oper.getLocationOnScreen().getY()))) {
                 return;
             }
             moveOnce(oper, divOper, adj, leftPosition, currentPosition);
@@ -115,9 +115,9 @@ public class JSplitPaneDriver extends LightSupportiveDriver implements ScrollDri
             if (currentPosition
                     == ((adj.getScrollOrientation() == JSplitPane.HORIZONTAL_SPLIT)
                             ? (int) (divOper.getLocationOnScreen().getX()
-                            - oper.getLocationOnScreen().getX())
+                                    - oper.getLocationOnScreen().getX())
                             : (int) (divOper.getLocationOnScreen().getY()
-                            - oper.getLocationOnScreen().getY()))) {
+                                    - oper.getLocationOnScreen().getY()))) {
                 return;
             }
             moveOnce(oper, divOper, adj, currentPosition, rightPosition);
@@ -127,9 +127,15 @@ public class JSplitPaneDriver extends LightSupportiveDriver implements ScrollDri
     }
 
     private void moveTo(JSplitPaneOperator oper, ComponentOperator divOper, int x, int y) {
-        DriverManager.getMouseDriver(divOper).
-                dragNDrop(divOper, divOper.getCenterX(), divOper.getCenterY(), x, y,
-                        Operator.getDefaultMouseButton(), 0,
+        DriverManager.getMouseDriver(divOper)
+                .dragNDrop(
+                        divOper,
+                        divOper.getCenterX(),
+                        divOper.getCenterY(),
+                        x,
+                        y,
+                        Operator.getDefaultMouseButton(),
+                        0,
                         oper.getTimeouts().create("ComponentOperator.BeforeDragTimeout"),
                         oper.getTimeouts().create("ComponentOperator.AfterDragTimeout"));
     }
@@ -147,11 +153,8 @@ public class JSplitPaneDriver extends LightSupportiveDriver implements ScrollDri
 
     private void expandTo(JSplitPaneOperator oper, int index) {
         ContainerOperator<?> divOper = oper.getDivider();
-        JButtonOperator bo
-                = new JButtonOperator((JButton) divOper.
-                        waitSubComponent(new JButtonOperator.JButtonFinder(ComponentSearcher.
-                                getTrueChooser("JButton")),
-                                index));
+        JButtonOperator bo = new JButtonOperator((JButton) divOper.waitSubComponent(
+                new JButtonOperator.JButtonFinder(ComponentSearcher.getTrueChooser("JButton")), index));
         bo.copyEnvironment(divOper);
         ButtonDriver bdriver = DriverManager.getButtonDriver(bo);
         bdriver.push(bo);

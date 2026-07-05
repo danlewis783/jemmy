@@ -35,5 +35,4 @@ public interface DescriptablePathChooser extends PathChooser {
      * Gives path description.
      */
     public String getDescription();
-
 }

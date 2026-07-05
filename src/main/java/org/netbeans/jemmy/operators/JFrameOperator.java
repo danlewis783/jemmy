@@ -26,13 +26,11 @@ package org.netbeans.jemmy.operators;
 
 import java.awt.Component;
 import java.awt.Container;
-
 import javax.accessibility.AccessibleContext;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JMenuBar;
 import javax.swing.JRootPane;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.FrameWaiter;
 import org.netbeans.jemmy.JemmyProperties;
@@ -67,10 +65,7 @@ public class JFrameOperator extends FrameOperator {
      * @param env an operator to copy environment from.
      */
     public JFrameOperator(ComponentChooser chooser, int index, Operator env) {
-        this((JFrame) waitFrame(new JFrameFinder(chooser),
-                index,
-                env.getTimeouts(),
-                env.getOutput()));
+        this((JFrame) waitFrame(new JFrameFinder(chooser), index, env.getTimeouts(), env.getOutput()));
         copyEnvironment(env);
     }
 
@@ -105,9 +100,7 @@ public class JFrameOperator extends FrameOperator {
      *
      */
     public JFrameOperator(String title, int index, Operator env) {
-        this(new JFrameFinder(new FrameByTitleFinder(title,
-                env.getComparator())),
-                index, env);
+        this(new JFrameFinder(new FrameByTitleFinder(title, env.getComparator())), index, env);
     }
 
     /**
@@ -122,8 +115,7 @@ public class JFrameOperator extends FrameOperator {
      *
      */
     public JFrameOperator(String title, int index) {
-        this(title, index,
-                ComponentOperator.getEnvironmentOperator());
+        this(title, index, ComponentOperator.getEnvironmentOperator());
     }
 
     /**
@@ -148,7 +140,8 @@ public class JFrameOperator extends FrameOperator {
      *
      */
     public JFrameOperator(int index) {
-        this((JFrame) waitFrame(new JFrameFinder(),
+        this((JFrame) waitFrame(
+                new JFrameFinder(),
                 index,
                 ComponentOperator.getEnvironmentOperator().getTimeouts(),
                 ComponentOperator.getEnvironmentOperator().getOutput()));
@@ -195,10 +188,8 @@ public class JFrameOperator extends FrameOperator {
      * @return JFrame instance or null if component was not found.
      */
     public static JFrame findJFrame(String title, boolean ce, boolean cc, int index) {
-        return ((JFrame) FrameWaiter.
-                getFrame(new JFrameFinder(new FrameByTitleFinder(title,
-                        new DefaultStringComparator(ce, cc))),
-                        index));
+        return ((JFrame) FrameWaiter.getFrame(
+                new JFrameFinder(new FrameByTitleFinder(title, new DefaultStringComparator(ce, cc))), index));
     }
 
     /**
@@ -222,7 +213,9 @@ public class JFrameOperator extends FrameOperator {
      *
      */
     public static JFrame waitJFrame(ComponentChooser chooser, int index) {
-        return ((JFrame) waitFrame(new JFrameFinder(chooser), index,
+        return ((JFrame) waitFrame(
+                new JFrameFinder(chooser),
+                index,
                 JemmyProperties.getCurrentTimeouts(),
                 JemmyProperties.getCurrentOutput()));
     }
@@ -250,9 +243,9 @@ public class JFrameOperator extends FrameOperator {
      */
     public static JFrame waitJFrame(String title, boolean ce, boolean cc, int index) {
         try {
-            return ((JFrame) (new FrameWaiter()).
-                    waitFrame(new JFrameFinder(new FrameByTitleFinder(title,
-                            new DefaultStringComparator(ce, cc))),
+            return ((JFrame) (new FrameWaiter())
+                    .waitFrame(
+                            new JFrameFinder(new FrameByTitleFinder(title, new DefaultStringComparator(ce, cc))),
                             index));
         } catch (InterruptedException e) {
             JemmyProperties.getCurrentOutput().printStackTrace(e);
@@ -274,7 +267,7 @@ public class JFrameOperator extends FrameOperator {
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code JFrame.getAccessibleContext()} through queue
      */
@@ -419,7 +412,7 @@ public class JFrameOperator extends FrameOperator {
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Checks component type.

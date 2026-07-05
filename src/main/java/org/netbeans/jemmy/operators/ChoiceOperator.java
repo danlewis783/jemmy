@@ -29,7 +29,6 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ItemListener;
 import java.util.Hashtable;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.Outputable;
@@ -89,9 +88,7 @@ public class ChoiceOperator extends ComponentOperator implements Outputable {
      * @param index an index between appropriate ones.
      */
     public ChoiceOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((Choice) cont.
-                waitSubComponent(new ChoiceFinder(chooser),
-                        index));
+        this((Choice) cont.waitSubComponent(new ChoiceFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -116,10 +113,7 @@ public class ChoiceOperator extends ComponentOperator implements Outputable {
      * @throws TimeoutExpiredException
      */
     public ChoiceOperator(ContainerOperator<?> cont, String text, int index) {
-        this((Choice) waitComponent(cont,
-                new ChoiceBySelectedItemFinder(text,
-                        cont.getComparator()),
-                index));
+        this((Choice) waitComponent(cont, new ChoiceBySelectedItemFinder(text, cont.getComparator()), index));
         copyEnvironment(cont);
     }
 
@@ -145,9 +139,7 @@ public class ChoiceOperator extends ComponentOperator implements Outputable {
      * @throws TimeoutExpiredException
      */
     public ChoiceOperator(ContainerOperator<?> cont, int index) {
-        this((Choice) waitComponent(cont,
-                new ChoiceFinder(),
-                index));
+        this((Choice) waitComponent(cont, new ChoiceFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -197,10 +189,7 @@ public class ChoiceOperator extends ComponentOperator implements Outputable {
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public static Choice findChoice(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return (findChoice(cont,
-                new ChoiceBySelectedItemFinder(text,
-                        new DefaultStringComparator(ce, ccs)),
-                index));
+        return (findChoice(cont, new ChoiceBySelectedItemFinder(text, new DefaultStringComparator(ce, ccs)), index));
     }
 
     /**
@@ -255,10 +244,7 @@ public class ChoiceOperator extends ComponentOperator implements Outputable {
      * @throws TimeoutExpiredException
      */
     public static Choice waitChoice(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return (waitChoice(cont,
-                new ChoiceBySelectedItemFinder(text,
-                        new DefaultStringComparator(ce, ccs)),
-                index));
+        return (waitChoice(cont, new ChoiceBySelectedItemFinder(text, new DefaultStringComparator(ce, ccs)), index));
     }
 
     /**
@@ -290,11 +276,8 @@ public class ChoiceOperator extends ComponentOperator implements Outputable {
     @Override
     public void copyEnvironment(Operator anotherOperator) {
         super.copyEnvironment(anotherOperator);
-        driver
-                = (ListDriver) DriverManager.
-                getDriver(DriverManager.LIST_DRIVER_ID,
-                        getClass(),
-                        anotherOperator.getProperties());
+        driver = (ListDriver)
+                DriverManager.getDriver(DriverManager.LIST_DRIVER_ID, getClass(), anotherOperator.getProperties());
     }
 
     /**
@@ -343,8 +326,7 @@ public class ChoiceOperator extends ComponentOperator implements Outputable {
      * @param index an item index.
      */
     public void selectItem(int index) {
-        output.printLine("Select " + Integer.toString(index) + "`th item in combobox\n    : "
-                + toStringSource());
+        output.printLine("Select " + Integer.toString(index) + "`th item in combobox\n    : " + toStringSource());
         output.printGolden("Select " + Integer.toString(index) + "`th item in combobox");
         makeComponentVisible();
         try {
@@ -364,11 +346,11 @@ public class ChoiceOperator extends ComponentOperator implements Outputable {
      * @param index Item index.
      */
     public void waitItemSelected(final int index) {
-        getOutput().printLine("Wait " + Integer.toString(index)
-                + "'th item to be selected in component \n    : "
-                + toStringSource());
-        getOutput().printGolden("Wait " + Integer.toString(index)
-                + "'th item to be selected");
+        getOutput()
+                .printLine("Wait " + Integer.toString(index)
+                        + "'th item to be selected in component \n    : "
+                        + toStringSource());
+        getOutput().printGolden("Wait " + Integer.toString(index) + "'th item to be selected");
         waitState(new ComponentChooser() {
             @Override
             public boolean checkComponent(Component comp) {
@@ -405,7 +387,7 @@ public class ChoiceOperator extends ComponentOperator implements Outputable {
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code Choice.add(String)} through queue
      */
@@ -575,7 +557,7 @@ public class ChoiceOperator extends ComponentOperator implements Outputable {
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     private int findItemIndex(String item, StringComparator comparator, int index) {
         int count = 0;
@@ -627,8 +609,7 @@ public class ChoiceOperator extends ComponentOperator implements Outputable {
         public boolean checkComponent(Component comp) {
             if (comp instanceof Choice) {
                 if (((Choice) comp).getSelectedItem() != null) {
-                    return (comparator.equals(((Choice) comp).getSelectedItem(),
-                            label));
+                    return (comparator.equals(((Choice) comp).getSelectedItem(), label));
                 }
             }
             return false;

@@ -25,9 +25,7 @@
 package org.netbeans.jemmy.operators;
 
 import java.awt.Container;
-
 import javax.swing.JToggleButton;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.TimeoutExpiredException;
 
@@ -64,9 +62,7 @@ public class JToggleButtonOperator extends AbstractButtonOperator {
      * @param index an index between appropriate ones.
      */
     public JToggleButtonOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JToggleButton) cont.
-                waitSubComponent(new JToggleButtonFinder(chooser),
-                        index));
+        this((JToggleButton) cont.waitSubComponent(new JToggleButtonFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -91,9 +87,10 @@ public class JToggleButtonOperator extends AbstractButtonOperator {
      * @throws TimeoutExpiredException
      */
     public JToggleButtonOperator(ContainerOperator<?> cont, String text, int index) {
-        this((JToggleButton) waitComponent(cont,
-                new JToggleButtonFinder(new AbstractButtonOperator.AbstractButtonByLabelFinder(text,
-                        cont.getComparator())),
+        this((JToggleButton) waitComponent(
+                cont,
+                new JToggleButtonFinder(
+                        new AbstractButtonOperator.AbstractButtonByLabelFinder(text, cont.getComparator())),
                 index));
         copyEnvironment(cont);
     }
@@ -120,9 +117,7 @@ public class JToggleButtonOperator extends AbstractButtonOperator {
      * @throws TimeoutExpiredException
      */
     public JToggleButtonOperator(ContainerOperator<?> cont, int index) {
-        this((JToggleButton) waitComponent(cont,
-                new JToggleButtonFinder(),
-                index));
+        this((JToggleButton) waitComponent(cont, new JToggleButtonFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -172,9 +167,10 @@ public class JToggleButtonOperator extends AbstractButtonOperator {
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public static JToggleButton findJToggleButton(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return (findJToggleButton(cont,
-                new JToggleButtonFinder(new AbstractButtonOperator.AbstractButtonByLabelFinder(text,
-                        new DefaultStringComparator(ce, ccs))),
+        return (findJToggleButton(
+                cont,
+                new JToggleButtonFinder(new AbstractButtonOperator.AbstractButtonByLabelFinder(
+                        text, new DefaultStringComparator(ce, ccs))),
                 index));
     }
 
@@ -230,9 +226,10 @@ public class JToggleButtonOperator extends AbstractButtonOperator {
      * @throws TimeoutExpiredException
      */
     public static JToggleButton waitJToggleButton(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return (waitJToggleButton(cont,
-                new JToggleButtonFinder(new AbstractButtonOperator.AbstractButtonByLabelFinder(text,
-                        new DefaultStringComparator(ce, ccs))),
+        return (waitJToggleButton(
+                cont,
+                new JToggleButtonFinder(new AbstractButtonOperator.AbstractButtonByLabelFinder(
+                        text, new DefaultStringComparator(ce, ccs))),
                 index));
     }
 

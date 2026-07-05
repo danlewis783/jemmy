@@ -25,7 +25,6 @@
 package org.netbeans.jemmy.drivers.text;
 
 import java.awt.event.KeyEvent;
-
 import org.netbeans.jemmy.Timeout;
 import org.netbeans.jemmy.operators.ComponentOperator;
 import org.netbeans.jemmy.operators.TextAreaOperator;
@@ -42,7 +41,7 @@ public class AWTTextKeyboardDriver extends TextKeyboardDriver {
      * Constructs a AWTTextKeyboardDriver.
      */
     public AWTTextKeyboardDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.TextComponentOperator"});
+        super(new String[] {"org.netbeans.jemmy.operators.TextComponentOperator"});
     }
 
     @Override

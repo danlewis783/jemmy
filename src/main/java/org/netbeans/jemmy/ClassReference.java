@@ -58,8 +58,7 @@ public class ClassReference {
      * @param className name of class
      * @exception ClassNotFoundException
      */
-    public ClassReference(String className)
-            throws ClassNotFoundException {
+    public ClassReference(String className) throws ClassNotFoundException {
         super();
         cl = Class.forName(className);
         instance = null;
@@ -72,8 +71,7 @@ public class ClassReference {
      * @exception NoSuchMethodException
      * @exception InvocationTargetException
      */
-    public void startApplication()
-            throws InvocationTargetException, NoSuchMethodException {
+    public void startApplication() throws InvocationTargetException, NoSuchMethodException {
         String[] params = new String[0];
         startApplication(params);
     }
@@ -86,8 +84,7 @@ public class ClassReference {
      * @exception NoSuchMethodException
      * @exception InvocationTargetException
      */
-    public void startApplication(String[] params)
-            throws InvocationTargetException, NoSuchMethodException {
+    public void startApplication(String[] params) throws InvocationTargetException, NoSuchMethodException {
         String[] real_params;
         if (params == null) {
             real_params = new String[0];
@@ -99,7 +96,8 @@ public class ClassReference {
         try {
             invokeMethod("main", methodParams, classes);
         } catch (IllegalAccessException | IllegalStateException e) {
-            throw new JemmyException("Failed to start application " + cl + " with params " + Arrays.toString(methodParams), e);
+            throw new JemmyException(
+                    "Failed to start application " + cl + " with params " + Arrays.toString(methodParams), e);
         }
     }
 
@@ -132,8 +130,7 @@ public class ClassReference {
         if (params_classes == null) {
             params_classes = new Class<?>[0];
         }
-        Method method = cl.getMethod(method_name,
-                params_classes);
+        Method method = cl.getMethod(method_name, params_classes);
         return method.invoke(instance, params);
     }
 
@@ -158,8 +155,7 @@ public class ClassReference {
      * @exception InvocationTargetException
      */
     public Object newInstance(Object[] params, Class<?>[] params_classes)
-            throws InvocationTargetException, NoSuchMethodException,
-            IllegalAccessException, InstantiationException {
+            throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
         if (params == null) {
             params = new Object[0];
         }
@@ -183,8 +179,7 @@ public class ClassReference {
      * @exception IllegalAccessException
      * @exception NoSuchFieldException
      */
-    public Object getField(String field_name)
-            throws NoSuchFieldException, IllegalAccessException {
+    public Object getField(String field_name) throws NoSuchFieldException, IllegalAccessException {
         return cl.getField(field_name).get(instance);
     }
 
@@ -201,8 +196,7 @@ public class ClassReference {
      * @exception IllegalAccessException
      * @exception NoSuchFieldException
      */
-    public void setField(String field_name, Object newValue)
-            throws NoSuchFieldException, IllegalAccessException {
+    public void setField(String field_name, Object newValue) throws NoSuchFieldException, IllegalAccessException {
         cl.getField(field_name).set(instance, newValue);
     }
 

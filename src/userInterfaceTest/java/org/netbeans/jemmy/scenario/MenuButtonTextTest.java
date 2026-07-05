@@ -24,9 +24,19 @@
  */
 package org.netbeans.jemmy.scenario;
 
+import static org.assertj.core.api.Assertions.assertThat;
 
+import java.awt.Component;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JRadioButtonMenuItem;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
 import org.netbeans.jemmy.operators.JMenuBarOperator;
@@ -35,19 +45,6 @@ import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.netbeans.jemmy.operators.JRadioButtonMenuItemOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
 import org.netbeans.jemmy.operators.Operator;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JRadioButtonMenuItem;
-import java.awt.Component;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class MenuButtonTextTest {
 
@@ -98,21 +95,18 @@ public class MenuButtonTextTest {
 
         JMenuItemOperator menu = mbo.showMenuItem("menu0|submenu");
         mbo.showMenuItems("menu0|submenu");
-        JPopupMenuOperator popup =
-                new JPopupMenuOperator(((JMenu) menu.getSource()).getPopupMenu());
-        JRadioButtonMenuItemOperator radio1 =
-                new JRadioButtonMenuItemOperator(popup, "radio");
+        JPopupMenuOperator popup = new JPopupMenuOperator(((JMenu) menu.getSource()).getPopupMenu());
+        JRadioButtonMenuItemOperator radio1 = new JRadioButtonMenuItemOperator(popup, "radio");
 
         assertThat(radio.isSelected()).as("Radio should not be selected").isFalse();
 
-        Thread.sleep(100); //CODETOOLS-7902051
+        Thread.sleep(100); // CODETOOLS-7902051
         mbo.pushMenu("menu0|submenu|radio");
 
         assertThat(radio.isSelected()).as("Radio should be selected").isTrue();
     }
 
-
-    //@Test
+    // @Test
     public void testPushMenus() {
 
         mbo.pushMenu("menuItem");
@@ -126,17 +120,14 @@ public class MenuButtonTextTest {
         mbo.pushMenu("menu0|submenu|subsubmenuitem");
 
         lbo.waitText("subsubmenuitem");
-
     }
 
-    //@Test
+    // @Test
     public void testShowMenus() {
 
         assertThat(mbo.showMenuItems("menu0|submenu")).hasSize(3);
 
-        ComponentChooser[] choosers1 = {
-                new MenuItemChooser("menu0"),
-                new MenuItemChooser("submenu")};
+        ComponentChooser[] choosers1 = {new MenuItemChooser("menu0"), new MenuItemChooser("submenu")};
 
         assertThat(mbo.showMenuItems(choosers1)).hasSize(3);
 
@@ -144,7 +135,9 @@ public class MenuButtonTextTest {
 
         assertThat(mbo.showMenuItem("menu").getText()).isEqualTo("menu");
 
-        assertThat(mbo.showMenuItem("menu0|submenu|subsubmenu|subsubsubmenuitem").getText()).isEqualTo("menuitem");
+        assertThat(mbo.showMenuItem("menu0|submenu|subsubmenu|subsubsubmenuitem")
+                        .getText())
+                .isEqualTo("menuitem");
     }
 
     public static class MenuItemChooser implements ComponentChooser {
@@ -156,9 +149,8 @@ public class MenuButtonTextTest {
 
         @Override
         public boolean checkComponent(Component comp) {
-            return (comp instanceof JMenuItem &&
-                    Operator.getDefaultStringComparator()
-                            .equals(text, ((JMenuItem) comp).getText()));
+            return (comp instanceof JMenuItem
+                    && Operator.getDefaultStringComparator().equals(text, ((JMenuItem) comp).getText()));
         }
 
         public String getDescription() {

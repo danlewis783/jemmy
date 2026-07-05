@@ -31,7 +31,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.QueueTool;
@@ -134,14 +133,12 @@ public class TrialListenerManager implements Outputable {
 
     void printEvent(final AWTEvent event) {
         // if event != null run toString in dispatch thread
-        String eventToString = new QueueTool().invokeSmoothly(
-                new QueueTool.QueueAction<String>("event.toString()") {
+        String eventToString = new QueueTool().invokeSmoothly(new QueueTool.QueueAction<String>("event.toString()") {
             @Override
             public String launch() {
                 return event.toString();
             }
-        }
-        );
+        });
         output.printLine(eventToString);
     }
 

@@ -26,7 +26,6 @@ package org.netbeans.jemmy.util;
 
 import java.awt.Component;
 import java.lang.reflect.InvocationTargetException;
-
 import org.netbeans.jemmy.ClassReference;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyProperties;
@@ -91,10 +90,7 @@ public class PropChooser implements ComponentChooser, Outputable {
      * A value of propNames[0] method/field should be equal to results[0]
      * object.
      */
-    public PropChooser(String[] propNames,
-            Object[][] params,
-            Class<?>[][] classes,
-            Object[] results) {
+    public PropChooser(String[] propNames, Object[][] params, Class<?>[][] classes, Object[] results) {
         this.propNames = propNames;
         this.results = results;
         if (params != null) {
@@ -124,8 +120,7 @@ public class PropChooser implements ComponentChooser, Outputable {
      * @param propNames Names of methods/fields
      * @param results Objects to compare method/field values to.
      */
-    public PropChooser(String[] propNames,
-            Object[] results) {
+    public PropChooser(String[] propNames, Object[] results) {
         this(propNames, null, null, results);
     }
 
@@ -217,8 +212,7 @@ public class PropChooser implements ComponentChooser, Outputable {
     }
 
     /* try to define if propName is a field or method*/
-    private boolean isField(Component comp, String propName, Class<?>[] params)
-            throws SecurityException {
+    private boolean isField(Component comp, String propName, Class<?>[] params) throws SecurityException {
         try {
             comp.getClass().getField(propName);
             comp.getClass().getMethod(propName, params);

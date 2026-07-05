@@ -43,8 +43,7 @@ public class StrictImageComparator implements ImageComparator {
      */
     @Override
     public boolean compare(BufferedImage image1, BufferedImage image2) {
-        if (image1.getWidth() != image2.getWidth()
-                || image1.getHeight() != image2.getHeight()) {
+        if (image1.getWidth() != image2.getWidth() || image1.getHeight() != image2.getHeight()) {
             return false;
         }
         for (int x = 0; x < image1.getWidth(); x++) {

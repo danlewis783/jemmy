@@ -37,7 +37,6 @@ import org.netbeans.jemmy.TimeoutExpiredException;
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
-
 public class Demonstrator {
 
     private static CommentWindow displayer;
@@ -65,23 +64,22 @@ public class Demonstrator {
      */
     public static void nextStep(String stepComment) {
         getDisplayer().nextStep(stepComment);
-        while(getDisplayer().isStopped()) {
+        while (getDisplayer().isStopped()) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
             }
         }
-        if(getDisplayer() != nonDisplayer) {
+        if (getDisplayer() != nonDisplayer) {
             try {
-                EventDispatcher.waitQueueEmpty(TestOut.getNullOutput(),
-                                               JemmyProperties.getCurrentTimeouts());
-            } catch(TimeoutExpiredException e) {
+                EventDispatcher.waitQueueEmpty(TestOut.getNullOutput(), JemmyProperties.getCurrentTimeouts());
+            } catch (TimeoutExpiredException e) {
                 e.printStackTrace();
             }
         }
-        if(getDisplayer().isInterrupted()) {
+        if (getDisplayer().isInterrupted()) {
             getDisplayer().close();
-            throw(new DemoInterruptedException(getDisplayer().getInterruptMessage()));
+            throw (new DemoInterruptedException(getDisplayer().getInterruptMessage()));
         }
     }
 
@@ -91,18 +89,17 @@ public class Demonstrator {
      */
     public static void showFinalComment(String stepComment) {
         getDisplayer().showFinalComment(stepComment);
-        while(getDisplayer().isStopped()) {
+        while (getDisplayer().isStopped()) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
             }
         }
         getDisplayer().close();
-        if(getDisplayer() != nonDisplayer) {
+        if (getDisplayer() != nonDisplayer) {
             try {
-                EventDispatcher.waitQueueEmpty(TestOut.getNullOutput(),
-                                               JemmyProperties.getCurrentTimeouts());
-            } catch(TimeoutExpiredException e) {
+                EventDispatcher.waitQueueEmpty(TestOut.getNullOutput(), JemmyProperties.getCurrentTimeouts());
+            } catch (TimeoutExpiredException e) {
                 e.printStackTrace();
             }
         }
@@ -115,35 +112,37 @@ public class Demonstrator {
     }
 
     private static class NonWindow implements CommentWindow {
-        public void setTitle(String title) {
-        }
+        public void setTitle(String title) {}
+
         public boolean isStopped() {
-            return(false);
+            return (false);
         }
+
         public void nextStep(String stepComment) {
-            JemmyProperties.getCurrentOutput().printLine("Step comments:\n" +
-                                                         stepComment);
+            JemmyProperties.getCurrentOutput().printLine("Step comments:\n" + stepComment);
         }
+
         public void showFinalComment(String stepComment) {
-            JemmyProperties.getCurrentOutput().printLine("Final comments:\n" +
-                                                         stepComment);
+            JemmyProperties.getCurrentOutput().printLine("Final comments:\n" + stepComment);
         }
+
         public boolean isInterrupted() {
-            return(false);
+            return (false);
         }
+
         public String getInterruptMessage() {
-            return("");
+            return ("");
         }
-        public void close() {
-        }
+
+        public void close() {}
     }
 
     private static CommentWindow getDisplayer() {
-        if(System.getProperty("jemmy.demo") != null &&
-           System.getProperty("jemmy.demo").equals("on")) {
-            return(displayer);
+        if (System.getProperty("jemmy.demo") != null
+                && System.getProperty("jemmy.demo").equals("on")) {
+            return (displayer);
         } else {
-            return(nonDisplayer);
+            return (nonDisplayer);
         }
     }
 }

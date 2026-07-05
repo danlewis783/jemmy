@@ -24,16 +24,16 @@
  */
 package org.netbeans.jemmy.scenario;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 /**
  * Created by shura on 6/30/17.
@@ -83,7 +83,9 @@ public class ComboBoxesAndListApp extends TestFrame {
         gridbag.setConstraints(list, c);
         pane.add(list);
 
-        String[] non_editable_contents = {"non_editable_one", "non_editable_two", "non_editable_three", "non_editable_four"};
+        String[] non_editable_contents = {
+            "non_editable_one", "non_editable_two", "non_editable_three", "non_editable_four"
+        };
         JComboBox non_editable = new JComboBox(non_editable_contents);
         non_editable.setEditable(false);
         non_editable.setName("non_editable");

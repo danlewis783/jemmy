@@ -30,13 +30,11 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-
 import org.netbeans.jemmy.EventDispatcher;
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.TestOut;
@@ -51,7 +49,6 @@ import org.netbeans.jemmy.operators.JButtonOperator;
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
-
 public class DefaultCommentWindow extends JDialog implements CommentWindow {
 
     JTextArea comments;
@@ -101,7 +98,7 @@ public class DefaultCommentWindow extends JDialog implements CommentWindow {
         finishButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 hideWindow();
-                if(!finished) {
+                if (!finished) {
                     setInterrupted(true);
                 }
                 continual = false;
@@ -132,8 +129,8 @@ public class DefaultCommentWindow extends JDialog implements CommentWindow {
         getContentPane().add(new JScrollPane(comments), BorderLayout.CENTER);
 
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        setSize((int)screen.getWidth(), 200);
-        setLocation(0, (int)screen.getHeight() - 200);
+        setSize((int) screen.getWidth(), 200);
+        setLocation(0, (int) screen.getHeight() - 200);
 
         setModal(modal);
     }
@@ -154,7 +151,7 @@ public class DefaultCommentWindow extends JDialog implements CommentWindow {
     }
 
     public boolean isStopped() {
-        return(stopped);
+        return (stopped);
     }
 
     public void nextStep(String stepComment) {
@@ -163,7 +160,7 @@ public class DefaultCommentWindow extends JDialog implements CommentWindow {
         contButton.setEnabled(true);
         finishButton.setEnabled(true);
         setStopped(true);
-        if(!continual) {
+        if (!continual) {
             new Mover(nextStepButton).enter();
         } else {
             new Mover(nextStepButton).push();
@@ -183,11 +180,11 @@ public class DefaultCommentWindow extends JDialog implements CommentWindow {
     }
 
     public boolean isInterrupted() {
-        return(interrupted);
+        return (interrupted);
     }
 
     public String getInterruptMessage() {
-        return("Step comments: \"" + comments.getText() + "\"");
+        return ("Step comments: \"" + comments.getText() + "\"");
     }
 
     public void close() {
@@ -212,8 +209,7 @@ public class DefaultCommentWindow extends JDialog implements CommentWindow {
             super();
             bo = new JButtonOperator(button);
             Timeouts times = JemmyProperties.getCurrentTimeouts();
-            times.setTimeout("AbstractButton.PushButtonTimeout",
-                             readCommentTimeout);
+            times.setTimeout("AbstractButton.PushButtonTimeout", readCommentTimeout);
             bo.setTimeouts(times);
         }
         /**
@@ -230,28 +226,28 @@ public class DefaultCommentWindow extends JDialog implements CommentWindow {
             toPush = false;
             start();
         }
+
         public void run() {
             try {
-                while(!bo.getSource().isShowing()) {
+                while (!bo.getSource().isShowing()) {
                     Thread.sleep(100);
                 }
-                EventDispatcher.waitQueueEmpty(TestOut.getNullOutput(),
-                                               JemmyProperties.getCurrentTimeouts());
+                EventDispatcher.waitQueueEmpty(TestOut.getNullOutput(), JemmyProperties.getCurrentTimeouts());
                 bo.enterMouse();
-                if(toPush) {
+                if (toPush) {
                     Thread.sleep(readCommentTimeout);
                     bo.push();
                 }
-            } catch(InterruptedException e) {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
-            } catch(TimeoutExpiredException e) {
+            } catch (TimeoutExpiredException e) {
                 e.printStackTrace();
             }
         }
     }
 
     private void hideWindow() {
-        if(isModal()) {
+        if (isModal()) {
             setVisible(false);
         } else {
             toBack();
@@ -260,7 +256,7 @@ public class DefaultCommentWindow extends JDialog implements CommentWindow {
 
     private void showWindow() {
         setVisible(true);
-        if(!isModal()) {
+        if (!isModal()) {
             toFront();
         }
     }

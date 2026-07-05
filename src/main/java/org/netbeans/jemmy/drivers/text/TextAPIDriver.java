@@ -25,7 +25,6 @@
 package org.netbeans.jemmy.drivers.text;
 
 import java.awt.event.KeyEvent;
-
 import org.netbeans.jemmy.Timeout;
 import org.netbeans.jemmy.drivers.DriverManager;
 import org.netbeans.jemmy.drivers.LightSupportiveDriver;
@@ -90,18 +89,13 @@ public abstract class TextAPIDriver extends LightSupportiveDriver implements Tex
         checkSupported(oper);
         String curtext = getText(oper);
         int realPos = caretPosition;
-        if (getSelectionStart(oper) == realPos
-                || getSelectionEnd(oper) == realPos) {
+        if (getSelectionStart(oper) == realPos || getSelectionEnd(oper) == realPos) {
             if (getSelectionEnd(oper) == realPos) {
                 realPos = realPos - (getSelectionEnd(oper) - getSelectionStart(oper));
             }
-            curtext
-                    = curtext.substring(0, getSelectionStart(oper))
-                    + curtext.substring(getSelectionEnd(oper));
+            curtext = curtext.substring(0, getSelectionStart(oper)) + curtext.substring(getSelectionEnd(oper));
         }
-        changeText(oper,
-                curtext.substring(0, realPos) + text
-                + curtext.substring(realPos));
+        changeText(oper, curtext.substring(0, realPos) + text + curtext.substring(realPos));
     }
 
     @Override
@@ -117,9 +111,7 @@ public abstract class TextAPIDriver extends LightSupportiveDriver implements Tex
     @Override
     public void enterText(ComponentOperator oper, String text) {
         changeText(oper, text);
-        DriverManager.getKeyDriver(oper).
-                pushKey(oper, KeyEvent.VK_ENTER, 0,
-                        new Timeout("", 0));
+        DriverManager.getKeyDriver(oper).pushKey(oper, KeyEvent.VK_ENTER, 0, new Timeout("", 0));
     }
 
     /**

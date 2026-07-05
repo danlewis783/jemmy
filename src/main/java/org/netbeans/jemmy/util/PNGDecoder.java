@@ -31,7 +31,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
-
 import org.netbeans.jemmy.JemmyException;
 
 /**
@@ -59,10 +58,7 @@ public class PNGDecoder extends Object {
 
     int readInt() throws IOException {
         byte b[] = read(4);
-        return (((b[0] & 0xff) << 24)
-                + ((b[1] & 0xff) << 16)
-                + ((b[2] & 0xff) << 8)
-                + ((b[3] & 0xff)));
+        return (((b[0] & 0xff) << 24) + ((b[1] & 0xff) << 16) + ((b[2] & 0xff) << 8) + ((b[3] & 0xff)));
     }
 
     byte[] read(int count) throws IOException {
@@ -100,7 +96,7 @@ public class PNGDecoder extends Object {
     public BufferedImage decode() throws IOException {
 
         byte[] id = read(12);
-        checkEquality(id, new byte[]{-119, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13});
+        checkEquality(id, new byte[] {-119, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13});
 
         byte[] ihdr = read(4);
         checkEquality(ihdr, "IHDR".getBytes());
@@ -112,17 +108,17 @@ public class PNGDecoder extends Object {
 
         byte[] head = read(5);
         int mode;
-        if (compare(head, new byte[]{1, 0, 0, 0, 0})) {
+        if (compare(head, new byte[] {1, 0, 0, 0, 0})) {
             mode = PNGEncoder.BW_MODE;
-        } else if (compare(head, new byte[]{8, 0, 0, 0, 0})) {
+        } else if (compare(head, new byte[] {8, 0, 0, 0, 0})) {
             mode = PNGEncoder.GREYSCALE_MODE;
-        } else if (compare(head, new byte[]{8, 2, 0, 0, 0})) {
+        } else if (compare(head, new byte[] {8, 2, 0, 0, 0})) {
             mode = PNGEncoder.COLOR_MODE;
         } else {
             throw (new JemmyException("Format error"));
         }
 
-        readInt();//!!crc
+        readInt(); // !!crc
 
         int size = readInt();
 
@@ -138,55 +134,59 @@ public class PNGDecoder extends Object {
 
         try {
             switch (mode) {
-                case PNGEncoder.BW_MODE: {
-                    int bytes = width / 8;
-                    if ((width % 8) != 0) {
-                        bytes++;
-                    }
-                    byte colorset;
-                    byte[] row = new byte[bytes];
-                    for (int y = 0; y < height; y++) {
-                        inflater.inflate(new byte[1]);
-                        inflater.inflate(row);
-                        for (int x = 0; x < bytes; x++) {
-                            colorset = row[x];
-                            for (int sh = 0; sh < 8; sh++) {
-                                if (x * 8 + sh >= width) {
-                                    break;
+                case PNGEncoder.BW_MODE:
+                    {
+                        int bytes = width / 8;
+                        if ((width % 8) != 0) {
+                            bytes++;
+                        }
+                        byte colorset;
+                        byte[] row = new byte[bytes];
+                        for (int y = 0; y < height; y++) {
+                            inflater.inflate(new byte[1]);
+                            inflater.inflate(row);
+                            for (int x = 0; x < bytes; x++) {
+                                colorset = row[x];
+                                for (int sh = 0; sh < 8; sh++) {
+                                    if (x * 8 + sh >= width) {
+                                        break;
+                                    }
+                                    if ((colorset & 0x80) == 0x80) {
+                                        result.setRGB(x * 8 + sh, y, Color.white.getRGB());
+                                    } else {
+                                        result.setRGB(x * 8 + sh, y, Color.black.getRGB());
+                                    }
+                                    colorset <<= 1;
                                 }
-                                if ((colorset & 0x80) == 0x80) {
-                                    result.setRGB(x * 8 + sh, y, Color.white.getRGB());
-                                } else {
-                                    result.setRGB(x * 8 + sh, y, Color.black.getRGB());
-                                }
-                                colorset <<= 1;
                             }
                         }
                     }
-                }
-                break;
-                case PNGEncoder.GREYSCALE_MODE: {
-                    byte[] row = new byte[width];
-                    for (int y = 0; y < height; y++) {
-                        inflater.inflate(new byte[1]);
-                        inflater.inflate(row);
-                        for (int x = 0; x < width; x++) {
-                            color = row[x];
-                            result.setRGB(x, y, (color << 16) + (color << 8) + color);
+                    break;
+                case PNGEncoder.GREYSCALE_MODE:
+                    {
+                        byte[] row = new byte[width];
+                        for (int y = 0; y < height; y++) {
+                            inflater.inflate(new byte[1]);
+                            inflater.inflate(row);
+                            for (int x = 0; x < width; x++) {
+                                color = row[x];
+                                result.setRGB(x, y, (color << 16) + (color << 8) + color);
+                            }
                         }
                     }
-                }
-                break;
+                    break;
                 case PNGEncoder.COLOR_MODE: {
                     byte[] row = new byte[width * 3];
                     for (int y = 0; y < height; y++) {
                         inflater.inflate(new byte[1]);
                         inflater.inflate(row);
                         for (int x = 0; x < width; x++) {
-                            result.setRGB(x, y,
+                            result.setRGB(
+                                    x,
+                                    y,
                                     ((row[x * 3 + 0] & 0xff) << 16)
-                                    + ((row[x * 3 + 1] & 0xff) << 8)
-                                    + ((row[x * 3 + 2] & 0xff)));
+                                            + ((row[x * 3 + 1] & 0xff) << 8)
+                                            + ((row[x * 3 + 2] & 0xff)));
                         }
                     }
                 }
@@ -195,13 +195,13 @@ public class PNGDecoder extends Object {
             throw (new JemmyException("ZIP error", e));
         }
 
-        readInt();//!!crc
-        readInt();//0
+        readInt(); // !!crc
+        readInt(); // 0
 
         byte[] iend = read(4);
         checkEquality(iend, "IEND".getBytes());
 
-        readInt();//!!crc
+        readInt(); // !!crc
         in.close();
 
         return result;
@@ -220,5 +220,4 @@ public class PNGDecoder extends Object {
             throw (new JemmyException("IOException during image reading", e));
         }
     }
-
 }

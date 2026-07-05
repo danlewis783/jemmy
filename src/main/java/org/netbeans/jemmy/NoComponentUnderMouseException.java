@@ -41,5 +41,4 @@ public class NoComponentUnderMouseException extends RuntimeException {
     public NoComponentUnderMouseException() {
         super("No component under the mouse!");
     }
-
 }

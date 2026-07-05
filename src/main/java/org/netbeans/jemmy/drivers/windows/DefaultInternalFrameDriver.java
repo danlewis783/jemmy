@@ -26,9 +26,7 @@ package org.netbeans.jemmy.drivers.windows;
 
 import java.awt.Component;
 import java.awt.Container;
-
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.drivers.FrameDriver;
@@ -42,7 +40,7 @@ public class DefaultInternalFrameDriver extends LightSupportiveDriver
         implements WindowDriver, FrameDriver, InternalFrameDriver {
 
     public DefaultInternalFrameDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.JInternalFrameOperator"});
+        super(new String[] {"org.netbeans.jemmy.operators.JInternalFrameOperator"});
     }
 
     @Override
@@ -74,7 +72,8 @@ public class DefaultInternalFrameDriver extends LightSupportiveDriver
     public void move(ComponentOperator oper, int x, int y) {
         checkSupported(oper);
         ComponentOperator titleOperator = ((JInternalFrameOperator) oper).getTitleOperator();
-        titleOperator.dragNDrop(titleOperator.getCenterY(),
+        titleOperator.dragNDrop(
+                titleOperator.getCenterY(),
                 titleOperator.getCenterY(),
                 x - oper.getX() + titleOperator.getCenterY(),
                 y - oper.getY() + titleOperator.getCenterY());
@@ -83,11 +82,7 @@ public class DefaultInternalFrameDriver extends LightSupportiveDriver
     @Override
     public void resize(ComponentOperator oper, int width, int height) {
         checkSupported(oper);
-        oper.
-                dragNDrop(oper.getWidth() - 1,
-                        oper.getHeight() - 1,
-                        width - 1,
-                        height - 1);
+        oper.dragNDrop(oper.getWidth() - 1, oper.getHeight() - 1, width - 1, height - 1);
     }
 
     @Override

@@ -177,5 +177,4 @@ public class ColorImageComparator extends StrictImageComparator {
             return (rgb == background) ? 0 : rgb;
         }
     }
-
 }

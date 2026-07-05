@@ -37,8 +37,7 @@ public class LookAndFeelProvider {
      * and feels
      */
     public static String[] availableLookAndFeels() {
-        UIManager.LookAndFeelInfo LookAndFeelInfos[]
-                = UIManager.getInstalledLookAndFeels();
+        UIManager.LookAndFeelInfo LookAndFeelInfos[] = UIManager.getInstalledLookAndFeels();
         String[] lookAndFeels = new String[LookAndFeelInfos.length];
         for (int i = 0; i < LookAndFeelInfos.length; i++) {
             lookAndFeels[i] = LookAndFeelInfos[i].getClassName();

@@ -130,8 +130,7 @@ public class Timeouts {
      * @see org.netbeans.jemmy.Timeouts#loadDefaults()
      * @exception IOException
      */
-    public void loadDefaults(InputStream stream)
-            throws IOException {
+    public void loadDefaults(InputStream stream) throws IOException {
         defaults.load(stream);
     }
 
@@ -144,8 +143,7 @@ public class Timeouts {
      * @exception IOException
      * @exception FileNotFoundException
      */
-    public void loadDefaults(String fileName)
-            throws FileNotFoundException, IOException {
+    public void loadDefaults(String fileName) throws FileNotFoundException, IOException {
         defaults.load(fileName);
     }
 
@@ -158,8 +156,7 @@ public class Timeouts {
      * @exception IOException
      * @exception FileNotFoundException
      */
-    public void loadDefaults()
-            throws FileNotFoundException, IOException {
+    public void loadDefaults() throws FileNotFoundException, IOException {
         defaults.load();
     }
 
@@ -268,8 +265,7 @@ public class Timeouts {
         String name = "";
         while (e.hasMoreElements()) {
             name = e.nextElement();
-            t.setTimeout(name,
-                    getTimeout(name));
+            t.setTimeout(name, getTimeout(name));
         }
         return t;
     }
@@ -282,8 +278,7 @@ public class Timeouts {
      * @exception InterruptedException
      */
     public void eSleep(String name) throws InterruptedException {
-        if (contains(name)
-                || defaults.contains(name)) {
+        if (contains(name) || defaults.contains(name)) {
             Thread.sleep(getTimeout(name));
         }
     }
@@ -338,8 +333,7 @@ public class Timeouts {
      * @see org.netbeans.jemmy.Timeouts#load()
      * @exception IOException
      */
-    public void load(InputStream stream)
-            throws IOException {
+    public void load(InputStream stream) throws IOException {
         Properties props = new Properties();
         props.load(stream);
         Enumeration<?> propNames = props.propertyNames();
@@ -361,8 +355,7 @@ public class Timeouts {
      * @exception IOException
      * @exception FileNotFoundException
      */
-    public void load(String fileName)
-            throws FileNotFoundException, IOException {
+    public void load(String fileName) throws FileNotFoundException, IOException {
         try (FileInputStream fileInputStream = new FileInputStream(fileName)) {
             load(fileInputStream);
         }
@@ -377,8 +370,7 @@ public class Timeouts {
      * @exception IOException
      * @exception FileNotFoundException
      */
-    public void load()
-            throws FileNotFoundException, IOException {
+    public void load() throws FileNotFoundException, IOException {
         if (System.getProperty("jemmy.timeouts") != null
                 && !System.getProperty("jemmy.timeouts").equals("")) {
             load(System.getProperty("jemmy.timeouts"));

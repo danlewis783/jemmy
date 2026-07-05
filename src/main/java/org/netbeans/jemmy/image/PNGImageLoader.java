@@ -27,7 +27,6 @@ package org.netbeans.jemmy.image;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
-
 import org.netbeans.jemmy.util.PNGDecoder;
 
 /**

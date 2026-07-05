@@ -28,7 +28,6 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Label;
 import java.util.Hashtable;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.TimeoutExpiredException;
 
@@ -67,9 +66,7 @@ public class LabelOperator extends ComponentOperator {
      * @param index an index between appropriate ones.
      */
     public LabelOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((Label) cont.
-                waitSubComponent(new LabelFinder(chooser),
-                        index));
+        this((Label) cont.waitSubComponent(new LabelFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -94,10 +91,7 @@ public class LabelOperator extends ComponentOperator {
      * @throws TimeoutExpiredException
      */
     public LabelOperator(ContainerOperator<?> cont, String text, int index) {
-        this((Label) waitComponent(cont,
-                new LabelByLabelFinder(text,
-                        cont.getComparator()),
-                index));
+        this((Label) waitComponent(cont, new LabelByLabelFinder(text, cont.getComparator()), index));
         copyEnvironment(cont);
     }
 
@@ -123,9 +117,7 @@ public class LabelOperator extends ComponentOperator {
      * @throws TimeoutExpiredException
      */
     public LabelOperator(ContainerOperator<?> cont, int index) {
-        this((Label) waitComponent(cont,
-                new LabelFinder(),
-                index));
+        this((Label) waitComponent(cont, new LabelFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -260,7 +252,7 @@ public class LabelOperator extends ComponentOperator {
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code Label.getAlignment()} through queue
      */
@@ -309,7 +301,7 @@ public class LabelOperator extends ComponentOperator {
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Allows to find component by LabelByLabelFinder.
@@ -343,8 +335,7 @@ public class LabelOperator extends ComponentOperator {
         public boolean checkComponent(Component comp) {
             if (comp instanceof Label) {
                 if (((Label) comp).getText() != null) {
-                    return (comparator.equals(((Label) comp).getText(),
-                            label));
+                    return (comparator.equals(((Label) comp).getText(), label));
                 }
             }
             return false;

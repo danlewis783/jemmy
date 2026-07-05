@@ -26,14 +26,12 @@ package org.netbeans.jemmy.operators;
 
 import java.awt.Component;
 import java.awt.Container;
-
 import javax.swing.Icon;
 import javax.swing.JTextPane;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.Style;
 import javax.swing.text.StyledDocument;
-
 import org.netbeans.jemmy.ComponentChooser;
 
 /**
@@ -75,9 +73,7 @@ public class JTextPaneOperator extends JEditorPaneOperator {
      * @param index an index between appropriate ones.
      */
     public JTextPaneOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JTextPane) cont.
-                waitSubComponent(new JTextPaneFinder(chooser),
-                        index));
+        this((JTextPane) cont.waitSubComponent(new JTextPaneFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -101,9 +97,9 @@ public class JTextPaneOperator extends JEditorPaneOperator {
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public JTextPaneOperator(ContainerOperator<?> cont, String text, int index) {
-        this((JTextPane) waitComponent(cont,
-                new JTextPaneFinder(new JTextComponentOperator.JTextComponentByTextFinder(text,
-                        cont.getComparator())),
+        this((JTextPane) waitComponent(
+                cont,
+                new JTextPaneFinder(new JTextComponentOperator.JTextComponentByTextFinder(text, cont.getComparator())),
                 index));
         copyEnvironment(cont);
     }
@@ -128,9 +124,7 @@ public class JTextPaneOperator extends JEditorPaneOperator {
      * @param index Ordinal component index.
      */
     public JTextPaneOperator(ContainerOperator<?> cont, int index) {
-        this((JTextPane) waitComponent(cont,
-                new JTextPaneFinder(),
-                index));
+        this((JTextPane) waitComponent(cont, new JTextPaneFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -179,9 +173,10 @@ public class JTextPaneOperator extends JEditorPaneOperator {
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public static JTextPane findJTextPane(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return (findJTextPane(cont,
-                new JTextPaneFinder(new JTextComponentOperator.JTextComponentByTextFinder(text,
-                        new DefaultStringComparator(ce, ccs))),
+        return (findJTextPane(
+                cont,
+                new JTextPaneFinder(new JTextComponentOperator.JTextComponentByTextFinder(
+                        text, new DefaultStringComparator(ce, ccs))),
                 index));
     }
 
@@ -234,9 +229,10 @@ public class JTextPaneOperator extends JEditorPaneOperator {
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public static JTextPane waitJTextPane(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return (waitJTextPane(cont,
-                new JTextPaneFinder(new JTextComponentOperator.JTextComponentByTextFinder(text,
-                        new DefaultStringComparator(ce, ccs))),
+        return (waitJTextPane(
+                cont,
+                new JTextPaneFinder(new JTextComponentOperator.JTextComponentByTextFinder(
+                        text, new DefaultStringComparator(ce, ccs))),
                 index));
     }
 
@@ -255,7 +251,7 @@ public class JTextPaneOperator extends JEditorPaneOperator {
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code JTextPane.addStyle(String, Style)} through queue
      */
@@ -426,7 +422,7 @@ public class JTextPaneOperator extends JEditorPaneOperator {
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Checks component type.

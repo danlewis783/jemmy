@@ -45,8 +45,8 @@ import java.awt.Frame;
  */
 public class FrameWaiter extends WindowWaiter implements Timeoutable, Outputable {
 
-    private final static long WAIT_TIME = 60000;
-    private final static long AFTER_WAIT_TIME = 0;
+    private static final long WAIT_TIME = 60000;
+    private static final long AFTER_WAIT_TIME = 0;
 
     private Timeouts timeouts;
     private TestOut output;
@@ -162,10 +162,8 @@ public class FrameWaiter extends WindowWaiter implements Timeoutable, Outputable
     public void setTimeouts(Timeouts timeouts) {
         this.timeouts = timeouts;
         Timeouts times = timeouts.cloneThis();
-        times.setTimeout("WindowWaiter.WaitWindowTimeout",
-                timeouts.getTimeout("FrameWaiter.WaitFrameTimeout"));
-        times.setTimeout("WindowWaiter.AfterWindowTimeout",
-                timeouts.getTimeout("FrameWaiter.AfterFrameTimeout"));
+        times.setTimeout("WindowWaiter.WaitWindowTimeout", timeouts.getTimeout("FrameWaiter.WaitFrameTimeout"));
+        times.setTimeout("WindowWaiter.AfterWindowTimeout", timeouts.getTimeout("FrameWaiter.AfterFrameTimeout"));
         super.setTimeouts(times);
     }
 
@@ -227,8 +225,7 @@ public class FrameWaiter extends WindowWaiter implements Timeoutable, Outputable
      * @see org.netbeans.jemmy.WindowWaiter#actionProduced(Object)
      * @exception InterruptedException
      */
-    public Frame waitFrame(ComponentChooser ch, int index)
-            throws InterruptedException {
+    public Frame waitFrame(ComponentChooser ch, int index) throws InterruptedException {
         setTimeouts(timeouts);
         return (Frame) waitWindow(new FrameSubChooser(ch), index);
     }
@@ -247,8 +244,7 @@ public class FrameWaiter extends WindowWaiter implements Timeoutable, Outputable
      * @see org.netbeans.jemmy.WindowWaiter#actionProduced(Object)
      * @exception InterruptedException
      */
-    public Frame waitFrame(ComponentChooser ch)
-            throws InterruptedException {
+    public Frame waitFrame(ComponentChooser ch) throws InterruptedException {
         return waitFrame(ch, 0);
     }
 
@@ -331,8 +327,8 @@ public class FrameWaiter extends WindowWaiter implements Timeoutable, Outputable
      */
     @Override
     protected String getTimeoutExpiredMessage(long timeSpent) {
-        return ("Frame \"" + getComponentChooser().getDescription() + "\" has not been opened in "
-                + timeSpent + " milliseconds");
+        return ("Frame \"" + getComponentChooser().getDescription() + "\" has not been opened in " + timeSpent
+                + " milliseconds");
     }
 
     /**
@@ -349,14 +345,12 @@ public class FrameWaiter extends WindowWaiter implements Timeoutable, Outputable
         String resultToString = null;
         if (result instanceof Component) {
             // run toString in dispatch thread
-            resultToString = new QueueTool().invokeSmoothly(
-                    new QueueTool.QueueAction<String>("result.toString()") {
+            resultToString = new QueueTool().invokeSmoothly(new QueueTool.QueueAction<String>("result.toString()") {
                 @Override
                 public String launch() {
                     return result.toString();
                 }
-            }
-            );
+            });
         } else {
             resultToString = result.toString();
         }
@@ -460,8 +454,8 @@ public class FrameWaiter extends WindowWaiter implements Timeoutable, Outputable
 
         @Override
         public String toString() {
-            return "FrameByTitleChooser{" + "title=" + title + ", compareExactly=" + compareExactly + ", compareCaseSensitive=" + compareCaseSensitive + '}';
+            return "FrameByTitleChooser{" + "title=" + title + ", compareExactly=" + compareExactly
+                    + ", compareCaseSensitive=" + compareCaseSensitive + '}';
         }
     }
-
 }

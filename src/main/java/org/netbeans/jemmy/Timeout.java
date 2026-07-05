@@ -72,10 +72,7 @@ public class Timeout extends Object {
             try {
                 Thread.sleep(getValue());
             } catch (InterruptedException e) {
-                throw (new JemmyException("Sleep "
-                        + getName()
-                        + " was interrupted!",
-                        e));
+                throw (new JemmyException("Sleep " + getName() + " was interrupted!", e));
             }
         }
     }
@@ -104,8 +101,7 @@ public class Timeout extends Object {
      */
     public void check() {
         if (expired()) {
-            throw (new TimeoutExpiredException(getName()
-                    + " timeout expired!"));
+            throw (new TimeoutExpiredException(getName() + " timeout expired!"));
         }
     }
 }

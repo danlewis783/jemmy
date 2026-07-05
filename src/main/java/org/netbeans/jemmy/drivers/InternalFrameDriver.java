@@ -25,7 +25,6 @@
 package org.netbeans.jemmy.drivers;
 
 import java.awt.Component;
-
 import org.netbeans.jemmy.operators.ComponentOperator;
 
 /**

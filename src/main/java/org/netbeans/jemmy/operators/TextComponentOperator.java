@@ -29,7 +29,6 @@ import java.awt.Container;
 import java.awt.TextComponent;
 import java.awt.event.TextListener;
 import java.util.Hashtable;
-
 import org.netbeans.jemmy.Action;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.Outputable;
@@ -48,8 +47,7 @@ import org.netbeans.jemmy.drivers.TextDriver;
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
-public class TextComponentOperator extends ComponentOperator
-        implements Timeoutable, Outputable {
+public class TextComponentOperator extends ComponentOperator implements Timeoutable, Outputable {
 
     /**
      * Identifier for a "text" property.
@@ -65,10 +63,10 @@ public class TextComponentOperator extends ComponentOperator
      */
     public static final String SELECTED_TEXT_DPROP = "Selected text";
 
-    private final static long PUSH_KEY_TIMEOUT = 0;
-    private final static long BETWEEN_KEYS_TIMEOUT = 0;
-    private final static long CHANGE_CARET_POSITION_TIMEOUT = 60000;
-    private final static long TYPE_TEXT_TIMEOUT = 60000;
+    private static final long PUSH_KEY_TIMEOUT = 0;
+    private static final long BETWEEN_KEYS_TIMEOUT = 0;
+    private static final long CHANGE_CARET_POSITION_TIMEOUT = 60000;
+    private static final long TYPE_TEXT_TIMEOUT = 60000;
 
     private Timeouts timeouts;
     private TestOut output;
@@ -94,9 +92,7 @@ public class TextComponentOperator extends ComponentOperator
      * @param index an index between appropriate ones.
      */
     public TextComponentOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((TextComponent) cont.
-                waitSubComponent(new TextComponentFinder(chooser),
-                        index));
+        this((TextComponent) cont.waitSubComponent(new TextComponentFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -125,10 +121,7 @@ public class TextComponentOperator extends ComponentOperator
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public TextComponentOperator(ContainerOperator<?> cont, String text, int index) {
-        this((TextComponent) waitComponent(cont,
-                new TextComponentByTextFinder(text,
-                        cont.getComparator()),
-                index));
+        this((TextComponent) waitComponent(cont, new TextComponentByTextFinder(text, cont.getComparator()), index));
         copyEnvironment(cont);
     }
 
@@ -158,9 +151,7 @@ public class TextComponentOperator extends ComponentOperator
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public TextComponentOperator(ContainerOperator<?> cont, int index) {
-        this((TextComponent) waitComponent(cont,
-                new TextComponentFinder(),
-                index));
+        this((TextComponent) waitComponent(cont, new TextComponentFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -217,7 +208,8 @@ public class TextComponentOperator extends ComponentOperator
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public static TextComponent findTextComponent(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return findTextComponent(cont, new TextComponentByTextFinder(text, new DefaultStringComparator(ce, ccs)), index);
+        return findTextComponent(
+                cont, new TextComponentByTextFinder(text, new DefaultStringComparator(ce, ccs)), index);
     }
 
     /**
@@ -269,7 +261,8 @@ public class TextComponentOperator extends ComponentOperator
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public static TextComponent waitTextComponent(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return waitTextComponent(cont, new TextComponentByTextFinder(text, new DefaultStringComparator(ce, ccs)), index);
+        return waitTextComponent(
+                cont, new TextComponentByTextFinder(text, new DefaultStringComparator(ce, ccs)), index);
     }
 
     /**
@@ -318,11 +311,8 @@ public class TextComponentOperator extends ComponentOperator
     @Override
     public void copyEnvironment(Operator anotherOperator) {
         super.copyEnvironment(anotherOperator);
-        driver
-                = (TextDriver) DriverManager.
-                getDriver(DriverManager.TEXT_DRIVER_ID,
-                        getClass(),
-                        anotherOperator.getProperties());
+        driver = (TextDriver)
+                DriverManager.getDriver(DriverManager.TEXT_DRIVER_ID, getClass(), anotherOperator.getProperties());
     }
 
     /**
@@ -333,23 +323,26 @@ public class TextComponentOperator extends ComponentOperator
      */
     public void changeCaretPosition(final int position) {
         makeComponentVisible();
-        produceTimeRestricted(new Action<Void, Void>() {
-            @Override
-            public Void launch(Void obj) {
-                driver.changeCaretPosition(TextComponentOperator.this, position);
-                return null;
-            }
+        produceTimeRestricted(
+                new Action<Void, Void>() {
+                    @Override
+                    public Void launch(Void obj) {
+                        driver.changeCaretPosition(TextComponentOperator.this, position);
+                        return null;
+                    }
 
-            @Override
-            public String getDescription() {
-                return "Caret moving";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "Caret moving";
+                    }
 
-            @Override
-            public String toString() {
-                return "TextComponentOperator.changeCaretPosition.Action{description = " + getDescription() + '}';
-            }
-        }, "TextComponentOperator.ChangeCaretPositionTimeout");
+                    @Override
+                    public String toString() {
+                        return "TextComponentOperator.changeCaretPosition.Action{description = " + getDescription()
+                                + '}';
+                    }
+                },
+                "TextComponentOperator.ChangeCaretPositionTimeout");
     }
 
     /**
@@ -361,23 +354,25 @@ public class TextComponentOperator extends ComponentOperator
      */
     public void selectText(final int startPosition, final int finalPosition) {
         makeComponentVisible();
-        produceTimeRestricted(new Action<Void, Void>() {
-            @Override
-            public Void launch(Void obj) {
-                driver.selectText(TextComponentOperator.this, startPosition, finalPosition);
-                return null;
-            }
+        produceTimeRestricted(
+                new Action<Void, Void>() {
+                    @Override
+                    public Void launch(Void obj) {
+                        driver.selectText(TextComponentOperator.this, startPosition, finalPosition);
+                        return null;
+                    }
 
-            @Override
-            public String getDescription() {
-                return "Text selecting";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "Text selecting";
+                    }
 
-            @Override
-            public String toString() {
-                return "TextComponentOperator.selectText.Action{description = " + getDescription() + '}';
-            }
-        }, "TextComponentOperator.TypeTextTimeout");
+                    @Override
+                    public String toString() {
+                        return "TextComponentOperator.selectText.Action{description = " + getDescription() + '}';
+                    }
+                },
+                "TextComponentOperator.TypeTextTimeout");
     }
 
     /**
@@ -417,27 +412,28 @@ public class TextComponentOperator extends ComponentOperator
      *
      */
     public void clearText() {
-        output.printLine("Clearing text in text component\n    : "
-                + toStringSource());
+        output.printLine("Clearing text in text component\n    : " + toStringSource());
         output.printGolden("Clearing text in text component");
         makeComponentVisible();
-        produceTimeRestricted(new Action<Void, Void>() {
-            @Override
-            public Void launch(Void obj) {
-                driver.clearText(TextComponentOperator.this);
-                return null;
-            }
+        produceTimeRestricted(
+                new Action<Void, Void>() {
+                    @Override
+                    public Void launch(Void obj) {
+                        driver.clearText(TextComponentOperator.this);
+                        return null;
+                    }
 
-            @Override
-            public String getDescription() {
-                return "Text clearing";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "Text clearing";
+                    }
 
-            @Override
-            public String toString() {
-                return "TextComponentOperator.clearText.Action{description = " + getDescription() + '}';
-            }
-        }, "TextComponentOperator.TypeTextTimeout");
+                    @Override
+                    public String toString() {
+                        return "TextComponentOperator.clearText.Action{description = " + getDescription() + '}';
+                    }
+                },
+                "TextComponentOperator.TypeTextTimeout");
     }
 
     /**
@@ -453,23 +449,25 @@ public class TextComponentOperator extends ComponentOperator
                 + toStringSource());
         output.printGolden("Typing text \"" + text + "\" in text component");
         makeComponentVisible();
-        produceTimeRestricted(new Action<Void, Void>() {
-            @Override
-            public Void launch(Void obj) {
-                driver.typeText(TextComponentOperator.this, text, caretPosition);
-                return null;
-            }
+        produceTimeRestricted(
+                new Action<Void, Void>() {
+                    @Override
+                    public Void launch(Void obj) {
+                        driver.typeText(TextComponentOperator.this, text, caretPosition);
+                        return null;
+                    }
 
-            @Override
-            public String getDescription() {
-                return "Text typing";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "Text typing";
+                    }
 
-            @Override
-            public String toString() {
-                return "TextComponentOperator.typeText.Action{description = " + getDescription() + '}';
-            }
-        }, "TextComponentOperator.TypeTextTimeout");
+                    @Override
+                    public String toString() {
+                        return "TextComponentOperator.typeText.Action{description = " + getDescription() + '}';
+                    }
+                },
+                "TextComponentOperator.TypeTextTimeout");
     }
 
     /**
@@ -489,23 +487,25 @@ public class TextComponentOperator extends ComponentOperator
      */
     public void enterText(final String text) {
         makeComponentVisible();
-        produceTimeRestricted(new Action<Void, Void>() {
-            @Override
-            public Void launch(Void obj) {
-                driver.enterText(TextComponentOperator.this, text);
-                return null;
-            }
+        produceTimeRestricted(
+                new Action<Void, Void>() {
+                    @Override
+                    public Void launch(Void obj) {
+                        driver.enterText(TextComponentOperator.this, text);
+                        return null;
+                    }
 
-            @Override
-            public String getDescription() {
-                return "Text entering";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "Text entering";
+                    }
 
-            @Override
-            public String toString() {
-                return "TextComponentOperator.enterText.Action{description = " + getDescription() + '}';
-            }
-        }, "TextComponentOperator.TypeTextTimeout");
+                    @Override
+                    public String toString() {
+                        return "TextComponentOperator.enterText.Action{description = " + getDescription() + '}';
+                    }
+                },
+                "TextComponentOperator.TypeTextTimeout");
     }
 
     @Override
@@ -518,7 +518,7 @@ public class TextComponentOperator extends ComponentOperator
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code TextComponent.addTextListener(TextListener)} through queue
      */
@@ -699,7 +699,7 @@ public class TextComponentOperator extends ComponentOperator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Return a TextDriver used by this component.
@@ -742,8 +742,7 @@ public class TextComponentOperator extends ComponentOperator
         public boolean checkComponent(Component comp) {
             if (comp instanceof TextComponent) {
                 if (((TextComponent) comp).getText() != null) {
-                    return (comparator.equals(((TextComponent) comp).getText(),
-                            label));
+                    return (comparator.equals(((TextComponent) comp).getText(), label));
                 }
             }
             return false;

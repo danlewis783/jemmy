@@ -61,7 +61,6 @@ import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.Properties;
 import java.util.Vector;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -93,7 +92,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
-
 import org.netbeans.jemmy.ClassReference;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.TestOut;
@@ -159,10 +157,9 @@ public class GUIBrowser extends JFrame {
         viewButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ComponentBrowser(getOwnr(),
-                        (ComponentNode) mainTree.getSelectionPath().
-                        getLastPathComponent()).
-                        setVisible(true);
+                new ComponentBrowser(getOwnr(), (ComponentNode)
+                                mainTree.getSelectionPath().getLastPathComponent())
+                        .setVisible(true);
             }
         });
 
@@ -171,8 +168,7 @@ public class GUIBrowser extends JFrame {
         expandButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                expandAll(mainTree,
-                        mainTree.getSelectionPath());
+                expandAll(mainTree, mainTree.getSelectionPath());
             }
         });
 
@@ -188,8 +184,7 @@ public class GUIBrowser extends JFrame {
         dumpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFileChooser chooser
-                        = new JFileChooser(System.getProperty("user.home"));
+                JFileChooser chooser = new JFileChooser(System.getProperty("user.home"));
                 chooser.addChoosableFileFilter(new FileFilter() {
                     @Override
                     public boolean accept(File f) {
@@ -262,8 +257,7 @@ public class GUIBrowser extends JFrame {
 
         addWindowListener(new WindowListener() {
             @Override
-            public void windowActivated(WindowEvent e) {
-            }
+            public void windowActivated(WindowEvent e) {}
 
             @Override
             public void windowClosed(WindowEvent e) {
@@ -274,33 +268,26 @@ public class GUIBrowser extends JFrame {
             }
 
             @Override
-            public void windowClosing(WindowEvent e) {
-            }
+            public void windowClosing(WindowEvent e) {}
 
             @Override
-            public void windowDeactivated(WindowEvent e) {
-            }
+            public void windowDeactivated(WindowEvent e) {}
 
             @Override
-            public void windowDeiconified(WindowEvent e) {
-            }
+            public void windowDeiconified(WindowEvent e) {}
 
             @Override
-            public void windowIconified(WindowEvent e) {
-            }
+            public void windowIconified(WindowEvent e) {}
 
             @Override
-            public void windowOpened(WindowEvent e) {
-            }
+            public void windowOpened(WindowEvent e) {}
         });
         addComponentListener(new ComponentListener() {
             @Override
-            public void componentHidden(ComponentEvent e) {
-            }
+            public void componentHidden(ComponentEvent e) {}
 
             @Override
-            public void componentMoved(ComponentEvent e) {
-            }
+            public void componentMoved(ComponentEvent e) {}
 
             @Override
             public void componentResized(ComponentEvent e) {
@@ -308,8 +295,7 @@ public class GUIBrowser extends JFrame {
             }
 
             @Override
-            public void componentShown(ComponentEvent e) {
-            }
+            public void componentShown(ComponentEvent e) {}
         });
 
         setSize(800, 400);
@@ -361,9 +347,7 @@ public class GUIBrowser extends JFrame {
             System.arraycopy(argv, 1, newArgv, 0, argv.length - 1);
             try {
                 new ClassReference(argv[0]).startApplication(newArgv);
-            } catch (ClassNotFoundException
-                    | InvocationTargetException
-                    | NoSuchMethodException e) {
+            } catch (ClassNotFoundException | InvocationTargetException | NoSuchMethodException e) {
                 e.printStackTrace();
                 return;
             }
@@ -375,24 +359,25 @@ public class GUIBrowser extends JFrame {
         viewButton.setEnabled(false);
         expandButton.setEnabled(false);
         new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    for (int i = delay - 1; i >= 0; i--) {
-                        setStatus("Reloading after " + Integer.toString(i) + " second");
-                        Thread.sleep(1000);
+                    @Override
+                    public void run() {
+                        try {
+                            for (int i = delay - 1; i >= 0; i--) {
+                                setStatus("Reloading after " + Integer.toString(i) + " second");
+                                Thread.sleep(1000);
+                            }
+                            setStatus("Reloading ...");
+                            Dumper.dumpAll(dumpWriter);
+                            // qt.lock();
+                            root = new RootNode();
+                            // qt.unlock();
+                            mainTree.setModel(root.getWindowModel());
+                            setStatus("Reloaded");
+                        } catch (InterruptedException ignored) {
+                        }
                     }
-                    setStatus("Reloading ...");
-                    Dumper.dumpAll(dumpWriter);
-                    //qt.lock();
-                    root = new RootNode();
-                    //qt.unlock();
-                    mainTree.setModel(root.getWindowModel());
-                    setStatus("Reloaded");
-                } catch (InterruptedException ignored) {
-                }
-            }
-        }).start();
+                })
+                .start();
     }
 
     private JFrame getOwnr() {
@@ -531,7 +516,6 @@ public class GUIBrowser extends JFrame {
                     + Modifier.toString(method.getModifiers()) + " "
                     + super.toString() + " "
                     + method.getName());
-
         }
 
         public ClassNode[] getParameters() {
@@ -681,9 +665,7 @@ public class GUIBrowser extends JFrame {
             clss = win.getClass().getName();
             BufferedImage image = null;
             try {
-                image = new Robot().
-                        createScreenCapture(new Rectangle(win.getLocationOnScreen(),
-                                win.getSize()));
+                image = new Robot().createScreenCapture(new Rectangle(win.getLocationOnScreen(), win.getSize()));
             } catch (AWTException e) {
                 e.printStackTrace();
             }
@@ -744,15 +726,13 @@ public class GUIBrowser extends JFrame {
         }
 
         @Override
-        public void addTreeModelListener(TreeModelListener l) {
-        }
+        public void addTreeModelListener(TreeModelListener l) {}
 
         @Override
         public Object getChild(Object parent, int index) {
             if (parent == clsn) {
                 return clsn.getSuperClasses()[index];
-            } else if (parent instanceof SuperClassNode
-                    || parent instanceof InterfaceNode) {
+            } else if (parent instanceof SuperClassNode || parent instanceof InterfaceNode) {
                 return ((ClassNode) parent).getSubNodes()[index];
             } else if (parent instanceof MethodNode) {
                 return ((MethodNode) parent).getParameters()[index];
@@ -764,8 +744,7 @@ public class GUIBrowser extends JFrame {
         public int getChildCount(Object parent) {
             if (parent == clsn) {
                 return clsn.getSuperClasses().length;
-            } else if (parent instanceof SuperClassNode
-                    || parent instanceof InterfaceNode) {
+            } else if (parent instanceof SuperClassNode || parent instanceof InterfaceNode) {
                 return ((ClassNode) parent).getSubNodes().length;
             } else if (parent instanceof MethodNode) {
                 return ((MethodNode) parent).getParameters().length;
@@ -780,8 +759,7 @@ public class GUIBrowser extends JFrame {
                     || parent instanceof SuperClassNode
                     || parent instanceof InterfaceNode) {
                 Object[] children;
-                if (parent instanceof SuperClassNode
-                        || parent instanceof InterfaceNode) {
+                if (parent instanceof SuperClassNode || parent instanceof InterfaceNode) {
                     children = ((ClassNode) parent).getSuperClasses();
                 } else if (parent instanceof MethodNode) {
                     children = ((MethodNode) parent).getParameters();
@@ -808,12 +786,10 @@ public class GUIBrowser extends JFrame {
         }
 
         @Override
-        public void removeTreeModelListener(TreeModelListener l) {
-        }
+        public void removeTreeModelListener(TreeModelListener l) {}
 
         @Override
-        public void valueForPathChanged(TreePath path, Object newValue) {
-        }
+        public void valueForPathChanged(TreePath path, Object newValue) {}
     }
 
     private static class WindowModel implements TreeModel {
@@ -825,8 +801,7 @@ public class GUIBrowser extends JFrame {
         }
 
         @Override
-        public void addTreeModelListener(TreeModelListener l) {
-        }
+        public void addTreeModelListener(TreeModelListener l) {}
 
         @Override
         public Object getChild(Object parent, int index) {
@@ -854,12 +829,10 @@ public class GUIBrowser extends JFrame {
         }
 
         @Override
-        public void removeTreeModelListener(TreeModelListener l) {
-        }
+        public void removeTreeModelListener(TreeModelListener l) {}
 
         @Override
-        public void valueForPathChanged(TreePath path, Object newValue) {
-        }
+        public void valueForPathChanged(TreePath path, Object newValue) {}
     }
 
     private static class ComponentModel implements TreeModel {
@@ -871,8 +844,7 @@ public class GUIBrowser extends JFrame {
         }
 
         @Override
-        public void addTreeModelListener(TreeModelListener l) {
-        }
+        public void addTreeModelListener(TreeModelListener l) {}
 
         @Override
         public Object getChild(Object parent, int index) {
@@ -916,36 +888,25 @@ public class GUIBrowser extends JFrame {
         }
 
         @Override
-        public void removeTreeModelListener(TreeModelListener l) {
-        }
+        public void removeTreeModelListener(TreeModelListener l) {}
 
         @Override
-        public void valueForPathChanged(TreePath path, Object newValue) {
-        }
+        public void valueForPathChanged(TreePath path, Object newValue) {}
     }
 
     private static class WindowRenderer implements TreeCellRenderer, ListCellRenderer<ClassNode> {
 
-        public WindowRenderer() {
-        }
+        public WindowRenderer() {}
 
         @Override
-        public Component getTreeCellRendererComponent(JTree tree,
-                Object value,
-                boolean selected,
-                boolean expanded,
-                boolean leaf,
-                int row,
-                boolean hasFocus) {
+        public Component getTreeCellRendererComponent(
+                JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
             return get((ClassNode) value, selected);
         }
 
         @Override
-        public Component getListCellRendererComponent(JList<? extends ClassNode> list,
-                ClassNode value,
-                int index,
-                boolean isSelected,
-                boolean cellHasFocus) {
+        public Component getListCellRendererComponent(
+                JList<? extends ClassNode> list, ClassNode value, int index, boolean isSelected, boolean cellHasFocus) {
             return get(value, isSelected);
         }
 
@@ -981,9 +942,7 @@ public class GUIBrowser extends JFrame {
         public PropertyDialog(JFrame owner) {
             super(owner, "Properties", true);
 
-            propFile = new File(System.getProperty("user.home")
-                    + System.getProperty("file.separator")
-                    + ".guibrowser");
+            propFile = new File(System.getProperty("user.home") + System.getProperty("file.separator") + ".guibrowser");
 
             props = new Properties();
 
@@ -1059,8 +1018,7 @@ public class GUIBrowser extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     int index = orderList.getSelectedIndex();
                     if (index > 0) {
-                        viewTabs.add(index - 1,
-                                viewTabs.remove(index));
+                        viewTabs.add(index - 1, viewTabs.remove(index));
                         orderList.setSelectedIndex(index - 1);
                     }
                 }
@@ -1073,8 +1031,7 @@ public class GUIBrowser extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     int index = orderList.getSelectedIndex();
                     if (index < viewTabs.size() - 1) {
-                        viewTabs.add(index + 1,
-                                viewTabs.remove(index));
+                        viewTabs.add(index + 1, viewTabs.remove(index));
                         orderList.setSelectedIndex(index + 1);
                     }
                 }
@@ -1129,15 +1086,12 @@ public class GUIBrowser extends JFrame {
 
         private void save() {
             try {
-                props.setProperty("guibrowser.showall",
-                        showAll ? "on" : "off");
+                props.setProperty("guibrowser.showall", showAll ? "on" : "off");
                 for (int i = 0; i < viewTabs.size(); i++) {
-                    props.setProperty("guibrowser.viewpage_" + Integer.toString(i),
-                            viewTabs.elementAt(i));
+                    props.setProperty("guibrowser.viewpage_" + Integer.toString(i), viewTabs.elementAt(i));
                 }
                 try (FileOutputStream fileOutputStream = new FileOutputStream(propFile)) {
-                    props.store(fileOutputStream,
-                            "Jemmy GUIBrowser");
+                    props.store(fileOutputStream, "Jemmy GUIBrowser");
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -1150,8 +1104,7 @@ public class GUIBrowser extends JFrame {
                     try (FileInputStream fileInputStream = new FileInputStream(propFile)) {
                         props.load(fileInputStream);
                     }
-                    showAll
-                            = props.getProperty("guibrowser.showall") == null
+                    showAll = props.getProperty("guibrowser.showall") == null
                             || props.getProperty("guibrowser.showall").equals("")
                             || props.getProperty("guibrowser.showall").equals("on");
                     visibleCombo.setSelectedIndex(showAll ? 1 : 0);
@@ -1212,9 +1165,7 @@ public class GUIBrowser extends JFrame {
             viewButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    new ComponentBrowser(getOwnr(),
-                            getSelectedNode()).
-                            setVisible(true);
+                    new ComponentBrowser(getOwnr(), getSelectedNode()).setVisible(true);
                 }
             });
 
@@ -1223,8 +1174,7 @@ public class GUIBrowser extends JFrame {
             expandButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    expandAll(getSelectedTree(),
-                            getSelectionPath());
+                    expandAll(getSelectedTree(), getSelectionPath());
                 }
             });
 
@@ -1268,12 +1218,10 @@ public class GUIBrowser extends JFrame {
 
             addComponentListener(new ComponentListener() {
                 @Override
-                public void componentHidden(ComponentEvent e) {
-                }
+                public void componentHidden(ComponentEvent e) {}
 
                 @Override
-                public void componentMoved(ComponentEvent e) {
-                }
+                public void componentMoved(ComponentEvent e) {}
 
                 @Override
                 public void componentResized(ComponentEvent e) {
@@ -1286,8 +1234,7 @@ public class GUIBrowser extends JFrame {
                 }
 
                 @Override
-                public void componentShown(ComponentEvent e) {
-                }
+                public void componentShown(ComponentEvent e) {}
             });
 
             setSize(800, 400);
@@ -1307,8 +1254,7 @@ public class GUIBrowser extends JFrame {
         }
 
         private void addWindowTab() {
-            if (compNode instanceof WindowNode
-                    && ((WindowNode) compNode).getWindows().length > 0) {
+            if (compNode instanceof WindowNode && ((WindowNode) compNode).getWindows().length > 0) {
                 winTree = new JTree(((WindowNode) compNode).getWindowModel());
                 winTree.setCellRenderer(renderer);
                 winTree.setEditable(false);
@@ -1316,12 +1262,10 @@ public class GUIBrowser extends JFrame {
                 winSplit = createUnderPane(winTree);
                 tbd.add(WINDOWS_TAB, winSplit);
             }
-
         }
 
         private void addComponentTab() {
-            if (compNode instanceof ContainerNode
-                    && ((ContainerNode) compNode).getComponents().length > 0) {
+            if (compNode instanceof ContainerNode && ((ContainerNode) compNode).getComponents().length > 0) {
                 componentTree = new JTree(((ContainerNode) compNode).getComponentModel());
                 componentTree.setCellRenderer(renderer);
                 componentTree.setEditable(false);
@@ -1329,7 +1273,6 @@ public class GUIBrowser extends JFrame {
                 componentSplit = createUnderPane(componentTree);
                 tbd.add(COMPONENTS_TAB, componentSplit);
             }
-
         }
 
         private void addReflectionTab() {
@@ -1459,7 +1402,6 @@ public class GUIBrowser extends JFrame {
                 return null;
             }
         }
-
     }
 
     private static class SelectionManager implements TreeSelectionListener, ListSelectionListener {
@@ -1490,8 +1432,7 @@ public class GUIBrowser extends JFrame {
         TreeModel model = tree.getModel();
         Object lastComponent = path.getLastPathComponent();
         for (int i = 0; i < model.getChildCount(lastComponent); i++) {
-            expandAll(tree,
-                    path.pathByAddingChild(model.getChild(lastComponent, i)));
+            expandAll(tree, path.pathByAddingChild(model.getChild(lastComponent, i)));
         }
     }
 
@@ -1505,11 +1446,8 @@ public class GUIBrowser extends JFrame {
 
         @Override
         public void valueChanged(TreeSelectionEvent e) {
-            if (e.getPath() != null
-                    && e.getPath().getLastPathComponent() instanceof ComponentNode) {
-                area.setText("toString(): "
-                        + ((ComponentNode) e.getPath().getLastPathComponent()).
-                        getToString());
+            if (e.getPath() != null && e.getPath().getLastPathComponent() instanceof ComponentNode) {
+                area.setText("toString(): " + ((ComponentNode) e.getPath().getLastPathComponent()).getToString());
             } else {
                 area.setText("");
             }
@@ -1521,9 +1459,8 @@ public class GUIBrowser extends JFrame {
         toStringArea.setLineWrap(true);
         toStringArea.setEditable(false);
         tree.addTreeSelectionListener(new ToStringListener(toStringArea));
-        JSplitPane result = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-                new JScrollPane(tree),
-                new JScrollPane(toStringArea));
+        JSplitPane result =
+                new JSplitPane(JSplitPane.VERTICAL_SPLIT, new JScrollPane(tree), new JScrollPane(toStringArea));
         result.setOneTouchExpandable(true);
         result.setDividerSize(8);
         result.setDividerLocation(0.8);

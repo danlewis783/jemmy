@@ -32,7 +32,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Hashtable;
-
 import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
 import javax.swing.event.HyperlinkEvent;
@@ -41,7 +40,6 @@ import javax.swing.text.Document;
 import javax.swing.text.EditorKit;
 import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLDocument;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.TimeoutExpiredException;
@@ -95,9 +93,7 @@ public class JEditorPaneOperator extends JTextComponentOperator {
      * @param index an index between appropriate ones.
      */
     public JEditorPaneOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JEditorPane) cont.
-                waitSubComponent(new JEditorPaneFinder(chooser),
-                        index));
+        this((JEditorPane) cont.waitSubComponent(new JEditorPaneFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -122,9 +118,10 @@ public class JEditorPaneOperator extends JTextComponentOperator {
      * @throws TimeoutExpiredException
      */
     public JEditorPaneOperator(ContainerOperator<?> cont, String text, int index) {
-        this((JEditorPane) waitComponent(cont,
-                new JEditorPaneFinder(new JTextComponentOperator.JTextComponentByTextFinder(text,
-                        cont.getComparator())),
+        this((JEditorPane) waitComponent(
+                cont,
+                new JEditorPaneFinder(
+                        new JTextComponentOperator.JTextComponentByTextFinder(text, cont.getComparator())),
                 index));
         copyEnvironment(cont);
     }
@@ -151,9 +148,7 @@ public class JEditorPaneOperator extends JTextComponentOperator {
      * @throws TimeoutExpiredException
      */
     public JEditorPaneOperator(ContainerOperator<?> cont, int index) {
-        this((JEditorPane) waitComponent(cont,
-                new JEditorPaneFinder(),
-                index));
+        this((JEditorPane) waitComponent(cont, new JEditorPaneFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -203,9 +198,10 @@ public class JEditorPaneOperator extends JTextComponentOperator {
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public static JEditorPane findJEditorPane(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return (findJEditorPane(cont,
-                new JEditorPaneFinder(new JTextComponentOperator.JTextComponentByTextFinder(text,
-                        new DefaultStringComparator(ce, ccs))),
+        return (findJEditorPane(
+                cont,
+                new JEditorPaneFinder(new JTextComponentOperator.JTextComponentByTextFinder(
+                        text, new DefaultStringComparator(ce, ccs))),
                 index));
     }
 
@@ -261,9 +257,10 @@ public class JEditorPaneOperator extends JTextComponentOperator {
      * @throws TimeoutExpiredException
      */
     public static JEditorPane waitJEditorPane(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return (waitJEditorPane(cont,
-                new JEditorPaneFinder(new JTextComponentOperator.JTextComponentByTextFinder(text,
-                        new DefaultStringComparator(ce, ccs))),
+        return (waitJEditorPane(
+                cont,
+                new JEditorPaneFinder(new JTextComponentOperator.JTextComponentByTextFinder(
+                        text, new DefaultStringComparator(ce, ccs))),
                 index));
     }
 
@@ -291,8 +288,7 @@ public class JEditorPaneOperator extends JTextComponentOperator {
      * is performed by TextDriver.
      */
     @Deprecated
-    public void usePageNavigationKeys(boolean yesOrNo) {
-    }
+    public void usePageNavigationKeys(boolean yesOrNo) {}
 
     /**
      * Returns information about component.
@@ -313,29 +309,27 @@ public class JEditorPaneOperator extends JTextComponentOperator {
         int expectedCaretPos = getCaretPositionOfReference(reference);
         Rectangle viewBounds = modelToView(expectedCaretPos);
         Point expectedCaretPosLoc = new Point(viewBounds.x, viewBounds.y);
-        //TODO Extend DefaultVisualizer to show a portion of component and use
+        // TODO Extend DefaultVisualizer to show a portion of component and use
         // that in here
         JScrollPane scroll = (JScrollPane) getContainer(
-                new JScrollPaneOperator.JScrollPaneFinder(
-                        ComponentSearcher.getTrueChooser("JScrollPane")));
+                new JScrollPaneOperator.JScrollPaneFinder(ComponentSearcher.getTrueChooser("JScrollPane")));
         if (scroll != null) {
             JScrollPaneOperator scroller = new JScrollPaneOperator(scroll);
             scroller.copyEnvironment(this);
             scroller.setVisualizer(new EmptyVisualizer());
-            scroller.scrollToComponentRectangle(getSource(),
-                    (int) viewBounds.getX(), (int) viewBounds.getY(),
-                    (int) viewBounds.getWidth(), (int) viewBounds.getHeight());
+            scroller.scrollToComponentRectangle(
+                    getSource(), (int) viewBounds.getX(), (int) viewBounds.getY(), (int) viewBounds.getWidth(), (int)
+                            viewBounds.getHeight());
             setCaretPosition(expectedCaretPos);
         } else if (getVisibleRect().contains(expectedCaretPosLoc)) {
             scrollToReference(reference);
         } else {
-            throw new IllegalComponentStateException("Component doesn't "
-                    + "contain JScrollPane and Reference is out of"
-                    + " visible area");
+            throw new IllegalComponentStateException(
+                    "Component doesn't " + "contain JScrollPane and Reference is out of" + " visible area");
         }
 
-        waitStateOnQueue(comp -> expectedCaretPosLoc.equals(
-                ((JEditorPane)comp).getCaret().getMagicCaretPosition()));
+        waitStateOnQueue(comp ->
+                expectedCaretPosLoc.equals(((JEditorPane) comp).getCaret().getMagicCaretPosition()));
         waitCaretPosition(expectedCaretPos);
         clickMouse(viewBounds.x, viewBounds.y, 1);
     }
@@ -348,30 +342,27 @@ public class JEditorPaneOperator extends JTextComponentOperator {
      * @throws IllegalArgumentException if the named reference doesn't
      *  exist in the document
      */
-    private int getCaretPositionOfReference(String reference)
-            throws IllegalArgumentException {
+    private int getCaretPositionOfReference(String reference) throws IllegalArgumentException {
         int pos = -1;
         Document doc = getDocument();
         if (doc instanceof HTMLDocument) {
-            HTMLDocument.Iterator iter =
-                    ((HTMLDocument) doc).getIterator(HTML.Tag.A);
-            for (;iter.isValid();iter.next()) {
-                String nameAttr = (String) iter.getAttributes().
-                        getAttribute(HTML.Attribute.NAME);
+            HTMLDocument.Iterator iter = ((HTMLDocument) doc).getIterator(HTML.Tag.A);
+            for (; iter.isValid(); iter.next()) {
+                String nameAttr = (String) iter.getAttributes().getAttribute(HTML.Attribute.NAME);
                 if (reference.equals(nameAttr)) {
                     pos = iter.getStartOffset();
                 }
             }
         }
-        if(pos ==-1) {
-            throw new IllegalArgumentException("Reference " + reference +
-                    " doesn't exist in the document " + doc + ".");
+        if (pos == -1) {
+            throw new IllegalArgumentException(
+                    "Reference " + reference + " doesn't exist in the document " + doc + ".");
         }
         return pos;
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code JEditorPane.addHyperlinkListener(HyperlinkListener)}
      * through queue
@@ -544,7 +535,7 @@ public class JEditorPaneOperator extends JTextComponentOperator {
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Checks component type.

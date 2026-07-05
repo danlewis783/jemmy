@@ -26,7 +26,6 @@ package org.netbeans.jemmy.drivers.lists;
 
 import java.awt.Rectangle;
 import java.awt.event.InputEvent;
-
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.drivers.DriverManager;
 import org.netbeans.jemmy.drivers.LightSupportiveDriver;
@@ -48,7 +47,7 @@ public class JListMouseDriver extends LightSupportiveDriver implements MultiSelL
      * Constructs a JListMouseDriver.
      */
     public JListMouseDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.JListOperator"});
+        super(new String[] {"org.netbeans.jemmy.operators.JListOperator"});
         queueTool = new QueueTool();
     }
 
@@ -90,11 +89,14 @@ public class JListMouseDriver extends LightSupportiveDriver implements MultiSelL
             @Override
             public Void launch() {
                 Rectangle rect = oper.getCellBounds(index, index);
-                DriverManager.getMouseDriver(oper).
-                        clickMouse(oper,
+                DriverManager.getMouseDriver(oper)
+                        .clickMouse(
+                                oper,
                                 rect.x + rect.width / 2,
                                 rect.y + rect.height / 2,
-                                1, Operator.getDefaultMouseButton(), modifiers,
+                                1,
+                                Operator.getDefaultMouseButton(),
+                                modifiers,
                                 oper.getTimeouts().create("ComponentOperator.MouseClickTimeout"));
                 return null;
             }

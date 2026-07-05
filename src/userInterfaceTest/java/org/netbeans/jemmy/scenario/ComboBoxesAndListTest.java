@@ -24,23 +24,29 @@
  */
 package org.netbeans.jemmy.scenario;
 
-import org.netbeans.jemmy.ComponentSearcher;
-import org.netbeans.jemmy.operators.*;
-import org.netbeans.jemmy.util.NameComponentChooser;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import java.awt.Window;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import javax.swing.JFrame;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-
-import javax.swing.*;
-import java.awt.*;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.netbeans.jemmy.ComponentSearcher;
+import org.netbeans.jemmy.operators.ComponentOperator;
+import org.netbeans.jemmy.operators.FrameOperator;
+import org.netbeans.jemmy.operators.JComboBoxOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.JListOperator;
+import org.netbeans.jemmy.operators.JScrollPaneOperator;
+import org.netbeans.jemmy.operators.JTextFieldOperator;
+import org.netbeans.jemmy.operators.Operator;
+import org.netbeans.jemmy.util.NameComponentChooser;
 
 // testEditableSelection, testEditable and testNonEditable used to declare
 // dependsOnMethods = "testEditableLookup" under TestNG; ordering keeps that
@@ -58,8 +64,8 @@ public class ComboBoxesAndListTest {
         new ComboBoxesAndListApp().display();
         win = JFrameOperator.waitJFrame("ComboBoxesAndListTest", true, true);
         fo = new JFrameOperator(win);
-        scroller = new JScrollPaneOperator(JScrollPaneOperator.
-                findJScrollPane(win,ComponentSearcher.getTrueChooser("Scroll pane")));
+        scroller = new JScrollPaneOperator(
+                JScrollPaneOperator.findJScrollPane(win, ComponentSearcher.getTrueChooser("Scroll pane")));
     }
 
     @Test
@@ -73,14 +79,12 @@ public class ComboBoxesAndListTest {
         Window window = new ComponentOperator(win).getWindow();
         assertThat(window).isSameAs(win);
     }
+
     @Test
     @Order(2)
     public void testEditableLookup() {
-        JComboBoxOperator operator_1 = new JComboBoxOperator(JComboBoxOperator.
-                findJComboBox(win,
-                        "editable_one",
-                        true, true,
-                        0));
+        JComboBoxOperator operator_1 =
+                new JComboBoxOperator(JComboBoxOperator.findJComboBox(win, "editable_one", true, true, 0));
         JComboBoxOperator operator_10 = new JComboBoxOperator(fo);
         JComboBoxOperator operator_11 = new JComboBoxOperator(fo, "editable_one");
         JComboBoxOperator operator_12 = new JComboBoxOperator(fo, new NameComponentChooser("editable"));
@@ -93,11 +97,8 @@ public class ComboBoxesAndListTest {
     @Test
     @Order(3)
     public void testListLookup() {
-        JComboBoxOperator operator_2 = new JComboBoxOperator(JComboBoxOperator.
-                findJComboBox(win,
-                        "non_editable_one",
-                        true, true,
-                        0));
+        JComboBoxOperator operator_2 =
+                new JComboBoxOperator(JComboBoxOperator.findJComboBox(win, "non_editable_one", true, true, 0));
 
         JListOperator lo0 = new JListOperator(fo);
         lo0.clickOnItem("two");
@@ -163,7 +164,8 @@ public class ComboBoxesAndListTest {
         JComboBoxOperator.waitJComboBox(win, "non_editable_three", true, true, -1);
 
         JComboBoxOperator operator_00 = new JComboBoxOperator(fo, new NameComponentChooser("non_editable"));
-        JComboBoxOperator operator_01 = new JComboBoxOperator(fo, new NameComponentChooser("on_e", new Operator.DefaultStringComparator(false, false)));
+        JComboBoxOperator operator_01 = new JComboBoxOperator(
+                fo, new NameComponentChooser("on_e", new Operator.DefaultStringComparator(false, false)));
         assertThat(operator_01.getSource()).isSameAs(operator_00.getSource());
 
         fo.getTimeouts().setTimeout("ComponentOperator.WaitComponentTimeout", 1000);

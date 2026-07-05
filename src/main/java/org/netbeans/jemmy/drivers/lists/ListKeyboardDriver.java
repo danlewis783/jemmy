@@ -25,7 +25,6 @@
 package org.netbeans.jemmy.drivers.lists;
 
 import java.awt.event.KeyEvent;
-
 import org.netbeans.jemmy.Timeout;
 import org.netbeans.jemmy.drivers.DriverManager;
 import org.netbeans.jemmy.drivers.KeyDriver;

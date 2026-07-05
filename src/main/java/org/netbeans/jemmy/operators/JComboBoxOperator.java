@@ -32,19 +32,17 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.util.Hashtable;
-
 import javax.swing.ComboBoxEditor;
 import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComboBox.KeySelectionManager;
 import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
-import javax.swing.JComboBox.KeySelectionManager;
 import javax.swing.event.ListDataEvent;
 import javax.swing.plaf.ComboBoxUI;
 import javax.swing.plaf.basic.ComboPopup;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.JemmyException;
@@ -87,8 +85,7 @@ import org.netbeans.jemmy.util.EmptyVisualizer;
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
-public class JComboBoxOperator extends JComponentOperator
-        implements Timeoutable, Outputable {
+public class JComboBoxOperator extends JComponentOperator implements Timeoutable, Outputable {
 
     /**
      * Identifier for a "text" property.
@@ -104,8 +101,8 @@ public class JComboBoxOperator extends JComponentOperator
      */
     public static final String ITEM_PREFIX_DPROP = "Item";
 
-    private final static long BEFORE_SELECTING_TIMEOUT = 0;
-    private final static long WAIT_LIST_TIMEOUT = 60000;
+    private static final long BEFORE_SELECTING_TIMEOUT = 0;
+    private static final long WAIT_LIST_TIMEOUT = 60000;
 
     private TestOut output;
     private Timeouts timeouts;
@@ -133,9 +130,7 @@ public class JComboBoxOperator extends JComponentOperator
      * @param index an index between appropriate ones.
      */
     public JComboBoxOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JComboBox) cont.
-                waitSubComponent(new JComboBoxFinder(chooser),
-                        index));
+        this((JComboBox) cont.waitSubComponent(new JComboBoxFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -160,10 +155,7 @@ public class JComboBoxOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public JComboBoxOperator(ContainerOperator<?> cont, String text, int index) {
-        this((JComboBox) waitComponent(cont,
-                new JComboBoxByItemFinder(text, -1,
-                        cont.getComparator()),
-                index));
+        this((JComboBox) waitComponent(cont, new JComboBoxByItemFinder(text, -1, cont.getComparator()), index));
         copyEnvironment(cont);
     }
 
@@ -189,9 +181,7 @@ public class JComboBoxOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public JComboBoxOperator(ContainerOperator<?> cont, int index) {
-        this((JComboBox) waitComponent(cont,
-                new JComboBoxFinder(),
-                index));
+        this((JComboBox) waitComponent(cont, new JComboBoxFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -242,12 +232,10 @@ public class JComboBoxOperator extends JComponentOperator
      * @return JComboBox instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JComboBox<?> findJComboBox(Container cont, String text, boolean ce, boolean ccs, int itemIndex, int index) {
-        return (findJComboBox(cont,
-                new JComboBoxByItemFinder(text,
-                        itemIndex,
-                        new DefaultStringComparator(ce, ccs)),
-                index));
+    public static JComboBox<?> findJComboBox(
+            Container cont, String text, boolean ce, boolean ccs, int itemIndex, int index) {
+        return (findJComboBox(
+                cont, new JComboBoxByItemFinder(text, itemIndex, new DefaultStringComparator(ce, ccs)), index));
     }
 
     /**
@@ -305,12 +293,10 @@ public class JComboBoxOperator extends JComponentOperator
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @throws TimeoutExpiredException
      */
-    public static JComboBox<?> waitJComboBox(Container cont, String text, boolean ce, boolean ccs, int itemIndex, int index) {
-        return (waitJComboBox(cont,
-                new JComboBoxByItemFinder(text,
-                        itemIndex,
-                        new DefaultStringComparator(ce, ccs)),
-                index));
+    public static JComboBox<?> waitJComboBox(
+            Container cont, String text, boolean ce, boolean ccs, int itemIndex, int index) {
+        return (waitJComboBox(
+                cont, new JComboBoxByItemFinder(text, itemIndex, new DefaultStringComparator(ce, ccs)), index));
     }
 
     /**
@@ -360,11 +346,8 @@ public class JComboBoxOperator extends JComponentOperator
     @Override
     public void copyEnvironment(Operator anotherOperator) {
         super.copyEnvironment(anotherOperator);
-        driver
-                = (ListDriver) DriverManager.
-                getDriver(DriverManager.LIST_DRIVER_ID,
-                        getClass(),
-                        anotherOperator.getProperties());
+        driver = (ListDriver)
+                DriverManager.getDriver(DriverManager.LIST_DRIVER_ID, getClass(), anotherOperator.getProperties());
     }
 
     /**
@@ -500,8 +483,7 @@ public class JComboBoxOperator extends JComponentOperator
      * found.
      */
     public int waitItem(final String item, final StringComparator comparator) {
-        getOutput().printLine("Wait item \"" + item + "\" available in combo box \n    : "
-                + toStringSource());
+        getOutput().printLine("Wait item \"" + item + "\" available in combo box \n    : " + toStringSource());
         getOutput().printGolden("Wait item \"" + item + "\" available in combo box.");
         waitState(new ComponentChooser() {
             @Override
@@ -530,8 +512,9 @@ public class JComboBoxOperator extends JComponentOperator
      * found.
      */
     public int waitItem(final int itemIndex) {
-        getOutput().printLine("Wait item of index \"" + itemIndex + "\" available in combo box \n    : "
-                + toStringSource());
+        getOutput()
+                .printLine(
+                        "Wait item of index \"" + itemIndex + "\" available in combo box \n    : " + toStringSource());
         getOutput().printGolden("Wait item of index \"" + itemIndex + "\" available in combo box.");
         waitState(new ComponentChooser() {
             @Override
@@ -560,8 +543,7 @@ public class JComboBoxOperator extends JComponentOperator
      * @param comparator a searching criteria.
      */
     public void selectItem(String item, StringComparator comparator) {
-        output.printLine("Select \"" + item + "\" item in combobox\n    : "
-                + toStringSource());
+        output.printLine("Select \"" + item + "\" item in combobox\n    : " + toStringSource());
         output.printGolden("Select \"" + item + "\" item in combobox");
         selectItem(waitItem(item, comparator));
     }
@@ -600,8 +582,7 @@ public class JComboBoxOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public void selectItem(int index) {
-        output.printLine("Select " + Integer.toString(index) + "\'th item in combobox\n    : "
-                + toStringSource());
+        output.printLine("Select " + Integer.toString(index) + "\'th item in combobox\n    : " + toStringSource());
         output.printGolden("Select " + Integer.toString(index) + "\'th item in combobox");
         try {
             waitComponentEnabled();
@@ -665,11 +646,11 @@ public class JComboBoxOperator extends JComponentOperator
      * @param index Item index.
      */
     public void waitItemSelected(final int index) {
-        getOutput().printLine("Wait " + Integer.toString(index)
-                + "'th item to be selected in component \n    : "
-                + toStringSource());
-        getOutput().printGolden("Wait " + Integer.toString(index)
-                + "'th item to be selected");
+        getOutput()
+                .printLine("Wait " + Integer.toString(index)
+                        + "'th item to be selected in component \n    : "
+                        + toStringSource());
+        getOutput().printGolden("Wait " + Integer.toString(index) + "'th item to be selected");
         waitState(new ComponentChooser() {
             @Override
             public boolean checkComponent(Component comp) {
@@ -694,13 +675,9 @@ public class JComboBoxOperator extends JComponentOperator
      * @param item wait an item to be selected.
      */
     public void waitItemSelected(final String item) {
-        getOutput().printLine("Wait \"" + item
-                + "\" item to be selected in component \n    : "
-                + toStringSource());
-        getOutput().printGolden("WaitWait \"" + item
-                + "\" item to be selected");
+        getOutput().printLine("Wait \"" + item + "\" item to be selected in component \n    : " + toStringSource());
+        getOutput().printGolden("WaitWait \"" + item + "\" item to be selected");
         waitState(new JComboBoxByItemFinder(item, -1, getComparator()));
-
     }
 
     /**
@@ -726,7 +703,7 @@ public class JComboBoxOperator extends JComponentOperator
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code JComboBox.actionPerformed(ActionEvent)} through queue
      */
@@ -1273,7 +1250,7 @@ public class JComboBoxOperator extends JComponentOperator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Allows to find component by an item.
@@ -1323,8 +1300,8 @@ public class JComboBoxOperator extends JComponentOperator
                             return false;
                         }
                     }
-                    return (comparator.equals(((JComboBox) comp).getModel().getElementAt(ii).toString(),
-                            label));
+                    return (comparator.equals(
+                            ((JComboBox) comp).getModel().getElementAt(ii).toString(), label));
                 }
             }
             return false;
@@ -1332,13 +1309,13 @@ public class JComboBoxOperator extends JComponentOperator
 
         @Override
         public String getDescription() {
-            return ("JComboBox with text \"" + label + "\" in "
-                    + itemIndex + "'th item");
+            return ("JComboBox with text \"" + label + "\" in " + itemIndex + "'th item");
         }
 
         @Override
         public String toString() {
-            return "JComboBoxByItemFinder{" + "label=" + label + ", itemIndex=" + itemIndex + ", comparator=" + comparator + '}';
+            return "JComboBoxByItemFinder{" + "label=" + label + ", itemIndex=" + itemIndex + ", comparator="
+                    + comparator + '}';
         }
     }
 

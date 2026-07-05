@@ -27,9 +27,8 @@ package org.netbeans.jemmy.operators;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.awt.Component;
-
-import org.netbeans.jemmy.ComponentChooser;
 import org.junit.jupiter.api.Test;
+import org.netbeans.jemmy.ComponentChooser;
 
 public class ComponentChooserTest {
 

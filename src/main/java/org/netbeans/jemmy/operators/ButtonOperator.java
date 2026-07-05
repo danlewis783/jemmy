@@ -29,7 +29,6 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionListener;
 import java.util.Hashtable;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
@@ -53,8 +52,7 @@ import org.netbeans.jemmy.drivers.DriverManager;
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
-public class ButtonOperator extends ComponentOperator
-        implements Timeoutable, Outputable {
+public class ButtonOperator extends ComponentOperator implements Timeoutable, Outputable {
 
     /**
      * Identifier for a label property.
@@ -63,7 +61,7 @@ public class ButtonOperator extends ComponentOperator
      */
     public static final String TEXT_DPROP = "Label";
 
-    private final static long PUSH_BUTTON_TIMEOUT = 0;
+    private static final long PUSH_BUTTON_TIMEOUT = 0;
 
     private Timeouts timeouts;
     private TestOut output;
@@ -88,9 +86,7 @@ public class ButtonOperator extends ComponentOperator
      * @param index an index between appropriate ones.
      */
     public ButtonOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((Button) cont.
-                waitSubComponent(new ButtonFinder(chooser),
-                        index));
+        this((Button) cont.waitSubComponent(new ButtonFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -120,10 +116,7 @@ public class ButtonOperator extends ComponentOperator
      * @throws TimeoutExpiredException
      */
     public ButtonOperator(ContainerOperator<?> cont, String text, int index) {
-        this((Button) waitComponent(cont,
-                new ButtonByLabelFinder(text,
-                        cont.getComparator()),
-                index));
+        this((Button) waitComponent(cont, new ButtonByLabelFinder(text, cont.getComparator()), index));
         copyEnvironment(cont);
     }
 
@@ -155,9 +148,7 @@ public class ButtonOperator extends ComponentOperator
      * @throws TimeoutExpiredException
      */
     public ButtonOperator(ContainerOperator<?> cont, int index) {
-        this((Button) waitComponent(cont,
-                new ButtonFinder(),
-                index));
+        this((Button) waitComponent(cont, new ButtonFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -317,11 +308,8 @@ public class ButtonOperator extends ComponentOperator
     @Override
     public void copyEnvironment(Operator anotherOperator) {
         super.copyEnvironment(anotherOperator);
-        driver
-                = (ButtonDriver) DriverManager.
-                getDriver(DriverManager.BUTTON_DRIVER_ID,
-                        getClass(),
-                        anotherOperator.getProperties());
+        driver = (ButtonDriver)
+                DriverManager.getDriver(DriverManager.BUTTON_DRIVER_ID, getClass(), anotherOperator.getProperties());
     }
 
     /**
@@ -383,7 +371,7 @@ public class ButtonOperator extends ComponentOperator
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code Button.addActionListener(ActionListener)} through queue
      */
@@ -456,7 +444,7 @@ public class ButtonOperator extends ComponentOperator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Allows to find component by label.
@@ -490,8 +478,7 @@ public class ButtonOperator extends ComponentOperator
         public boolean checkComponent(Component comp) {
             if (comp instanceof Button) {
                 if (((Button) comp).getLabel() != null) {
-                    return (comparator.equals(((Button) comp).getLabel(),
-                            label));
+                    return (comparator.equals(((Button) comp).getLabel(), label));
                 }
             }
             return false;

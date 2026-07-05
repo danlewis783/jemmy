@@ -26,7 +26,6 @@ package org.netbeans.jemmy.drivers.scrolling;
 
 import java.awt.Point;
 import java.awt.Scrollbar;
-
 import org.netbeans.jemmy.operators.ComponentOperator;
 import org.netbeans.jemmy.operators.ScrollbarOperator;
 
@@ -43,7 +42,7 @@ public class ScrollbarDriver extends AWTScrollDriver {
      * Constructs a ScrollbarDriver.
      */
     public ScrollbarDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.ScrollbarOperator"});
+        super(new String[] {"org.netbeans.jemmy.operators.ScrollbarOperator"});
     }
 
     @Override
@@ -53,14 +52,12 @@ public class ScrollbarDriver extends AWTScrollDriver {
 
     @Override
     public void scrollToMinimum(final ComponentOperator oper, final int orientation) {
-        scroll(oper,
-                new ScrollAdjuster() {
+        scroll(oper, new ScrollAdjuster() {
             @Override
             public int getScrollDirection() {
-                return ((((ScrollbarOperator) oper).getMinimum()
-                        < ((ScrollbarOperator) oper).getValue())
-                                ? DECREASE_SCROLL_DIRECTION
-                                : DO_NOT_TOUCH_SCROLL_DIRECTION);
+                return ((((ScrollbarOperator) oper).getMinimum() < ((ScrollbarOperator) oper).getValue())
+                        ? DECREASE_SCROLL_DIRECTION
+                        : DO_NOT_TOUCH_SCROLL_DIRECTION);
             }
 
             @Override
@@ -82,15 +79,13 @@ public class ScrollbarDriver extends AWTScrollDriver {
 
     @Override
     public void scrollToMaximum(final ComponentOperator oper, final int orientation) {
-        scroll(oper,
-                new ScrollAdjuster() {
+        scroll(oper, new ScrollAdjuster() {
             @Override
             public int getScrollDirection() {
-                return (((((ScrollbarOperator) oper).getMaximum()
-                        - ((ScrollbarOperator) oper).getVisibleAmount())
-                        > ((ScrollbarOperator) oper).getValue())
-                                ? INCREASE_SCROLL_DIRECTION
-                                : DO_NOT_TOUCH_SCROLL_DIRECTION);
+                return (((((ScrollbarOperator) oper).getMaximum() - ((ScrollbarOperator) oper).getVisibleAmount())
+                                > ((ScrollbarOperator) oper).getValue())
+                        ? INCREASE_SCROLL_DIRECTION
+                        : DO_NOT_TOUCH_SCROLL_DIRECTION);
             }
 
             @Override

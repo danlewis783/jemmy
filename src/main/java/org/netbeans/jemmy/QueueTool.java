@@ -50,11 +50,11 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class QueueTool implements Outputable, Timeoutable {
 
-    private final static long WAIT_QUEUE_EMPTY_TIMEOUT = 180000;
-    private final static long QUEUE_CHECKING_DELTA = 10;
-    private final static long LOCK_TIMEOUT = 180000;
-    private final static long MAXIMUM_LOCKING_TIME = 180000;
-    private final static long INVOCATION_TIMEOUT = 180000;
+    private static final long WAIT_QUEUE_EMPTY_TIMEOUT = 180000;
+    private static final long QUEUE_CHECKING_DELTA = 10;
+    private static final long LOCK_TIMEOUT = 180000;
+    private static final long MAXIMUM_LOCKING_TIME = 180000;
+    private static final long INVOCATION_TIMEOUT = 180000;
 
     private static JemmyQueue jemmyQueue = null;
 
@@ -123,12 +123,10 @@ public class QueueTool implements Outputable, Timeoutable {
      * @param event Event to dispatch.
      */
     public static void processEvent(AWTEvent event) {
-        if ((JemmyProperties.getCurrentDispatchingModel()
-                & JemmyProperties.SHORTCUT_MODEL_MASK) != 0) {
+        if ((JemmyProperties.getCurrentDispatchingModel() & JemmyProperties.SHORTCUT_MODEL_MASK) != 0) {
             installQueue();
         }
-        if ((JemmyProperties.getCurrentDispatchingModel()
-                & JemmyProperties.SHORTCUT_MODEL_MASK) != 0
+        if ((JemmyProperties.getCurrentDispatchingModel() & JemmyProperties.SHORTCUT_MODEL_MASK) != 0
                 && isDispatchThread()) {
             shortcutEvent(event);
         } else {
@@ -275,14 +273,14 @@ public class QueueTool implements Outputable, Timeoutable {
         } catch (TimeoutExpiredException e) {
             final AWTEvent event = getQueue().peekEvent();
             // if event != null run toString in dispatch thread
-            String eventToString = (event == null) ? "null" : invokeSmoothly(
-                    new QueueTool.QueueAction<String>("event.toString()") {
-                @Override
-                public String launch() {
-                    return event.toString();
-                }
-            }
-            );
+            String eventToString = (event == null)
+                    ? "null"
+                    : invokeSmoothly(new QueueTool.QueueAction<String>("event.toString()") {
+                        @Override
+                        public String launch() {
+                            return event.toString();
+                        }
+                    });
             getOutput().printErrLine("Event at the top of stack: " + eventToString);
             throw (e);
         } catch (InterruptedException e) {
@@ -307,14 +305,14 @@ public class QueueTool implements Outputable, Timeoutable {
             waiter.waitAction(null);
         } catch (TimeoutExpiredException e) {
             final AWTEvent event = getQueue().peekEvent();
-            String eventToString = (event == null) ? "null" : invokeSmoothly(
-                    new QueueTool.QueueAction<String>("event.toString()") {
-                @Override
-                public String launch() {
-                    return event.toString();
-                }
-            }
-            );
+            String eventToString = (event == null)
+                    ? "null"
+                    : invokeSmoothly(new QueueTool.QueueAction<String>("event.toString()") {
+                        @Override
+                        public String launch() {
+                            return event.toString();
+                        }
+                    });
             getOutput().printErrLine("Event at the top of stack: " + eventToString);
             throw (e);
         } catch (InterruptedException e) {
@@ -421,14 +419,9 @@ public class QueueTool implements Outputable, Timeoutable {
      */
     public <R> R invokeAndWait(QueueAction<R> action) {
 
-        class JemmyInvocationLock {
-        }
+        class JemmyInvocationLock {}
         Object lock = new JemmyInvocationLock();
-        InvocationEvent event
-                = new JemmyInvocationEvent(Toolkit.getDefaultToolkit(),
-                        action,
-                        lock,
-                        true);
+        InvocationEvent event = new JemmyInvocationEvent(Toolkit.getDefaultToolkit(), action, lock, true);
         try {
             synchronized (lock) {
                 getQueue().postEvent(event);
@@ -437,17 +430,13 @@ public class QueueTool implements Outputable, Timeoutable {
                 }
             }
         } catch (InterruptedException e) {
-            throw (new JemmyException("InterruptedException during "
-                    + action.getDescription()
-                    + " execution", e));
+            throw (new JemmyException("InterruptedException during " + action.getDescription() + " execution", e));
         }
         if (action.getException() != null) {
-            throw (new JemmyException("Exception in " + action.getDescription(),
-                    action.getException()));
+            throw (new JemmyException("Exception in " + action.getDescription(), action.getException()));
         }
         if (event.getException() != null) {
-            throw (new JemmyException("Exception in " + action.getDescription(),
-                    event.getException()));
+            throw (new JemmyException("Exception in " + action.getDescription(), event.getException()));
         }
         return action.getResult();
     }
@@ -456,8 +445,7 @@ public class QueueTool implements Outputable, Timeoutable {
 
         private static final long serialVersionUID = 42L;
 
-        public JemmyInvocationEvent(Object source, Runnable runnable,
-                Object notifier, boolean catchThrowables) {
+        public JemmyInvocationEvent(Object source, Runnable runnable, Object notifier, boolean catchThrowables) {
             super(source, runnable, notifier, catchThrowables);
         }
     }
@@ -499,16 +487,10 @@ public class QueueTool implements Outputable, Timeoutable {
         output.printTrace("Locking queue.");
         invoke(locker);
         try {
-            lockWaiter.
-                    getTimeouts().
-                    setTimeout("Waiter.WaitingTime",
-                            timeouts.
-                            getTimeout("QueueTool.LockTimeout"));
-            lockWaiter.
-                    getTimeouts().
-                    setTimeout("Waiter.TimeDelta",
-                            timeouts.
-                            getTimeout("QueueTool.QueueCheckingDelta"));
+            lockWaiter.getTimeouts().setTimeout("Waiter.WaitingTime", timeouts.getTimeout("QueueTool.LockTimeout"));
+            lockWaiter
+                    .getTimeouts()
+                    .setTimeout("Waiter.TimeDelta", timeouts.getTimeout("QueueTool.QueueCheckingDelta"));
             lockWaiter.waitAction(null);
         } catch (InterruptedException e) {
             output.printStackTrace(e);
@@ -552,7 +534,7 @@ public class QueueTool implements Outputable, Timeoutable {
      * monitored by {@code getResult()}, {@code getException()},
      * {@code getFinished()} methods.
      */
-    public static abstract class QueueAction<R> implements Runnable {
+    public abstract static class QueueAction<R> implements Runnable {
 
         private volatile boolean finished;
         private Exception exception;
@@ -577,8 +559,7 @@ public class QueueTool implements Outputable, Timeoutable {
          * @return an Object - action result
          * @throws Exception
          */
-        public abstract R launch()
-                throws Exception;
+        public abstract R launch() throws Exception;
 
         /**
          */
@@ -635,7 +616,8 @@ public class QueueTool implements Outputable, Timeoutable {
 
         @Override
         public String toString() {
-            return "QueueAction{description=" + description + ", result=" + result + ", finished=" + finished + ", exception=" + exception + '}';
+            return "QueueAction{description=" + description + ", result=" + result + ", finished=" + finished
+                    + ", exception=" + exception + '}';
         }
     }
 
@@ -649,14 +631,14 @@ public class QueueTool implements Outputable, Timeoutable {
 
         @Override
         protected void dispatchEvent(AWTEvent event) {
-            //it's necessary to catch exception here.
-            //because test might already fail by timeout
-            //but generated events are still in stack
+            // it's necessary to catch exception here.
+            // because test might already fail by timeout
+            // but generated events are still in stack
             try {
                 super.dispatchEvent(event);
             } catch (Exception e) {
-                //the exceptions should be printed into
-                //Jemmy output - not System.out
+                // the exceptions should be printed into
+                // Jemmy output - not System.out
                 JemmyProperties.getCurrentOutput().printStackTrace(e);
             }
         }
@@ -688,8 +670,7 @@ public class QueueTool implements Outputable, Timeoutable {
         @Override
         public void run() {
             long startTime = System.currentTimeMillis();
-            while ((empty = checkEmpty())
-                    && (System.currentTimeMillis() - startTime) < emptyTime) {
+            while ((empty = checkEmpty()) && (System.currentTimeMillis() - startTime) < emptyTime) {
                 timeouts.sleep("QueueTool.QueueCheckingDelta");
             }
         }
@@ -708,8 +689,7 @@ public class QueueTool implements Outputable, Timeoutable {
             try {
                 EventWaiter eventWaiter = new EventWaiter(emptyTime);
                 EventQueue.invokeAndWait(eventWaiter);
-                if (eventWaiter.empty
-                        && timeFromStart() <= super.getTimeouts().getTimeout("Waiter.WaitingTime")) {
+                if (eventWaiter.empty && timeFromStart() <= super.getTimeouts().getTimeout("Waiter.WaitingTime")) {
                     return "Reached";
                 }
             } catch (InterruptedException | InvocationTargetException e) {

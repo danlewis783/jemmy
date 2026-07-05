@@ -31,7 +31,6 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.Enumeration;
 import java.util.Hashtable;
-
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
@@ -45,7 +44,6 @@ import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.JemmyException;
@@ -84,8 +82,7 @@ import org.netbeans.jemmy.util.EmptyVisualizer;
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
-public class JTreeOperator extends JComponentOperator
-        implements Timeoutable, Outputable {
+public class JTreeOperator extends JComponentOperator implements Timeoutable, Outputable {
 
     /**
      * Identifier for a "root" property.
@@ -115,13 +112,13 @@ public class JTreeOperator extends JComponentOperator
      */
     public static final String SELECTION_LAST_DPROP = "Last selected";
 
-    private final static long WAIT_NODE_EXPANDED_TIMEOUT = 60000;
-    private final static long WAIT_NODE_COLLAPSED_TIMEOUT = 60000;
-    private final static long WAIT_AFTER_NODE_EXPANDED_TIMEOUT = 0;
-    private final static long WAIT_NEXT_NODE_TIMEOUT = 60000;
-    private final static long WAIT_NODE_VISIBLE_TIMEOUT = 60000;
-    private final static long BEFORE_EDIT_TIMEOUT = 1000;
-    private final static long WAIT_EDITING_TIMEOUT = 60000;
+    private static final long WAIT_NODE_EXPANDED_TIMEOUT = 60000;
+    private static final long WAIT_NODE_COLLAPSED_TIMEOUT = 60000;
+    private static final long WAIT_AFTER_NODE_EXPANDED_TIMEOUT = 0;
+    private static final long WAIT_NEXT_NODE_TIMEOUT = 60000;
+    private static final long WAIT_NODE_VISIBLE_TIMEOUT = 60000;
+    private static final long BEFORE_EDIT_TIMEOUT = 1000;
+    private static final long WAIT_EDITING_TIMEOUT = 60000;
 
     private TestOut output;
     private Timeouts timeouts;
@@ -145,9 +142,7 @@ public class JTreeOperator extends JComponentOperator
      * @param index an index between appropriate ones.
      */
     public JTreeOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JTree) cont.
-                waitSubComponent(new JTreeFinder(chooser),
-                        index));
+        this((JTree) cont.waitSubComponent(new JTreeFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -174,10 +169,7 @@ public class JTreeOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public JTreeOperator(ContainerOperator<?> cont, String text, int row, int index) {
-        this((JTree) waitComponent(cont,
-                new JTreeByItemFinder(text, row,
-                        cont.getComparator()),
-                index));
+        this((JTree) waitComponent(cont, new JTreeByItemFinder(text, row, cont.getComparator()), index));
         copyEnvironment(cont);
     }
 
@@ -217,9 +209,7 @@ public class JTreeOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public JTreeOperator(ContainerOperator<?> cont, int index) {
-        this((JTree) waitComponent(cont,
-                new JTreeFinder(),
-                index));
+        this((JTree) waitComponent(cont, new JTreeFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -385,11 +375,8 @@ public class JTreeOperator extends JComponentOperator
     @Override
     public void copyEnvironment(Operator anotherOperator) {
         super.copyEnvironment(anotherOperator);
-        driver
-                = (TreeDriver) DriverManager.
-                getDriver(DriverManager.TREE_DRIVER_ID,
-                        getClass(),
-                        anotherOperator.getProperties());
+        driver = (TreeDriver)
+                DriverManager.getDriver(DriverManager.TREE_DRIVER_ID, getClass(), anotherOperator.getProperties());
     }
 
     /**
@@ -400,10 +387,10 @@ public class JTreeOperator extends JComponentOperator
      */
     public void doExpandPath(TreePath path) {
         if (path != null) {
-            output.printLine("Expanding \"" + path.getPathComponent(path.getPathCount() - 1).toString()
-                    + "\" node");
-            output.printGolden("Expanding \"" + path.getPathComponent(path.getPathCount() - 1).toString()
-                    + "\" node");
+            output.printLine("Expanding \""
+                    + path.getPathComponent(path.getPathCount() - 1).toString() + "\" node");
+            output.printGolden("Expanding \""
+                    + path.getPathComponent(path.getPathCount() - 1).toString() + "\" node");
             driver.expandItem(this, getRowForPath(path));
             waitExpanded(path);
         } else {
@@ -418,10 +405,8 @@ public class JTreeOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public void doExpandRow(int row) {
-        output.printLine("Expanding " + Integer.toString(row)
-                + " row");
-        output.printGolden("Expanding " + Integer.toString(row)
-                + " row");
+        output.printLine("Expanding " + Integer.toString(row) + " row");
+        output.printGolden("Expanding " + Integer.toString(row) + " row");
         driver.expandItem(this, row);
         waitExpanded(row);
     }
@@ -502,8 +487,7 @@ public class JTreeOperator extends JComponentOperator
      */
     public int getChildCount(TreePath path) {
         if (path != null) {
-            return (getChildCount(path.
-                    getLastPathComponent()));
+            return (getChildCount(path.getLastPathComponent()));
         } else {
             throw (new NoSuchPathException());
         }
@@ -518,9 +502,7 @@ public class JTreeOperator extends JComponentOperator
      */
     public TreePath getChildPath(TreePath path, int index) {
         if (path != null) {
-            return (path.
-                    pathByAddingChild(getChild(path.
-                            getLastPathComponent(), index)));
+            return (path.pathByAddingChild(getChild(path.getLastPathComponent(), index)));
         } else {
             throw (new NoSuchPathException());
         }
@@ -534,12 +516,10 @@ public class JTreeOperator extends JComponentOperator
      */
     public TreePath[] getChildPaths(TreePath path) {
         if (path != null) {
-            Object[] children = getChildren(path.
-                    getLastPathComponent());
+            Object[] children = getChildren(path.getLastPathComponent());
             TreePath[] result = new TreePath[children.length];
             for (int i = 0; i < children.length; i++) {
-                result[i] = path.
-                        pathByAddingChild(children[i]);
+                result[i] = path.pathByAddingChild(children[i]);
             }
             return result;
         } else {
@@ -701,9 +681,7 @@ public class JTreeOperator extends JComponentOperator
      */
     @Deprecated
     public int findRow(String item, boolean ce, boolean cc, int index) {
-        return (findRow(item,
-                new DefaultStringComparator(ce, cc),
-                index));
+        return (findRow(item, new DefaultStringComparator(ce, cc), index));
     }
 
     /**
@@ -715,9 +693,7 @@ public class JTreeOperator extends JComponentOperator
      * @return Row index or -1 if search was insuccessful.
      */
     public int findRow(String item, int index) {
-        return (findRow(item,
-                getComparator(),
-                index));
+        return (findRow(item, getComparator(), index));
     }
 
     /**
@@ -753,9 +729,7 @@ public class JTreeOperator extends JComponentOperator
      * @return Row index or -1 if search was insuccessful.
      */
     public int findRow(String item) {
-        return (findRow(item,
-                getComparator(),
-                0));
+        return (findRow(item, getComparator(), 0));
     }
 
     /**
@@ -1142,8 +1116,8 @@ public class JTreeOperator extends JComponentOperator
         if (path != null) {
             Rectangle rect = getPathBounds(path);
             if (rect != null) {
-                return (new Point((int) (rect.getX() + rect.getWidth() / 2),
-                        (int) (rect.getY() + rect.getHeight() / 2)));
+                return (new Point(
+                        (int) (rect.getX() + rect.getWidth() / 2), (int) (rect.getY() + rect.getHeight() / 2)));
             } else {
                 throw (new NoSuchPathException(path));
             }
@@ -1161,8 +1135,7 @@ public class JTreeOperator extends JComponentOperator
     public Point getPointToClick(int row) {
         Rectangle rect = getRowBounds(row);
         if (rect != null) {
-            return (new Point((int) (rect.getX() + rect.getWidth() / 2),
-                    (int) (rect.getY() + rect.getHeight() / 2)));
+            return (new Point((int) (rect.getX() + rect.getWidth() / 2), (int) (rect.getY() + rect.getHeight() / 2)));
         } else {
             throw (new NoSuchPathException(row));
         }
@@ -1179,8 +1152,7 @@ public class JTreeOperator extends JComponentOperator
      */
     public void clickOnPath(TreePath path, int clickCount, int mouseButton, int modifiers) {
         if (path != null) {
-            output.printLine("Click on \"" + path.toString()
-                    + "\" path");
+            output.printLine("Click on \"" + path.toString() + "\" path");
             output.printGolden("Click on path");
             makeComponentVisible();
             if (path.getParentPath() != null) {
@@ -1239,8 +1211,7 @@ public class JTreeOperator extends JComponentOperator
      */
     public JPopupMenu callPopupOnPaths(TreePath[] paths, int mouseButton) {
         if (paths.length == 1) {
-            output.printLine("Call popup on \"" + paths[0].toString()
-                    + "\" path");
+            output.printLine("Call popup on \"" + paths[0].toString() + "\" path");
             output.printGolden("Call popup on path");
         } else {
             output.printLine("Call popup on some pathes:");
@@ -1258,10 +1229,7 @@ public class JTreeOperator extends JComponentOperator
         selectPaths(paths);
         scrollToPath(paths[paths.length - 1]);
         Point point = getPointToClick(paths[paths.length - 1]);
-        return (JPopupMenuOperator.callPopup(this,
-                (int) point.getX(),
-                (int) point.getY(),
-                mouseButton));
+        return (JPopupMenuOperator.callPopup(this, (int) point.getX(), (int) point.getY(), mouseButton));
     }
 
     /**
@@ -1311,13 +1279,12 @@ public class JTreeOperator extends JComponentOperator
      */
     public void scrollToPath(TreePath path) {
         if (path != null) {
-            output.printTrace("Scroll JTree to path \"" + path.toString() + "\"\n    : "
-                    + toStringSource());
+            output.printTrace("Scroll JTree to path \"" + path.toString() + "\"\n    : " + toStringSource());
             output.printGolden("Scroll JTree to path \"" + path.toString() + "\"");
             makeComponentVisible();
-            //try to find JScrollPane under.
-            JScrollPane scroll = (JScrollPane) getContainer(new JScrollPaneOperator.JScrollPaneFinder(ComponentSearcher.
-                    getTrueChooser("JScrollPane")));
+            // try to find JScrollPane under.
+            JScrollPane scroll = (JScrollPane) getContainer(
+                    new JScrollPaneOperator.JScrollPaneFinder(ComponentSearcher.getTrueChooser("JScrollPane")));
             if (scroll == null) {
                 return;
             }
@@ -1326,11 +1293,9 @@ public class JTreeOperator extends JComponentOperator
             scroller.setVisualizer(new EmptyVisualizer());
             Rectangle rect = getPathBounds(path);
             if (rect != null) {
-                scroller.scrollToComponentRectangle(getSource(),
-                        (int) rect.getX(),
-                        (int) rect.getY(),
-                        (int) rect.getWidth(),
-                        (int) rect.getHeight());
+                scroller.scrollToComponentRectangle(
+                        getSource(), (int) rect.getX(), (int) rect.getY(), (int) rect.getWidth(), (int)
+                                rect.getHeight());
             } else {
                 throw (new NoSuchPathException(path));
             }
@@ -1355,8 +1320,7 @@ public class JTreeOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public void clickForEdit(TreePath path) {
-        driver.startEditing(this, getRowForPath(path),
-                timeouts.create("JTreeOperator.WaitEditingTimeout"));
+        driver.startEditing(this, getRowForPath(path), timeouts.create("JTreeOperator.WaitEditingTimeout"));
     }
 
     /**
@@ -1370,8 +1334,9 @@ public class JTreeOperator extends JComponentOperator
      */
     public Component getRenderedComponent(TreePath path, boolean isSelected, boolean isExpanded, boolean cellHasFocus) {
         if (path != null) {
-            return (getCellRenderer().
-                    getTreeCellRendererComponent((JTree) getSource(),
+            return (getCellRenderer()
+                    .getTreeCellRendererComponent(
+                            (JTree) getSource(),
                             path.getLastPathComponent(),
                             isSelected,
                             isExpanded,
@@ -1392,10 +1357,7 @@ public class JTreeOperator extends JComponentOperator
      * @return Component to be displayed.
      */
     public Component getRenderedComponent(TreePath path) {
-        return (getRenderedComponent(path,
-                isPathSelected(path),
-                isExpanded(path),
-                false));
+        return (getRenderedComponent(path, isPathSelected(path), isExpanded(path), false));
     }
 
     /**
@@ -1421,8 +1383,7 @@ public class JTreeOperator extends JComponentOperator
      */
     public void changePathObject(TreePath path, Object newValue) {
         scrollToPath(path);
-        driver.editItem(this, getRowForPath(path), newValue,
-                timeouts.create("JTreeOperator.WaitEditingTimeout"));
+        driver.editItem(this, getRowForPath(path), newValue, timeouts.create("JTreeOperator.WaitEditingTimeout"));
     }
 
     /**
@@ -1432,8 +1393,9 @@ public class JTreeOperator extends JComponentOperator
      */
     public void waitExpanded(final TreePath path) {
         if (path != null) {
-            getOutput().printLine("Wait \"" + path.toString() + "\" path to be expanded in component \n    : "
-                    + toStringSource());
+            getOutput()
+                    .printLine("Wait \"" + path.toString() + "\" path to be expanded in component \n    : "
+                            + toStringSource());
             getOutput().printGolden("Wait \"" + path.toString() + "\" path to be expanded");
             waitState(new ComponentChooser() {
                 @Override
@@ -1462,8 +1424,9 @@ public class JTreeOperator extends JComponentOperator
      * @param row a row index to wait expanded.
      */
     public void waitExpanded(final int row) {
-        getOutput().printLine("Wait " + Integer.toString(row) + "'th row to be expanded in component \n    : "
-                + toStringSource());
+        getOutput()
+                .printLine("Wait " + Integer.toString(row) + "'th row to be expanded in component \n    : "
+                        + toStringSource());
         getOutput().printGolden("Wait " + Integer.toString(row) + "'th row to be expanded");
         waitState(new ComponentChooser() {
             @Override
@@ -1490,8 +1453,9 @@ public class JTreeOperator extends JComponentOperator
      */
     public void waitCollapsed(final TreePath path) {
         if (path != null) {
-            getOutput().printLine("Wait \"" + path.toString() + "\" path to be collapsed in component \n    : "
-                    + toStringSource());
+            getOutput()
+                    .printLine("Wait \"" + path.toString() + "\" path to be collapsed in component \n    : "
+                            + toStringSource());
             getOutput().printGolden("Wait \"" + path.toString() + "\" path to be collapsed");
             waitState(new ComponentChooser() {
                 @Override
@@ -1520,8 +1484,9 @@ public class JTreeOperator extends JComponentOperator
      * @param row a row index to wait collapsed.
      */
     public void waitCollapsed(final int row) {
-        getOutput().printLine("Wait " + Integer.toString(row) + "'th row to be collapsed in component \n    : "
-                + toStringSource());
+        getOutput()
+                .printLine("Wait " + Integer.toString(row) + "'th row to be collapsed in component \n    : "
+                        + toStringSource());
         getOutput().printGolden("Wait " + Integer.toString(row) + "'th row to be collapsed");
         waitState(new ComponentChooser() {
             @Override
@@ -1548,8 +1513,9 @@ public class JTreeOperator extends JComponentOperator
      */
     public void waitVisible(final TreePath path) {
         if (path != null) {
-            getOutput().printLine("Wait \"" + path.toString() + "\" path to be visible in component \n    : "
-                    + toStringSource());
+            getOutput()
+                    .printLine("Wait \"" + path.toString() + "\" path to be visible in component \n    : "
+                            + toStringSource());
             getOutput().printGolden("Wait \"" + path.toString() + "\" path to be visible");
             waitState(new ComponentChooser() {
                 @Override
@@ -1578,8 +1544,7 @@ public class JTreeOperator extends JComponentOperator
      * @param paths an array of paths to be selected.
      */
     public void waitSelected(final TreePath[] paths) {
-        getOutput().printLine("Wait right selection in component \n    : "
-                + toStringSource());
+        getOutput().printLine("Wait right selection in component \n    : " + toStringSource());
         getOutput().printGolden("Wait right selection");
         waitState(new ComponentChooser() {
             @Override
@@ -1615,7 +1580,7 @@ public class JTreeOperator extends JComponentOperator
      * @param path a tree path to be selected.
      */
     public void waitSelected(final TreePath path) {
-        waitSelected(new TreePath[]{path});
+        waitSelected(new TreePath[] {path});
     }
 
     /**
@@ -1637,7 +1602,7 @@ public class JTreeOperator extends JComponentOperator
      * @param row an index of a row to be selected.
      */
     public void waitSelected(int row) {
-        waitSelected(new int[]{row});
+        waitSelected(new int[] {row});
     }
 
     /**
@@ -1648,11 +1613,11 @@ public class JTreeOperator extends JComponentOperator
      * @param row Row index. If -1, selected one is checked.
      */
     public void waitRow(String rowText, int row) {
-        getOutput().printLine("Wait \"" + rowText + "\" text in "
-                + Integer.toString(row) + "'th line in component \n    : "
-                + toStringSource());
-        getOutput().printGolden("Wait \"" + rowText + " \" text in "
-                + Integer.toString(row) + "'th line");
+        getOutput()
+                .printLine("Wait \"" + rowText + "\" text in "
+                        + Integer.toString(row) + "'th line in component \n    : "
+                        + toStringSource());
+        getOutput().printGolden("Wait \"" + rowText + " \" text in " + Integer.toString(row) + "'th line");
         waitState(new JTreeByItemFinder(rowText, row, getComparator()));
     }
 
@@ -1670,8 +1635,7 @@ public class JTreeOperator extends JComponentOperator
                     throw e;
                 }
             }
-            if (comparator.equals(node.toString(),
-                    text)) {
+            if (comparator.equals(node.toString(), text)) {
                 count++;
                 if (count == index) {
                     return node;
@@ -1705,15 +1669,12 @@ public class JTreeOperator extends JComponentOperator
         addChildrenToDump(result, NODE_PREFIX_DPROP, root, new TreePath(root));
         int minSelection = ((JTree) getSource()).getMinSelectionRow();
         if (minSelection >= 0) {
-            Object minObject = ((JTree) getSource()).
-                    getPathForRow(minSelection).
-                    getLastPathComponent();
+            Object minObject = ((JTree) getSource()).getPathForRow(minSelection).getLastPathComponent();
             result.put(SELECTION_FIRST_DPROP, minObject.toString());
             int maxSelection = ((JTree) getSource()).getMaxSelectionRow();
             if (maxSelection > minSelection) {
-                Object maxObject = ((JTree) getSource()).
-                        getPathForRow(maxSelection).
-                        getLastPathComponent();
+                Object maxObject =
+                        ((JTree) getSource()).getPathForRow(maxSelection).getLastPathComponent();
                 result.put(SELECTION_LAST_DPROP, maxObject.toString());
             }
         }
@@ -1721,7 +1682,7 @@ public class JTreeOperator extends JComponentOperator
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code JTree.addSelectionInterval(int, int)} through queue
      */
@@ -1874,7 +1835,8 @@ public class JTreeOperator extends JComponentOperator
      * {@code JTree.convertValueToText(Object, boolean, boolean, boolean, int, boolean)}
      * through queue
      */
-    public String convertValueToText(final Object object, final boolean b, final boolean b1, final boolean b2, final int i, final boolean b3) {
+    public String convertValueToText(
+            final Object object, final boolean b, final boolean b1, final boolean b2, final int i, final boolean b3) {
         return (runMapping(new MapAction<String>("convertValueToText") {
             @Override
             public String map() {
@@ -2947,7 +2909,7 @@ public class JTreeOperator extends JComponentOperator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Iterface to choose tree row. Defines criteria to distinguish row.
@@ -2971,7 +2933,8 @@ public class JTreeOperator extends JComponentOperator
         public String getDescription();
     }
 
-    private TreePath findPathPrimitive(TreePath path, TreePathChooser chooser, Waiter<Object[], Object[]> loadedWaiter) {
+    private TreePath findPathPrimitive(
+            TreePath path, TreePathChooser chooser, Waiter<Object[], Object[]> loadedWaiter) {
         if (!isExpanded(path)) {
             if (!isPathSelected(path)) {
                 clickOnPath(path);
@@ -3121,8 +3084,7 @@ public class JTreeOperator extends JComponentOperator
 
         @Override
         public boolean checkPath(TreePath path, int indexInParent) {
-            return (path.getPathCount() - 1 == arr.length
-                    && hasAsParent(path, indexInParent));
+            return (path.getPathCount() - 1 == arr.length && hasAsParent(path, indexInParent));
         }
 
         @Override
@@ -3157,7 +3119,8 @@ public class JTreeOperator extends JComponentOperator
 
         @Override
         public String toString() {
-            return "StringArrayPathChooser{" + "arr=" + arr + ", indices=" + indices + ", comparator=" + comparator + '}';
+            return "StringArrayPathChooser{" + "arr=" + arr + ", indices=" + indices + ", comparator=" + comparator
+                    + '}';
         }
     }
 
@@ -3173,8 +3136,8 @@ public class JTreeOperator extends JComponentOperator
 
         @Override
         public boolean checkRow(JTreeOperator oper, int row) {
-            return (comparator.equals(oper.getPathForRow(row).getLastPathComponent().toString(),
-                    subString));
+            return (comparator.equals(
+                    oper.getPathForRow(row).getLastPathComponent().toString(), subString));
         }
 
         @Override
@@ -3286,8 +3249,8 @@ public class JTreeOperator extends JComponentOperator
                     }
                     TreePath path = ((JTree) comp).getPathForRow(ii);
                     if (path != null) {
-                        return (comparator.equals(path.getPathComponent(path.getPathCount() - 1).toString(),
-                                label));
+                        return (comparator.equals(
+                                path.getPathComponent(path.getPathCount() - 1).toString(), label));
                     }
                 }
             }
@@ -3296,13 +3259,13 @@ public class JTreeOperator extends JComponentOperator
 
         @Override
         public String getDescription() {
-            return ("JTree with text \"" + label + "\" in "
-                    + rowIndex + "'th row");
+            return ("JTree with text \"" + label + "\" in " + rowIndex + "'th row");
         }
 
         @Override
         public String toString() {
-            return "JTreeByItemFinder{" + "label=" + label + ", rowIndex=" + rowIndex + ", comparator=" + comparator + '}';
+            return "JTreeByItemFinder{" + "label=" + label + ", rowIndex=" + rowIndex + ", comparator=" + comparator
+                    + '}';
         }
     }
 }

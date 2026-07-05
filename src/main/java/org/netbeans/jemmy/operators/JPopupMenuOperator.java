@@ -32,7 +32,6 @@ import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.Hashtable;
-
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -41,7 +40,6 @@ import javax.swing.MenuSelectionManager;
 import javax.swing.SingleSelectionModel;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.plaf.PopupMenuUI;
-
 import org.netbeans.jemmy.Action;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
@@ -72,8 +70,7 @@ import org.netbeans.jemmy.drivers.MenuDriver;
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
-public class JPopupMenuOperator extends JComponentOperator
-        implements Outputable, Timeoutable {
+public class JPopupMenuOperator extends JComponentOperator implements Outputable, Timeoutable {
 
     /**
      * Identifier for a "label" property.
@@ -104,9 +101,7 @@ public class JPopupMenuOperator extends JComponentOperator
      * @param index an index between appropriate ones.
      */
     public JPopupMenuOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JPopupMenu) cont.
-                waitSubComponent(new JPopupMenuFinder(chooser),
-                        index));
+        this((JPopupMenu) cont.waitSubComponent(new JPopupMenuFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -128,11 +123,8 @@ public class JPopupMenuOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public JPopupMenuOperator(Operator env) {
-        this((JPopupMenu) waitComponent(WindowOperator.
-                waitWindow(new JPopupWindowFinder(),
-                        0,
-                        env.getTimeouts(),
-                        env.getOutput()),
+        this((JPopupMenu) waitComponent(
+                WindowOperator.waitWindow(new JPopupWindowFinder(), 0, env.getTimeouts(), env.getOutput()),
                 new JPopupMenuFinder(),
                 0,
                 env.getTimeouts(),
@@ -148,9 +140,7 @@ public class JPopupMenuOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public JPopupMenuOperator(ContainerOperator<?> cont) {
-        this((JPopupMenu) waitComponent(cont,
-                new JPopupMenuFinder(),
-                0));
+        this((JPopupMenu) waitComponent(cont, new JPopupMenuFinder(), 0));
         copyEnvironment(cont);
     }
 
@@ -283,8 +273,8 @@ public class JPopupMenuOperator extends JComponentOperator
                 if (comp instanceof JPopupMenu) {
                     ComponentSearcher searcher = new ComponentSearcher((Container) comp);
                     searcher.setOutput(JemmyProperties.getCurrentOutput().createErrorOutput());
-                    return (searcher.findComponent(new JMenuItemOperator.JMenuItemByLabelFinder(menuItemText,
-                            Operator.getDefaultStringComparator()))
+                    return (searcher.findComponent(new JMenuItemOperator.JMenuItemByLabelFinder(
+                                    menuItemText, Operator.getDefaultStringComparator()))
                             != null);
                 } else {
                     return false;
@@ -315,7 +305,7 @@ public class JPopupMenuOperator extends JComponentOperator
      */
     public static JPopupMenu callPopup(final ComponentOperator oper, int x, int y, int mouseButton) {
         oper.makeComponentVisible();
-        //1.5 workaround
+        // 1.5 workaround
         if (System.getProperty("java.specification.version").compareTo("1.4") > 0) {
             QueueTool qt = new QueueTool();
             qt.setOutput(oper.getOutput().createErrorOutput());
@@ -323,30 +313,31 @@ public class JPopupMenuOperator extends JComponentOperator
             qt.waitEmpty(10);
             qt.waitEmpty(10);
         }
-        //end of 1.5 workaround
+        // end of 1.5 workaround
         oper.clickForPopup(x, y, mouseButton);
         oper.getTimeouts().sleep("JMenuOperator.WaitBeforePopupTimeout");
-        return (waitJPopupMenu(waitJPopupWindow(new ComponentChooser() {
-            @Override
-            public boolean checkComponent(Component cmp) {
-                Component invoker = ((JPopupMenu) cmp).getInvoker();
-                return (invoker == oper.getSource()
-                        || (invoker instanceof Container
-                        && ((Container) invoker).isAncestorOf(oper.getSource()))
-                        || (oper.getSource() instanceof Container
-                        && ((Container) oper.getSource()).isAncestorOf(invoker)));
-            }
+        return (waitJPopupMenu(
+                waitJPopupWindow(new ComponentChooser() {
+                    @Override
+                    public boolean checkComponent(Component cmp) {
+                        Component invoker = ((JPopupMenu) cmp).getInvoker();
+                        return (invoker == oper.getSource()
+                                || (invoker instanceof Container
+                                        && ((Container) invoker).isAncestorOf(oper.getSource()))
+                                || (oper.getSource() instanceof Container
+                                        && ((Container) oper.getSource()).isAncestorOf(invoker)));
+                    }
 
-            @Override
-            public String getDescription() {
-                return "Popup menu";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "Popup menu";
+                    }
 
-            @Override
-            public String toString() {
-                return "JPopupMenuOperator.callPopup.ComponentChooser{description = " + getDescription() + '}';
-            }
-        }),
+                    @Override
+                    public String toString() {
+                        return "JPopupMenuOperator.callPopup.ComponentChooser{description = " + getDescription() + '}';
+                    }
+                }),
                 ComponentSearcher.getTrueChooser("Popup menu")));
     }
 
@@ -404,7 +395,8 @@ public class JPopupMenuOperator extends JComponentOperator
         ComponentOperator co = new ComponentOperator(comp);
         co.makeComponentVisible();
         co.clickForPopup(mouseButton);
-        return (findJPopupMenu(waitJPopupWindow(ComponentSearcher.getTrueChooser("Popup menu window")),
+        return (findJPopupMenu(
+                waitJPopupWindow(ComponentSearcher.getTrueChooser("Popup menu window")),
                 ComponentSearcher.getTrueChooser("Popup menu")));
     }
 
@@ -421,7 +413,7 @@ public class JPopupMenuOperator extends JComponentOperator
     }
 
     static {
-        //necessary to init timeouts
+        // necessary to init timeouts
         JMenuOperator.performInit();
     }
 
@@ -461,27 +453,29 @@ public class JPopupMenuOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public JMenuItem pushMenu(final ComponentChooser[] choosers) {
-        return ((JMenuItem) produceTimeRestricted(new Action<Object, Void>() {
-            @Override
-            public Object launch(Void obj) {
-                //TDB 1.5 menu workaround
-                getQueueTool().waitEmpty();
-                Object result = driver.pushMenu(JPopupMenuOperator.this,
-                        JMenuOperator.converChoosers(choosers));
-                getQueueTool().waitEmpty();
-                return result;
-            }
+        return ((JMenuItem) produceTimeRestricted(
+                new Action<Object, Void>() {
+                    @Override
+                    public Object launch(Void obj) {
+                        // TDB 1.5 menu workaround
+                        getQueueTool().waitEmpty();
+                        Object result =
+                                driver.pushMenu(JPopupMenuOperator.this, JMenuOperator.converChoosers(choosers));
+                        getQueueTool().waitEmpty();
+                        return result;
+                    }
 
-            @Override
-            public String getDescription() {
-                return JMenuOperator.createDescription(choosers);
-            }
+                    @Override
+                    public String getDescription() {
+                        return JMenuOperator.createDescription(choosers);
+                    }
 
-            @Override
-            public String toString() {
-                return "JPopupMenuOperator.pushMenu.ComponentChooser{description = " + getDescription() + '}';
-            }
-        }, "JMenuOperator.PushMenuTimeout"));
+                    @Override
+                    public String toString() {
+                        return "JPopupMenuOperator.pushMenu.ComponentChooser{description = " + getDescription() + '}';
+                    }
+                },
+                "JMenuOperator.PushMenuTimeout"));
     }
 
     /**
@@ -494,10 +488,9 @@ public class JPopupMenuOperator extends JComponentOperator
         produceNoBlocking(new NoBlockingAction<Object, Void>("Menu pushing") {
             @Override
             public Object doAction(Void param) {
-                //TDB 1.5 menu workaround
+                // TDB 1.5 menu workaround
                 getQueueTool().waitEmpty();
-                Object result = driver.pushMenu(JPopupMenuOperator.this,
-                        JMenuOperator.converChoosers(choosers));
+                Object result = driver.pushMenu(JPopupMenuOperator.this, JMenuOperator.converChoosers(choosers));
                 getQueueTool().waitEmpty();
                 return result;
             }
@@ -909,7 +902,7 @@ public class JPopupMenuOperator extends JComponentOperator
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code JPopupMenu.add(String)} through queue
      */
@@ -1132,7 +1125,8 @@ public class JPopupMenuOperator extends JComponentOperator
      * {@code JPopupMenu.processKeyEvent(KeyEvent, MenuElement[], MenuSelectionManager)}
      * through queue
      */
-    public void processKeyEvent(final KeyEvent keyEvent, final MenuElement[] menuElement, final MenuSelectionManager menuSelectionManager) {
+    public void processKeyEvent(
+            final KeyEvent keyEvent, final MenuElement[] menuElement, final MenuSelectionManager menuSelectionManager) {
         runMapping(new MapVoidAction("processKeyEvent") {
             @Override
             public void map() {
@@ -1146,7 +1140,10 @@ public class JPopupMenuOperator extends JComponentOperator
      * {@code JPopupMenu.processMouseEvent(MouseEvent, MenuElement[], MenuSelectionManager)}
      * through queue
      */
-    public void processMouseEvent(final MouseEvent mouseEvent, final MenuElement[] menuElement, final MenuSelectionManager menuSelectionManager) {
+    public void processMouseEvent(
+            final MouseEvent mouseEvent,
+            final MenuElement[] menuElement,
+            final MenuSelectionManager menuSelectionManager) {
         runMapping(new MapVoidAction("processMouseEvent") {
             @Override
             public void map() {
@@ -1289,7 +1286,7 @@ public class JPopupMenuOperator extends JComponentOperator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Checks component type.
@@ -1314,8 +1311,7 @@ public class JPopupMenuOperator extends JComponentOperator
 
         @Override
         public boolean checkComponent(Component comp) {
-            return (comp.isShowing()
-                    && super.checkComponent(comp));
+            return (comp.isShowing() && super.checkComponent(comp));
         }
     }
 
@@ -1337,9 +1333,7 @@ public class JPopupMenuOperator extends JComponentOperator
             ppFinder = new ComponentChooser() {
                 @Override
                 public boolean checkComponent(Component comp) {
-                    return (comp.isShowing()
-                            && comp.isVisible()
-                            && subFinder.checkComponent(comp));
+                    return (comp.isShowing() && comp.isVisible() && subFinder.checkComponent(comp));
                 }
 
                 @Override
@@ -1349,7 +1343,8 @@ public class JPopupMenuOperator extends JComponentOperator
 
                 @Override
                 public String toString() {
-                    return "JPopupMenuOperator.JPopupWindowFinder.ComponentChooser{description = " + getDescription() + '}';
+                    return "JPopupMenuOperator.JPopupWindowFinder.ComponentChooser{description = " + getDescription()
+                            + '}';
                 }
             };
         }
@@ -1366,8 +1361,7 @@ public class JPopupMenuOperator extends JComponentOperator
             if (comp.isShowing() && comp instanceof Window) {
                 ComponentSearcher cs = new ComponentSearcher((Container) comp);
                 cs.setOutput(JemmyProperties.getCurrentOutput().createErrorOutput());
-                return (cs.findComponent(ppFinder)
-                        != null);
+                return (cs.findComponent(ppFinder) != null);
             }
             return false;
         }
@@ -1382,5 +1376,4 @@ public class JPopupMenuOperator extends JComponentOperator
             return "JPopupWindowFinder{" + "subFinder=" + subFinder + ", ppFinder=" + ppFinder + '}';
         }
     }
-
 }

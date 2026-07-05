@@ -28,7 +28,6 @@ import java.awt.Adjustable;
 import java.awt.Point;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.JemmyProperties;
-
 import org.netbeans.jemmy.Timeout;
 import org.netbeans.jemmy.drivers.LightSupportiveDriver;
 import org.netbeans.jemmy.drivers.ScrollDriver;
@@ -49,6 +48,7 @@ public abstract class AbstractScrollDriver extends LightSupportiveDriver impleme
      * scrolling operation.
      */
     public static final int ADJUST_CLICK_COUNT = 10;
+
     public static final String SCROLL_FREEZE_TIMEOUT = AbstractScrollDriver.class.getName() + ".freeze.timeout";
 
     static {

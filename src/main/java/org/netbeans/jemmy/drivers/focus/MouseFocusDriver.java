@@ -36,7 +36,7 @@ public class MouseFocusDriver extends LightSupportiveDriver implements FocusDriv
     private QueueTool queueTool;
 
     public MouseFocusDriver() {
-        super(new String[]{
+        super(new String[] {
             "org.netbeans.jemmy.operators.JListOperator",
             "org.netbeans.jemmy.operators.JScrollBarOperator",
             "org.netbeans.jemmy.operators.JSliderOperator",
@@ -47,7 +47,8 @@ public class MouseFocusDriver extends LightSupportiveDriver implements FocusDriv
             "org.netbeans.jemmy.operators.ScrollbarOperator",
             "org.netbeans.jemmy.operators.TextAreaOperator",
             "org.netbeans.jemmy.operators.TextComponentOperator",
-            "org.netbeans.jemmy.operators.TextFieldOperator"});
+            "org.netbeans.jemmy.operators.TextFieldOperator"
+        });
         queueTool = new QueueTool();
     }
 
@@ -57,9 +58,14 @@ public class MouseFocusDriver extends LightSupportiveDriver implements FocusDriv
             queueTool.invokeSmoothly(new QueueTool.QueueAction<Void>("Mouse click to get focus") {
                 @Override
                 public Void launch() {
-                    DriverManager.getMouseDriver(oper).
-                            clickMouse(oper, oper.getCenterXForClick(), oper.getCenterYForClick(),
-                                    1, Operator.getDefaultMouseButton(), 0,
+                    DriverManager.getMouseDriver(oper)
+                            .clickMouse(
+                                    oper,
+                                    oper.getCenterXForClick(),
+                                    oper.getCenterYForClick(),
+                                    1,
+                                    Operator.getDefaultMouseButton(),
+                                    0,
                                     oper.getTimeouts().create("ComponentOperator.MouseClickTimeout"));
                     return null;
                 }

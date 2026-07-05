@@ -68,37 +68,39 @@ public class DefaultDriverInstaller extends ArrayDriverInstaller {
      * @param shortcutEvents Signals whether shortcut mode is used.
      */
     public DefaultDriverInstaller(boolean shortcutEvents) {
-        super(new String[]{
-            DriverManager.LIST_DRIVER_ID,
-            DriverManager.MULTISELLIST_DRIVER_ID,
-            DriverManager.TREE_DRIVER_ID,
-            DriverManager.TEXT_DRIVER_ID,
-            DriverManager.TEXT_DRIVER_ID,
-            DriverManager.SCROLL_DRIVER_ID,
-            DriverManager.SCROLL_DRIVER_ID,
-            DriverManager.SCROLL_DRIVER_ID,
-            DriverManager.SCROLL_DRIVER_ID,
-            DriverManager.SCROLL_DRIVER_ID,
-            DriverManager.SCROLL_DRIVER_ID,
-            DriverManager.BUTTON_DRIVER_ID,
-            DriverManager.LIST_DRIVER_ID,
-            DriverManager.LIST_DRIVER_ID,
-            DriverManager.MULTISELLIST_DRIVER_ID,
-            DriverManager.LIST_DRIVER_ID,
-            DriverManager.LIST_DRIVER_ID,
-            DriverManager.MULTISELLIST_DRIVER_ID,
-            DriverManager.TABLE_DRIVER_ID,
-            DriverManager.LIST_DRIVER_ID,
-            DriverManager.FRAME_DRIVER_ID,
-            DriverManager.WINDOW_DRIVER_ID,
-            DriverManager.FRAME_DRIVER_ID,
-            DriverManager.INTERNAL_FRAME_DRIVER_ID,
-            DriverManager.WINDOW_DRIVER_ID,
-            DriverManager.FOCUS_DRIVER_ID,
-            DriverManager.FOCUS_DRIVER_ID,
-            DriverManager.MENU_DRIVER_ID,
-            DriverManager.ORDEREDLIST_DRIVER_ID},
-                new Object[]{
+        super(
+                new String[] {
+                    DriverManager.LIST_DRIVER_ID,
+                    DriverManager.MULTISELLIST_DRIVER_ID,
+                    DriverManager.TREE_DRIVER_ID,
+                    DriverManager.TEXT_DRIVER_ID,
+                    DriverManager.TEXT_DRIVER_ID,
+                    DriverManager.SCROLL_DRIVER_ID,
+                    DriverManager.SCROLL_DRIVER_ID,
+                    DriverManager.SCROLL_DRIVER_ID,
+                    DriverManager.SCROLL_DRIVER_ID,
+                    DriverManager.SCROLL_DRIVER_ID,
+                    DriverManager.SCROLL_DRIVER_ID,
+                    DriverManager.BUTTON_DRIVER_ID,
+                    DriverManager.LIST_DRIVER_ID,
+                    DriverManager.LIST_DRIVER_ID,
+                    DriverManager.MULTISELLIST_DRIVER_ID,
+                    DriverManager.LIST_DRIVER_ID,
+                    DriverManager.LIST_DRIVER_ID,
+                    DriverManager.MULTISELLIST_DRIVER_ID,
+                    DriverManager.TABLE_DRIVER_ID,
+                    DriverManager.LIST_DRIVER_ID,
+                    DriverManager.FRAME_DRIVER_ID,
+                    DriverManager.WINDOW_DRIVER_ID,
+                    DriverManager.FRAME_DRIVER_ID,
+                    DriverManager.INTERNAL_FRAME_DRIVER_ID,
+                    DriverManager.WINDOW_DRIVER_ID,
+                    DriverManager.FOCUS_DRIVER_ID,
+                    DriverManager.FOCUS_DRIVER_ID,
+                    DriverManager.MENU_DRIVER_ID,
+                    DriverManager.ORDEREDLIST_DRIVER_ID
+                },
+                new Object[] {
                     new JTreeMouseDriver(),
                     new JTreeMouseDriver(),
                     new JTreeMouseDriver(),
@@ -121,13 +123,14 @@ public class DefaultDriverInstaller extends ArrayDriverInstaller {
                     new ChoiceDriver(),
                     new DefaultFrameDriver(),
                     new DefaultWindowDriver(),
-                    LookAndFeel.isMotif()? new InternalFramePopupMenuDriver(): new DefaultInternalFrameDriver(),
-                    LookAndFeel.isMotif()? new InternalFramePopupMenuDriver(): new DefaultInternalFrameDriver(),
-                    LookAndFeel.isMotif()? new InternalFramePopupMenuDriver(): new DefaultInternalFrameDriver(),
+                    LookAndFeel.isMotif() ? new InternalFramePopupMenuDriver() : new DefaultInternalFrameDriver(),
+                    LookAndFeel.isMotif() ? new InternalFramePopupMenuDriver() : new DefaultInternalFrameDriver(),
+                    LookAndFeel.isMotif() ? new InternalFramePopupMenuDriver() : new DefaultInternalFrameDriver(),
                     new APIFocusDriver(),
                     new MouseFocusDriver(),
                     (shortcutEvents ? new QueueJMenuDriver() : new DefaultJMenuDriver()),
-                    new JTableHeaderDriver()});
+                    new JTableHeaderDriver()
+                });
     }
 
     /**
@@ -135,23 +138,23 @@ public class DefaultDriverInstaller extends ArrayDriverInstaller {
      * from {@code JemmyProperties}.
      */
     public DefaultDriverInstaller() {
-        this((JemmyProperties.getCurrentDispatchingModel()
-                & JemmyProperties.SHORTCUT_MODEL_MASK) != 0);
+        this((JemmyProperties.getCurrentDispatchingModel() & JemmyProperties.SHORTCUT_MODEL_MASK) != 0);
     }
 
     private static LightDriver createSpinnerDriver() {
         if (System.getProperty("java.specification.version").compareTo("1.3") > 0) {
             try {
-                return ((LightDriver) new ClassReference("org.netbeans.jemmy.drivers.scrolling.JSpinnerDriver").
-                        newInstance(null, null));
+                return ((LightDriver) new ClassReference("org.netbeans.jemmy.drivers.scrolling.JSpinnerDriver")
+                        .newInstance(null, null));
             } catch (ClassNotFoundException e) {
-                JemmyProperties.getCurrentOutput().
-                        printErrLine("ATTENTION! you are using Jemmy built by Java earlier then 1.4, under "
+                JemmyProperties.getCurrentOutput()
+                        .printErrLine("ATTENTION! you are using Jemmy built by Java earlier then 1.4, under "
                                 + "Java 1.4. \nImpossible to create JSpinnerDriver");
                 return createEmptyDriver();
             } catch (Exception e) {
-                throw (new JemmyException("Impossible to create JSpinnerDriver although java version is "
-                        + System.getProperty("java.version"),
+                throw (new JemmyException(
+                        "Impossible to create JSpinnerDriver although java version is "
+                                + System.getProperty("java.version"),
                         e));
             }
         } else {
@@ -163,7 +166,7 @@ public class DefaultDriverInstaller extends ArrayDriverInstaller {
         return (new LightDriver() {
             @Override
             public String[] getSupported() {
-                return new String[]{Object.class.getName()};
+                return new String[] {Object.class.getName()};
             }
         });
     }

@@ -32,7 +32,6 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.Hashtable;
 import java.util.Vector;
-
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListCellRenderer;
@@ -40,7 +39,6 @@ import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.ListUI;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.JemmyInputException;
@@ -66,8 +64,7 @@ import org.netbeans.jemmy.util.EmptyVisualizer;
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
-public class JListOperator extends JComponentOperator
-        implements Outputable {
+public class JListOperator extends JComponentOperator implements Outputable {
 
     /**
      * Identifier for a "item" properties.
@@ -104,9 +101,7 @@ public class JListOperator extends JComponentOperator
      * @param index an index between appropriate ones.
      */
     public JListOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JList) cont.
-                waitSubComponent(new JListFinder(chooser),
-                        index));
+        this((JList) cont.waitSubComponent(new JListFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -131,10 +126,7 @@ public class JListOperator extends JComponentOperator
      *
      */
     public JListOperator(ContainerOperator<?> cont, String text, int itemIndex, int index) {
-        this((JList) waitComponent(cont,
-                new JListByItemFinder(text, itemIndex,
-                        cont.getComparator()),
-                index));
+        this((JList) waitComponent(cont, new JListByItemFinder(text, itemIndex, cont.getComparator()), index));
         copyEnvironment(cont);
     }
 
@@ -174,9 +166,7 @@ public class JListOperator extends JComponentOperator
      *
      */
     public JListOperator(ContainerOperator<?> cont, int index) {
-        this((JList) waitComponent(cont,
-                new JListFinder(),
-                index));
+        this((JList) waitComponent(cont, new JListFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -321,11 +311,8 @@ public class JListOperator extends JComponentOperator
     @Override
     public void copyEnvironment(Operator anotherOperator) {
         super.copyEnvironment(anotherOperator);
-        driver
-                = (MultiSelListDriver) DriverManager.
-                getDriver(DriverManager.MULTISELLIST_DRIVER_ID,
-                        getClass(),
-                        anotherOperator.getProperties());
+        driver = (MultiSelListDriver) DriverManager.getDriver(
+                DriverManager.MULTISELLIST_DRIVER_ID, getClass(), anotherOperator.getProperties());
     }
 
     /**
@@ -336,8 +323,7 @@ public class JListOperator extends JComponentOperator
      */
     public Point getClickPoint(int itemIndex) {
         Rectangle rect = getCellBounds(itemIndex, itemIndex);
-        return (new Point(rect.x + rect.width / 2,
-                rect.y + rect.height / 2));
+        return (new Point(rect.x + rect.width / 2, rect.y + rect.height / 2));
     }
 
     /**
@@ -350,8 +336,9 @@ public class JListOperator extends JComponentOperator
      */
     @SuppressWarnings(value = "unchecked")
     public Component getRenderedComponent(int itemIndex, boolean isSelected, boolean cellHasFocus) {
-        return (((ListCellRenderer<Object>) getCellRenderer()).
-                getListCellRendererComponent((JList<Object>) getSource(),
+        return (((ListCellRenderer<Object>) getCellRenderer())
+                .getListCellRendererComponent(
+                        (JList<Object>) getSource(),
                         getModel().getElementAt(itemIndex),
                         itemIndex,
                         isSelected,
@@ -520,10 +507,8 @@ public class JListOperator extends JComponentOperator
      * @throws NoSuchItemException
      */
     public Object clickOnItem(final int itemIndex, final int clickCount) {
-        output.printLine("Click " + Integer.toString(clickCount)
-                + " times on JList\n    : " + toStringSource());
-        output.printGolden("Click " + Integer.toString(clickCount)
-                + " times on JList");
+        output.printLine("Click " + Integer.toString(clickCount) + " times on JList\n    : " + toStringSource());
+        output.printGolden("Click " + Integer.toString(clickCount) + " times on JList");
         checkIndex(itemIndex);
         try {
             scrollToItem(itemIndex);
@@ -531,8 +516,8 @@ public class JListOperator extends JComponentOperator
             output.printStackTrace(e);
         }
         if (((JList) getSource()).getModel().getSize() <= itemIndex) {
-            output.printErrLine("JList " + toStringSource() + " does not contain "
-                    + Integer.toString(itemIndex) + "'th item");
+            output.printErrLine(
+                    "JList " + toStringSource() + " does not contain " + Integer.toString(itemIndex) + "'th item");
             return null;
         }
         if (((JList) getSource()).getAutoscrolls()) {
@@ -543,12 +528,12 @@ public class JListOperator extends JComponentOperator
             public Object launch() {
                 Rectangle rect = getCellBounds(itemIndex, itemIndex);
                 if (rect == null) {
-                    output.printErrLine("Impossible to determine click point for "
-                            + Integer.toString(itemIndex) + "'th item");
+                    output.printErrLine(
+                            "Impossible to determine click point for " + Integer.toString(itemIndex) + "'th item");
                     return null;
                 }
-                Point point = new Point((int) (rect.getX() + rect.getWidth() / 2),
-                        (int) (rect.getY() + rect.getHeight() / 2));
+                Point point = new Point(
+                        (int) (rect.getX() + rect.getWidth() / 2), (int) (rect.getY() + rect.getHeight() / 2));
                 Object result = getModel().getElementAt(itemIndex);
                 clickMouse(point.x, point.y, clickCount);
                 return result;
@@ -660,14 +645,13 @@ public class JListOperator extends JComponentOperator
      * @throws NoSuchItemException
      */
     public void scrollToItem(int itemIndex) {
-        output.printTrace("Scroll JList to " + Integer.toString(itemIndex) + "'th item\n    : "
-                + toStringSource());
+        output.printTrace("Scroll JList to " + Integer.toString(itemIndex) + "'th item\n    : " + toStringSource());
         output.printGolden("Scroll JList to " + Integer.toString(itemIndex) + "'th item");
         checkIndex(itemIndex);
         makeComponentVisible();
-        //try to find JScrollPane under.
-        JScrollPane scroll = (JScrollPane) getContainer(new JScrollPaneOperator.JScrollPaneFinder(ComponentSearcher.
-                getTrueChooser("JScrollPane")));
+        // try to find JScrollPane under.
+        JScrollPane scroll = (JScrollPane) getContainer(
+                new JScrollPaneOperator.JScrollPaneFinder(ComponentSearcher.getTrueChooser("JScrollPane")));
         if (scroll == null) {
             return;
         }
@@ -675,11 +659,8 @@ public class JListOperator extends JComponentOperator
         scroller.copyEnvironment(this);
         scroller.setVisualizer(new EmptyVisualizer());
         Rectangle rect = getCellBounds(itemIndex, itemIndex);
-        scroller.scrollToComponentRectangle(getSource(),
-                (int) rect.getX(),
-                (int) rect.getY(),
-                (int) rect.getWidth(),
-                (int) rect.getHeight());
+        scroller.scrollToComponentRectangle(
+                getSource(), (int) rect.getX(), (int) rect.getY(), (int) rect.getWidth(), (int) rect.getHeight());
     }
 
     /**
@@ -772,11 +753,11 @@ public class JListOperator extends JComponentOperator
      * @param selected Selected (true) or unselected (false).
      */
     public void waitItemsSelection(final int[] itemIndices, final boolean selected) {
-        getOutput().printLine("Wait items to be "
-                + (selected ? "" : "un") + "selected in component \n    : "
-                + toStringSource());
-        getOutput().printGolden("Wait items to be "
-                + (selected ? "" : "un") + "selected");
+        getOutput()
+                .printLine("Wait items to be "
+                        + (selected ? "" : "un") + "selected in component \n    : "
+                        + toStringSource());
+        getOutput().printGolden("Wait items to be " + (selected ? "" : "un") + "selected");
         waitState(new ComponentChooser() {
             @Override
             public boolean checkComponent(Component comp) {
@@ -791,8 +772,7 @@ public class JListOperator extends JComponentOperator
 
             @Override
             public String getDescription() {
-                return ("Item has been "
-                        + (selected ? "" : "un") + "selected");
+                return ("Item has been " + (selected ? "" : "un") + "selected");
             }
 
             @Override
@@ -809,7 +789,7 @@ public class JListOperator extends JComponentOperator
      * @param selected Selected (true) or unselected (false).
      */
     public void waitItemSelection(final int itemIndex, final boolean selected) {
-        waitItemsSelection(new int[]{itemIndex}, selected);
+        waitItemsSelection(new int[] {itemIndex}, selected);
     }
 
     /**
@@ -819,11 +799,11 @@ public class JListOperator extends JComponentOperator
      * @param itemIndex Index of item to check or -1 to check selected item.
      */
     public void waitItem(String item, int itemIndex) {
-        getOutput().printLine("Wait \"" + item + "\" at the " + Integer.toString(itemIndex)
-                + " position in component \n    : "
-                + toStringSource());
-        getOutput().printGolden("Wait \"" + item + "\" at the " + Integer.toString(itemIndex)
-                + " position");
+        getOutput()
+                .printLine("Wait \"" + item + "\" at the " + Integer.toString(itemIndex)
+                        + " position in component \n    : "
+                        + toStringSource());
+        getOutput().printGolden("Wait \"" + item + "\" at the " + Integer.toString(itemIndex) + " position");
         waitState(new JListByItemFinder(item, itemIndex, getComparator()));
     }
 
@@ -848,7 +828,7 @@ public class JListOperator extends JComponentOperator
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code JList.addListSelectionListener(ListSelectionListener)}
      * through queue
@@ -1532,11 +1512,10 @@ public class JListOperator extends JComponentOperator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     private void checkIndex(int index) {
-        if (index < 0
-                || index >= getModel().getSize()) {
+        if (index < 0 || index >= getModel().getSize()) {
             throw (new NoSuchItemException(index));
         }
     }
@@ -1607,8 +1586,7 @@ public class JListOperator extends JComponentOperator
 
         @Override
         public boolean checkItem(JListOperator oper, int index) {
-            return (comparator.equals(oper.getModel().getElementAt(index).toString(),
-                    subString));
+            return (comparator.equals(oper.getModel().getElementAt(index).toString(), subString));
         }
 
         @Override
@@ -1694,8 +1672,8 @@ public class JListOperator extends JComponentOperator
                             return false;
                         }
                     }
-                    return (comparator.equals(((JList) comp).getModel().getElementAt(ii).toString(),
-                            label));
+                    return (comparator.equals(
+                            ((JList) comp).getModel().getElementAt(ii).toString(), label));
                 }
             }
             return false;
@@ -1703,13 +1681,13 @@ public class JListOperator extends JComponentOperator
 
         @Override
         public String getDescription() {
-            return ("JList with text \"" + label + "\" in "
-                    + itemIndex + "'th item");
+            return ("JList with text \"" + label + "\" in " + itemIndex + "'th item");
         }
 
         @Override
         public String toString() {
-            return "JListByItemFinder{" + "label=" + label + ", itemIndex=" + itemIndex + ", comparator=" + comparator + '}';
+            return "JListByItemFinder{" + "label=" + label + ", itemIndex=" + itemIndex + ", comparator=" + comparator
+                    + '}';
         }
     }
 

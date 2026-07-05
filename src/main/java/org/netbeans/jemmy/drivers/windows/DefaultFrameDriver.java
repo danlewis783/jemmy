@@ -27,7 +27,6 @@ package org.netbeans.jemmy.drivers.windows;
 import java.awt.Frame;
 import java.awt.Window;
 import java.awt.event.WindowEvent;
-
 import org.netbeans.jemmy.drivers.FrameDriver;
 import org.netbeans.jemmy.drivers.LightSupportiveDriver;
 import org.netbeans.jemmy.drivers.input.EventDriver;
@@ -39,25 +38,23 @@ public class DefaultFrameDriver extends LightSupportiveDriver implements FrameDr
     EventDriver eDriver;
 
     public DefaultFrameDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.FrameOperator"});
+        super(new String[] {"org.netbeans.jemmy.operators.FrameOperator"});
         eDriver = new EventDriver();
     }
 
     @Override
     public void iconify(ComponentOperator oper) {
         checkSupported(oper);
-        eDriver.dispatchEvent(oper.getSource(),
-                new WindowEvent((Window) oper.getSource(),
-                        WindowEvent.WINDOW_ICONIFIED));
+        eDriver.dispatchEvent(
+                oper.getSource(), new WindowEvent((Window) oper.getSource(), WindowEvent.WINDOW_ICONIFIED));
         ((FrameOperator) oper).setState(Frame.ICONIFIED);
     }
 
     @Override
     public void deiconify(ComponentOperator oper) {
         checkSupported(oper);
-        eDriver.dispatchEvent(oper.getSource(),
-                new WindowEvent((Window) oper.getSource(),
-                        WindowEvent.WINDOW_DEICONIFIED));
+        eDriver.dispatchEvent(
+                oper.getSource(), new WindowEvent((Window) oper.getSource(), WindowEvent.WINDOW_DEICONIFIED));
         ((FrameOperator) oper).setState(Frame.NORMAL);
     }
 
@@ -84,5 +81,4 @@ public class DefaultFrameDriver extends LightSupportiveDriver implements FrameDr
         checkSupported(oper);
         ((FrameOperator) oper).setExtendedState(Frame.NORMAL);
     }
-
 }

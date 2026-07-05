@@ -35,7 +35,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.Hashtable;
-
 import javax.swing.JScrollPane;
 import javax.swing.event.CaretListener;
 import javax.swing.plaf.TextUI;
@@ -45,7 +44,6 @@ import javax.swing.text.Document;
 import javax.swing.text.Highlighter;
 import javax.swing.text.JTextComponent;
 import javax.swing.text.Keymap;
-
 import org.netbeans.jemmy.Action;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
@@ -84,8 +82,7 @@ import org.netbeans.jemmy.util.EmptyVisualizer;
  *
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
-public class JTextComponentOperator extends JComponentOperator
-        implements Timeoutable, Outputable {
+public class JTextComponentOperator extends JComponentOperator implements Timeoutable, Outputable {
 
     /**
      * Identifier for a "text" property.
@@ -108,10 +105,10 @@ public class JTextComponentOperator extends JComponentOperator
      */
     public static final String IS_EDITABLE_DPROP = "Editable";
 
-    private final static long PUSH_KEY_TIMEOUT = 0;
-    private final static long BETWEEN_KEYS_TIMEOUT = 0;
-    private final static long CHANGE_CARET_POSITION_TIMEOUT = 60000;
-    private final static long TYPE_TEXT_TIMEOUT = 60000;
+    private static final long PUSH_KEY_TIMEOUT = 0;
+    private static final long BETWEEN_KEYS_TIMEOUT = 0;
+    private static final long CHANGE_CARET_POSITION_TIMEOUT = 60000;
+    private static final long TYPE_TEXT_TIMEOUT = 60000;
 
     private Timeouts timeouts;
     private TestOut output;
@@ -145,9 +142,7 @@ public class JTextComponentOperator extends JComponentOperator
      * @param index an index between appropriate ones.
      */
     public JTextComponentOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JTextComponent) cont.
-                waitSubComponent(new JTextComponentFinder(chooser),
-                        index));
+        this((JTextComponent) cont.waitSubComponent(new JTextComponentFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -172,10 +167,7 @@ public class JTextComponentOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public JTextComponentOperator(ContainerOperator<?> cont, String text, int index) {
-        this((JTextComponent) waitComponent(cont,
-                new JTextComponentByTextFinder(text,
-                        cont.getComparator()),
-                index));
+        this((JTextComponent) waitComponent(cont, new JTextComponentByTextFinder(text, cont.getComparator()), index));
         copyEnvironment(cont);
     }
 
@@ -201,9 +193,7 @@ public class JTextComponentOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public JTextComponentOperator(ContainerOperator<?> cont, int index) {
-        this((JTextComponent) waitComponent(cont,
-                new JTextComponentFinder(),
-                index));
+        this((JTextComponent) waitComponent(cont, new JTextComponentFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -260,7 +250,8 @@ public class JTextComponentOperator extends JComponentOperator
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public static JTextComponent findJTextComponent(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return findJTextComponent(cont, new JTextComponentByTextFinder(text, new DefaultStringComparator(ce, ccs)), index);
+        return findJTextComponent(
+                cont, new JTextComponentByTextFinder(text, new DefaultStringComparator(ce, ccs)), index);
     }
 
     /**
@@ -286,7 +277,8 @@ public class JTextComponentOperator extends JComponentOperator
      * @return JTextComponent instance.
      * @throws TimeoutExpiredException
      */
-    public static JTextComponent waitJTextComponent(final Container cont, final ComponentChooser chooser, final int index) {
+    public static JTextComponent waitJTextComponent(
+            final Container cont, final ComponentChooser chooser, final int index) {
         return (JTextComponent) waitComponent(cont, new JTextComponentFinder(chooser), index);
     }
 
@@ -315,7 +307,8 @@ public class JTextComponentOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public static JTextComponent waitJTextComponent(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return waitJTextComponent(cont, new JTextComponentByTextFinder(text, new DefaultStringComparator(ce, ccs)), index);
+        return waitJTextComponent(
+                cont, new JTextComponentByTextFinder(text, new DefaultStringComparator(ce, ccs)), index);
     }
 
     /**
@@ -336,8 +329,8 @@ public class JTextComponentOperator extends JComponentOperator
     @Override
     public void setTimeouts(Timeouts times) {
         timeouts = times;
-        timeouts.setTimeout("ComponentOperator.PushKeyTimeout",
-                timeouts.getTimeout("JTextComponentOperator.PushKeyTimeout"));
+        timeouts.setTimeout(
+                "ComponentOperator.PushKeyTimeout", timeouts.getTimeout("JTextComponentOperator.PushKeyTimeout"));
         super.setTimeouts(timeouts);
     }
 
@@ -360,11 +353,8 @@ public class JTextComponentOperator extends JComponentOperator
     @Override
     public void copyEnvironment(Operator anotherOperator) {
         super.copyEnvironment(anotherOperator);
-        driver
-                = (TextDriver) DriverManager.
-                getDriver(DriverManager.TEXT_DRIVER_ID,
-                        getClass(),
-                        anotherOperator.getProperties());
+        driver = (TextDriver)
+                DriverManager.getDriver(DriverManager.TEXT_DRIVER_ID, getClass(), anotherOperator.getProperties());
     }
 
     /**
@@ -380,8 +370,7 @@ public class JTextComponentOperator extends JComponentOperator
         output.printLine("Find " + tChooser.getDescription() + "\"" + text
                 + "\" text in text component\n    : "
                 + toStringSource());
-        output.printGolden("Find " + tChooser.getDescription() + "\"" + text
-                + "\" text in text component");
+        output.printGolden("Find " + tChooser.getDescription() + "\"" + text + "\" text in text component");
         String allText = getDisplayedText();
         Document doc = getDocument();
         int position = 0;
@@ -418,22 +407,26 @@ public class JTextComponentOperator extends JComponentOperator
      * @return Caret position correspondent to text start.
      */
     public int getPositionByText(String text, int index) {
-        return (getPositionByText(text, new TextChooser() {
-            @Override
-            public boolean checkPosition(Document doc, int offset) {
-                return true;
-            }
+        return (getPositionByText(
+                text,
+                new TextChooser() {
+                    @Override
+                    public boolean checkPosition(Document doc, int offset) {
+                        return true;
+                    }
 
-            @Override
-            public String getDescription() {
-                return "any";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "any";
+                    }
 
-            @Override
-            public String toString() {
-                return "JTextComponentOperator.getPositionByText.TextChooser{description = " + getDescription() + '}';
-            }
-        }, index));
+                    @Override
+                    public String toString() {
+                        return "JTextComponentOperator.getPositionByText.TextChooser{description = " + getDescription()
+                                + '}';
+                    }
+                },
+                index));
     }
 
     /**
@@ -454,23 +447,25 @@ public class JTextComponentOperator extends JComponentOperator
      */
     public void enterText(final String text) {
         makeComponentVisible();
-        produceTimeRestricted(new Action<Void, Void>() {
-            @Override
-            public Void launch(Void obj) {
-                driver.enterText(JTextComponentOperator.this, text);
-                return null;
-            }
+        produceTimeRestricted(
+                new Action<Void, Void>() {
+                    @Override
+                    public Void launch(Void obj) {
+                        driver.enterText(JTextComponentOperator.this, text);
+                        return null;
+                    }
 
-            @Override
-            public String getDescription() {
-                return "Text entering";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "Text entering";
+                    }
 
-            @Override
-            public String toString() {
-                return "JTextComponentOperator.enterText.Action{description = " + getDescription() + '}';
-            }
-        }, "JTextComponentOperator.TypeTextTimeout");
+                    @Override
+                    public String toString() {
+                        return "JTextComponentOperator.enterText.Action{description = " + getDescription() + '}';
+                    }
+                },
+                "JTextComponentOperator.TypeTextTimeout");
     }
 
     /**
@@ -483,23 +478,26 @@ public class JTextComponentOperator extends JComponentOperator
     public void changeCaretPosition(final int position) {
         output.printLine("Change caret position to " + Integer.toString(position));
         makeComponentVisible();
-        produceTimeRestricted(new Action<Void, Void>() {
-            @Override
-            public Void launch(Void obj) {
-                driver.changeCaretPosition(JTextComponentOperator.this, position);
-                return null;
-            }
+        produceTimeRestricted(
+                new Action<Void, Void>() {
+                    @Override
+                    public Void launch(Void obj) {
+                        driver.changeCaretPosition(JTextComponentOperator.this, position);
+                        return null;
+                    }
 
-            @Override
-            public String getDescription() {
-                return "Caret moving";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "Caret moving";
+                    }
 
-            @Override
-            public String toString() {
-                return "JTextComponentOperator.changeCaretPosition.Action{description = " + getDescription() + '}';
-            }
-        }, "JTextComponentOperator.ChangeCaretPositionTimeout");
+                    @Override
+                    public String toString() {
+                        return "JTextComponentOperator.changeCaretPosition.Action{description = " + getDescription()
+                                + '}';
+                    }
+                },
+                "JTextComponentOperator.ChangeCaretPositionTimeout");
         if (getVerification()) {
             waitCaretPosition(position);
         }
@@ -562,23 +560,25 @@ public class JTextComponentOperator extends JComponentOperator
                 + toStringSource());
         output.printGolden("Typing text \"" + text + "\" in text component");
         makeComponentVisible();
-        produceTimeRestricted(new Action<Void, Void>() {
-            @Override
-            public Void launch(Void obj) {
-                driver.typeText(JTextComponentOperator.this, text, caretPosition);
-                return null;
-            }
+        produceTimeRestricted(
+                new Action<Void, Void>() {
+                    @Override
+                    public Void launch(Void obj) {
+                        driver.typeText(JTextComponentOperator.this, text, caretPosition);
+                        return null;
+                    }
 
-            @Override
-            public String getDescription() {
-                return "Text typing";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "Text typing";
+                    }
 
-            @Override
-            public String toString() {
-                return "JTextComponentOperator.typeText.Action{description = " + getDescription() + '}';
-            }
-        }, "JTextComponentOperator.TypeTextTimeout");
+                    @Override
+                    public String toString() {
+                        return "JTextComponentOperator.typeText.Action{description = " + getDescription() + '}';
+                    }
+                },
+                "JTextComponentOperator.TypeTextTimeout");
         if (getVerification()) {
             waitText(text, -1);
         }
@@ -611,23 +611,25 @@ public class JTextComponentOperator extends JComponentOperator
                 + " in text component\n    : "
                 + toStringSource());
         makeComponentVisible();
-        produceTimeRestricted(new Action<Void, Void>() {
-            @Override
-            public Void launch(Void obj) {
-                driver.selectText(JTextComponentOperator.this, startPosition, finalPosition);
-                return null;
-            }
+        produceTimeRestricted(
+                new Action<Void, Void>() {
+                    @Override
+                    public Void launch(Void obj) {
+                        driver.selectText(JTextComponentOperator.this, startPosition, finalPosition);
+                        return null;
+                    }
 
-            @Override
-            public String getDescription() {
-                return "Text selecting";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "Text selecting";
+                    }
 
-            @Override
-            public String toString() {
-                return "JTextComponentOperator.selectText.Action{description = " + getDescription() + '}';
-            }
-        }, "JTextComponentOperator.TypeTextTimeout");
+                    @Override
+                    public String toString() {
+                        return "JTextComponentOperator.selectText.Action{description = " + getDescription() + '}';
+                    }
+                },
+                "JTextComponentOperator.TypeTextTimeout");
     }
 
     /**
@@ -673,27 +675,28 @@ public class JTextComponentOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public void clearText() {
-        output.printLine("Clearing text in text component\n    : "
-                + toStringSource());
+        output.printLine("Clearing text in text component\n    : " + toStringSource());
         output.printGolden("Clearing text in text component");
         makeComponentVisible();
-        produceTimeRestricted(new Action<Void, Void>() {
-            @Override
-            public Void launch(Void obj) {
-                driver.clearText(JTextComponentOperator.this);
-                return null;
-            }
+        produceTimeRestricted(
+                new Action<Void, Void>() {
+                    @Override
+                    public Void launch(Void obj) {
+                        driver.clearText(JTextComponentOperator.this);
+                        return null;
+                    }
 
-            @Override
-            public String getDescription() {
-                return "Text clearing";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "Text clearing";
+                    }
 
-            @Override
-            public String toString() {
-                return "JTextComponentOperator.clearText.Action{description = " + getDescription() + '}';
-            }
-        }, "JTextComponentOperator.TypeTextTimeout");
+                    @Override
+                    public String toString() {
+                        return "JTextComponentOperator.clearText.Action{description = " + getDescription() + '}';
+                    }
+                },
+                "JTextComponentOperator.TypeTextTimeout");
     }
 
     /**
@@ -703,13 +706,13 @@ public class JTextComponentOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public void scrollToPosition(int position) {
-        output.printTrace("Scroll JTextComponent to " + Integer.toString(position) + " position\n    : "
-                + toStringSource());
+        output.printTrace(
+                "Scroll JTextComponent to " + Integer.toString(position) + " position\n    : " + toStringSource());
         output.printGolden("Scroll JTextComponent to " + Integer.toString(position) + " position");
         makeComponentVisible();
-        //try to find JScrollPane under.
-        JScrollPane scroll = (JScrollPane) getContainer(new JScrollPaneOperator.JScrollPaneFinder(ComponentSearcher.
-                getTrueChooser("JScrollPane")));
+        // try to find JScrollPane under.
+        JScrollPane scroll = (JScrollPane) getContainer(
+                new JScrollPaneOperator.JScrollPaneFinder(ComponentSearcher.getTrueChooser("JScrollPane")));
         if (scroll == null) {
             return;
         }
@@ -717,11 +720,8 @@ public class JTextComponentOperator extends JComponentOperator
         scroller.copyEnvironment(this);
         scroller.setVisualizer(new EmptyVisualizer());
         Rectangle rect = modelToView(position);
-        scroller.scrollToComponentRectangle(getSource(),
-                (int) rect.getX(),
-                (int) rect.getY(),
-                (int) rect.getWidth(),
-                (int) rect.getHeight());
+        scroller.scrollToComponentRectangle(
+                getSource(), (int) rect.getX(), (int) rect.getY(), (int) rect.getWidth(), (int) rect.getHeight());
     }
 
     /**
@@ -737,8 +737,7 @@ public class JTextComponentOperator extends JComponentOperator
             Document doc = getDocument();
             return doc.getText(0, doc.getLength());
         } catch (BadLocationException e) {
-            throw (new JemmyException("Exception during text operation with\n    : "
-                    + toStringSource(), e));
+            throw (new JemmyException("Exception during text operation with\n    : " + toStringSource(), e));
         }
     }
 
@@ -749,19 +748,19 @@ public class JTextComponentOperator extends JComponentOperator
      * @param position starting text position.
      */
     public void waitText(final String text, final int position) {
-        getOutput().printLine("Wait \"" + text + "\" text starting from "
-                + Integer.toString(position) + " position in component \n    : "
-                + toStringSource());
-        getOutput().printGolden("Wait \"" + text + "\" text starting from "
-                + Integer.toString(position) + " position");
+        getOutput()
+                .printLine("Wait \"" + text + "\" text starting from "
+                        + Integer.toString(position) + " position in component \n    : "
+                        + toStringSource());
+        getOutput().printGolden("Wait \"" + text + "\" text starting from " + Integer.toString(position) + " position");
         waitState(new ComponentChooser() {
             @Override
             public boolean checkComponent(Component comp) {
                 String alltext = getDisplayedText();
                 if (position >= 0) {
                     if (position + text.length() <= alltext.length()) {
-                        return (alltext.substring(position, position + text.length()).
-                                equals(text));
+                        return (alltext.substring(position, position + text.length())
+                                .equals(text));
                     } else {
                         return false;
                     }
@@ -772,8 +771,7 @@ public class JTextComponentOperator extends JComponentOperator
 
             @Override
             public String getDescription() {
-                return ("Has \"" + text + "\" text starting from "
-                        + Integer.toString(position) + " position");
+                return ("Has \"" + text + "\" text starting from " + Integer.toString(position) + " position");
             }
 
             @Override
@@ -789,8 +787,7 @@ public class JTextComponentOperator extends JComponentOperator
      * @param text Text to be compared by getComparator() comparator.
      */
     public void waitText(String text) {
-        getOutput().printLine("Wait \"" + text + "\" text in component \n    : "
-                + toStringSource());
+        getOutput().printLine("Wait \"" + text + "\" text in component \n    : " + toStringSource());
         getOutput().printGolden("Wait \"" + text + "\" text");
         waitState(new JTextComponentByTextFinder(text, getComparator()));
     }
@@ -801,11 +798,11 @@ public class JTextComponentOperator extends JComponentOperator
      * @param position a position which caret supposed to be moved to.
      */
     public void waitCaretPosition(final int position) {
-        getOutput().printLine("Wait caret to be at \"" + Integer.toString(position)
-                + " position in component \n    : "
-                + toStringSource());
-        getOutput().printGolden("Wait caret to be at \"" + Integer.toString(position)
-                + " position");
+        getOutput()
+                .printLine("Wait caret to be at \"" + Integer.toString(position)
+                        + " position in component \n    : "
+                        + toStringSource());
+        getOutput().printGolden("Wait caret to be at \"" + Integer.toString(position) + " position");
         waitState(new ComponentChooser() {
             @Override
             public boolean checkComponent(Component comp) {
@@ -819,7 +816,8 @@ public class JTextComponentOperator extends JComponentOperator
 
             @Override
             public String toString() {
-                return "JTextComponentOperator.waitCaretPosition.ComponentChooser{description = " + getDescription() + '}';
+                return "JTextComponentOperator.waitCaretPosition.ComponentChooser{description = " + getDescription()
+                        + '}';
             }
         });
     }
@@ -835,7 +833,7 @@ public class JTextComponentOperator extends JComponentOperator
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code JTextComponent.addCaretListener(CaretListener)} through queue
      */
@@ -1480,7 +1478,7 @@ public class JTextComponentOperator extends JComponentOperator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Can be throught during a text operation if text has not been found in the
@@ -1557,8 +1555,7 @@ public class JTextComponentOperator extends JComponentOperator
         public boolean checkComponent(Component comp) {
             if (comp instanceof JTextComponent) {
                 if (((JTextComponent) comp).getText() != null) {
-                    return (comparator.equals(((JTextComponent) comp).getText(),
-                            label));
+                    return (comparator.equals(((JTextComponent) comp).getText(), label));
                 }
             }
             return false;

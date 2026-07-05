@@ -26,9 +26,7 @@ package org.netbeans.jemmy.drivers.tables;
 
 import java.awt.Point;
 import java.awt.event.KeyEvent;
-
 import javax.swing.text.JTextComponent;
-
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.drivers.DriverManager;
 import org.netbeans.jemmy.drivers.LightSupportiveDriver;
@@ -52,7 +50,7 @@ public class JTableMouseDriver extends LightSupportiveDriver implements TableDri
      * Constructs a JTableMouseDriver.
      */
     public JTableMouseDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.JTableOperator"});
+        super(new String[] {"org.netbeans.jemmy.operators.JTableOperator"});
         queueTool = new QueueTool();
     }
 
@@ -65,21 +63,16 @@ public class JTableMouseDriver extends LightSupportiveDriver implements TableDri
     public void editCell(ComponentOperator oper, int row, int column, Object value) {
         JTableOperator toper = (JTableOperator) oper;
         toper.scrollToCell(row, column);
-        if (!toper.isEditing()
-                || toper.getEditingRow() != row
-                || toper.getEditingColumn() != column) {
+        if (!toper.isEditing() || toper.getEditingRow() != row || toper.getEditingColumn() != column) {
             clickOnCell((JTableOperator) oper, row, column, 2);
         }
-        JTextComponentOperator textoper
-                = new JTextComponentOperator((JTextComponent) toper.
-                        waitSubComponent(new JTextComponentOperator.JTextComponentFinder()));
+        JTextComponentOperator textoper = new JTextComponentOperator(
+                (JTextComponent) toper.waitSubComponent(new JTextComponentOperator.JTextComponentFinder()));
         TextDriver text = DriverManager.getTextDriver(JTextComponentOperator.class);
         text.clearText(textoper);
         text.typeText(textoper, value.toString(), 0);
-        DriverManager.getKeyDriver(oper).
-                pushKey(textoper, KeyEvent.VK_ENTER, 0,
-                        oper.getTimeouts().
-                        create("ComponentOperator.PushKeyTimeout"));
+        DriverManager.getKeyDriver(oper)
+                .pushKey(textoper, KeyEvent.VK_ENTER, 0, oper.getTimeouts().create("ComponentOperator.PushKeyTimeout"));
     }
 
     /**
@@ -95,8 +88,12 @@ public class JTableMouseDriver extends LightSupportiveDriver implements TableDri
             @Override
             public Void launch() {
                 Point point = oper.getPointToClick(row, column);
-                DriverManager.getMouseDriver(oper).
-                        clickMouse(oper, point.x, point.y, clickCount,
+                DriverManager.getMouseDriver(oper)
+                        .clickMouse(
+                                oper,
+                                point.x,
+                                point.y,
+                                clickCount,
                                 Operator.getDefaultMouseButton(),
                                 0,
                                 oper.getTimeouts().create("ComponentOperator.MouseClickTimeout"));

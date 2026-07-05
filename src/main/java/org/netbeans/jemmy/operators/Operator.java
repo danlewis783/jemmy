@@ -30,7 +30,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
 import java.util.Vector;
-
 import org.netbeans.jemmy.Action;
 import org.netbeans.jemmy.ActionProducer;
 import org.netbeans.jemmy.CharBindingMap;
@@ -56,8 +55,7 @@ import org.netbeans.jemmy.util.Platform;
  *
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
-public abstract class Operator
-        implements Timeoutable, Outputable {
+public abstract class Operator implements Timeoutable, Outputable {
 
     /**
      * Identifier for a "class" property.
@@ -106,8 +104,8 @@ public abstract class Operator
      * @see org.netbeans.jemmy.util.DefaultVisualizer
      */
     public static ComponentVisualizer setDefaultComponentVisualizer(ComponentVisualizer visualizer) {
-        return ((ComponentVisualizer) JemmyProperties.
-                setCurrentProperty("ComponentOperator.ComponentVisualizer", visualizer));
+        return ((ComponentVisualizer)
+                JemmyProperties.setCurrentProperty("ComponentOperator.ComponentVisualizer", visualizer));
     }
 
     /**
@@ -118,8 +116,7 @@ public abstract class Operator
      * @see #setDefaultComponentVisualizer(Operator.ComponentVisualizer)
      */
     public static ComponentVisualizer getDefaultComponentVisualizer() {
-        return ((ComponentVisualizer) JemmyProperties.
-                getCurrentProperty("ComponentOperator.ComponentVisualizer"));
+        return ((ComponentVisualizer) JemmyProperties.getCurrentProperty("ComponentOperator.ComponentVisualizer"));
     }
 
     /**
@@ -131,8 +128,8 @@ public abstract class Operator
      * @see Operator.StringComparator
      */
     public static StringComparator setDefaultStringComparator(StringComparator comparator) {
-        return ((StringComparator) JemmyProperties.
-                setCurrentProperty("ComponentOperator.StringComparator", comparator));
+        return ((StringComparator)
+                JemmyProperties.setCurrentProperty("ComponentOperator.StringComparator", comparator));
     }
 
     /**
@@ -143,8 +140,7 @@ public abstract class Operator
      * @see Operator.StringComparator
      */
     public static StringComparator getDefaultStringComparator() {
-        return ((StringComparator) JemmyProperties.
-                getCurrentProperty("ComponentOperator.StringComparator"));
+        return ((StringComparator) JemmyProperties.getCurrentProperty("ComponentOperator.StringComparator"));
     }
 
     /**
@@ -156,8 +152,7 @@ public abstract class Operator
      * @see #getDefaultPathParser
      */
     public static PathParser setDefaultPathParser(PathParser parser) {
-        return ((PathParser) JemmyProperties.
-                setCurrentProperty("ComponentOperator.PathParser", parser));
+        return ((PathParser) JemmyProperties.setCurrentProperty("ComponentOperator.PathParser", parser));
     }
 
     /**
@@ -168,8 +163,7 @@ public abstract class Operator
      * @see #setDefaultPathParser
      */
     public static PathParser getDefaultPathParser() {
-        return ((PathParser) JemmyProperties.
-                getCurrentProperty("ComponentOperator.PathParser"));
+        return ((PathParser) JemmyProperties.getCurrentProperty("ComponentOperator.PathParser"));
     }
 
     /**
@@ -182,9 +176,8 @@ public abstract class Operator
      * @see #setVerification(boolean)
      */
     public static boolean setDefaultVerification(boolean verification) {
-        Boolean oldValue = (Boolean) (JemmyProperties.
-                setCurrentProperty("Operator.Verification",
-                        verification ? Boolean.TRUE : Boolean.FALSE));
+        Boolean oldValue = (Boolean) (JemmyProperties.setCurrentProperty(
+                "Operator.Verification", verification ? Boolean.TRUE : Boolean.FALSE));
         return (oldValue != null) ? oldValue : false;
     }
 
@@ -197,8 +190,7 @@ public abstract class Operator
      * @see #getVerification()
      */
     public static boolean getDefaultVerification() {
-        return ((Boolean) (JemmyProperties.
-                getCurrentProperty("Operator.Verification")));
+        return ((Boolean) (JemmyProperties.getCurrentProperty("Operator.Verification")));
     }
 
     /**
@@ -263,7 +255,7 @@ public abstract class Operator
      * @see #addOperatorPackage(String)
      */
     public static ComponentOperator createOperator(Component comp) {
-        //hack!
+        // hack!
         try {
             Class<?> cclass = Class.forName("java.awt.Component");
             Class<?> compClass = comp.getClass();
@@ -300,10 +292,10 @@ public abstract class Operator
     }
 
     static {
-        //init visualizer depending on OS:
-        //Linux - new MouseVisualizer(MouseVisualizer.TOP, 0.5, 10, false)
-        //solaris - new MouseVisualizer()
-        //others - new DefaultVisualizer()
+        // init visualizer depending on OS:
+        // Linux - new MouseVisualizer(MouseVisualizer.TOP, 0.5, 10, false)
+        // solaris - new MouseVisualizer()
+        // others - new DefaultVisualizer()
         if (Platform.isLinux()) {
             setDefaultComponentVisualizer(new MouseVisualizer(MouseVisualizer.TOP, 0.5, 10, false));
         } else if (Platform.isSolaris()) {
@@ -327,7 +319,7 @@ public abstract class Operator
     public abstract Component getSource();
 
     ////////////////////////////////////////////////////////
-    //Environment                                         //
+    // Environment                                         //
     ////////////////////////////////////////////////////////
     /**
      * Returns QueueTool is used to work with queue.
@@ -519,7 +511,7 @@ public abstract class Operator
     }
 
     ////////////////////////////////////////////////////////
-    //Util                                                //
+    // Util                                                //
     ////////////////////////////////////////////////////////
     /**
      * Creates new array which has all elements from first array, except last
@@ -665,9 +657,7 @@ public abstract class Operator
         Hashtable<String, Object> result = getDump();
         Object[] keys = result.keySet().toArray();
         for (int i = 0; i < result.size(); i++) {
-            output.printLine(keys[i]
-                    + " = "
-                    + result.get(keys[i]));
+            output.printLine(keys[i] + " = " + result.get(keys[i]));
         }
     }
 
@@ -701,8 +691,7 @@ public abstract class Operator
 
             @Override
             public String getDescription() {
-                return "Wait \"" + state.getDescription()
-                        + "\" state to be reached";
+                return "Wait \"" + state.getDescription() + "\" state to be reached";
             }
 
             @Override
@@ -714,15 +703,12 @@ public abstract class Operator
 
     public <R> R waitState(Waitable<R, Void> waitable) {
         Waiter<R, Void> stateWaiter = new Waiter<>(waitable);
-        stateWaiter.setTimeoutsToCloneOf(getTimeouts(),
-                "ComponentOperator.WaitStateTimeout");
+        stateWaiter.setTimeoutsToCloneOf(getTimeouts(), "ComponentOperator.WaitStateTimeout");
         stateWaiter.setOutput(getOutput().createErrorOutput());
         try {
             return stateWaiter.waitAction(null);
         } catch (InterruptedException e) {
-            throw new JemmyException(
-                    "Waiting of \"" + waitable.getDescription()
-                            + "\" state has been interrupted!");
+            throw new JemmyException("Waiting of \"" + waitable.getDescription() + "\" state has been interrupted!");
         }
     }
 
@@ -737,13 +723,12 @@ public abstract class Operator
         waitState(new ComponentChooser() {
             @Override
             public boolean checkComponent(Component comp) {
-                return (boolean) (queueTool.invokeSmoothly(
-                        new QueueTool.QueueAction<Object>("checkComponent") {
-                            @Override
-                            public final Object launch() throws Exception {
-                                return state.checkComponent(comp);
-                            }
-                        }));
+                return (boolean) (queueTool.invokeSmoothly(new QueueTool.QueueAction<Object>("checkComponent") {
+                    @Override
+                    public final Object launch() throws Exception {
+                        return state.checkComponent(comp);
+                    }
+                }));
             }
 
             @Override
@@ -754,7 +739,7 @@ public abstract class Operator
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     ////////////////////////////////////////////////////////
     /**
      * Performs an operation with time control.
@@ -765,13 +750,12 @@ public abstract class Operator
      * action to be finished.
      * @return an action result.
      */
-    protected <R, P> R produceTimeRestricted(Action<R, P> action, final P param,
-            String actionTimeOrigin) {
+    protected <R, P> R produceTimeRestricted(Action<R, P> action, final P param, String actionTimeOrigin) {
         ActionProducer<R, P> producer = new ActionProducer<>(action);
         producer.setOutput(getOutput().createErrorOutput());
         producer.setTimeouts(getTimeouts().cloneThis());
-        producer.getTimeouts().setTimeout("ActionProducer.MaxActionTime",
-                getTimeouts().getTimeout(actionTimeOrigin));
+        producer.getTimeouts()
+                .setTimeout("ActionProducer.MaxActionTime", getTimeouts().getTimeout(actionTimeOrigin));
         try {
             R result = producer.produceAction(param, actionTimeOrigin);
             Throwable exception = producer.getException();
@@ -779,8 +763,7 @@ public abstract class Operator
                 if (exception instanceof JemmyException) {
                     throw ((JemmyException) exception);
                 } else {
-                    throw (new JemmyException("Exception during " + action.getDescription(),
-                            exception));
+                    throw (new JemmyException("Exception during " + action.getDescription(), exception));
                 }
             }
             return result;
@@ -814,15 +797,11 @@ public abstract class Operator
             noBlockingProducer.setTimeouts(timeouts);
             noBlockingProducer.produceAction(param, null);
         } catch (InterruptedException e) {
-            throw (new JemmyException("Exception during \""
-                    + action.getDescription()
-                    + "\" execution",
-                    e));
+            throw (new JemmyException("Exception during \"" + action.getDescription() + "\" execution", e));
         }
         if (action.exception != null) {
-            throw (new JemmyException("Exception during nonblocking \""
-                    + action.getDescription() + "\"",
-                    action.exception));
+            throw (new JemmyException(
+                    "Exception during nonblocking \"" + action.getDescription() + "\"", action.exception));
         }
     }
 
@@ -1003,7 +982,7 @@ public abstract class Operator
         return names;
     }
     ////////////////////////////////////////////////////////
-    //Private                                             //
+    // Private                                             //
     ////////////////////////////////////////////////////////
 
     private <R> R runMappingPrimitive(QueueTool.QueueAction<R> action) {
@@ -1020,9 +999,7 @@ public abstract class Operator
         String zeroString = zeroStringB.toString();
         for (int i = 0; i < count; i++) {
             String indexString = Integer.toString(i);
-            result[i] = title
-                    + zeroString.substring(0, indexLength - indexString.length())
-                    + indexString;
+            result[i] = title + zeroString.substring(0, indexLength - indexString.length()) + indexString;
         }
         return result;
     }
@@ -1039,9 +1016,8 @@ public abstract class Operator
         for (String operatorPkg : operatorPkgs) {
             operatorPackage = operatorPkg;
             try {
-                return ((ComponentOperator) new ClassReference(operatorPackage + "."
-                        + className + "Operator").
-                        newInstance(params, param_classes));
+                return ((ComponentOperator) new ClassReference(operatorPackage + "." + className + "Operator")
+                        .newInstance(params, param_classes));
             } catch (ClassNotFoundException ignored) {
             } catch (InvocationTargetException ignored) {
             } catch (NoSuchMethodException ignored) {

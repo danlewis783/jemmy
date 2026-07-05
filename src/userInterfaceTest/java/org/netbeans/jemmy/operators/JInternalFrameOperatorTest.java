@@ -25,26 +25,24 @@
 
 package org.netbeans.jemmy.operators;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.netbeans.jemmy.operators.JInternalFrameOperator.CLOSE_BUTTON_TOOLTIP;
 import static org.netbeans.jemmy.operators.JInternalFrameOperator.MAXIMIZE_BUTTON_TOOLTIP;
 import static org.netbeans.jemmy.operators.JInternalFrameOperator.MINIMIZE_BUTTON_TOOLTIP;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.awt.Dimension;
 import java.awt.Point;
-
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.UIManager;
-
-import org.netbeans.jemmy.JemmyProperties;
-import org.netbeans.jemmy.util.LookAndFeel;
-import org.netbeans.jemmy.util.Platform;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.netbeans.jemmy.JemmyProperties;
+import org.netbeans.jemmy.util.LookAndFeel;
+import org.netbeans.jemmy.util.Platform;
 
 public class JInternalFrameOperatorTest {
 
@@ -54,8 +52,8 @@ public class JInternalFrameOperatorTest {
 
     private JDesktopPane desktop;
 
-    private final static String OSX_EXCEPT_MESSAGE = "Jemmy doesn't support"
-            + " getting or initializing title related operators on Mac OSx";
+    private static final String OSX_EXCEPT_MESSAGE =
+            "Jemmy doesn't support" + " getting or initializing title related operators on Mac OSx";
 
     // was a TestNG @BeforeMethod receiving the data-provider arguments;
     // JUnit has no such injection, so each test calls this helper itself
@@ -64,15 +62,13 @@ public class JInternalFrameOperatorTest {
         JFrame frame = new JFrame();
         desktop = new JDesktopPane();
         frame.setContentPane(desktop);
-        JemmyProperties.setCurrentDispatchingModel(
-                JemmyProperties.getCurrentDispatchingModel());
-        JInternalFrame internalFrame = new JInternalFrame(
-                "JInternalFrameOperatorTest", true, true, true, true);
+        JemmyProperties.setCurrentDispatchingModel(JemmyProperties.getCurrentDispatchingModel());
+        JInternalFrame internalFrame = new JInternalFrame("JInternalFrameOperatorTest", true, true, true, true);
         internalFrame.setName("JInternalFrameOperatorTest");
         internalFrame.setSize(200, 200);
         internalFrame.setVisible(true);
         desktop.add(internalFrame);
-        frame.setSize(400,400);
+        frame.setSize(400, 400);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frameOper = new JFrameOperator();
@@ -92,9 +88,7 @@ public class JInternalFrameOperatorTest {
         setUp(lookAndFeel);
         new JInternalFrameOperator(frameOper);
         new JInternalFrameOperator(frameOper, "JInternalFrameOperatorTest");
-        new JInternalFrameOperator(frameOper,
-                comp -> "JInternalFrameOperatorTest".equals(comp.getName()));
-
+        new JInternalFrameOperator(frameOper, comp -> "JInternalFrameOperatorTest".equals(comp.getName()));
     }
 
     @ParameterizedTest
@@ -142,24 +136,21 @@ public class JInternalFrameOperatorTest {
     @MethodSource("org.netbeans.jemmy.LookAndFeelProvider#availableLookAndFeels")
     public void testTitleButtons(String lookAndFeel) throws Exception {
         setUp(lookAndFeel);
-        if(!Platform.isOSX() && !LookAndFeel.isMotif()) {
+        if (!Platform.isOSX() && !LookAndFeel.isMotif()) {
             // Close, Maximize, and Minimize buttons are adding along with the
             // construction of internal frame itself
-            JInternalFrame interanlFrame1 = new JInternalFrame(
-                    "JInternalFrameButtonTest1", true, true, true, true);
+            JInternalFrame interanlFrame1 = new JInternalFrame("JInternalFrameButtonTest1", true, true, true, true);
             verifyTitleButtons(interanlFrame1);
 
             // Close, Maximize, and Minimize buttons are adding after the
             // construction of internal frame by using APIs
-            JInternalFrame interanlFrame2 = new JInternalFrame(
-                    "JInternalFrameButtonTest2", false, false, false, false);
+            JInternalFrame interanlFrame2 = new JInternalFrame("JInternalFrameButtonTest2", false, false, false, false);
             interanlFrame2.setClosable(true);
             interanlFrame2.setMaximizable(true);
             interanlFrame2.setIconifiable(true);
             verifyTitleButtons(interanlFrame2);
-        } else if (Platform.isOSX()){
-            JInternalFrame interanlFrame = new JInternalFrame(
-                    "JInternalFrameButtonTest3", true, true, true, true);
+        } else if (Platform.isOSX()) {
+            JInternalFrame interanlFrame = new JInternalFrame("JInternalFrameButtonTest3", true, true, true, true);
             interanlFrame.setSize(200, 200);
             interanlFrame.setVisible(true);
             desktop.add(interanlFrame);
@@ -183,12 +174,9 @@ public class JInternalFrameOperatorTest {
         JInternalFrameOperator interanlFrameOper = new JInternalFrameOperator(interanlFrame);
 
         // Verify title buttons tooltip texts
-        assertThat(interanlFrameOper.getCloseButton().getToolTipText())
-                .isEqualTo(CLOSE_BUTTON_TOOLTIP);
-        assertThat(interanlFrameOper.getMaximizeButton().getToolTipText())
-                .isEqualTo(MAXIMIZE_BUTTON_TOOLTIP);
-        assertThat(interanlFrameOper.getMinimizeButton().getToolTipText())
-                .isEqualTo(MINIMIZE_BUTTON_TOOLTIP);
+        assertThat(interanlFrameOper.getCloseButton().getToolTipText()).isEqualTo(CLOSE_BUTTON_TOOLTIP);
+        assertThat(interanlFrameOper.getMaximizeButton().getToolTipText()).isEqualTo(MAXIMIZE_BUTTON_TOOLTIP);
+        assertThat(interanlFrameOper.getMinimizeButton().getToolTipText()).isEqualTo(MINIMIZE_BUTTON_TOOLTIP);
 
         // Verify different actions using title buttons
         interanlFrameOper.getMaximizeButton().push();
@@ -204,5 +192,4 @@ public class JInternalFrameOperatorTest {
         desktop.remove(interanlFrame);
         interanlFrame.dispose();
     }
-
 }

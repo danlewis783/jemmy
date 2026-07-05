@@ -30,11 +30,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
-
 import javax.swing.JComponent;
 import javax.swing.JToolTip;
 import javax.swing.plaf.ToolTipUI;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.JemmyException;
@@ -94,8 +92,7 @@ public class JToolTipOperator extends JComponentOperator {
      * @see #getDefaultStringComparator()
      */
     public JToolTipOperator(String tipText) {
-        this(waitJToolTip(new JToolTipByTipTextFinder(tipText,
-                getDefaultStringComparator())));
+        this(waitJToolTip(new JToolTipByTipTextFinder(tipText, getDefaultStringComparator())));
     }
 
     /**
@@ -136,7 +133,7 @@ public class JToolTipOperator extends JComponentOperator {
      */
     public JToolTipOperator(ComponentOperator comp, ComponentChooser chooser) {
         this(waitJToolTip(comp, chooser));
-        if(comp != null) {
+        if (comp != null) {
             copyEnvironment(comp);
         }
     }
@@ -155,8 +152,7 @@ public class JToolTipOperator extends JComponentOperator {
      * @see #copyEnvironment(org.netbeans.jemmy.operators.Operator)
      */
     public JToolTipOperator(ComponentOperator comp, String tipText) {
-        this(waitJToolTip(comp,
-                new JToolTipByTipTextFinder(tipText, comp.getComparator())));
+        this(waitJToolTip(comp, new JToolTipByTipTextFinder(tipText, comp.getComparator())));
         copyEnvironment(comp);
     }
 
@@ -171,25 +167,21 @@ public class JToolTipOperator extends JComponentOperator {
      *            a component chooser specifying searching criteria.
      * @return JToolTip instance or null if component was not found.
      */
-    public static JToolTip findJToolTip(ComponentOperator comp,
-            ComponentChooser chooser) {
+    public static JToolTip findJToolTip(ComponentOperator comp, ComponentChooser chooser) {
         List<Window> windowList;
-        if(comp != null && comp.getWindow() != null) {
-            windowList = new ArrayList<>(
-                    Arrays.asList(comp.getWindow().getOwnedWindows()));
+        if (comp != null && comp.getWindow() != null) {
+            windowList = new ArrayList<>(Arrays.asList(comp.getWindow().getOwnedWindows()));
             windowList.add(comp.getWindow());
         } else {
-            windowList = new ArrayList<>(
-                    Arrays.asList(WindowOperator.getWindows()));
+            windowList = new ArrayList<>(Arrays.asList(WindowOperator.getWindows()));
         }
         ComponentChooser toolTipChooser = new JToolTipFinder(chooser);
         for (Window w : windowList) {
             ComponentSearcher searcher = new ComponentSearcher(w);
             Component[] components = searcher.findComponents(toolTipChooser);
             if (components.length > 0) {
-                if(comp!= null && comp.getSource() != null) {
-                    if(comp.getSource().equals(
-                            ((JToolTip) components[0]).getComponent())) {
+                if (comp != null && comp.getSource() != null) {
+                    if (comp.getSource().equals(((JToolTip) components[0]).getComponent())) {
                         return (JToolTip) components[0];
                     }
                 } else {
@@ -199,7 +191,6 @@ public class JToolTipOperator extends JComponentOperator {
         }
         return null;
     }
-
 
     /**
      * Searches for a JToolTip.
@@ -239,10 +230,8 @@ public class JToolTipOperator extends JComponentOperator {
      * @see DefaultStringComparator
      * @see JToolTipByTipTextFinder
      */
-    public static JToolTip findJToolTip(ComponentOperator comp, String tipText,
-            boolean ce, boolean ccs) {
-        return findJToolTip(comp, new JToolTipByTipTextFinder(tipText,
-                new DefaultStringComparator(ce, ccs)));
+    public static JToolTip findJToolTip(ComponentOperator comp, String tipText, boolean ce, boolean ccs) {
+        return findJToolTip(comp, new JToolTipByTipTextFinder(tipText, new DefaultStringComparator(ce, ccs)));
     }
 
     /**
@@ -254,7 +243,6 @@ public class JToolTipOperator extends JComponentOperator {
     public static JToolTip waitJToolTip() {
         return waitJToolTip(TRUE_CHOOSER);
     }
-
 
     /**
      * Waits for the first JToolTip associated with the given component.
@@ -292,8 +280,7 @@ public class JToolTipOperator extends JComponentOperator {
      * @return JToolTip instance.
      * @see TimeoutExpiredException
      */
-    public static JToolTip waitJToolTip(ComponentOperator comp,
-            ComponentChooser chooser) {
+    public static JToolTip waitJToolTip(ComponentOperator comp, ComponentChooser chooser) {
         Waitable<JToolTip, Void> waitable = new Waitable<JToolTip, Void>() {
             @Override
             public JToolTip actionProduced(Void obj) {
@@ -302,26 +289,22 @@ public class JToolTipOperator extends JComponentOperator {
 
             @Override
             public String getDescription() {
-                return "Wait for JTooltip to be displayed for Component = "
-                        + comp + ", " + "chooser = " + chooser;
+                return "Wait for JTooltip to be displayed for Component = " + comp + ", " + "chooser = " + chooser;
             }
 
             @Override
             public String toString() {
-                return "JToolTipOperator.waitJToolTip.Waitable{description = "
-                        + getDescription() + '}';
+                return "JToolTipOperator.waitJToolTip.Waitable{description = " + getDescription() + '}';
             }
         };
         Waiter<JToolTip, Void> stateWaiter = new Waiter<>(waitable);
-        stateWaiter.setTimeoutsToCloneOf(Operator.getEnvironmentOperator().
-                getTimeouts(), "JToolTipOperator.WaitToolTipTimeout");
-        stateWaiter.setOutput(Operator.getEnvironmentOperator().
-                getOutput().createErrorOutput());
+        stateWaiter.setTimeoutsToCloneOf(
+                Operator.getEnvironmentOperator().getTimeouts(), "JToolTipOperator.WaitToolTipTimeout");
+        stateWaiter.setOutput(Operator.getEnvironmentOperator().getOutput().createErrorOutput());
         try {
             return stateWaiter.waitAction(null);
         } catch (InterruptedException e) {
-           throw new JemmyException("Waiting of " + waitable.getDescription()
-               + " state has been interrupted!");
+            throw new JemmyException("Waiting of " + waitable.getDescription() + " state has been interrupted!");
         }
     }
 
@@ -340,10 +323,8 @@ public class JToolTipOperator extends JComponentOperator {
      * @return JToolTip instance.
      * @see TimeoutExpiredException
      */
-    public static JToolTip waitJToolTip(ComponentOperator comp, String tipText,
-            boolean ce, boolean ccs) {
-        return waitJToolTip(comp, new JToolTipByTipTextFinder(tipText,
-                new DefaultStringComparator(ce, ccs)));
+    public static JToolTip waitJToolTip(ComponentOperator comp, String tipText, boolean ce, boolean ccs) {
+        return waitJToolTip(comp, new JToolTipByTipTextFinder(tipText, new DefaultStringComparator(ce, ccs)));
     }
 
     /**
@@ -355,8 +336,7 @@ public class JToolTipOperator extends JComponentOperator {
      * @see TimeoutExpiredException
      */
     public void waitTipText(String tipText) {
-        getOutput().printLine("Wait \"" + tipText
-                + "\" tip text in JToolTip \n    : " + toStringSource());
+        getOutput().printLine("Wait \"" + tipText + "\" tip text in JToolTip \n    : " + toStringSource());
         getOutput().printGolden("Wait \"" + tipText + "\" tip text");
         waitState(new JToolTipByTipTextFinder(tipText, getComparator()));
     }
@@ -453,7 +433,6 @@ public class JToolTipOperator extends JComponentOperator {
     // End of mapping //
     ////////////////////////////////////////////////////////
 
-
     /**
      * Allows to find JToolTip by tip text.
      */
@@ -470,8 +449,7 @@ public class JToolTipOperator extends JComponentOperator {
          * @param comparator
          *            specifies string comparison algorithm.
          */
-        public JToolTipByTipTextFinder(String tipText,
-                StringComparator comparator) {
+        public JToolTipByTipTextFinder(String tipText, StringComparator comparator) {
             this.tipText = tipText;
             this.comparator = comparator;
         }
@@ -490,8 +468,7 @@ public class JToolTipOperator extends JComponentOperator {
         public boolean checkComponent(Component comp) {
             if (comp instanceof JToolTip) {
                 if (((JToolTip) comp).getTipText() != null) {
-                    return (comparator.equals(((JToolTip) comp).getTipText(),
-                            tipText));
+                    return (comparator.equals(((JToolTip) comp).getTipText(), tipText));
                 }
             }
             return false;
@@ -504,8 +481,7 @@ public class JToolTipOperator extends JComponentOperator {
 
         @Override
         public String toString() {
-            return "JToolTipByTipTextFinder{" + "tipText=" + tipText
-                    + ", comparator=" + comparator + '}';
+            return "JToolTipByTipTextFinder{" + "tipText=" + tipText + ", comparator=" + comparator + '}';
         }
     }
 
@@ -532,6 +508,5 @@ public class JToolTipOperator extends JComponentOperator {
         }
     }
 
-    private static final ComponentChooser TRUE_CHOOSER = ComponentSearcher
-            .getTrueChooser("Any JToolTip");
+    private static final ComponentChooser TRUE_CHOOSER = ComponentSearcher.getTrueChooser("Any JToolTip");
 }

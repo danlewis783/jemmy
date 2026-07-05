@@ -109,8 +109,7 @@ public class BundleManager {
      * @exception IOException
      * @exception FileNotFoundException
      */
-    public Bundle loadBundleFromFile(String fileName, String ID)
-            throws IOException, FileNotFoundException {
+    public Bundle loadBundleFromFile(String fileName, String ID) throws IOException, FileNotFoundException {
         if (getBundle(ID) != null) {
             return null;
         }
@@ -119,8 +118,7 @@ public class BundleManager {
         return addBundle(bundle, ID);
     }
 
-    public Bundle loadBundleFromStream(InputStream stream, String ID)
-            throws IOException, FileNotFoundException {
+    public Bundle loadBundleFromStream(InputStream stream, String ID) throws IOException, FileNotFoundException {
         if (getBundle(ID) != null) {
             return null;
         }
@@ -143,8 +141,7 @@ public class BundleManager {
      * @exception IOException
      * @exception FileNotFoundException
      */
-    public Bundle load()
-            throws IOException, FileNotFoundException {
+    public Bundle load() throws IOException, FileNotFoundException {
         if (System.getProperty("jemmy.resources") != null
                 && !System.getProperty("jemmy.resources").equals("")) {
             return loadBundleFromFile(System.getProperty("jemmy.resources"), "");
@@ -286,8 +283,7 @@ public class BundleManager {
         Enumeration<String> keys = bundles.keys();
         Enumeration<Bundle> elements = bundles.elements();
         while (keys.hasMoreElements()) {
-            result.bundles.put(keys.nextElement(),
-                    elements.nextElement());
+            result.bundles.put(keys.nextElement(), elements.nextElement());
         }
         return result;
     }

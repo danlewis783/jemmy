@@ -30,7 +30,6 @@ import java.awt.Rectangle;
 import java.awt.Window;
 import java.awt.event.ActionListener;
 import java.io.File;
-
 import javax.swing.ComboBoxModel;
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -49,7 +48,6 @@ import javax.swing.filechooser.FileSystemView;
 import javax.swing.filechooser.FileView;
 import javax.swing.plaf.FileChooserUI;
 import javax.swing.table.TableModel;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.JemmyException;
@@ -70,10 +68,9 @@ import org.netbeans.jemmy.util.LookAndFeel;
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
-public class JFileChooserOperator extends JComponentOperator
-        implements Timeoutable, Outputable {
+public class JFileChooserOperator extends JComponentOperator implements Timeoutable, Outputable {
 
-    private final static long WAIT_LIST_PAINTED_TIMEOUT = 60000;
+    private static final long WAIT_LIST_PAINTED_TIMEOUT = 60000;
 
     private Timeouts timeouts;
     private TestOut output;
@@ -98,11 +95,9 @@ public class JFileChooserOperator extends JComponentOperator
      * @param env an operator to get environment from.
      */
     public JFileChooserOperator(Operator env) {
-        this((JFileChooser) waitComponent(JDialogOperator.
-                waitJDialog(new JFileChooserJDialogFinder(env.getOutput()),
-                        0,
-                        env.getTimeouts(),
-                        env.getOutput()),
+        this((JFileChooser) waitComponent(
+                JDialogOperator.waitJDialog(
+                        new JFileChooserJDialogFinder(env.getOutput()), 0, env.getTimeouts(), env.getOutput()),
                 new JFileChooserFinder(),
                 0,
                 env.getTimeouts(),
@@ -123,9 +118,7 @@ public class JFileChooserOperator extends JComponentOperator
      * @return a component instance
      */
     public static JDialog findJFileChooserDialog() {
-        return (JDialogOperator.
-                findJDialog(new JFileChooserJDialogFinder(JemmyProperties.
-                        getCurrentOutput())));
+        return (JDialogOperator.findJDialog(new JFileChooserJDialogFinder(JemmyProperties.getCurrentOutput())));
     }
 
     /**
@@ -134,9 +127,7 @@ public class JFileChooserOperator extends JComponentOperator
      * @return a component instance
      */
     public static JDialog waitJFileChooserDialog() {
-        return (JDialogOperator.
-                waitJDialog(new JFileChooserJDialogFinder(JemmyProperties.
-                        getCurrentOutput())));
+        return (JDialogOperator.waitJDialog(new JFileChooserJDialogFinder(JemmyProperties.getCurrentOutput())));
     }
 
     /**
@@ -235,12 +226,10 @@ public class JFileChooserOperator extends JComponentOperator
             aText = getUI().getApproveButtonText((JFileChooser) getSource());
         }
         if (aText != null) {
-            return ((JButton) innerSearcher.
-                    findComponent(new ButtonFinder(aText)));
+            return ((JButton) innerSearcher.findComponent(new ButtonFinder(aText)));
         } else {
-            throw (new JemmyException("JFileChooser.getApproveButtonText() "
-                    + "and getUI().getApproveButtonText "
-                    + "return null"));
+            throw (new JemmyException(
+                    "JFileChooser.getApproveButtonText() " + "and getUI().getApproveButtonText " + "return null"));
         }
     }
 
@@ -250,8 +239,8 @@ public class JFileChooserOperator extends JComponentOperator
      * @return a cancel button.
      */
     public JButton getCancelButton() {
-        return ((JButton) innerSearcher.
-                findComponent(new ComponentChooser() {
+        return ((JButton) innerSearcher.findComponent(
+                new ComponentChooser() {
                     @Override
                     public boolean checkComponent(Component comp) {
                         return (comp != null
@@ -269,9 +258,11 @@ public class JFileChooserOperator extends JComponentOperator
 
                     @Override
                     public String toString() {
-                        return "JFileChooserOperator.getCancelButton.ComponentChooser{description = " + getDescription() + '}';
+                        return "JFileChooserOperator.getCancelButton.ComponentChooser{description = " + getDescription()
+                                + '}';
                     }
-                }, 1));
+                },
+                1));
     }
 
     /**
@@ -316,24 +307,22 @@ public class JFileChooserOperator extends JComponentOperator
      * @return a text field being used for path typing.
      */
     public JTextField getPathField() {
-        return ((JTextField) innerSearcher.
-                findComponent(new ComponentChooser() {
-                    @Override
-                    public boolean checkComponent(Component comp) {
-                        return (comp != null
-                                && comp instanceof JTextField);
-                    }
+        return ((JTextField) innerSearcher.findComponent(new ComponentChooser() {
+            @Override
+            public boolean checkComponent(Component comp) {
+                return (comp != null && comp instanceof JTextField);
+            }
 
-                    @Override
-                    public String getDescription() {
-                        return "JTextField";
-                    }
+            @Override
+            public String getDescription() {
+                return "JTextField";
+            }
 
-                    @Override
-                    public String toString() {
-                        return "JFileChooserOperator.getPathField.ComponentChooser{description = " + getDescription() + '}';
-                    }
-                }));
+            @Override
+            public String toString() {
+                return "JFileChooserOperator.getPathField.ComponentChooser{description = " + getDescription() + '}';
+            }
+        }));
     }
 
     /**
@@ -348,24 +337,25 @@ public class JFileChooserOperator extends JComponentOperator
         } else {
             fileListName = UIManager.getString("FileChooser.filesListAccessibleName", getLocale());
         }
-        return innerSearcher.
-                findComponent(new ComponentChooser() {
-                    @Override
-                    public boolean checkComponent(Component comp) {
-                        return ((comp instanceof JList && fileListName.equals(comp.getAccessibleContext().getAccessibleName()))
-                                || comp instanceof JTable);
-                    }
+        return innerSearcher.findComponent(new ComponentChooser() {
+            @Override
+            public boolean checkComponent(Component comp) {
+                return ((comp instanceof JList
+                                && fileListName.equals(
+                                        comp.getAccessibleContext().getAccessibleName()))
+                        || comp instanceof JTable);
+            }
 
-                    @Override
-                    public String getDescription() {
-                        return "JList or JTable used to show list of files";
-                    }
+            @Override
+            public String getDescription() {
+                return "JList or JTable used to show list of files";
+            }
 
-                    @Override
-                    public String toString() {
-                        return "JFileChooserOperator.getFileList.ComponentChooser{description = " + getDescription() + '}';
-                    }
-                });
+            @Override
+            public String toString() {
+                return "JFileChooserOperator.getFileList.ComponentChooser{description = " + getDescription() + '}';
+            }
+        });
     }
 
     /**
@@ -373,8 +363,7 @@ public class JFileChooserOperator extends JComponentOperator
      */
     public void approve() {
         getQueueTool().waitEmpty();
-        output.printTrace("Push approve button in JFileChooser\n    : "
-                + toStringSource());
+        output.printTrace("Push approve button in JFileChooser\n    : " + toStringSource());
         JButtonOperator approveOper = new JButtonOperator(getApproveButton());
         approveOper.copyEnvironment(this);
         approveOper.setOutput(output.createErrorOutput());
@@ -385,8 +374,7 @@ public class JFileChooserOperator extends JComponentOperator
      * Pushes cancel button.
      */
     public void cancel() {
-        output.printTrace("Push cancel button in JFileChooser\n    : "
-                + toStringSource());
+        output.printTrace("Push cancel button in JFileChooser\n    : " + toStringSource());
         JButtonOperator cancelOper = new JButtonOperator(getCancelButton());
         cancelOper.copyEnvironment(this);
         cancelOper.setOutput(output.createErrorOutput());
@@ -400,16 +388,15 @@ public class JFileChooserOperator extends JComponentOperator
      */
     public void chooseFile(String fileName) {
         getQueueTool().waitEmpty();
-        output.printTrace("Choose file by JFileChooser\n    : " + fileName
-                + "\n    : " + toStringSource());
+        output.printTrace("Choose file by JFileChooser\n    : " + fileName + "\n    : " + toStringSource());
         JTextFieldOperator fieldOper = new JTextFieldOperator(getPathField());
         fieldOper.copyEnvironment(this);
         fieldOper.setOutput(output.createErrorOutput());
-        //workaround
+        // workaround
         fieldOper.setText(fileName);
-        //fieldOper.clearText();
-        //fieldOper.typeText(fileName);
-        //approveSelection();
+        // fieldOper.clearText();
+        // fieldOper.typeText(fileName);
+        // approveSelection();
         approve();
     }
 
@@ -420,14 +407,13 @@ public class JFileChooserOperator extends JComponentOperator
      */
     public File goUpLevel() {
         getQueueTool().waitEmpty();
-        output.printTrace("Go up level in JFileChooser\n    : "
-                + toStringSource());
-        //workaround
+        output.printTrace("Go up level in JFileChooser\n    : " + toStringSource());
+        // workaround
         setCurrentDirectory(getCurrentDirectory().getParentFile());
-        //JButtonOperator upOper = new JButtonOperator(getUpLevelButton());
-        //upOper.copyEnvironment(this);
-        //upOper.setOutput(output.createErrorOutput());
-        //upOper.push();
+        // JButtonOperator upOper = new JButtonOperator(getUpLevelButton());
+        // upOper.copyEnvironment(this);
+        // upOper.setOutput(output.createErrorOutput());
+        // upOper.push();
         waitPainted(-1);
         return getCurrentDirectory();
     }
@@ -439,14 +425,13 @@ public class JFileChooserOperator extends JComponentOperator
      */
     public File goHome() {
         getQueueTool().waitEmpty();
-        output.printTrace("Go home in JFileChooser\n    : "
-                + toStringSource());
+        output.printTrace("Go home in JFileChooser\n    : " + toStringSource());
         AbstractButtonOperator homeOper;
         // In Windows and Windows Classic L&F, there is no 'Go Home' button,
         // but there is a toggle button to go desktop. In Windows platform
         // 'Go Home' button usually navigates to Desktop only.
-        if(LookAndFeel.isWindows() || LookAndFeel.isWindowsClassic()) {
-            homeOper =new JToggleButtonOperator(this, 1);
+        if (LookAndFeel.isWindows() || LookAndFeel.isWindowsClassic()) {
+            homeOper = new JToggleButtonOperator(this, 1);
         } else {
             homeOper = new JButtonOperator(getHomeButton());
         }
@@ -471,18 +456,17 @@ public class JFileChooserOperator extends JComponentOperator
                 + toStringSource());
         waitPainted(index);
         Component list = getFileList();
-        if(list instanceof JList) {
+        if (list instanceof JList) {
             JListOperator listOper = new JListOperator((JList) list);
             listOper.copyEnvironment(this);
             listOper.setOutput(output.createErrorOutput());
             listOper.clickOnItem(index, clickCount);
-        } else if(list instanceof JTable) {
+        } else if (list instanceof JTable) {
             JTableOperator tableOper = new JTableOperator((JTable) list);
             tableOper.copyEnvironment(this);
             tableOper.setOutput(output.createErrorOutput());
             tableOper.clickOnCell(index, 0, clickCount);
-        } else
-            throw new IllegalStateException("Wrong component type");
+        } else throw new IllegalStateException("Wrong component type");
     }
 
     /**
@@ -620,18 +604,17 @@ public class JFileChooserOperator extends JComponentOperator
         getQueueTool().waitEmpty();
         int index = findFileIndex(file, comparator);
         Component list = getFileList();
-        if(list instanceof JList) {
+        if (list instanceof JList) {
             JListOperator listOper = new JListOperator((JList) list);
             listOper.copyEnvironment(this);
             listOper.setOutput(output.createErrorOutput());
             listOper.setSelectedIndex(index);
-        } else if(list instanceof JTable){
+        } else if (list instanceof JTable) {
             JTableOperator tableOper = new JTableOperator((JTable) list);
             tableOper.copyEnvironment(this);
             tableOper.setOutput(output.createErrorOutput());
             tableOper.changeSelection(index, 0, false, false);
-        } else
-            throw new IllegalStateException("Wrong component type");
+        } else throw new IllegalStateException("Wrong component type");
     }
 
     /**
@@ -667,14 +650,13 @@ public class JFileChooserOperator extends JComponentOperator
      */
     public void selectPathDirectory(String dir, StringComparator comparator) {
         getQueueTool().waitEmpty();
-        output.printTrace("Select \"" + dir + "\" directory in JFileChooser\n    : "
-                + toStringSource());
+        output.printTrace("Select \"" + dir + "\" directory in JFileChooser\n    : " + toStringSource());
         JComboBoxOperator comboOper = new JComboBoxOperator(getPathCombo());
         comboOper.copyEnvironment(this);
         comboOper.setOutput(output.createErrorOutput());
-        //workaround
+        // workaround
         comboOper.setSelectedIndex(findDirIndex(dir, comparator));
-        //comboOper.selectItem(findDirIndex(dir, comparator));
+        // comboOper.selectItem(findDirIndex(dir, comparator));
         waitPainted(-1);
     }
 
@@ -709,12 +691,11 @@ public class JFileChooserOperator extends JComponentOperator
      */
     public void selectFileType(String filter, StringComparator comparator) {
         getQueueTool().waitEmpty();
-        output.printTrace("Select \"" + filter + "\" file type in JFileChooser\n    : "
-                + toStringSource());
+        output.printTrace("Select \"" + filter + "\" file type in JFileChooser\n    : " + toStringSource());
         JComboBoxOperator comboOper = new JComboBoxOperator(getFileTypesCombo());
         comboOper.copyEnvironment(this);
         comboOper.setOutput(output.createErrorOutput());
-        //workaround
+        // workaround
         comboOper.setSelectedIndex(findFileTypeIndex(filter, comparator));
         //        comboOper.selectItem(findFileTypeIndex(filter, comparator));
         waitPainted(-1);
@@ -788,12 +769,9 @@ public class JFileChooserOperator extends JComponentOperator
     public int getFileCount() {
         waitPainted(-1);
         Component list = getFileList();
-        if(list instanceof JList)
-            return ((JList)list).getModel().getSize();
-        else if(list instanceof JTable)
-            return ((JTable)list).getModel().getRowCount();
-        else
-            throw new IllegalStateException("Wrong component type");
+        if (list instanceof JList) return ((JList) list).getModel().getSize();
+        else if (list instanceof JTable) return ((JTable) list).getModel().getRowCount();
+        else throw new IllegalStateException("Wrong component type");
     }
 
     /**
@@ -804,22 +782,21 @@ public class JFileChooserOperator extends JComponentOperator
     public File[] getFiles() {
         waitPainted(-1);
         Component list = getFileList();
-        if(list instanceof JList) {
-            ListModel<?> listModel = ((JList)list).getModel();
+        if (list instanceof JList) {
+            ListModel<?> listModel = ((JList) list).getModel();
             File[] result = new File[listModel.getSize()];
             for (int i = 0; i < listModel.getSize(); i++) {
                 result[i] = (File) listModel.getElementAt(i);
             }
             return result;
-        } else if(list instanceof JTable){
-            TableModel listModel = ((JTable)list).getModel();
+        } else if (list instanceof JTable) {
+            TableModel listModel = ((JTable) list).getModel();
             File[] result = new File[listModel.getRowCount()];
             for (int i = 0; i < listModel.getRowCount(); i++) {
                 result[i] = (File) listModel.getValueAt(i, 0);
             }
             return result;
-        } else
-            throw new IllegalStateException("Wrong component type");
+        } else throw new IllegalStateException("Wrong component type");
     }
 
     /**
@@ -836,8 +813,7 @@ public class JFileChooserOperator extends JComponentOperator
 
             @Override
             public String getDescription() {
-                return ("Count of files to be equal "
-                        + Integer.toString(count));
+                return ("Count of files to be equal " + Integer.toString(count));
             }
 
             @Override
@@ -866,13 +842,14 @@ public class JFileChooserOperator extends JComponentOperator
 
             @Override
             public String toString() {
-                return "JFileChooserOperator.waitFileDisplayed.ComponentChooser{description = " + getDescription() + '}';
+                return "JFileChooserOperator.waitFileDisplayed.ComponentChooser{description = " + getDescription()
+                        + '}';
             }
         });
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code JFileChooser.accept(File)} through queue
      */
@@ -1536,7 +1513,7 @@ public class JFileChooserOperator extends JComponentOperator
         }));
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     private void waitPainted(int index) {
         Waiter<Rectangle, Integer> drawingWaiter = new Waiter<>(new Waitable<Rectangle, Integer>() {
@@ -1544,31 +1521,26 @@ public class JFileChooserOperator extends JComponentOperator
             public Rectangle actionProduced(Integer param) {
                 Component list = getFileList();
                 int size;
-                if(list instanceof JList)
-                    size = ((JList) list).getModel().getSize();
-                else if(list instanceof JTable)
-                    size = ((JTable)list).getModel().getRowCount();
-                else
-                    throw new IllegalStateException("Wrong component type");
+                if (list instanceof JList) size = ((JList) list).getModel().getSize();
+                else if (list instanceof JTable)
+                    size = ((JTable) list).getModel().getRowCount();
+                else throw new IllegalStateException("Wrong component type");
                 if (size == 0) {
                     return new Rectangle();
                 }
                 int current = (param != null) ? param : 0;
                 try {
-                    if(list instanceof JList)
+                    if (list instanceof JList)
                         if (((JList) list).getCellBounds(current, current) != null)
                             return ((JList) list).getCellBounds(size - 1, size - 1);
-                        else
-                            return null;
-                    else if(list instanceof JTable)
-                        if (((JTable)list).getCellRect(current, 0, false) != null)
-                            return ((JTable)list).getCellRect(size - 1, 0, false);
-                        else
-                            return null;
-                    else
-                        throw new IllegalStateException("Wrong component type");
+                        else return null;
+                    else if (list instanceof JTable)
+                        if (((JTable) list).getCellRect(current, 0, false) != null)
+                            return ((JTable) list).getCellRect(size - 1, 0, false);
+                        else return null;
+                    else throw new IllegalStateException("Wrong component type");
                 } catch (NullPointerException e) {
-                    //sometimes thrown from list.getCellBounds when item exists but not painted
+                    // sometimes thrown from list.getCellBounds when item exists but not painted
                     return null;
                 }
             }
@@ -1593,12 +1565,11 @@ public class JFileChooserOperator extends JComponentOperator
     }
 
     private JComboBox<?> getCombo(int index) {
-        return ((JComboBox) innerSearcher.
-                findComponent(new ComponentChooser() {
+        return ((JComboBox) innerSearcher.findComponent(
+                new ComponentChooser() {
                     @Override
                     public boolean checkComponent(Component comp) {
-                        return (comp != null
-                                && comp instanceof JComboBox);
+                        return (comp != null && comp instanceof JComboBox);
                     }
 
                     @Override
@@ -1610,19 +1581,20 @@ public class JFileChooserOperator extends JComponentOperator
                     public String toString() {
                         return "JFileChooserOperator.getCombo.ComponentChooser{description = " + getDescription() + '}';
                     }
-                }, index));
+                },
+                index));
     }
 
     private JButton getNoTextButton(int index) {
-        return ((JButton) innerSearcher.
-                findComponent(new ComponentChooser() {
+        return ((JButton) innerSearcher.findComponent(
+                new ComponentChooser() {
                     @Override
                     public boolean checkComponent(Component comp) {
                         return (comp != null
                                 && comp instanceof JButton
                                 && !(comp.getParent() instanceof JComboBox)
                                 && (((JButton) comp).getText() == null
-                                || ((JButton) comp).getText().length() == 0));
+                                        || ((JButton) comp).getText().length() == 0));
                     }
 
                     @Override
@@ -1632,18 +1604,19 @@ public class JFileChooserOperator extends JComponentOperator
 
                     @Override
                     public String toString() {
-                        return "JFileChooserOperator.getNoTextButton.ComponentChooser{description = " + getDescription() + '}';
+                        return "JFileChooserOperator.getNoTextButton.ComponentChooser{description = " + getDescription()
+                                + '}';
                     }
-                }, index));
+                },
+                index));
     }
 
     private JToggleButton getToggleButton(int index) {
-        return ((JToggleButton) innerSearcher.
-                findComponent(new ComponentChooser() {
+        return ((JToggleButton) innerSearcher.findComponent(
+                new ComponentChooser() {
                     @Override
                     public boolean checkComponent(Component comp) {
-                        return (comp != null
-                                && comp instanceof JToggleButton);
+                        return (comp != null && comp instanceof JToggleButton);
                     }
 
                     @Override
@@ -1653,9 +1626,11 @@ public class JFileChooserOperator extends JComponentOperator
 
                     @Override
                     public String toString() {
-                        return "JFileChooserOperator.getToggleButton.ComponentChooser{description = " + getDescription() + '}';
+                        return "JFileChooserOperator.getToggleButton.ComponentChooser{description = " + getDescription()
+                                + '}';
                     }
-                }, index));
+                },
+                index));
     }
 
     private int findFileIndex(final String file, final StringComparator comparator) {
@@ -1664,8 +1639,7 @@ public class JFileChooserOperator extends JComponentOperator
             public Integer actionProduced(Void obj) {
                 File[] files = getFiles();
                 for (int i = 0; i < files.length; i++) {
-                    if (comparator.equals(files[i].getName(),
-                            file)) {
+                    if (comparator.equals(files[i].getName(), file)) {
                         return i;
                     }
                 }
@@ -1694,8 +1668,7 @@ public class JFileChooserOperator extends JComponentOperator
     private int findDirIndex(String dir, StringComparator comparator) {
         ComboBoxModel<?> cbModel = getPathCombo().getModel();
         for (int i = cbModel.getSize() - 1; i >= 0; i--) {
-            if (comparator.equals(((File) cbModel.getElementAt(i)).getName(),
-                    dir)) {
+            if (comparator.equals(((File) cbModel.getElementAt(i)).getName(), dir)) {
                 return i;
             }
         }
@@ -1705,8 +1678,7 @@ public class JFileChooserOperator extends JComponentOperator
     private int findFileTypeIndex(String fileType, StringComparator comparator) {
         ComboBoxModel<?> cbModel = getFileTypesCombo().getModel();
         for (int i = 0; i < cbModel.getSize(); i++) {
-            if (comparator.equals(((FileFilter) cbModel.getElementAt(i)).getDescription(),
-                    fileType)) {
+            if (comparator.equals(((FileFilter) cbModel.getElementAt(i)).getDescription(), fileType)) {
                 return i;
             }
         }
@@ -1733,11 +1705,8 @@ public class JFileChooserOperator extends JComponentOperator
 
         @Override
         public boolean checkComponent(Component comp) {
-            if (comp != null
-                    && comp instanceof Window
-                    && comp.isVisible()) {
-                ComponentSearcher searcher
-                        = new ComponentSearcher((Container) comp);
+            if (comp != null && comp instanceof Window && comp.isVisible()) {
+                ComponentSearcher searcher = new ComponentSearcher((Container) comp);
                 searcher.setOutput(output);
                 return searcher.findComponent(subChooser) != null;
             } else {
@@ -1804,5 +1773,4 @@ public class JFileChooserOperator extends JComponentOperator
             return "ButtonFinder{" + "text=" + text + '}';
         }
     }
-
 }

@@ -25,9 +25,7 @@
 package org.netbeans.jemmy.operators;
 
 import java.awt.Component;
-
 import javax.swing.JRadioButtonMenuItem;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyProperties;
 
@@ -66,9 +64,7 @@ public class JRadioButtonMenuItemOperator extends JMenuItemOperator {
      * @param index an index between appropriate ones.
      */
     public JRadioButtonMenuItemOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JRadioButtonMenuItem) cont.
-                waitSubComponent(new JRadioButtonMenuItemFinder(chooser),
-                        index));
+        this((JRadioButtonMenuItem) cont.waitSubComponent(new JRadioButtonMenuItemFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -92,10 +88,8 @@ public class JRadioButtonMenuItemOperator extends JMenuItemOperator {
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public JRadioButtonMenuItemOperator(ContainerOperator<?> cont, String text, int index) {
-        this((JRadioButtonMenuItem) waitComponent(cont,
-                new JRadioButtonMenuItemByLabelFinder(text,
-                        cont.getComparator()),
-                index));
+        this((JRadioButtonMenuItem)
+                waitComponent(cont, new JRadioButtonMenuItemByLabelFinder(text, cont.getComparator()), index));
         setTimeouts(cont.getTimeouts());
         setOutput(cont.getOutput());
     }
@@ -120,9 +114,7 @@ public class JRadioButtonMenuItemOperator extends JMenuItemOperator {
      * @param index Ordinal component index.
      */
     public JRadioButtonMenuItemOperator(ContainerOperator<?> cont, int index) {
-        this((JRadioButtonMenuItem) waitComponent(cont,
-                new JRadioButtonMenuItemFinder(),
-                index));
+        this((JRadioButtonMenuItem) waitComponent(cont, new JRadioButtonMenuItemFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -137,8 +129,8 @@ public class JRadioButtonMenuItemOperator extends JMenuItemOperator {
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
-    //End of mapping                                      //
+    // Mapping                                             //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Allows to find component by text.
@@ -172,8 +164,7 @@ public class JRadioButtonMenuItemOperator extends JMenuItemOperator {
         public boolean checkComponent(Component comp) {
             if (comp instanceof JRadioButtonMenuItem) {
                 if (((JRadioButtonMenuItem) comp).getText() != null) {
-                    return (comparator.equals(((JRadioButtonMenuItem) comp).getText(),
-                            label));
+                    return (comparator.equals(((JRadioButtonMenuItem) comp).getText(), label));
                 }
             }
             return false;

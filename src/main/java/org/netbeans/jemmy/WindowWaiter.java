@@ -52,8 +52,8 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
 
     public static boolean FIND_INVISIBLE_WINDOWS = false;
 
-    private final static long WAIT_TIME = 60000;
-    private final static long AFTER_WAIT_TIME = 0;
+    private static final long WAIT_TIME = 60000;
+    private static final long AFTER_WAIT_TIME = 0;
 
     private ComponentChooser chooser;
     private Window owner = null;
@@ -156,10 +156,8 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
     public void setTimeouts(Timeouts timeouts) {
         this.timeouts = timeouts;
         Timeouts times = timeouts.cloneThis();
-        times.setTimeout("Waiter.WaitingTime",
-                timeouts.getTimeout("WindowWaiter.WaitWindowTimeout"));
-        times.setTimeout("Waiter.AfterWaitingTime",
-                timeouts.getTimeout("WindowWaiter.AfterWindowTimeout"));
+        times.setTimeout("Waiter.WaitingTime", timeouts.getTimeout("WindowWaiter.WaitWindowTimeout"));
+        times.setTimeout("Waiter.AfterWaitingTime", timeouts.getTimeout("WindowWaiter.AfterWindowTimeout"));
         setWaitingTimeOrigin("WindowWaiter.WaitWindowTimeout");
         super.setTimeouts(times);
     }
@@ -209,8 +207,7 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
      * @see #actionProduced(Object)
      * @exception InterruptedException
      */
-    public Window waitWindow(ComponentChooser ch, int index)
-            throws InterruptedException {
+    public Window waitWindow(ComponentChooser ch, int index) throws InterruptedException {
         chooser = ch;
         owner = null;
         this.index = index;
@@ -231,8 +228,7 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
      * @see #actionProduced(Object)
      * @exception InterruptedException
      */
-    public Window waitWindow(ComponentChooser ch)
-            throws InterruptedException {
+    public Window waitWindow(ComponentChooser ch) throws InterruptedException {
         return waitWindow(ch, 0);
     }
 
@@ -256,8 +252,7 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
      * @see #actionProduced(Object)
      * @exception InterruptedException
      */
-    public Window waitWindow(Window o, ComponentChooser ch, int index)
-            throws InterruptedException {
+    public Window waitWindow(Window o, ComponentChooser ch, int index) throws InterruptedException {
         owner = o;
         chooser = ch;
         this.index = index;
@@ -280,8 +275,7 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
      * @see #actionProduced(Object)
      * @exception InterruptedException
      */
-    public Window waitWindow(Window o, ComponentChooser ch)
-            throws InterruptedException {
+    public Window waitWindow(Window o, ComponentChooser ch) throws InterruptedException {
         return waitWindow(o, ch, 0);
     }
 
@@ -294,8 +288,7 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
      * @param count the number of expected windows meeting the search criteria.
      * @throws InterruptedException
      */
-    public static void waitWindowCount(ComponentChooser ch, int count)
-            throws InterruptedException {
+    public static void waitWindowCount(ComponentChooser ch, int count) throws InterruptedException {
         waitWindowCount(null, ch, count);
     }
 
@@ -309,8 +302,7 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
      * @param count the number of expected windows meeting the search criteria.
      * @throws InterruptedException
      */
-    public static void waitWindowCount(Window owner, ComponentChooser ch, int count)
-            throws InterruptedException {
+    public static void waitWindowCount(Window owner, ComponentChooser ch, int count) throws InterruptedException {
         Waiter<String, Void> stateWaiter = new Waiter<>(new Waitable<String, Void>() {
             @Override
             public String actionProduced(Void obj) {
@@ -325,8 +317,7 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
 
             @Override
             public String toString() {
-                return "Operator.waitState.Waitable{description = "
-                        + getDescription() + '}';
+                return "Operator.waitState.Waitable{description = " + getDescription() + '}';
             }
         });
         stateWaiter.waitAction(null);
@@ -352,8 +343,8 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
                 } else {
                     windows = owner.getOwnedWindows();
                 }
-                return (int) Stream.of(windows)
-                        .filter(x -> ch.checkComponent(x)).count();
+                return (int)
+                        Stream.of(windows).filter(x -> ch.checkComponent(x)).count();
             }
         });
     }
@@ -437,8 +428,7 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
      */
     @Override
     protected String getTimeoutExpiredMessage(long timeSpent) {
-        return ("Window \"" + chooser.getDescription() + "\" has not been opened in "
-                + timeSpent + " milliseconds");
+        return ("Window \"" + chooser.getDescription() + "\" has not been opened in " + timeSpent + " milliseconds");
     }
 
     /**
@@ -454,14 +444,12 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
         String resultToString;
         if (result instanceof Component) {
             // run toString in dispatch thread
-            resultToString = new QueueTool().invokeSmoothly(
-                    new QueueTool.QueueAction<String>("result.toString()") {
+            resultToString = new QueueTool().invokeSmoothly(new QueueTool.QueueAction<String>("result.toString()") {
                 @Override
                 public String launch() {
                     return result.toString();
                 }
-            }
-            );
+            });
         } else {
             resultToString = result.toString();
         }
@@ -529,8 +517,7 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
         return null;
     }
 
-    private Window waitWindow()
-            throws InterruptedException {
+    private Window waitWindow() throws InterruptedException {
         return waitAction(null);
     }
 
@@ -548,8 +535,7 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
 
         @Override
         public boolean checkComponent(Component comp) {
-            if ((FIND_INVISIBLE_WINDOWS || (comp.isShowing() && comp.isVisible()))
-                    && chooser.checkComponent(comp)) {
+            if ((FIND_INVISIBLE_WINDOWS || (comp.isShowing() && comp.isVisible())) && chooser.checkComponent(comp)) {
                 if (curIndex == index) {
                     return true;
                 }

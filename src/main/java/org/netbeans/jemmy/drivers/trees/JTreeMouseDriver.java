@@ -27,9 +27,7 @@ package org.netbeans.jemmy.drivers.trees;
 import java.awt.Point;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-
 import javax.swing.text.JTextComponent;
-
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.Timeout;
 import org.netbeans.jemmy.drivers.DriverManager;
@@ -55,13 +53,13 @@ public class JTreeMouseDriver extends LightSupportiveDriver implements TreeDrive
      * Constructs a JTreeMouseDriver.
      */
     public JTreeMouseDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.JTreeOperator"});
+        super(new String[] {"org.netbeans.jemmy.operators.JTreeOperator"});
         queueTool = new QueueTool();
     }
 
     @Override
     public void selectItem(ComponentOperator oper, int index) {
-        selectItems(oper, new int[]{index});
+        selectItems(oper, new int[] {index});
     }
 
     @Override
@@ -80,13 +78,19 @@ public class JTreeMouseDriver extends LightSupportiveDriver implements TreeDrive
             queueTool.invokeSmoothly(new QueueTool.QueueAction<Void>("Path selecting") {
                 @Override
                 public Void launch() {
-                    mdriver.clickMouse(oper, p.x, p.y, 1, Operator.getDefaultMouseButton(),
-                            (index == 0) ? 0 : InputEvent.CTRL_MASK, clickTime);
+                    mdriver.clickMouse(
+                            oper,
+                            p.x,
+                            p.y,
+                            1,
+                            Operator.getDefaultMouseButton(),
+                            (index == 0) ? 0 : InputEvent.CTRL_MASK,
+                            clickTime);
                     return null;
                 }
             });
         }
-        //1.5 workaround
+        // 1.5 workaround
         if (System.getProperty("java.specification.version").compareTo("1.4") > 0) {
             if (!QueueTool.isDispatchThread()) {
                 queueTool.setOutput(oper.getOutput().createErrorOutput());
@@ -95,7 +99,7 @@ public class JTreeMouseDriver extends LightSupportiveDriver implements TreeDrive
                 queueTool.waitEmpty(10);
             }
         }
-        //end of 1.5 workaround
+        // end of 1.5 workaround
     }
 
     @Override
@@ -108,9 +112,14 @@ public class JTreeMouseDriver extends LightSupportiveDriver implements TreeDrive
                 @Override
                 public Void launch() {
                     Point p = toper.getPointToClick(index);
-                    mdriver.clickMouse(toper, p.x, p.y, 2, Operator.getDefaultMouseButton(),
-                            0, toper.getTimeouts().
-                            create("ComponentOperator.MouseClickTimeout"));
+                    mdriver.clickMouse(
+                            toper,
+                            p.x,
+                            p.y,
+                            2,
+                            Operator.getDefaultMouseButton(),
+                            0,
+                            toper.getTimeouts().create("ComponentOperator.MouseClickTimeout"));
                     return null;
                 }
             });
@@ -127,9 +136,14 @@ public class JTreeMouseDriver extends LightSupportiveDriver implements TreeDrive
                 @Override
                 public Void launch() {
                     Point p = toper.getPointToClick(index);
-                    mdriver.clickMouse(toper, p.x, p.y, 2, Operator.getDefaultMouseButton(),
-                            0, toper.getTimeouts().
-                            create("ComponentOperator.MouseClickTimeout"));
+                    mdriver.clickMouse(
+                            toper,
+                            p.x,
+                            p.y,
+                            2,
+                            Operator.getDefaultMouseButton(),
+                            0,
+                            toper.getTimeouts().create("ComponentOperator.MouseClickTimeout"));
                     return null;
                 }
             });
@@ -142,10 +156,8 @@ public class JTreeMouseDriver extends LightSupportiveDriver implements TreeDrive
         final TextDriver text = DriverManager.getTextDriver(JTextComponentOperator.class);
         text.clearText(textoper);
         text.typeText(textoper, newValue.toString(), 0);
-        DriverManager.getKeyDriver(oper).
-                pushKey(textoper, KeyEvent.VK_ENTER, 0,
-                        oper.getTimeouts().
-                        create("ComponentOperator.PushKeyTimeout"));
+        DriverManager.getKeyDriver(oper)
+                .pushKey(textoper, KeyEvent.VK_ENTER, 0, oper.getTimeouts().create("ComponentOperator.PushKeyTimeout"));
     }
 
     @Override
@@ -153,7 +165,8 @@ public class JTreeMouseDriver extends LightSupportiveDriver implements TreeDrive
         startEditingAndReturnEditor(oper, index, waitEditorTime);
     }
 
-    private JTextComponentOperator startEditingAndReturnEditor(ComponentOperator oper, final int index, Timeout waitEditorTime) {
+    private JTextComponentOperator startEditingAndReturnEditor(
+            ComponentOperator oper, final int index, Timeout waitEditorTime) {
         checkSupported(oper);
         final JTreeOperator toper = (JTreeOperator) oper;
         final MouseDriver mdriver = DriverManager.getMouseDriver(oper);
@@ -161,9 +174,14 @@ public class JTreeMouseDriver extends LightSupportiveDriver implements TreeDrive
             @Override
             public Void launch() {
                 Point p = toper.getPointToClick(index);
-                mdriver.clickMouse(toper, p.x, p.y, 1, Operator.getDefaultMouseButton(),
-                        0, toper.getTimeouts().
-                        create("ComponentOperator.MouseClickTimeout"));
+                mdriver.clickMouse(
+                        toper,
+                        p.x,
+                        p.y,
+                        1,
+                        Operator.getDefaultMouseButton(),
+                        0,
+                        toper.getTimeouts().create("ComponentOperator.MouseClickTimeout"));
                 return null;
             }
         });
@@ -172,15 +190,19 @@ public class JTreeMouseDriver extends LightSupportiveDriver implements TreeDrive
             @Override
             public Void launch() {
                 Point p = toper.getPointToClick(index);
-                mdriver.clickMouse(toper, p.x, p.y, 1, Operator.getDefaultMouseButton(),
-                        0, toper.getTimeouts().
-                        create("ComponentOperator.MouseClickTimeout"));
+                mdriver.clickMouse(
+                        toper,
+                        p.x,
+                        p.y,
+                        1,
+                        Operator.getDefaultMouseButton(),
+                        0,
+                        toper.getTimeouts().create("ComponentOperator.MouseClickTimeout"));
                 return null;
             }
         });
-        toper.getTimeouts().
-                setTimeout("ComponentOperator.WaitComponentTimeout", waitEditorTime.getValue());
-        return (new JTextComponentOperator((JTextComponent) toper.
-                waitSubComponent(new JTextComponentOperator.JTextComponentFinder())));
+        toper.getTimeouts().setTimeout("ComponentOperator.WaitComponentTimeout", waitEditorTime.getValue());
+        return (new JTextComponentOperator(
+                (JTextComponent) toper.waitSubComponent(new JTextComponentOperator.JTextComponentFinder())));
     }
 }

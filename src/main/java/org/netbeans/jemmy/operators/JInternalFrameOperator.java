@@ -31,7 +31,6 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.beans.PropertyVetoException;
 import java.util.Hashtable;
-
 import javax.swing.Icon;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
@@ -42,7 +41,6 @@ import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.plaf.InternalFrameUI;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.JemmyInputException;
@@ -79,8 +77,7 @@ import org.netbeans.jemmy.util.Platform;
  * @see WrongInternalFrameStateException
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
-public class JInternalFrameOperator extends JComponentOperator
-        implements Outputable, Timeoutable {
+public class JInternalFrameOperator extends JComponentOperator implements Outputable, Timeoutable {
 
     /**
      * Identifier for a "title" property.
@@ -141,20 +138,17 @@ public class JInternalFrameOperator extends JComponentOperator
     /**
      * Maximize button tool tip key
      */
-    public static final String MAXIMIZE_BUTTON_TOOLTIP =
-            UIManager.getString("InternalFrame.maxButtonToolTip");
+    public static final String MAXIMIZE_BUTTON_TOOLTIP = UIManager.getString("InternalFrame.maxButtonToolTip");
 
     /**
      * Close button tool tip key
      */
-    public static final String CLOSE_BUTTON_TOOLTIP =
-            UIManager.getString("InternalFrame.closeButtonToolTip");
+    public static final String CLOSE_BUTTON_TOOLTIP = UIManager.getString("InternalFrame.closeButtonToolTip");
 
     /**
      * Minimize button tool tip key
      */
-    public static final String MINIMIZE_BUTTON_TOOLTIP =
-            UIManager.getString("InternalFrame.iconButtonToolTip");
+    public static final String MINIMIZE_BUTTON_TOOLTIP = UIManager.getString("InternalFrame.iconButtonToolTip");
 
     /**
      * A minimizing button.
@@ -177,6 +171,7 @@ public class JInternalFrameOperator extends JComponentOperator
      * A title operator.
      */
     protected ContainerOperator<?> titleOperator = null;
+
     private TestOut output;
     private Timeouts timeouts;
     private JDesktopIconOperator iconOperator;
@@ -205,8 +200,7 @@ public class JInternalFrameOperator extends JComponentOperator
      * @param index an index between appropriate ones.
      */
     public JInternalFrameOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this(waitJInternalFrame((Container)cont.getSource(),
-                chooser, index));
+        this(waitJInternalFrame((Container) cont.getSource(), chooser, index));
         copyEnvironment(cont);
     }
 
@@ -257,9 +251,7 @@ public class JInternalFrameOperator extends JComponentOperator
      *
      */
     public JInternalFrameOperator(ContainerOperator<?> cont, int index) {
-        this(waitJInternalFrame((Container)cont.getSource(),
-                new JInternalFrameFinder(),
-                index));
+        this(waitJInternalFrame((Container) cont.getSource(), new JInternalFrameFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -316,10 +308,8 @@ public class JInternalFrameOperator extends JComponentOperator
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public static JInternalFrame findJInternalFrame(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return (findJInternalFrame(cont,
-                new JInternalFrameByTitleFinder(text,
-                        new DefaultStringComparator(ce, ccs)),
-                index));
+        return (findJInternalFrame(
+                cont, new JInternalFrameByTitleFinder(text, new DefaultStringComparator(ce, ccs)), index));
     }
 
     /**
@@ -366,7 +356,8 @@ public class JInternalFrameOperator extends JComponentOperator
      * @return JInternalframe instance.
      *
      */
-    public static JInternalFrame waitJInternalFrame(final Container cont, final ComponentChooser chooser, final int index) {
+    public static JInternalFrame waitJInternalFrame(
+            final Container cont, final ComponentChooser chooser, final int index) {
         Component res = waitComponent(cont, new JInternalFrameFinder(chooser), index);
         if (res instanceof JInternalFrame) {
             return (JInternalFrame) res;
@@ -402,10 +393,8 @@ public class JInternalFrameOperator extends JComponentOperator
      *
      */
     public static JInternalFrame waitJInternalFrame(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return (waitJInternalFrame(cont,
-                new JInternalFrameByTitleFinder(text,
-                        new DefaultStringComparator(ce, ccs)),
-                index));
+        return (waitJInternalFrame(
+                cont, new JInternalFrameByTitleFinder(text, new DefaultStringComparator(ce, ccs)), index));
     }
 
     /**
@@ -597,16 +586,14 @@ public class JInternalFrameOperator extends JComponentOperator
         output.printTrace("Scroll desktop pane to make \"" + getTitle() + "\" internal frame visible");
         output.printGolden("Scroll desktop pane to make \"" + getTitle() + "\" internal frame visible");
         makeComponentVisible();
-        //try to find JScrollPane under.
+        // try to find JScrollPane under.
         JScrollPane scroll;
         if (isIcon()) {
-            scroll
-                    = (JScrollPane) iconOperator.getContainer(new JScrollPaneOperator.JScrollPaneFinder(ComponentSearcher.
-                            getTrueChooser("JScrollPane")));
+            scroll = (JScrollPane) iconOperator.getContainer(
+                    new JScrollPaneOperator.JScrollPaneFinder(ComponentSearcher.getTrueChooser("JScrollPane")));
         } else {
-            scroll
-                    = (JScrollPane) getContainer(new JScrollPaneOperator.JScrollPaneFinder(ComponentSearcher.
-                            getTrueChooser("JScrollPane")));
+            scroll = (JScrollPane) getContainer(
+                    new JScrollPaneOperator.JScrollPaneFinder(ComponentSearcher.getTrueChooser("JScrollPane")));
         }
         if (scroll == null) {
             return;
@@ -614,8 +601,7 @@ public class JInternalFrameOperator extends JComponentOperator
         JScrollPaneOperator scroller = new JScrollPaneOperator(scroll);
         scroller.copyEnvironment(this);
         scroller.setVisualizer(new EmptyVisualizer());
-        scroller.scrollToComponentRectangle(isIcon() ? iconOperator.getSource() : getSource(),
-                x, y, width, height);
+        scroller.scrollToComponentRectangle(isIcon() ? iconOperator.getSource() : getSource(), x, y, width, height);
     }
 
     /**
@@ -690,7 +676,7 @@ public class JInternalFrameOperator extends JComponentOperator
      * @return an icon operator.
      */
     public JDesktopIconOperator getIconOperator() {
-        if(Platform.isOSX()) {
+        if (Platform.isOSX()) {
             initIconOperator();
         } else {
             initOperators();
@@ -814,7 +800,7 @@ public class JInternalFrameOperator extends JComponentOperator
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps
      * {@code JInternalFrame.addInternalFrameListener(InternalFrameListener)}
@@ -1371,7 +1357,7 @@ public class JInternalFrameOperator extends JComponentOperator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Uses InternalframeDriver to get a title pane.
@@ -1395,81 +1381,79 @@ public class JInternalFrameOperator extends JComponentOperator
      */
     protected void initOperators() {
         initIconOperator();
-        if(Platform.isOSX()) {
+        if (Platform.isOSX()) {
             throw new UnsupportedOperationException(
-                    "Jemmy doesn't support getting or initializing title"
-                    + " related operators on Mac OSx");
+                    "Jemmy doesn't support getting or initializing title" + " related operators on Mac OSx");
         } else {
             Container titlePane = findTitlePane();
             if (!isIcon() && titlePane != null) {
                 if (titleOperator == null) {
                     titleOperator = new ContainerOperator<>(titlePane);
                     if (getContainer(new ComponentChooser() {
-                        @Override
-                        public boolean checkComponent(Component comp) {
-                            return comp instanceof JDesktopPane;
-                        }
+                                @Override
+                                public boolean checkComponent(Component comp) {
+                                    return comp instanceof JDesktopPane;
+                                }
 
-                    @Override
-                    public String getDescription() {
-                        return "Desktop pane";
-                    }
+                                @Override
+                                public String getDescription() {
+                                    return "Desktop pane";
+                                }
 
-                    @Override
-                    public String toString() {
-                        return "JInternalFrameOperator.initOperators.ComponentChooser{description = " + getDescription() + '}';
-                    }
-                }) != null) {
-                    if(LookAndFeel.isMotif()) {
-                        popupButtonOper = new JButtonOperator(titleOperator, 0);
-                    } else {
-                        minOper = new JButtonOperator(titleOperator,
-                            new JComponentByTipFinder(MINIMIZE_BUTTON_TOOLTIP));
-                        if (((JInternalFrame) getSource()).isMaximizable()) {
-                            maxOper = new JButtonOperator(titleOperator,
-                                new JComponentByTipFinder(MAXIMIZE_BUTTON_TOOLTIP));
+                                @Override
+                                public String toString() {
+                                    return "JInternalFrameOperator.initOperators.ComponentChooser{description = "
+                                            + getDescription() + '}';
+                                }
+                            })
+                            != null) {
+                        if (LookAndFeel.isMotif()) {
+                            popupButtonOper = new JButtonOperator(titleOperator, 0);
                         } else {
-                            maxOper = null;
+                            minOper = new JButtonOperator(
+                                    titleOperator, new JComponentByTipFinder(MINIMIZE_BUTTON_TOOLTIP));
+                            if (((JInternalFrame) getSource()).isMaximizable()) {
+                                maxOper = new JButtonOperator(
+                                        titleOperator, new JComponentByTipFinder(MAXIMIZE_BUTTON_TOOLTIP));
+                            } else {
+                                maxOper = null;
+                            }
                         }
+                    } else {
+                        minOper = null;
+                        maxOper = null;
                     }
-                } else {
-                    minOper = null;
-                    maxOper = null;
-                }
-                if (isClosable()) {
-                    if(!LookAndFeel.isMotif()) {
-                        closeOper = new JButtonOperator(titleOperator,
-                            new JComponentByTipFinder(CLOSE_BUTTON_TOOLTIP));
+                    if (isClosable()) {
+                        if (!LookAndFeel.isMotif()) {
+                            closeOper =
+                                    new JButtonOperator(titleOperator, new JComponentByTipFinder(CLOSE_BUTTON_TOOLTIP));
+                        }
+                    } else {
+                        closeOper = null;
                     }
-                } else {
-                    closeOper = null;
                 }
-            }
-        } else {
-            titleOperator = null;
-            minOper = null;
-            maxOper = null;
-            closeOper = null;
+            } else {
+                titleOperator = null;
+                minOper = null;
+                maxOper = null;
+                closeOper = null;
             }
         }
     }
 
-    //throw exception if state is wrong
+    // throw exception if state is wrong
     private void checkIconified(boolean shouldBeIconified) {
-        if (shouldBeIconified && !isIcon()
-                || !shouldBeIconified && isIcon()) {
-            throw (new WrongInternalFrameStateException("JInternal frame should "
-                    + (shouldBeIconified ? "" : "not")
-                    + " be iconified to produce this operation",
+        if (shouldBeIconified && !isIcon() || !shouldBeIconified && isIcon()) {
+            throw (new WrongInternalFrameStateException(
+                    "JInternal frame should "
+                            + (shouldBeIconified ? "" : "not")
+                            + " be iconified to produce this operation",
                     getSource()));
         }
     }
 
     private static JInternalFrame findOne(ContainerOperator<?> cont, String text, int index) {
-        Component source = waitComponent(cont,
-                new JInternalFrameByTitleFinder(text,
-                        cont.getComparator()),
-                index);
+        Component source = waitComponent(cont, new JInternalFrameByTitleFinder(text, cont.getComparator()), index);
         if (source instanceof JInternalFrame) {
             return (JInternalFrame) source;
         } else if (source instanceof JInternalFrame.JDesktopIcon) {
@@ -1539,8 +1523,7 @@ public class JInternalFrameOperator extends JComponentOperator
                     frame = io.getInternalFrame();
                 }
                 if (frame.getTitle() != null) {
-                    return (comparator.equals(frame.getTitle(),
-                            label));
+                    return (comparator.equals(frame.getTitle(), label));
                 }
             }
             return false;
@@ -1561,8 +1544,7 @@ public class JInternalFrameOperator extends JComponentOperator
      * Class to operate with javax.swing.JInternalFrame.JDesktopIconOperator
      * component.
      */
-    public static class JDesktopIconOperator extends JComponentOperator
-            implements Outputable, Timeoutable {
+    public static class JDesktopIconOperator extends JComponentOperator implements Outputable, Timeoutable {
 
         private TestOut output;
         private Timeouts timeouts;
@@ -1661,5 +1643,4 @@ public class JInternalFrameOperator extends JComponentOperator
             return "JInternalFrameFinder{" + "sf=" + sf + '}';
         }
     }
-
 }

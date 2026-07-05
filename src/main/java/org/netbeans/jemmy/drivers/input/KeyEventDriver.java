@@ -26,7 +26,6 @@ package org.netbeans.jemmy.drivers.input;
 
 import java.awt.Component;
 import java.awt.event.KeyEvent;
-
 import org.netbeans.jemmy.Timeout;
 import org.netbeans.jemmy.drivers.KeyDriver;
 import org.netbeans.jemmy.operators.ComponentOperator;
@@ -88,28 +87,28 @@ public class KeyEventDriver extends EventDriver implements KeyDriver {
 
     @Deprecated
     private void pressKey(Component nativeContainer, int keyCode, int modifiers) {
-        dispatchEvent(nativeContainer,
-                new KeyEvent(nativeContainer,
-                        KeyEvent.KEY_PRESSED,
-                        System.currentTimeMillis(),
-                        modifiers, keyCode));
+        dispatchEvent(
+                nativeContainer,
+                new KeyEvent(nativeContainer, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), modifiers, keyCode));
     }
 
     private void typedKey(Component nativeContainer, char keyChar, int modifiers) {
-        dispatchEvent(nativeContainer,
-                new KeyEvent(nativeContainer,
+        dispatchEvent(
+                nativeContainer,
+                new KeyEvent(
+                        nativeContainer,
                         KeyEvent.KEY_TYPED,
                         System.currentTimeMillis(),
-                        modifiers, KeyEvent.VK_UNDEFINED, keyChar));
+                        modifiers,
+                        KeyEvent.VK_UNDEFINED,
+                        keyChar));
     }
 
     @Deprecated
     private void releaseKey(Component nativeContainer, int keyCode, int modifiers) {
-        dispatchEvent(nativeContainer,
-                new KeyEvent(nativeContainer,
-                        KeyEvent.KEY_RELEASED,
-                        System.currentTimeMillis(),
-                        modifiers, keyCode));
+        dispatchEvent(
+                nativeContainer,
+                new KeyEvent(nativeContainer, KeyEvent.KEY_RELEASED, System.currentTimeMillis(), modifiers, keyCode));
     }
 
     private Component findNativeParent(Component source) {

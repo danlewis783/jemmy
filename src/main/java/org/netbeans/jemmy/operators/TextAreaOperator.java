@@ -29,7 +29,6 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.TextArea;
 import java.util.Hashtable;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
@@ -44,8 +43,7 @@ import org.netbeans.jemmy.Timeouts;
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
-public class TextAreaOperator extends TextComponentOperator
-        implements Timeoutable, Outputable {
+public class TextAreaOperator extends TextComponentOperator implements Timeoutable, Outputable {
 
     /**
      * Identifier for a "text" property.
@@ -54,10 +52,10 @@ public class TextAreaOperator extends TextComponentOperator
      */
     public static final String TEXT_DPROP = "Text";
 
-    private final static long PUSH_KEY_TIMEOUT = 0;
-    private final static long BETWEEN_KEYS_TIMEOUT = 0;
-    private final static long CHANGE_CARET_POSITION_TIMEOUT = 60000;
-    private final static long TYPE_TEXT_TIMEOUT = 60000;
+    private static final long PUSH_KEY_TIMEOUT = 0;
+    private static final long BETWEEN_KEYS_TIMEOUT = 0;
+    private static final long CHANGE_CARET_POSITION_TIMEOUT = 60000;
+    private static final long TYPE_TEXT_TIMEOUT = 60000;
 
     private Timeouts timeouts;
     private TestOut output;
@@ -79,9 +77,7 @@ public class TextAreaOperator extends TextComponentOperator
      * @param index an index between appropriate ones.
      */
     public TextAreaOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((TextArea) cont.
-                waitSubComponent(new TextAreaFinder(chooser),
-                        index));
+        this((TextArea) cont.waitSubComponent(new TextAreaFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -110,10 +106,7 @@ public class TextAreaOperator extends TextComponentOperator
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public TextAreaOperator(ContainerOperator<?> cont, String text, int index) {
-        this((TextArea) waitComponent(cont,
-                new TextAreaByTextFinder(text,
-                        cont.getComparator()),
-                index));
+        this((TextArea) waitComponent(cont, new TextAreaByTextFinder(text, cont.getComparator()), index));
         copyEnvironment(cont);
     }
 
@@ -143,9 +136,7 @@ public class TextAreaOperator extends TextComponentOperator
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public TextAreaOperator(ContainerOperator<?> cont, int index) {
-        this((TextArea) waitComponent(cont,
-                new TextAreaFinder(),
-                index));
+        this((TextArea) waitComponent(cont, new TextAreaFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -308,7 +299,7 @@ public class TextAreaOperator extends TextComponentOperator
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code TextArea.getColumns()} through queue
      */
@@ -405,7 +396,7 @@ public class TextAreaOperator extends TextComponentOperator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Allows to find component by text.
@@ -439,8 +430,7 @@ public class TextAreaOperator extends TextComponentOperator
         public boolean checkComponent(Component comp) {
             if (comp instanceof TextArea) {
                 if (((TextArea) comp).getText() != null) {
-                    return (comparator.equals(((TextArea) comp).getText(),
-                            label));
+                    return (comparator.equals(((TextArea) comp).getText(), label));
                 }
             }
             return false;

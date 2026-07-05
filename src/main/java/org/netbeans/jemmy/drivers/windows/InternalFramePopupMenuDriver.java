@@ -26,7 +26,6 @@
 package org.netbeans.jemmy.drivers.windows;
 
 import javax.swing.UIManager;
-
 import org.netbeans.jemmy.operators.ComponentOperator;
 import org.netbeans.jemmy.operators.JInternalFrameOperator;
 import org.netbeans.jemmy.operators.JMenuItemOperator;
@@ -41,15 +40,13 @@ public class InternalFramePopupMenuDriver extends DefaultInternalFrameDriver {
     @Override
     public void requestClose(ComponentOperator oper) {
         checkSupported(oper);
-        pushMenuItem(oper, UIManager.getString(
-                "InternalFrameTitlePane.closeButtonText"));
+        pushMenuItem(oper, UIManager.getString("InternalFrameTitlePane.closeButtonText"));
     }
 
     @Override
     public void iconify(ComponentOperator oper) {
         checkSupported(oper);
-        pushMenuItem(oper, UIManager.getString(
-                "InternalFrameTitlePane.minimizeButtonText"));
+        pushMenuItem(oper, UIManager.getString("InternalFrameTitlePane.minimizeButtonText"));
     }
 
     @Override
@@ -59,8 +56,7 @@ public class InternalFramePopupMenuDriver extends DefaultInternalFrameDriver {
             if (!((JInternalFrameOperator) oper).isSelected()) {
                 activate(oper);
             }
-            pushMenuItem(oper, UIManager.getString(
-                    "InternalFrameTitlePane.maximizeButtonText"));
+            pushMenuItem(oper, UIManager.getString("InternalFrameTitlePane.maximizeButtonText"));
         }
     }
 
@@ -71,17 +67,14 @@ public class InternalFramePopupMenuDriver extends DefaultInternalFrameDriver {
             if (!((JInternalFrameOperator) oper).isSelected()) {
                 activate(oper);
             }
-            pushMenuItem(oper, UIManager.getString(
-                    "InternalFrameTitlePane.restoreButtonText"));
+            pushMenuItem(oper, UIManager.getString("InternalFrameTitlePane.restoreButtonText"));
         }
     }
 
-    private void pushMenuItem(ComponentOperator oper,
-            String menuText) {
+    private void pushMenuItem(ComponentOperator oper, String menuText) {
         ((JInternalFrameOperator) oper).getPopupButton().push();
         JPopupMenuOperator popupMenu = new JPopupMenuOperator();
-        JMenuItemOperator menuItem =
-                new JMenuItemOperator(popupMenu, menuText);
+        JMenuItemOperator menuItem = new JMenuItemOperator(popupMenu, menuText);
         menuItem.push();
     }
 }

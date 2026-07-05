@@ -38,7 +38,7 @@ public class AWTTextAPIDriver extends TextAPIDriver {
      * Constructs a AWTTextAPIDriver.
      */
     public AWTTextAPIDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.TextComponentOperator"});
+        super(new String[] {"org.netbeans.jemmy.operators.TextComponentOperator"});
     }
 
     @Override

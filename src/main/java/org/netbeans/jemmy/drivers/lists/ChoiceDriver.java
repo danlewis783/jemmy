@@ -26,7 +26,6 @@ package org.netbeans.jemmy.drivers.lists;
 
 import java.awt.Point;
 import java.awt.event.KeyEvent;
-
 import org.netbeans.jemmy.Timeout;
 import org.netbeans.jemmy.drivers.DriverManager;
 import org.netbeans.jemmy.drivers.KeyDriver;
@@ -43,28 +42,34 @@ import org.netbeans.jemmy.operators.Operator;
  */
 public class ChoiceDriver extends LightSupportiveDriver implements ListDriver {
 
-    private final static int RIGHT_INDENT = 10;
+    private static final int RIGHT_INDENT = 10;
 
     /**
      * Constructs a ChoiceDriver.
      */
     public ChoiceDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.ChoiceOperator"});
+        super(new String[] {"org.netbeans.jemmy.operators.ChoiceOperator"});
     }
 
     @Override
     public void selectItem(ComponentOperator oper, int index) {
         ChoiceOperator coper = (ChoiceOperator) oper;
         Point pointToClick = getClickPoint(oper);
-        DriverManager.getMouseDriver(oper).
-                clickMouse(oper, pointToClick.x, pointToClick.y,
-                        1, Operator.getDefaultMouseButton(), 0,
+        DriverManager.getMouseDriver(oper)
+                .clickMouse(
+                        oper,
+                        pointToClick.x,
+                        pointToClick.y,
+                        1,
+                        Operator.getDefaultMouseButton(),
+                        0,
                         oper.getTimeouts().create("ComponentOperator.MouseClickTimeout"));
         KeyDriver kdriver = DriverManager.getKeyDriver(oper);
         Timeout pushTimeout = oper.getTimeouts().create("ComponentOperator.PushKeyTimeout");
         if (System.getProperty("java.specification.version").compareTo("1.3") > 0) {
             while (coper.getSelectedIndex() != index) {
-                kdriver.pushKey(oper, (index > coper.getSelectedIndex()) ? KeyEvent.VK_DOWN : KeyEvent.VK_UP, 0, pushTimeout);
+                kdriver.pushKey(
+                        oper, (index > coper.getSelectedIndex()) ? KeyEvent.VK_DOWN : KeyEvent.VK_UP, 0, pushTimeout);
             }
         } else {
             int current = ((ChoiceOperator) oper).getSelectedIndex();

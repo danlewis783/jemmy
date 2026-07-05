@@ -25,9 +25,7 @@
 package org.netbeans.jemmy.drivers.lists;
 
 import java.awt.Rectangle;
-
 import javax.swing.JTabbedPane;
-
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.drivers.DriverManager;
 import org.netbeans.jemmy.drivers.LightSupportiveDriver;
@@ -49,7 +47,7 @@ public class JTabMouseDriver extends LightSupportiveDriver implements ListDriver
      * Constructs a JTabMouseDriver.
      */
     public JTabMouseDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.JTabbedPaneOperator"});
+        super(new String[] {"org.netbeans.jemmy.operators.JTabbedPaneOperator"});
         queueTool = new QueueTool();
     }
 
@@ -59,15 +57,16 @@ public class JTabMouseDriver extends LightSupportiveDriver implements ListDriver
             queueTool.invokeSmoothly(new QueueTool.QueueAction<Void>("Selecting tab " + index + " using mouse") {
                 @Override
                 public Void launch() {
-                    Rectangle rect = ((JTabbedPaneOperator) oper).
-                            getUI().
-                            getTabBounds((JTabbedPane) oper.getSource(),
-                                    index);
-                    DriverManager.getMouseDriver(oper).
-                            clickMouse(oper,
+                    Rectangle rect =
+                            ((JTabbedPaneOperator) oper).getUI().getTabBounds((JTabbedPane) oper.getSource(), index);
+                    DriverManager.getMouseDriver(oper)
+                            .clickMouse(
+                                    oper,
                                     (int) (rect.getX() + rect.getWidth() / 2),
                                     (int) (rect.getY() + rect.getHeight() / 2),
-                                    1, Operator.getDefaultMouseButton(), 0,
+                                    1,
+                                    Operator.getDefaultMouseButton(),
+                                    0,
                                     oper.getTimeouts().create("ComponentOperator.MouseClickTimeout"));
                     return null;
                 }

@@ -26,7 +26,6 @@ package org.netbeans.jemmy.image;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
 import org.netbeans.jemmy.JemmyException;
 
 /**
@@ -79,8 +78,7 @@ public class FileImageComparator {
      */
     public boolean compare(String fileName1, String fileName2) {
         try {
-            return (comparator.compare(loader.load(fileName1),
-                    loader.load(fileName2)));
+            return (comparator.compare(loader.load(fileName1), loader.load(fileName2)));
         } catch (IOException e) {
             throw (new JemmyException("IOException during image loading", e));
         }

@@ -27,7 +27,6 @@ package org.netbeans.jemmy.operators;
 import java.awt.Component;
 import java.awt.Point;
 import java.awt.Rectangle;
-
 import javax.swing.JTable;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ListSelectionEvent;
@@ -37,7 +36,6 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.Outputable;
@@ -56,8 +54,7 @@ import org.netbeans.jemmy.drivers.OrderedListDriver;
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
-public class JTableHeaderOperator extends JComponentOperator
-        implements Outputable, Timeoutable {
+public class JTableHeaderOperator extends JComponentOperator implements Outputable, Timeoutable {
 
     private TestOut output;
     private Timeouts timeouts;
@@ -82,9 +79,7 @@ public class JTableHeaderOperator extends JComponentOperator
      * @param index an index between appropriate ones.
      */
     public JTableHeaderOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JTableHeader) cont.
-                waitSubComponent(new JTableHeaderFinder(chooser),
-                        index));
+        this((JTableHeader) cont.waitSubComponent(new JTableHeaderFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -105,10 +100,8 @@ public class JTableHeaderOperator extends JComponentOperator
      * @param index an index between appropriate ones.
      */
     public JTableHeaderOperator(ContainerOperator<?> cont, int index) {
-        this((JTableHeader) waitComponent(cont,
-                new JTableHeaderFinder(ComponentSearcher.
-                        getTrueChooser("Any JTableHeader")),
-                index));
+        this((JTableHeader) waitComponent(
+                cont, new JTableHeaderFinder(ComponentSearcher.getTrueChooser("Any JTableHeader")), index));
         copyEnvironment(cont);
     }
 
@@ -179,22 +172,18 @@ public class JTableHeaderOperator extends JComponentOperator
      */
     public Point getPointToClick(int columnIndex) {
         Rectangle rect = getHeaderRect(columnIndex);
-        return (new Point(rect.x + rect.width / 2,
-                rect.y + rect.height / 2));
+        return (new Point(rect.x + rect.width / 2, rect.y + rect.height / 2));
     }
 
     @Override
     public void copyEnvironment(Operator anotherOperator) {
         super.copyEnvironment(anotherOperator);
-        driver
-                = (OrderedListDriver) DriverManager.
-                getDriver(DriverManager.ORDEREDLIST_DRIVER_ID,
-                        getClass(),
-                        anotherOperator.getProperties());
+        driver = (OrderedListDriver) DriverManager.getDriver(
+                DriverManager.ORDEREDLIST_DRIVER_ID, getClass(), anotherOperator.getProperties());
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code JTableHeader.setTable(JTable)} through queue
      */
@@ -534,7 +523,7 @@ public class JTableHeaderOperator extends JComponentOperator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Checks component type.

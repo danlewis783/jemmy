@@ -26,7 +26,6 @@ package org.netbeans.jemmy.drivers.lists;
 
 import java.awt.Point;
 import java.awt.event.InputEvent;
-
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.drivers.DriverManager;
 import org.netbeans.jemmy.drivers.LightSupportiveDriver;
@@ -48,7 +47,7 @@ public class JTableHeaderDriver extends LightSupportiveDriver implements Ordered
      * Constructs a JTableHeaderDriver.
      */
     public JTableHeaderDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.JTableHeaderOperator"});
+        super(new String[] {"org.netbeans.jemmy.operators.JTableHeaderOperator"});
         queueTool = new QueueTool();
     }
 
@@ -94,11 +93,14 @@ public class JTableHeaderDriver extends LightSupportiveDriver implements Ordered
             @Override
             public Void launch() {
                 Point toClick = oper.getPointToClick(index);
-                DriverManager.getMouseDriver(oper).
-                        clickMouse(oper,
+                DriverManager.getMouseDriver(oper)
+                        .clickMouse(
+                                oper,
                                 toClick.x,
                                 toClick.y,
-                                1, Operator.getDefaultMouseButton(), modifiers,
+                                1,
+                                Operator.getDefaultMouseButton(),
+                                modifiers,
                                 oper.getTimeouts().create("ComponentOperator.MouseClickTimeout"));
                 return null;
             }

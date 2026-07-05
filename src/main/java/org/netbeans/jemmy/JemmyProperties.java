@@ -35,7 +35,6 @@ import java.util.Hashtable;
 import java.util.Properties;
 import java.util.Stack;
 import java.util.StringTokenizer;
-
 import org.netbeans.jemmy.drivers.APIDriverInstaller;
 import org.netbeans.jemmy.drivers.DefaultDriverInstaller;
 import org.netbeans.jemmy.drivers.DriverInstaller;
@@ -110,8 +109,8 @@ public class JemmyProperties {
      * @return a String representing the major version value.
      */
     public static String getMajorVersion() {
-        return (extractValue(getProperties().getClass().
-                getClassLoader().getResourceAsStream("org/netbeans/jemmy/version_info"),
+        return (extractValue(
+                getProperties().getClass().getClassLoader().getResourceAsStream("org/netbeans/jemmy/version_info"),
                 "Jemmy-MajorVersion"));
     }
 
@@ -121,8 +120,8 @@ public class JemmyProperties {
      * @return a String representing the minor version value.
      */
     public static String getMinorVersion() {
-        return (extractValue(getProperties().getClass().
-                getClassLoader().getResourceAsStream("org/netbeans/jemmy/version_info"),
+        return (extractValue(
+                getProperties().getClass().getClassLoader().getResourceAsStream("org/netbeans/jemmy/version_info"),
                 "Jemmy-MinorVersion"));
     }
 
@@ -132,8 +131,8 @@ public class JemmyProperties {
      * @return a String representing the build value.
      */
     public static String getBuild() {
-        return (extractValue(getProperties().getClass().
-                getClassLoader().getResourceAsStream("org/netbeans/jemmy/version_info"),
+        return (extractValue(
+                getProperties().getClass().getClassLoader().getResourceAsStream("org/netbeans/jemmy/version_info"),
                 "Jemmy-Build"));
     }
 
@@ -143,9 +142,7 @@ public class JemmyProperties {
      * @return a String representing the full version value.
      */
     public static String getFullVersion() {
-        return (getMajorVersion() + "."
-                + getMinorVersion() + "-"
-                + getBuild());
+        return (getMajorVersion() + "." + getMinorVersion() + "-" + getBuild());
     }
 
     /**
@@ -154,8 +151,7 @@ public class JemmyProperties {
      * @return a String representing the short version value.
      */
     public static String getVersion() {
-        return (getMajorVersion() + "."
-                + getMinorVersion());
+        return (getMajorVersion() + "." + getMinorVersion());
     }
 
     /**
@@ -454,11 +450,9 @@ public class JemmyProperties {
     public static void main(String[] argv) {
         if (argv.length == 0) {
             System.out.println("Jemmy version : " + getVersion());
-        } else if (argv.length == 1
-                && argv[0].equals("-f")) {
+        } else if (argv.length == 1 && argv[0].equals("-f")) {
             System.out.println("Jemmy full version : " + getFullVersion());
-        } else if (argv.length > 0
-                && argv[0].equals("-e")) {
+        } else if (argv.length > 0 && argv[0].equals("-e")) {
             String[] newArgv = new String[argv.length - 1];
             System.arraycopy(argv, 1, newArgv, 0, argv.length - 1);
             GUIBrowser.main(newArgv);
@@ -501,14 +495,12 @@ public class JemmyProperties {
             }
             if (props.getProperty("TIMEOUTS_FILE") != null
                     && !props.getProperty("TIMEOUTS_FILE").equals("")) {
-                getOutput().printLine("Loading timeouts from " + props.getProperty("TIMEOUTS_FILE")
-                        + " file");
+                getOutput().printLine("Loading timeouts from " + props.getProperty("TIMEOUTS_FILE") + " file");
                 getTimeouts().loadDefaults(props.getProperty("TIMEOUTS_FILE"));
             }
             if (props.getProperty("RESOURCE_FILE") != null
                     && !props.getProperty("RESOURCE_FILE").equals("")) {
-                getOutput().printLine("Loading resources from " + props.getProperty("RESOURCE_FILE")
-                        + " file");
+                getOutput().printLine("Loading resources from " + props.getProperty("RESOURCE_FILE") + " file");
                 getBundleManager().loadBundleFromFile(props.getProperty("RESOURCE_FILE"), "");
             }
         } catch (IOException e) {
@@ -950,7 +942,7 @@ public class JemmyProperties {
         for (String key : keys) {
             properties.setProperty(key, getProperty(key));
         }
-        //some should be cloned
+        // some should be cloned
         properties.setTimeouts(getTimeouts().cloneThis());
         properties.setBundleManager(getBundleManager().cloneThis());
     }
@@ -984,5 +976,4 @@ public class JemmyProperties {
             return "";
         }
     }
-
 }

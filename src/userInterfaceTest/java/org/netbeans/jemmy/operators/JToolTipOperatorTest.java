@@ -24,30 +24,28 @@
  */
 package org.netbeans.jemmy.operators;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JToolTip;
-
-import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.TimeoutExpiredException;
-import org.netbeans.jemmy.Timeouts;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.netbeans.jemmy.ComponentChooser;
+import org.netbeans.jemmy.TimeoutExpiredException;
+import org.netbeans.jemmy.Timeouts;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class JToolTipOperatorTest {
-
 
     private JFrame frame = null;
 
     @BeforeAll
     protected void setUp() throws Exception {
         frame = new JFrame();
-        frame.setSize(400,400);
+        frame.setSize(400, 400);
         frame.setLocationRelativeTo(null);
         Timeouts timeouts = Operator.getEnvironmentOperator().getTimeouts();
         timeouts.setTimeout("JToolTipOperator.WaitToolTipTimeout", 5000);
@@ -69,44 +67,38 @@ public class JToolTipOperatorTest {
         frame.add(label);
         frame.setVisible(true);
         JLabelOperator labelOperator = new JLabelOperator(label);
-        JToolTipOperator toolTipOperator = new JToolTipOperator(
-                labelOperator.showToolTip());
+        JToolTipOperator toolTipOperator = new JToolTipOperator(labelOperator.showToolTip());
         toolTipOperator.waitTipText(TOLLTIP_TEXT);
 
         // Testing different constructors
         new JToolTipOperator();
         new JToolTipOperator(labelOperator);
         new JToolTipOperator(TOLLTIP_TEXT);
-        ComponentChooser chooser = comp -> ((JLabel)((JToolTip)comp).
-                getComponent()).getText().equals(LABEL_TEXT);
+        ComponentChooser chooser =
+                comp -> ((JLabel) ((JToolTip) comp).getComponent()).getText().equals(LABEL_TEXT);
         new JToolTipOperator(chooser);
         new JToolTipOperator(labelOperator, TOLLTIP_TEXT);
         new JToolTipOperator(labelOperator, chooser);
 
         labelOperator.clickMouse();
-        assertThatThrownBy(JToolTipOperator::waitJToolTip)
-                .isInstanceOf(TimeoutExpiredException.class);
+        assertThatThrownBy(JToolTipOperator::waitJToolTip).isInstanceOf(TimeoutExpiredException.class);
     }
 
     @Test
     public void testToolTipConstructorsNegativeScenarios() {
         final String LABEL_TEXT = "Random Text";
         JLabelOperator dummyLabel = new JLabelOperator(new JLabel());
-        ComponentChooser chooser = comp -> ((JLabel)((JToolTip)comp).
-                getComponent()).getText().equals(LABEL_TEXT);
-        assertThatThrownBy(() -> new JToolTipOperator(dummyLabel))
-                .isInstanceOf(TimeoutExpiredException.class);
+        ComponentChooser chooser =
+                comp -> ((JLabel) ((JToolTip) comp).getComponent()).getText().equals(LABEL_TEXT);
+        assertThatThrownBy(() -> new JToolTipOperator(dummyLabel)).isInstanceOf(TimeoutExpiredException.class);
 
-        assertThatThrownBy(() -> new JToolTipOperator(LABEL_TEXT))
-                .isInstanceOf(TimeoutExpiredException.class);
+        assertThatThrownBy(() -> new JToolTipOperator(LABEL_TEXT)).isInstanceOf(TimeoutExpiredException.class);
 
-        assertThatThrownBy(() -> new JToolTipOperator(chooser))
-                .isInstanceOf(TimeoutExpiredException.class);
+        assertThatThrownBy(() -> new JToolTipOperator(chooser)).isInstanceOf(TimeoutExpiredException.class);
 
         assertThatThrownBy(() -> new JToolTipOperator(dummyLabel, LABEL_TEXT))
                 .isInstanceOf(TimeoutExpiredException.class);
 
-        assertThatThrownBy(() -> new JToolTipOperator(dummyLabel, chooser))
-                .isInstanceOf(TimeoutExpiredException.class);
+        assertThatThrownBy(() -> new JToolTipOperator(dummyLabel, chooser)).isInstanceOf(TimeoutExpiredException.class);
     }
 }

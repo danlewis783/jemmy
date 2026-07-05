@@ -30,21 +30,18 @@ import java.awt.Component;
 import java.awt.Container;
 import java.io.File;
 import java.io.IOException;
-
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileSystemView;
-
-import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.DumpOnFailure;
-import org.netbeans.jemmy.LookAndFeelProvider;
-import org.netbeans.jemmy.util.LookAndFeel;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.netbeans.jemmy.ComponentChooser;
+import org.netbeans.jemmy.DumpOnFailure;
+import org.netbeans.jemmy.util.LookAndFeel;
 
 @ExtendWith(DumpOnFailure.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -57,7 +54,8 @@ public class FileChooserTest {
     @BeforeAll
     public void setup() throws IOException {
         dir = File.createTempFile("testDir", "");
-        dir.delete(); dir.mkdirs();
+        dir.delete();
+        dir.mkdirs();
         File.createTempFile("aestFile", ".txt", dir).deleteOnExit();
         file = File.createTempFile("testFile", ".txt", dir);
         file.deleteOnExit();
@@ -70,8 +68,7 @@ public class FileChooserTest {
         UIManager.setLookAndFeel(lookAndFeel);
         FileChooserApp.show(dir);
         frame = new JFrameOperator("Sample File Chooser");
-        fileChooser = new JFileChooserOperator(
-                JFileChooserOperator.findJFileChooser((Container) frame.getSource()));
+        fileChooser = new JFileChooserOperator(JFileChooserOperator.findJFileChooser((Container) frame.getSource()));
     }
 
     @AfterEach
@@ -88,8 +85,8 @@ public class FileChooserTest {
         fileChooser.waitState(new ComponentChooser() {
             @Override
             public boolean checkComponent(Component comp) {
-                return ((JFileChooser)comp).getSelectedFile() != null &&
-                        fileChooser.getSelectedFile().getName().equals(file.getName());
+                return ((JFileChooser) comp).getSelectedFile() != null
+                        && fileChooser.getSelectedFile().getName().equals(file.getName());
             }
 
             @Override
@@ -115,8 +112,12 @@ public class FileChooserTest {
         if (!LookAndFeel.isAqua() && !LookAndFeel.isMotif() && !LookAndFeel.isGTK()) {
             File previousDirectory = fileChooser.getCurrentDirectory();
             fileChooser.goHome();
-            fileChooser.waitState(chooser -> fileChooser.getCurrentDirectory().getPath().equals(
-                    FileSystemView.getFileSystemView().getHomeDirectory().getPath()));
+            fileChooser.waitState(chooser -> fileChooser
+                    .getCurrentDirectory()
+                    .getPath()
+                    .equals(FileSystemView.getFileSystemView()
+                            .getHomeDirectory()
+                            .getPath()));
             fileChooser.setCurrentDirectory(previousDirectory);
             fileChooser.rescanCurrentDirectory();
         }

@@ -42,6 +42,5 @@ import org.netbeans.jemmy.operators.Operator.ComponentVisualizer;
 public class EmptyVisualizer implements ComponentVisualizer {
 
     @Override
-    public void makeVisible(ComponentOperator compOper) {
-    }
+    public void makeVisible(ComponentOperator compOper) {}
 }

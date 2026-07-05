@@ -26,9 +26,7 @@ package org.netbeans.jemmy.operators;
 
 import java.awt.Container;
 import java.util.Hashtable;
-
 import javax.swing.JPasswordField;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.TimeoutExpiredException;
 
@@ -78,9 +76,7 @@ public class JPasswordFieldOperator extends JTextFieldOperator {
      * @param index an index between appropriate ones.
      */
     public JPasswordFieldOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JPasswordField) cont.
-                waitSubComponent(new JPasswordFieldFinder(chooser),
-                        index));
+        this((JPasswordField) cont.waitSubComponent(new JPasswordFieldFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -105,9 +101,10 @@ public class JPasswordFieldOperator extends JTextFieldOperator {
      * @throws TimeoutExpiredException
      */
     public JPasswordFieldOperator(ContainerOperator<?> cont, String text, int index) {
-        this((JPasswordField) waitComponent(cont,
-                new JPasswordFieldFinder(new JTextComponentOperator.JTextComponentByTextFinder(text,
-                        cont.getComparator())),
+        this((JPasswordField) waitComponent(
+                cont,
+                new JPasswordFieldFinder(
+                        new JTextComponentOperator.JTextComponentByTextFinder(text, cont.getComparator())),
                 index));
         copyEnvironment(cont);
     }
@@ -134,9 +131,7 @@ public class JPasswordFieldOperator extends JTextFieldOperator {
      * @throws TimeoutExpiredException
      */
     public JPasswordFieldOperator(ContainerOperator<?> cont, int index) {
-        this((JPasswordField) waitComponent(cont,
-                new JPasswordFieldFinder(),
-                index));
+        this((JPasswordField) waitComponent(cont, new JPasswordFieldFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -186,9 +181,10 @@ public class JPasswordFieldOperator extends JTextFieldOperator {
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public static JPasswordField findJPasswordField(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return (findJPasswordField(cont,
-                new JPasswordFieldFinder(new JTextComponentOperator.JTextComponentByTextFinder(text,
-                        new DefaultStringComparator(ce, ccs))),
+        return (findJPasswordField(
+                cont,
+                new JPasswordFieldFinder(new JTextComponentOperator.JTextComponentByTextFinder(
+                        text, new DefaultStringComparator(ce, ccs))),
                 index));
     }
 
@@ -244,9 +240,10 @@ public class JPasswordFieldOperator extends JTextFieldOperator {
      * @throws TimeoutExpiredException
      */
     public static JPasswordField waitJPasswordField(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return (waitJPasswordField(cont,
-                new JPasswordFieldFinder(new JTextComponentOperator.JTextComponentByTextFinder(text,
-                        new DefaultStringComparator(ce, ccs))),
+        return (waitJPasswordField(
+                cont,
+                new JPasswordFieldFinder(new JTextComponentOperator.JTextComponentByTextFinder(
+                        text, new DefaultStringComparator(ce, ccs))),
                 index));
     }
 
@@ -268,13 +265,12 @@ public class JPasswordFieldOperator extends JTextFieldOperator {
     @Override
     public Hashtable<String, Object> getDump() {
         Hashtable<String, Object> result = super.getDump();
-        result.put(ECHO_CHAR_DPROP,
-                Character.toString(((JPasswordField) getSource()).getEchoChar()));
+        result.put(ECHO_CHAR_DPROP, Character.toString(((JPasswordField) getSource()).getEchoChar()));
         return result;
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code JPasswordField.echoCharIsSet()} through queue
      */
@@ -323,7 +319,7 @@ public class JPasswordFieldOperator extends JTextFieldOperator {
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Checks component type.

@@ -25,13 +25,11 @@
 package org.netbeans.jemmy.accessibility;
 
 import java.awt.Component;
-
 import javax.accessibility.AccessibleContext;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JWindow;
-
 import org.netbeans.jemmy.ComponentChooser;
 
 public abstract class AccessibilityChooser implements ComponentChooser {

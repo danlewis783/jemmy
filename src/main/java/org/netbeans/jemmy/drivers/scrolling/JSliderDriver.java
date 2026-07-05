@@ -25,9 +25,7 @@
 package org.netbeans.jemmy.drivers.scrolling;
 
 import java.awt.Point;
-
 import javax.swing.JSlider;
-
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.Timeout;
 import org.netbeans.jemmy.drivers.DriverManager;
@@ -49,7 +47,7 @@ public class JSliderDriver extends AbstractScrollDriver {
      * Constructs a JSliderDriver object.
      */
     public JSliderDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.JSliderOperator"});
+        super(new String[] {"org.netbeans.jemmy.operators.JSliderOperator"});
         queueTool = new QueueTool();
     }
 
@@ -61,14 +59,12 @@ public class JSliderDriver extends AbstractScrollDriver {
     @Override
     public void scrollToMinimum(final ComponentOperator oper, int orientation) {
         checkSupported(oper);
-        scroll(oper,
-                new ScrollAdjuster() {
+        scroll(oper, new ScrollAdjuster() {
             @Override
             public int getScrollDirection() {
-                return ((((JSliderOperator) oper).getMinimum()
-                        < ((JSliderOperator) oper).getValue())
-                                ? DECREASE_SCROLL_DIRECTION
-                                : DO_NOT_TOUCH_SCROLL_DIRECTION);
+                return ((((JSliderOperator) oper).getMinimum() < ((JSliderOperator) oper).getValue())
+                        ? DECREASE_SCROLL_DIRECTION
+                        : DO_NOT_TOUCH_SCROLL_DIRECTION);
             }
 
             @Override
@@ -91,14 +87,12 @@ public class JSliderDriver extends AbstractScrollDriver {
     @Override
     public void scrollToMaximum(final ComponentOperator oper, int orientation) {
         checkSupported(oper);
-        scroll(oper,
-                new ScrollAdjuster() {
+        scroll(oper, new ScrollAdjuster() {
             @Override
             public int getScrollDirection() {
-                return ((((JSliderOperator) oper).getMaximum()
-                        > ((JSliderOperator) oper).getValue())
-                                ? INCREASE_SCROLL_DIRECTION
-                                : DO_NOT_TOUCH_SCROLL_DIRECTION);
+                return ((((JSliderOperator) oper).getMaximum() > ((JSliderOperator) oper).getValue())
+                        ? INCREASE_SCROLL_DIRECTION
+                        : DO_NOT_TOUCH_SCROLL_DIRECTION);
             }
 
             @Override
@@ -126,12 +120,15 @@ public class JSliderDriver extends AbstractScrollDriver {
                 public Void launch() {
                     Point clickPoint = getClickPoint(oper, adj.getScrollDirection(), adj.getScrollOrientation());
                     if (clickPoint != null) {
-                        DriverManager.getMouseDriver(oper).
-                                clickMouse(oper, clickPoint.x, clickPoint.y, 1,
+                        DriverManager.getMouseDriver(oper)
+                                .clickMouse(
+                                        oper,
+                                        clickPoint.x,
+                                        clickPoint.y,
+                                        1,
                                         Operator.getDefaultMouseButton(),
                                         0,
-                                        oper.getTimeouts().
-                                        create("ComponentOperator.MouseClickTimeout"));
+                                        oper.getTimeouts().create("ComponentOperator.MouseClickTimeout"));
                     }
                     return null;
                 }
@@ -141,7 +138,7 @@ public class JSliderDriver extends AbstractScrollDriver {
 
     @Override
     protected void jump(ComponentOperator oper, ScrollAdjuster adj) {
-        //cannot
+        // cannot
     }
 
     @Override
@@ -153,9 +150,7 @@ public class JSliderDriver extends AbstractScrollDriver {
                 if (clickPoint != null) {
                     MouseDriver mdriver = DriverManager.getMouseDriver(oper);
                     mdriver.moveMouse(oper, clickPoint.x, clickPoint.y);
-                    mdriver.pressMouse(oper, clickPoint.x, clickPoint.y,
-                            Operator.getDefaultMouseButton(),
-                            0);
+                    mdriver.pressMouse(oper, clickPoint.x, clickPoint.y, Operator.getDefaultMouseButton(), 0);
                 }
                 return null;
             }
@@ -170,9 +165,7 @@ public class JSliderDriver extends AbstractScrollDriver {
                 Point clickPoint = getClickPoint(oper, direction, orientation);
                 if (clickPoint != null) {
                     MouseDriver mdriver = DriverManager.getMouseDriver(oper);
-                    mdriver.releaseMouse(oper, clickPoint.x, clickPoint.y,
-                            Operator.getDefaultMouseButton(),
-                            0);
+                    mdriver.releaseMouse(oper, clickPoint.x, clickPoint.y, Operator.getDefaultMouseButton(), 0);
                 }
                 return null;
             }
@@ -181,18 +174,18 @@ public class JSliderDriver extends AbstractScrollDriver {
 
     @Override
     protected Point startDragging(ComponentOperator oper) {
-        //cannot
+        // cannot
         return null;
     }
 
     @Override
     protected void drop(ComponentOperator oper, Point pnt) {
-        //cannot
+        // cannot
     }
 
     @Override
     protected void drag(ComponentOperator oper, Point pnt) {
-        //cannot
+        // cannot
     }
 
     @Override

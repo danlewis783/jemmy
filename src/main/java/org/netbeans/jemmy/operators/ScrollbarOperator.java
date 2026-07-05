@@ -27,7 +27,6 @@ package org.netbeans.jemmy.operators;
 import java.awt.Container;
 import java.awt.Scrollbar;
 import java.awt.event.AdjustmentListener;
-
 import org.netbeans.jemmy.Action;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
@@ -52,13 +51,12 @@ import org.netbeans.jemmy.drivers.scrolling.ScrollAdjuster;
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
-public class ScrollbarOperator extends ComponentOperator
-        implements Timeoutable, Outputable {
+public class ScrollbarOperator extends ComponentOperator implements Timeoutable, Outputable {
 
-    private final static long ONE_SCROLL_CLICK_TIMEOUT = 0;
-    private final static long WHOLE_SCROLL_TIMEOUT = 60000;
-    private final static long BEFORE_DROP_TIMEOUT = 0;
-    private final static long DRAG_AND_DROP_SCROLLING_DELTA = 0;
+    private static final long ONE_SCROLL_CLICK_TIMEOUT = 0;
+    private static final long WHOLE_SCROLL_TIMEOUT = 60000;
+    private static final long BEFORE_DROP_TIMEOUT = 0;
+    private static final long DRAG_AND_DROP_SCROLLING_DELTA = 0;
 
     private Timeouts timeouts;
     private TestOut output;
@@ -83,9 +81,7 @@ public class ScrollbarOperator extends ComponentOperator
      * @param index an index between appropriate ones.
      */
     public ScrollbarOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((Scrollbar) cont.
-                waitSubComponent(new ScrollbarFinder(chooser),
-                        index));
+        this((Scrollbar) cont.waitSubComponent(new ScrollbarFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -106,9 +102,7 @@ public class ScrollbarOperator extends ComponentOperator
      * @param index an index between appropriate ones.
      */
     public ScrollbarOperator(ContainerOperator<?> cont, int index) {
-        this((Scrollbar) waitComponent(cont,
-                new ScrollbarFinder(),
-                index));
+        this((Scrollbar) waitComponent(cont, new ScrollbarFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -152,7 +146,8 @@ public class ScrollbarOperator extends ComponentOperator
      * @return the scrollbar fitting searching criteria
      */
     public static Scrollbar findScrollbar(Container cont, int index) {
-        return findScrollbar(cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th Scrollbar instance"), index);
+        return findScrollbar(
+                cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th Scrollbar instance"), index);
     }
 
     /**
@@ -196,7 +191,8 @@ public class ScrollbarOperator extends ComponentOperator
      * @return the scrollbar fitting searching criteria
      */
     public static Scrollbar waitScrollbar(Container cont, int index) {
-        return waitScrollbar(cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th Scrollbar instance"), index);
+        return waitScrollbar(
+                cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th Scrollbar instance"), index);
     }
 
     /**
@@ -241,11 +237,8 @@ public class ScrollbarOperator extends ComponentOperator
     @Override
     public void copyEnvironment(Operator anotherOperator) {
         super.copyEnvironment(anotherOperator);
-        driver
-                = (ScrollDriver) DriverManager.
-                getDriver(DriverManager.SCROLL_DRIVER_ID,
-                        getClass(),
-                        anotherOperator.getProperties());
+        driver = (ScrollDriver)
+                DriverManager.getDriver(DriverManager.SCROLL_DRIVER_ID, getClass(), anotherOperator.getProperties());
     }
 
     /**
@@ -269,23 +262,25 @@ public class ScrollbarOperator extends ComponentOperator
      * @throws TimeoutExpiredException
      */
     public void scrollTo(final ScrollAdjuster adj) {
-        produceTimeRestricted(new Action<Void, Void>() {
-            @Override
-            public Void launch(Void obj) {
-                driver.scroll(ScrollbarOperator.this, adj);
-                return null;
-            }
+        produceTimeRestricted(
+                new Action<Void, Void>() {
+                    @Override
+                    public Void launch(Void obj) {
+                        driver.scroll(ScrollbarOperator.this, adj);
+                        return null;
+                    }
 
-            @Override
-            public String getDescription() {
-                return "Scrolling";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "Scrolling";
+                    }
 
-            @Override
-            public String toString() {
-                return "ScrollbarOperator.scrollTo.Action{description = " + getDescription() + '}';
-            }
-        }, "ScrollbarOperator.WholeScrollTimeout");
+                    @Override
+                    public String toString() {
+                        return "ScrollbarOperator.scrollTo.Action{description = " + getDescription() + '}';
+                    }
+                },
+                "ScrollbarOperator.WholeScrollTimeout");
     }
 
     /**
@@ -295,8 +290,7 @@ public class ScrollbarOperator extends ComponentOperator
      * @throws TimeoutExpiredException
      */
     public void scrollToValue(int value) {
-        output.printTrace("Scroll Scrollbar to " + Integer.toString(value)
-                + " value\n" + toStringSource());
+        output.printTrace("Scroll Scrollbar to " + Integer.toString(value) + " value\n" + toStringSource());
         output.printGolden("Scroll Scrollbar to " + Integer.toString(value) + " value");
         scrollTo(new ValueScrollAdjuster(value));
     }
@@ -308,13 +302,11 @@ public class ScrollbarOperator extends ComponentOperator
      * @throws TimeoutExpiredException
      */
     public void scrollToValue(double proportionalValue) {
-        output.printTrace("Scroll Scrollbar to " + Double.toString(proportionalValue)
-                + " proportional value\n" + toStringSource());
+        output.printTrace("Scroll Scrollbar to " + Double.toString(proportionalValue) + " proportional value\n"
+                + toStringSource());
         output.printGolden("Scroll Scrollbar to " + Double.toString(proportionalValue) + " proportional value");
-        scrollTo(new ValueScrollAdjuster((int) (getMinimum()
-                + (getMaximum()
-                - getVisibleAmount()
-                - getMinimum()) * proportionalValue)));
+        scrollTo(new ValueScrollAdjuster(
+                (int) (getMinimum() + (getMaximum() - getVisibleAmount() - getMinimum()) * proportionalValue)));
     }
 
     /**
@@ -323,26 +315,27 @@ public class ScrollbarOperator extends ComponentOperator
      * @throws TimeoutExpiredException
      */
     public void scrollToMinimum() {
-        output.printTrace("Scroll Scrollbar to minimum value\n"
-                + toStringSource());
+        output.printTrace("Scroll Scrollbar to minimum value\n" + toStringSource());
         output.printGolden("Scroll Scrollbar to minimum value");
-        produceTimeRestricted(new Action<Void, Void>() {
-            @Override
-            public Void launch(Void obj) {
-                driver.scrollToMinimum(ScrollbarOperator.this, getOrientation());
-                return null;
-            }
+        produceTimeRestricted(
+                new Action<Void, Void>() {
+                    @Override
+                    public Void launch(Void obj) {
+                        driver.scrollToMinimum(ScrollbarOperator.this, getOrientation());
+                        return null;
+                    }
 
-            @Override
-            public String getDescription() {
-                return "Scrolling";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "Scrolling";
+                    }
 
-            @Override
-            public String toString() {
-                return "ScrollbarOperator.scrollToMinimum.Action{description = " + getDescription() + '}';
-            }
-        }, "ScrollbarOperator.WholeScrollTimeout");
+                    @Override
+                    public String toString() {
+                        return "ScrollbarOperator.scrollToMinimum.Action{description = " + getDescription() + '}';
+                    }
+                },
+                "ScrollbarOperator.WholeScrollTimeout");
     }
 
     /**
@@ -351,29 +344,30 @@ public class ScrollbarOperator extends ComponentOperator
      * @throws TimeoutExpiredException
      */
     public void scrollToMaximum() {
-        output.printTrace("Scroll Scrollbar to maximum value\n"
-                + toStringSource());
+        output.printTrace("Scroll Scrollbar to maximum value\n" + toStringSource());
         output.printGolden("Scroll Scrollbar to maximum value");
-        produceTimeRestricted(new Action<Void, Void>() {
-            @Override
-            public Void launch(Void obj) {
-                driver.scrollToMaximum(ScrollbarOperator.this, getOrientation());
-                return null;
-            }
+        produceTimeRestricted(
+                new Action<Void, Void>() {
+                    @Override
+                    public Void launch(Void obj) {
+                        driver.scrollToMaximum(ScrollbarOperator.this, getOrientation());
+                        return null;
+                    }
 
-            @Override
-            public String getDescription() {
-                return "Scrolling";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "Scrolling";
+                    }
 
-            @Override
-            public String toString() {
-                return "ScrollbarOperator.scrollToMaximum.Action{description = " + getDescription() + '}';
-            }
-        }, "ScrollbarOperator.WholeScrollTimeout");
+                    @Override
+                    public String toString() {
+                        return "ScrollbarOperator.scrollToMaximum.Action{description = " + getDescription() + '}';
+                    }
+                },
+                "ScrollbarOperator.WholeScrollTimeout");
     }
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
 
     /**
      * Maps {@code Scrollbar.addAdjustmentListener(AdjustmentListener)}
@@ -581,7 +575,7 @@ public class ScrollbarOperator extends ComponentOperator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     private class ValueScrollAdjuster implements ScrollAdjuster {
 
@@ -639,9 +633,7 @@ public class ScrollbarOperator extends ComponentOperator
             if (reached) {
                 return ScrollAdjuster.DO_NOT_TOUCH_SCROLL_DIRECTION;
             } else {
-                return (increase
-                        ? ScrollAdjuster.INCREASE_SCROLL_DIRECTION
-                        : ScrollAdjuster.DECREASE_SCROLL_DIRECTION);
+                return (increase ? ScrollAdjuster.INCREASE_SCROLL_DIRECTION : ScrollAdjuster.DECREASE_SCROLL_DIRECTION);
             }
         }
 
@@ -657,7 +649,8 @@ public class ScrollbarOperator extends ComponentOperator
 
         @Override
         public String toString() {
-            return "WaitableChecker{" + "w=" + w + ", waitParam=" + waitParam + ", increase=" + increase + ", reached=" + reached + '}';
+            return "WaitableChecker{" + "w=" + w + ", waitParam=" + waitParam + ", increase=" + increase + ", reached="
+                    + reached + '}';
         }
     }
 

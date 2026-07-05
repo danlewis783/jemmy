@@ -43,11 +43,7 @@ public class TestCompletedException extends JemmyException {
      * @param ex Exception provoked test failure.
      */
     public TestCompletedException(int st, Exception ex) {
-        super("Test "
-                + ((st == 0)
-                        ? "passed"
-                        : "failed with status " + Integer.toString(st)),
-                ex);
+        super("Test " + ((st == 0) ? "passed" : "failed with status " + Integer.toString(st)), ex);
         status = st;
     }
 
@@ -58,11 +54,7 @@ public class TestCompletedException extends JemmyException {
      * @param description Failure reason
      */
     public TestCompletedException(int st, String description) {
-        super("Test "
-                + ((st == 0)
-                        ? "passed"
-                        : "failed with status " + Integer.toString(st)
-                        + "\n" + description));
+        super("Test " + ((st == 0) ? "passed" : "failed with status " + Integer.toString(st) + "\n" + description));
         status = st;
     }
 

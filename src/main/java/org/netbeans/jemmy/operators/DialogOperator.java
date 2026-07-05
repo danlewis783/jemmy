@@ -28,7 +28,6 @@ import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Window;
 import java.util.Hashtable;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.DialogWaiter;
 import org.netbeans.jemmy.JemmyProperties;
@@ -88,10 +87,7 @@ public class DialogOperator extends WindowOperator {
      * @param env an operator to copy environment from.
      */
     public DialogOperator(ComponentChooser chooser, int index, Operator env) {
-        this(waitDialog(new DialogFinder(chooser),
-                index,
-                env.getTimeouts(),
-                env.getOutput()));
+        this(waitDialog(new DialogFinder(chooser), index, env.getTimeouts(), env.getOutput()));
         copyEnvironment(env);
     }
 
@@ -122,9 +118,7 @@ public class DialogOperator extends WindowOperator {
      * @param index an index between appropriate ones.
      */
     public DialogOperator(WindowOperator owner, ComponentChooser chooser, int index) {
-        this((Dialog) owner.
-                waitSubWindow(new DialogFinder(chooser),
-                        index));
+        this((Dialog) owner.waitSubWindow(new DialogFinder(chooser), index));
         copyEnvironment(owner);
     }
 
@@ -152,10 +146,7 @@ public class DialogOperator extends WindowOperator {
      * @throws TimeoutExpiredException
      */
     public DialogOperator(WindowOperator owner, String title, int index) {
-        this(waitDialog(owner,
-                new DialogByTitleFinder(title,
-                        owner.getComparator()),
-                index));
+        this(waitDialog(owner, new DialogByTitleFinder(title, owner.getComparator()), index));
         copyEnvironment(owner);
     }
 
@@ -185,9 +176,7 @@ public class DialogOperator extends WindowOperator {
      * @throws TimeoutExpiredException
      */
     public DialogOperator(WindowOperator owner, int index) {
-        this(waitDialog(owner,
-                new DialogFinder(),
-                index));
+        this(waitDialog(owner, new DialogFinder(), index));
         copyEnvironment(owner);
     }
 
@@ -214,10 +203,7 @@ public class DialogOperator extends WindowOperator {
      * @throws TimeoutExpiredException
      */
     public DialogOperator(String title, int index, Operator env) {
-        this(new DialogByTitleFinder(title,
-                env.getComparator()),
-                index,
-                env);
+        this(new DialogByTitleFinder(title, env.getComparator()), index, env);
     }
 
     /**
@@ -232,8 +218,7 @@ public class DialogOperator extends WindowOperator {
      * @throws TimeoutExpiredException
      */
     public DialogOperator(String title, int index) {
-        this(title, index,
-                ComponentOperator.getEnvironmentOperator());
+        this(title, index, ComponentOperator.getEnvironmentOperator());
     }
 
     /**
@@ -258,7 +243,8 @@ public class DialogOperator extends WindowOperator {
      * @throws TimeoutExpiredException
      */
     public DialogOperator(int index) {
-        this(waitDialog(new DialogFinder(),
+        this(waitDialog(
+                new DialogFinder(),
                 index,
                 ComponentOperator.getEnvironmentOperator().getTimeouts(),
                 ComponentOperator.getEnvironmentOperator().getOutput()));
@@ -281,8 +267,7 @@ public class DialogOperator extends WindowOperator {
      * @param title Title to wait for.
      */
     public void waitTitle(final String title) {
-        getOutput().printLine("Wait \"" + title + "\" title of dialog \n    : "
-                + toStringSource());
+        getOutput().printLine("Wait \"" + title + "\" title of dialog \n    : " + toStringSource());
         getOutput().printGolden("Wait \"" + title + "\" title");
         waitState(new DialogByTitleFinder(title, getComparator()));
     }
@@ -302,7 +287,7 @@ public class DialogOperator extends WindowOperator {
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code Dialog.getTitle()} through queue
      */
@@ -375,7 +360,7 @@ public class DialogOperator extends WindowOperator {
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * A method to be used from subclasses. Uses timeouts and output passed as
@@ -387,8 +372,7 @@ public class DialogOperator extends WindowOperator {
      * @param output an output to be used during the waiting.
      * @return Component instance or null if component was not found.
      */
-    protected static Dialog waitDialog(ComponentChooser chooser, int index,
-            Timeouts timeouts, TestOut output) {
+    protected static Dialog waitDialog(ComponentChooser chooser, int index, Timeouts timeouts, TestOut output) {
         try {
             DialogWaiter waiter = new DialogWaiter();
             waiter.setTimeouts(timeouts);
@@ -410,9 +394,7 @@ public class DialogOperator extends WindowOperator {
      * @return Component instance or null if component was not found.
      */
     protected static Dialog waitDialog(WindowOperator owner, ComponentChooser chooser, int index) {
-        return (waitDialog((Window) owner.getSource(),
-                chooser, index,
-                owner.getTimeouts(), owner.getOutput()));
+        return (waitDialog((Window) owner.getSource(), chooser, index, owner.getTimeouts(), owner.getOutput()));
     }
 
     /**
@@ -426,14 +408,13 @@ public class DialogOperator extends WindowOperator {
      * @param output an output to be used during the waiting.
      * @return Component instance or null if component was not found.
      */
-    protected static Dialog waitDialog(Window owner, ComponentChooser chooser, int index,
-            Timeouts timeouts, TestOut output) {
+    protected static Dialog waitDialog(
+            Window owner, ComponentChooser chooser, int index, Timeouts timeouts, TestOut output) {
         try {
             DialogWaiter waiter = new DialogWaiter();
             waiter.setTimeouts(timeouts);
             waiter.setOutput(output);
-            return (waiter.
-                    waitDialog(owner, new DialogFinder(chooser), index));
+            return (waiter.waitDialog(owner, new DialogFinder(chooser), index));
         } catch (InterruptedException e) {
             JemmyProperties.getCurrentOutput().printStackTrace(e);
             return null;

@@ -25,7 +25,6 @@
 package org.netbeans.jemmy.drivers.scrolling;
 
 import java.awt.Point;
-
 import org.netbeans.jemmy.Timeout;
 import org.netbeans.jemmy.operators.ComponentOperator;
 import org.netbeans.jemmy.operators.JSliderOperator;
@@ -37,13 +36,13 @@ import org.netbeans.jemmy.operators.JSliderOperator;
  */
 public class JSliderAPIDriver extends AbstractScrollDriver {
 
-    private final static int SMALL_INCREMENT = 1;
+    private static final int SMALL_INCREMENT = 1;
 
     /**
      * Constructs a JSliderDriver object.
      */
     public JSliderAPIDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.JSliderOperator"});
+        super(new String[] {"org.netbeans.jemmy.operators.JSliderOperator"});
     }
 
     @Override
@@ -66,24 +65,21 @@ public class JSliderAPIDriver extends AbstractScrollDriver {
         JSliderOperator scroll = (JSliderOperator) oper;
         int newValue = -1;
         if (adj.getScrollDirection() == ScrollAdjuster.DECREASE_SCROLL_DIRECTION) {
-            newValue = (scroll.getValue() > scroll.getMinimum()
-                    + getUnitIncrement(scroll))
-                            ? scroll.getValue() - getUnitIncrement(scroll)
-                            : scroll.getMinimum();
+            newValue = (scroll.getValue() > scroll.getMinimum() + getUnitIncrement(scroll))
+                    ? scroll.getValue() - getUnitIncrement(scroll)
+                    : scroll.getMinimum();
             scroll.setValue(newValue);
         } else if (adj.getScrollDirection() == ScrollAdjuster.INCREASE_SCROLL_DIRECTION) {
-            newValue = (scroll.getValue() < scroll.getMaximum()
-                    - getUnitIncrement(scroll))
-                            ? scroll.getValue() + getUnitIncrement(scroll)
-                            : scroll.getMaximum();
+            newValue = (scroll.getValue() < scroll.getMaximum() - getUnitIncrement(scroll))
+                    ? scroll.getValue() + getUnitIncrement(scroll)
+                    : scroll.getMaximum();
             scroll.setValue(newValue);
         }
     }
 
     @Override
     protected Timeout getScrollDeltaTimeout(ComponentOperator oper) {
-        return (oper.getTimeouts().
-                create("JSliderOperator.ScrollingDelta"));
+        return (oper.getTimeouts().create("JSliderOperator.ScrollingDelta"));
     }
 
     @Override
@@ -91,27 +87,23 @@ public class JSliderAPIDriver extends AbstractScrollDriver {
         JSliderOperator scroll = (JSliderOperator) oper;
         int newValue = -1;
         if (adj.getScrollDirection() == ScrollAdjuster.DECREASE_SCROLL_DIRECTION) {
-            newValue = (scroll.getValue() > scroll.getMinimum()
-                    + getBlockIncrement(scroll))
-                            ? scroll.getValue() - getBlockIncrement(scroll)
-                            : scroll.getMinimum();
+            newValue = (scroll.getValue() > scroll.getMinimum() + getBlockIncrement(scroll))
+                    ? scroll.getValue() - getBlockIncrement(scroll)
+                    : scroll.getMinimum();
             scroll.setValue(newValue);
         } else if (adj.getScrollDirection() == ScrollAdjuster.INCREASE_SCROLL_DIRECTION) {
-            newValue = (scroll.getValue() < scroll.getMaximum()
-                    - getBlockIncrement(scroll))
-                            ? scroll.getValue() + getBlockIncrement(scroll)
-                            : scroll.getMaximum();
+            newValue = (scroll.getValue() < scroll.getMaximum() - getBlockIncrement(scroll))
+                    ? scroll.getValue() + getBlockIncrement(scroll)
+                    : scroll.getMaximum();
             scroll.setValue(newValue);
         }
     }
 
     @Override
-    protected void startPushAndWait(ComponentOperator oper, int direction, int orientation) {
-    }
+    protected void startPushAndWait(ComponentOperator oper, int direction, int orientation) {}
 
     @Override
-    protected void stopPushAndWait(ComponentOperator oper, int direction, int orientation) {
-    }
+    protected void stopPushAndWait(ComponentOperator oper, int direction, int orientation) {}
 
     @Override
     protected Point startDragging(ComponentOperator oper) {
@@ -119,12 +111,10 @@ public class JSliderAPIDriver extends AbstractScrollDriver {
     }
 
     @Override
-    protected void drop(ComponentOperator oper, Point pnt) {
-    }
+    protected void drop(ComponentOperator oper, Point pnt) {}
 
     @Override
-    protected void drag(ComponentOperator oper, Point pnt) {
-    }
+    protected void drag(ComponentOperator oper, Point pnt) {}
 
     @Override
     protected boolean canDragAndDrop(ComponentOperator oper) {
@@ -147,20 +137,14 @@ public class JSliderAPIDriver extends AbstractScrollDriver {
     }
 
     private int getUnitIncrement(JSliderOperator oper) {
-        return ((oper.getMinorTickSpacing() == 0)
-                ? 1
-                : oper.getMinorTickSpacing());
+        return ((oper.getMinorTickSpacing() == 0) ? 1 : oper.getMinorTickSpacing());
     }
 
     private int getBlockIncrement(JSliderOperator oper) {
-        return ((oper.getMajorTickSpacing() == 0)
-                ? 1
-                : oper.getMajorTickSpacing());
+        return ((oper.getMajorTickSpacing() == 0) ? 1 : oper.getMajorTickSpacing());
     }
 
     private boolean isSmallIncrement(JSliderOperator oper) {
-        return (oper.getMajorTickSpacing() <= SMALL_INCREMENT
-                && oper.getMajorTickSpacing() <= SMALL_INCREMENT);
+        return (oper.getMajorTickSpacing() <= SMALL_INCREMENT && oper.getMajorTickSpacing() <= SMALL_INCREMENT);
     }
-
 }

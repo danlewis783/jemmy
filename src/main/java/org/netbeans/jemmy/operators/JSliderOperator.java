@@ -27,12 +27,10 @@ package org.netbeans.jemmy.operators;
 import java.awt.Container;
 import java.util.Dictionary;
 import java.util.Hashtable;
-
 import javax.swing.BoundedRangeModel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.SliderUI;
-
 import org.netbeans.jemmy.Action;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
@@ -55,12 +53,11 @@ import org.netbeans.jemmy.drivers.scrolling.ScrollAdjuster;
  *
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
-public class JSliderOperator extends JComponentOperator
-        implements Timeoutable, Outputable {
+public class JSliderOperator extends JComponentOperator implements Timeoutable, Outputable {
 
-    private final static long ONE_SCROLL_CLICK_TIMEOUT = 0;
-    private final static long WHOLE_SCROLL_TIMEOUT = 60000;
-    private final static long SCROLLING_DELTA = 0;
+    private static final long ONE_SCROLL_CLICK_TIMEOUT = 0;
+    private static final long WHOLE_SCROLL_TIMEOUT = 60000;
+    private static final long SCROLLING_DELTA = 0;
 
     private ScrollDriver driver;
 
@@ -154,9 +151,7 @@ public class JSliderOperator extends JComponentOperator
      * @param index an index between appropriate ones.
      */
     public JSliderOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JSlider) cont.
-                waitSubComponent(new JSliderFinder(chooser),
-                        index));
+        this((JSlider) cont.waitSubComponent(new JSliderFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -179,9 +174,7 @@ public class JSliderOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public JSliderOperator(ContainerOperator<?> cont, int index) {
-        this((JSlider) waitComponent(cont,
-                new JSliderFinder(),
-                index));
+        this((JSlider) waitComponent(cont, new JSliderFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -227,7 +220,8 @@ public class JSliderOperator extends JComponentOperator
      * @return JSlider instance or null if component was not found.
      */
     public static JSlider findJSlider(Container cont, int index) {
-        return findJSlider(cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th JSlider instance"), index);
+        return findJSlider(
+                cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th JSlider instance"), index);
     }
 
     /**
@@ -274,7 +268,8 @@ public class JSliderOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public static JSlider waitJSlider(Container cont, int index) {
-        return waitJSlider(cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th JSlider instance"), index);
+        return waitJSlider(
+                cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th JSlider instance"), index);
     }
 
     /**
@@ -355,23 +350,25 @@ public class JSliderOperator extends JComponentOperator
      */
     public void scrollTo(final ScrollAdjuster adj) {
         makeComponentVisible();
-        produceTimeRestricted(new Action<Void, Void>() {
-            @Override
-            public Void launch(Void obj) {
-                driver.scroll(JSliderOperator.this, adj);
-                return null;
-            }
+        produceTimeRestricted(
+                new Action<Void, Void>() {
+                    @Override
+                    public Void launch(Void obj) {
+                        driver.scroll(JSliderOperator.this, adj);
+                        return null;
+                    }
 
-            @Override
-            public String getDescription() {
-                return "Scrolling";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "Scrolling";
+                    }
 
-            @Override
-            public String toString() {
-                return "JSliderOperator.scrollTo.Action{description = " + getDescription() + '}';
-            }
-        }, "JSliderOperator.WholeScrollTimeout");
+                    @Override
+                    public String toString() {
+                        return "JSliderOperator.scrollTo.Action{description = " + getDescription() + '}';
+                    }
+                },
+                "JSliderOperator.WholeScrollTimeout");
     }
 
     /**
@@ -381,8 +378,7 @@ public class JSliderOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public void scrollToValue(int value) {
-        output.printTrace("Move JSlider to " + Integer.toString(value)
-                + " value\n" + toStringSource());
+        output.printTrace("Move JSlider to " + Integer.toString(value) + " value\n" + toStringSource());
         output.printGolden("Move JSlider to " + Integer.toString(value) + " value");
         scrollTo(new ValueScrollAdjuster(value));
     }
@@ -393,8 +389,7 @@ public class JSliderOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public void scrollToMaximum() {
-        output.printTrace("Move JSlider to maximum value\n"
-                + toStringSource());
+        output.printTrace("Move JSlider to maximum value\n" + toStringSource());
         output.printGolden("Move JSlider to maximum value");
         scrollToValue(getMaximum());
     }
@@ -405,8 +400,7 @@ public class JSliderOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public void scrollToMinimum() {
-        output.printTrace("Move JSlider to minimum value\n"
-                + toStringSource());
+        output.printTrace("Move JSlider to minimum value\n" + toStringSource());
         output.printGolden("Move JSlider to minimum value");
         scrollToValue(getMinimum());
     }
@@ -416,16 +410,18 @@ public class JSliderOperator extends JComponentOperator
         Hashtable<String, Object> result = super.getDump();
         result.put(MINIMUM_DPROP, Integer.toString(((JSlider) getSource()).getMinimum()));
         result.put(MAXIMUM_DPROP, Integer.toString(((JSlider) getSource()).getMaximum()));
-        result.put(ORIENTATION_DPROP, (((JSlider) getSource()).getOrientation() == JSlider.HORIZONTAL)
-                ? HORIZONTAL_ORIENTATION_DPROP_VALUE
-                : VERTICAL_ORIENTATION_DPROP_VALUE);
+        result.put(
+                ORIENTATION_DPROP,
+                (((JSlider) getSource()).getOrientation() == JSlider.HORIZONTAL)
+                        ? HORIZONTAL_ORIENTATION_DPROP_VALUE
+                        : VERTICAL_ORIENTATION_DPROP_VALUE);
         result.put(IS_INVERTED_DPROP, ((JSlider) getSource()).getInverted() ? "true" : "false");
         result.put(VALUE_DPROP, Integer.toString(((JSlider) getSource()).getValue()));
         return result;
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code JSlider.addChangeListener(ChangeListener)} through queue
      */
@@ -858,7 +854,7 @@ public class JSliderOperator extends JComponentOperator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Checks component type.

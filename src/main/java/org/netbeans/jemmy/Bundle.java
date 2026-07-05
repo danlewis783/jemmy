@@ -62,8 +62,7 @@ public class Bundle extends Object {
      * @param stream Stream to load resources from.
      * @exception IOException
      */
-    public void load(InputStream stream)
-            throws IOException {
+    public void load(InputStream stream) throws IOException {
         resources.load(stream);
     }
 
@@ -74,8 +73,7 @@ public class Bundle extends Object {
      * @exception IOException
      * @exception FileNotFoundException
      */
-    public void loadFromFile(String fileName)
-            throws IOException, FileNotFoundException {
+    public void loadFromFile(String fileName) throws IOException, FileNotFoundException {
         try (FileInputStream fileInputStream = new FileInputStream(fileName)) {
             load(fileInputStream);
         }
@@ -89,8 +87,7 @@ public class Bundle extends Object {
      * @exception IOException
      * @exception FileNotFoundException
      */
-    public void loadFromJar(String fileName, String entryName)
-            throws IOException, FileNotFoundException {
+    public void loadFromJar(String fileName, String entryName) throws IOException, FileNotFoundException {
         try (JarFile jFile = new JarFile(fileName);
                 InputStream inputStream = jFile.getInputStream(jFile.getEntry(entryName))) {
             load(inputStream);
@@ -106,8 +103,7 @@ public class Bundle extends Object {
      * @exception IOException
      * @exception FileNotFoundException
      */
-    public void loadFromZip(String fileName, String entryName)
-            throws IOException, FileNotFoundException, ZipException {
+    public void loadFromZip(String fileName, String entryName) throws IOException, FileNotFoundException, ZipException {
         try (ZipFile zFile = new ZipFile(fileName);
                 InputStream inputStream = zFile.getInputStream(zFile.getEntry(entryName))) {
             load(inputStream);
@@ -145,5 +141,4 @@ public class Bundle extends Object {
     public String getResource(String key) {
         return resources.getProperty(key);
     }
-
 }

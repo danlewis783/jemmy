@@ -45,5 +45,4 @@ public class ComponentIsNotFocusedException extends JemmyInputException {
     public ComponentIsNotFocusedException(Component comp) {
         super("Component do not have focus", comp);
     }
-
 }

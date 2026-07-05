@@ -28,7 +28,6 @@ import java.awt.Window;
 import java.awt.event.ComponentEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.WindowEvent;
-
 import org.netbeans.jemmy.drivers.LightSupportiveDriver;
 import org.netbeans.jemmy.drivers.WindowDriver;
 import org.netbeans.jemmy.drivers.input.EventDriver;
@@ -40,7 +39,7 @@ public class DefaultWindowDriver extends LightSupportiveDriver implements Window
     EventDriver eDriver;
 
     public DefaultWindowDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.WindowOperator"});
+        super(new String[] {"org.netbeans.jemmy.operators.WindowOperator"});
         eDriver = new EventDriver();
     }
 
@@ -50,20 +49,15 @@ public class DefaultWindowDriver extends LightSupportiveDriver implements Window
         if (((WindowOperator) oper).getFocusOwner() == null) {
             ((WindowOperator) oper).toFront();
         }
-        eDriver.dispatchEvent(oper.getSource(),
-                new WindowEvent((Window) oper.getSource(),
-                        WindowEvent.WINDOW_ACTIVATED));
-        eDriver.dispatchEvent(oper.getSource(),
-                new FocusEvent(oper.getSource(),
-                        FocusEvent.FOCUS_GAINED));
+        eDriver.dispatchEvent(
+                oper.getSource(), new WindowEvent((Window) oper.getSource(), WindowEvent.WINDOW_ACTIVATED));
+        eDriver.dispatchEvent(oper.getSource(), new FocusEvent(oper.getSource(), FocusEvent.FOCUS_GAINED));
     }
 
     @Override
     public void requestClose(ComponentOperator oper) {
         checkSupported(oper);
-        eDriver.dispatchEvent(oper.getSource(),
-                new WindowEvent((Window) oper.getSource(),
-                        WindowEvent.WINDOW_CLOSING));
+        eDriver.dispatchEvent(oper.getSource(), new WindowEvent((Window) oper.getSource(), WindowEvent.WINDOW_CLOSING));
     }
 
     @Override
@@ -88,8 +82,6 @@ public class DefaultWindowDriver extends LightSupportiveDriver implements Window
     public void resize(ComponentOperator oper, int width, int height) {
         checkSupported(oper);
         oper.setSize(width, height);
-        eDriver.dispatchEvent(oper.getSource(),
-                new ComponentEvent(oper.getSource(),
-                        ComponentEvent.COMPONENT_RESIZED));
+        eDriver.dispatchEvent(oper.getSource(), new ComponentEvent(oper.getSource(), ComponentEvent.COMPONENT_RESIZED));
     }
 }

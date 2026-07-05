@@ -25,13 +25,11 @@
 package org.netbeans.jemmy.drivers.menus;
 
 import java.awt.Component;
-
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.MenuElement;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.Waitable;
@@ -50,25 +48,22 @@ import org.netbeans.jemmy.operators.JPopupMenuOperator;
 public class DefaultJMenuDriver extends LightSupportiveDriver implements MenuDriver {
 
     public DefaultJMenuDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.JMenuOperator",
+        super(new String[] {
+            "org.netbeans.jemmy.operators.JMenuOperator",
             "org.netbeans.jemmy.operators.JMenuBarOperator",
-            "org.netbeans.jemmy.operators.JPopupMenuOperator"});
+            "org.netbeans.jemmy.operators.JPopupMenuOperator"
+        });
     }
 
     @Override
     public Object pushMenu(ComponentOperator oper, PathChooser chooser) {
         checkSupported(oper);
-        if (oper instanceof JMenuBarOperator
-                || oper instanceof JPopupMenuOperator) {
+        if (oper instanceof JMenuBarOperator || oper instanceof JPopupMenuOperator) {
             JMenuItem item;
             if (oper instanceof JMenuBarOperator) {
-                item = waitItem(oper,
-                        (JMenuBar) oper.getSource(),
-                        chooser, 0);
+                item = waitItem(oper, (JMenuBar) oper.getSource(), chooser, 0);
             } else {
-                item = waitItem(oper,
-                        (JPopupMenu) oper.getSource(),
-                        chooser, 0);
+                item = waitItem(oper, (JPopupMenu) oper.getSource(), chooser, 0);
             }
             JMenuItemOperator itemOper;
             if (item instanceof JMenu) {
@@ -77,16 +72,25 @@ public class DefaultJMenuDriver extends LightSupportiveDriver implements MenuDri
                 itemOper = new JMenuItemOperator(item);
             }
             itemOper.copyEnvironment(oper);
-            return (push(itemOper, null, (oper instanceof JMenuBarOperator) ? ((JMenuBar) oper.getSource()) : null,
-                    chooser, 1, true));
+            return (push(
+                    itemOper,
+                    null,
+                    (oper instanceof JMenuBarOperator) ? ((JMenuBar) oper.getSource()) : null,
+                    chooser,
+                    1,
+                    true));
         } else {
             return push(oper, null, null, chooser, 0, true);
         }
     }
 
-    protected Object push(ComponentOperator oper, ComponentOperator lastItem,
+    protected Object push(
+            ComponentOperator oper,
+            ComponentOperator lastItem,
             JMenuBar menuBar,
-            PathChooser chooser, int depth, boolean pressMouse) {
+            PathChooser chooser,
+            int depth,
+            boolean pressMouse) {
         try {
             oper.waitComponentVisible(true);
             oper.waitComponentEnabled();
@@ -94,19 +98,19 @@ public class DefaultJMenuDriver extends LightSupportiveDriver implements MenuDri
             throw (new JemmyException("Interrupted!", e));
         }
         MouseDriver mDriver = DriverManager.getMouseDriver(oper);
-        //mDriver.enterMouse(oper);
-        //use enhanced algorithm instead
+        // mDriver.enterMouse(oper);
+        // use enhanced algorithm instead
         smartMove(lastItem, oper);
         if (depth > chooser.getDepth() - 1) {
-            if (oper instanceof JMenuOperator
-                    && menuBar != null && getSelectedElement(menuBar) != null) {
-                //mDriver.enterMouse(oper);
+            if (oper instanceof JMenuOperator && menuBar != null && getSelectedElement(menuBar) != null) {
+                // mDriver.enterMouse(oper);
             } else {
                 DriverManager.getButtonDriver(oper).push(oper);
             }
             return oper.getSource();
         }
-        if (pressMouse && !((JMenuOperator) oper).isPopupMenuVisible()
+        if (pressMouse
+                && !((JMenuOperator) oper).isPopupMenuVisible()
                 && !(menuBar != null && getSelectedElement(menuBar) != null)) {
             DriverManager.getButtonDriver(oper).push(oper);
         }
@@ -125,7 +129,7 @@ public class DefaultJMenuDriver extends LightSupportiveDriver implements MenuDri
             } catch (InterruptedException e) {
                 throw (new JemmyException("Interrupted!", e));
             }
-            //move here first
+            // move here first
             smartMove(oper, mio);
             DriverManager.getButtonDriver(oper).push(mio);
             return item;
@@ -137,72 +141,68 @@ public class DefaultJMenuDriver extends LightSupportiveDriver implements MenuDri
             oper.enterMouse();
             return;
         }
-        //get all the coordinates first
-        //previous item
+        // get all the coordinates first
+        // previous item
         long lastXl, lastXr, lastYl, lastYr;
         lastXl = (long) last.getSource().getLocationOnScreen().getX();
         lastXr = lastXl + last.getSource().getWidth();
         lastYl = (long) last.getSource().getLocationOnScreen().getY();
         lastYr = lastYl + last.getSource().getHeight();
-        //this item
+        // this item
         long operXl, operXr, operYl, operYr;
         operXl = (long) oper.getSource().getLocationOnScreen().getX();
         operXr = operXl + oper.getSource().getWidth();
         operYl = (long) oper.getSource().getLocationOnScreen().getY();
         operYr = operYl + oper.getSource().getHeight();
-        //get the overlap borders
+        // get the overlap borders
         long overXl, overXr, overYl, overYr;
         overXl = (lastXl > operXl) ? lastXl : operXl;
         overXr = (lastXr < operXr) ? lastXr : operXr;
         overYl = (lastYl > operYl) ? lastYl : operYl;
         overYr = (lastYr < operYr) ? lastYr : operYr;
-        //now, let's see ...
-        //what if it overlaps by x?
+        // now, let's see ...
+        // what if it overlaps by x?
         if (overXl < overXr) {
-            //good - move mose to the center of the overlap
-            last.moveMouse((int) ((overXr - overXl) / 2 - lastXl),
-                    last.getCenterY());
-            //move mouse inside
-            oper.moveMouse((int) ((overXr - overXl) / 2 - operXl),
-                    oper.getCenterY());
-            //done - now move to the center
+            // good - move mose to the center of the overlap
+            last.moveMouse((int) ((overXr - overXl) / 2 - lastXl), last.getCenterY());
+            // move mouse inside
+            oper.moveMouse((int) ((overXr - overXl) / 2 - operXl), oper.getCenterY());
+            // done - now move to the center
             oper.enterMouse();
             return;
         }
-        //ok, what if it overlaps by y?
+        // ok, what if it overlaps by y?
         if (overYl < overYr) {
-            //good - move mose to the center of the overlap
-            last.moveMouse(last.getCenterX(),
-                    (int) ((overYr - overYl) / 2 - lastYl));
-            //move mouse inside
-            oper.moveMouse(last.getCenterX(),
-                    (int) ((overYr - overYl) / 2 - operYl));
-            //done - now move to the center
+            // good - move mose to the center of the overlap
+            last.moveMouse(last.getCenterX(), (int) ((overYr - overYl) / 2 - lastYl));
+            // move mouse inside
+            oper.moveMouse(last.getCenterX(), (int) ((overYr - overYl) / 2 - operYl));
+            // done - now move to the center
             oper.enterMouse();
             return;
         }
-        //well - can't help it
+        // well - can't help it
         oper.enterMouse();
     }
 
     protected JPopupMenu waitPopupMenu(final ComponentOperator oper) {
         return ((JPopupMenu) JPopupMenuOperator.waitJPopupMenu(new ComponentChooser() {
-            @Override
-            public boolean checkComponent(Component comp) {
-                return (comp == ((JMenuOperator) oper).getPopupMenu()
-                        && comp.isShowing());
-            }
+                    @Override
+                    public boolean checkComponent(Component comp) {
+                        return (comp == ((JMenuOperator) oper).getPopupMenu() && comp.isShowing());
+                    }
 
-            @Override
-            public String getDescription() {
-                return ((JMenuOperator) oper).getText() + "'s popup";
-            }
+                    @Override
+                    public String getDescription() {
+                        return ((JMenuOperator) oper).getText() + "'s popup";
+                    }
 
-            @Override
-            public String toString() {
-                return "waitPopupMenu.ComponentChooser{description = " + getDescription() + '}';
-            }
-        }).getSource());
+                    @Override
+                    public String toString() {
+                        return "waitPopupMenu.ComponentChooser{description = " + getDescription() + '}';
+                    }
+                })
+                .getSource());
     }
 
     protected JMenuItem waitItem(ComponentOperator oper, MenuElement element, PathChooser chooser, int depth) {
@@ -219,8 +219,7 @@ public class DefaultJMenuDriver extends LightSupportiveDriver implements MenuDri
     public static Object getSelectedElement(JMenuBar bar) {
         MenuElement[] subElements = bar.getSubElements();
         for (MenuElement subElement : subElements) {
-            if (subElement instanceof JMenu
-                    && ((JMenu) subElement).isPopupMenuVisible()) {
+            if (subElement instanceof JMenu && ((JMenu) subElement).isPopupMenuVisible()) {
                 return subElement;
             }
         }
@@ -246,7 +245,8 @@ public class DefaultJMenuDriver extends LightSupportiveDriver implements MenuDri
             }
             MenuElement[] subElements = cont.getSubElements();
             for (MenuElement subElement : subElements) {
-                if (((Component) subElement).isShowing() && ((Component) subElement).isEnabled()
+                if (((Component) subElement).isShowing()
+                        && ((Component) subElement).isEnabled()
                         && chooser.checkPathComponent(depth, subElement)) {
                     return subElement;
                 }

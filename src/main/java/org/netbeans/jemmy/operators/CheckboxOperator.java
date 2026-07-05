@@ -30,7 +30,6 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ItemListener;
 import java.util.Hashtable;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.Outputable;
@@ -83,9 +82,7 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
      * @param index an index between appropriate ones.
      */
     public CheckboxOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((Checkbox) cont.
-                waitSubComponent(new CheckboxFinder(chooser),
-                        index));
+        this((Checkbox) cont.waitSubComponent(new CheckboxFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -110,10 +107,7 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
      * @throws TimeoutExpiredException
      */
     public CheckboxOperator(ContainerOperator<?> cont, String text, int index) {
-        this((Checkbox) waitComponent(cont,
-                new CheckboxByLabelFinder(text,
-                        cont.getComparator()),
-                index));
+        this((Checkbox) waitComponent(cont, new CheckboxByLabelFinder(text, cont.getComparator()), index));
         copyEnvironment(cont);
     }
 
@@ -139,9 +133,7 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
      * @throws TimeoutExpiredException
      */
     public CheckboxOperator(ContainerOperator<?> cont, int index) {
-        this((Checkbox) waitComponent(cont,
-                new CheckboxFinder(),
-                index));
+        this((Checkbox) waitComponent(cont, new CheckboxFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -191,10 +183,7 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public static Checkbox findCheckbox(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return (findCheckbox(cont,
-                new CheckboxByLabelFinder(text,
-                        new DefaultStringComparator(ce, ccs)),
-                index));
+        return (findCheckbox(cont, new CheckboxByLabelFinder(text, new DefaultStringComparator(ce, ccs)), index));
     }
 
     /**
@@ -249,10 +238,7 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
      * @throws TimeoutExpiredException
      */
     public static Checkbox waitCheckbox(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return (waitCheckbox(cont,
-                new CheckboxByLabelFinder(text,
-                        new DefaultStringComparator(ce, ccs)),
-                index));
+        return (waitCheckbox(cont, new CheckboxByLabelFinder(text, new DefaultStringComparator(ce, ccs)), index));
     }
 
     /**
@@ -284,11 +270,8 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
     @Override
     public void copyEnvironment(Operator anotherOperator) {
         super.copyEnvironment(anotherOperator);
-        driver
-                = (ButtonDriver) DriverManager.
-                getDriver(DriverManager.BUTTON_DRIVER_ID,
-                        getClass(),
-                        anotherOperator.getProperties());
+        driver = (ButtonDriver)
+                DriverManager.getDriver(DriverManager.BUTTON_DRIVER_ID, getClass(), anotherOperator.getProperties());
     }
 
     /**
@@ -305,8 +288,8 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
             } catch (InterruptedException e) {
                 throw (new JemmyException("Interrupted!", e));
             }
-            output.printLine("Change checkbox selection to " + (newValue ? "true" : "false")
-                    + "\n    :" + toStringSource());
+            output.printLine(
+                    "Change checkbox selection to " + (newValue ? "true" : "false") + "\n    :" + toStringSource());
             output.printGolden("Change checkbox selection to " + (newValue ? "true" : "false"));
             driver.push(this);
             if (getVerification()) {
@@ -321,13 +304,15 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
      * @param selected a button selection.
      */
     public void changeSelectionNoBlock(boolean selected) {
-        produceNoBlocking(new NoBlockingAction<Void, Boolean>("Button selection changing") {
-            @Override
-            public Void doAction(Boolean param) {
-                changeSelection(param);
-                return null;
-            }
-        }, selected ? Boolean.TRUE : Boolean.FALSE);
+        produceNoBlocking(
+                new NoBlockingAction<Void, Boolean>("Button selection changing") {
+                    @Override
+                    public Void doAction(Boolean param) {
+                        changeSelection(param);
+                        return null;
+                    }
+                },
+                selected ? Boolean.TRUE : Boolean.FALSE);
     }
 
     /**
@@ -336,8 +321,7 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
      * @param selected selection.
      */
     public void waitSelected(final boolean selected) {
-        getOutput().printLine("Wait button to be selected \n    : "
-                + toStringSource());
+        getOutput().printLine("Wait button to be selected \n    : " + toStringSource());
         getOutput().printGolden("Wait button to be selected");
         waitState(new ComponentChooser() {
             @Override
@@ -347,8 +331,7 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
 
             @Override
             public String getDescription() {
-                return ("Items has been "
-                        + (selected ? "" : "un") + "selected");
+                return ("Items has been " + (selected ? "" : "un") + "selected");
             }
 
             @Override
@@ -369,7 +352,7 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code Checkbox.addItemListener(ItemListener)} through queue
      */
@@ -466,7 +449,7 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Allows to find component by label.
@@ -500,8 +483,7 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
         public boolean checkComponent(Component comp) {
             if (comp instanceof Checkbox) {
                 if (((Checkbox) comp).getLabel() != null) {
-                    return (comparator.equals(((Checkbox) comp).getLabel(),
-                            label));
+                    return (comparator.equals(((Checkbox) comp).getLabel(), label));
                 }
             }
             return false;

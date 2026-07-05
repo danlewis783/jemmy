@@ -29,13 +29,11 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Rectangle;
 import java.util.Hashtable;
-
 import javax.swing.Icon;
 import javax.swing.JTabbedPane;
 import javax.swing.SingleSelectionModel;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.TabbedPaneUI;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyInputException;
 import org.netbeans.jemmy.Outputable;
@@ -54,8 +52,7 @@ import org.netbeans.jemmy.drivers.ListDriver;
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
-public class JTabbedPaneOperator extends JComponentOperator
-        implements Outputable {
+public class JTabbedPaneOperator extends JComponentOperator implements Outputable {
 
     /**
      * Identifier for a "selected page" property.
@@ -92,9 +89,7 @@ public class JTabbedPaneOperator extends JComponentOperator
      * @param index an index between appropriate ones.
      */
     public JTabbedPaneOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JTabbedPane) cont.
-                waitSubComponent(new JTabbedPaneFinder(chooser),
-                        index));
+        this((JTabbedPane) cont.waitSubComponent(new JTabbedPaneFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -121,10 +116,8 @@ public class JTabbedPaneOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public JTabbedPaneOperator(ContainerOperator<?> cont, String text, int tabIndex, int index) {
-        this((JTabbedPane) waitComponent(cont,
-                new JTabbedPaneByItemFinder(text, tabIndex,
-                        cont.getComparator()),
-                index));
+        this((JTabbedPane)
+                waitComponent(cont, new JTabbedPaneByItemFinder(text, tabIndex, cont.getComparator()), index));
         copyEnvironment(cont);
     }
 
@@ -164,9 +157,7 @@ public class JTabbedPaneOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public JTabbedPaneOperator(ContainerOperator<?> cont, int index) {
-        this((JTabbedPane) waitComponent(cont,
-                new JTabbedPaneFinder(),
-                index));
+        this((JTabbedPane) waitComponent(cont, new JTabbedPaneFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -216,8 +207,10 @@ public class JTabbedPaneOperator extends JComponentOperator
      * @return JTabbedPane instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JTabbedPane findJTabbedPane(Container cont, String text, boolean ce, boolean ccs, int itemIndex, int index) {
-        return findJTabbedPane(cont, new JTabbedPaneByItemFinder(text, itemIndex, new DefaultStringComparator(ce, ccs)), index);
+    public static JTabbedPane findJTabbedPane(
+            Container cont, String text, boolean ce, boolean ccs, int itemIndex, int index) {
+        return findJTabbedPane(
+                cont, new JTabbedPaneByItemFinder(text, itemIndex, new DefaultStringComparator(ce, ccs)), index);
     }
 
     /**
@@ -294,8 +287,10 @@ public class JTabbedPaneOperator extends JComponentOperator
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @throws TimeoutExpiredException
      */
-    public static JTabbedPane waitJTabbedPane(Container cont, String text, boolean ce, boolean ccs, int itemIndex, int index) {
-        return waitJTabbedPane(cont, new JTabbedPaneByItemFinder(text, itemIndex, new DefaultStringComparator(ce, ccs)), index);
+    public static JTabbedPane waitJTabbedPane(
+            Container cont, String text, boolean ce, boolean ccs, int itemIndex, int index) {
+        return waitJTabbedPane(
+                cont, new JTabbedPaneByItemFinder(text, itemIndex, new DefaultStringComparator(ce, ccs)), index);
     }
 
     /**
@@ -328,11 +323,8 @@ public class JTabbedPaneOperator extends JComponentOperator
     @Override
     public void copyEnvironment(Operator anotherOperator) {
         super.copyEnvironment(anotherOperator);
-        driver
-                = (ListDriver) DriverManager.
-                getDriver(DriverManager.LIST_DRIVER_ID,
-                        getClass(),
-                        anotherOperator.getProperties());
+        driver = (ListDriver)
+                DriverManager.getDriver(DriverManager.LIST_DRIVER_ID, getClass(), anotherOperator.getProperties());
     }
 
     /**
@@ -417,8 +409,8 @@ public class JTabbedPaneOperator extends JComponentOperator
      * @return a root corresponding to the page.
      */
     public Component selectPage(TabPageChooser chooser) {
-        output.printLine("Selecting \"" + chooser.getDescription()
-                + "\" page in tabbed pane\n    :" + toStringSource());
+        output.printLine(
+                "Selecting \"" + chooser.getDescription() + "\" page in tabbed pane\n    :" + toStringSource());
         return selectPage(waitPage(chooser));
     }
 
@@ -512,11 +504,11 @@ public class JTabbedPaneOperator extends JComponentOperator
      * @param pageIndex an index of a page to be selected.
      */
     public void waitSelected(final int pageIndex) {
-        getOutput().printLine("Wait " + Integer.toString(pageIndex) + "'th page to be "
-                + " selected in component \n    : "
-                + toStringSource());
-        getOutput().printGolden("Wait " + Integer.toString(pageIndex) + "'th page to be "
-                + " selected");
+        getOutput()
+                .printLine("Wait " + Integer.toString(pageIndex) + "'th page to be "
+                        + " selected in component \n    : "
+                        + toStringSource());
+        getOutput().printGolden("Wait " + Integer.toString(pageIndex) + "'th page to be " + " selected");
         waitState(new ComponentChooser() {
             @Override
             public boolean checkComponent(Component comp) {
@@ -548,8 +540,9 @@ public class JTabbedPaneOperator extends JComponentOperator
     public Hashtable<String, Object> getDump() {
         Hashtable<String, Object> result = super.getDump();
         if (((JTabbedPane) getSource()).getSelectedIndex() != -1) {
-            result.put(SELECTED_PAGE_DPROP, ((JTabbedPane) getSource()).
-                    getTitleAt(((JTabbedPane) getSource()).getSelectedIndex()));
+            result.put(
+                    SELECTED_PAGE_DPROP,
+                    ((JTabbedPane) getSource()).getTitleAt(((JTabbedPane) getSource()).getSelectedIndex()));
         }
         String[] pages = new String[((JTabbedPane) getSource()).getTabCount()];
         for (int i = 0; i < ((JTabbedPane) getSource()).getTabCount(); i++) {
@@ -560,7 +553,7 @@ public class JTabbedPaneOperator extends JComponentOperator
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code JTabbedPane.addChangeListener(ChangeListener)} through queue
      */
@@ -819,7 +812,8 @@ public class JTabbedPaneOperator extends JComponentOperator
      * {@code JTabbedPane.insertTab(String, Icon, Component, String, int)}
      * through queue
      */
-    public void insertTab(final String string, final Icon icon, final Component component, final String string1, final int i) {
+    public void insertTab(
+            final String string, final Icon icon, final Component component, final String string1, final int i) {
         runMapping(new MapVoidAction("insertTab") {
             @Override
             public void map() {
@@ -1009,7 +1003,7 @@ public class JTabbedPaneOperator extends JComponentOperator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Specifies criteria for a tab page searching.
@@ -1099,8 +1093,7 @@ public class JTabbedPaneOperator extends JComponentOperator
                             return false;
                         }
                     }
-                    return (comparator.equals(tpo.getTitleAt(ii),
-                            title));
+                    return (comparator.equals(tpo.getTitleAt(ii), title));
                 }
             }
             return false;
@@ -1108,13 +1101,13 @@ public class JTabbedPaneOperator extends JComponentOperator
 
         @Override
         public String getDescription() {
-            return ("JTabbedPane with text \"" + title + "\" in "
-                    + itemIndex + "'th item");
+            return ("JTabbedPane with text \"" + title + "\" in " + itemIndex + "'th item");
         }
 
         @Override
         public String toString() {
-            return "JTabbedPaneByItemFinder{" + "title=" + title + ", itemIndex=" + itemIndex + ", comparator=" + comparator + '}';
+            return "JTabbedPaneByItemFinder{" + "title=" + title + ", itemIndex=" + itemIndex + ", comparator="
+                    + comparator + '}';
         }
     }
 
@@ -1152,8 +1145,7 @@ public class JTabbedPaneOperator extends JComponentOperator
 
         @Override
         public boolean checkPage(JTabbedPaneOperator oper, int index) {
-            return (comparator.equals(oper.getTitleAt(index),
-                    title));
+            return (comparator.equals(oper.getTitleAt(index), title));
         }
 
         @Override
@@ -1166,5 +1158,4 @@ public class JTabbedPaneOperator extends JComponentOperator
             return "BySubStringTabPageChooser{" + "title=" + title + ", comparator=" + comparator + '}';
         }
     }
-
 }

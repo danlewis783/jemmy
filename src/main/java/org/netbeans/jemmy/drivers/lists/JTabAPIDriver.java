@@ -43,20 +43,21 @@ public class JTabAPIDriver extends LightSupportiveDriver implements ListDriver {
      * Constructs a JTabMouseDriver.
      */
     public JTabAPIDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.JTabbedPaneOperator"});
+        super(new String[] {"org.netbeans.jemmy.operators.JTabbedPaneOperator"});
         queueTool = new QueueTool();
     }
 
     @Override
     public void selectItem(final ComponentOperator oper, final int index) {
         if (index != -1) {
-            queueTool.invokeSmoothly(new QueueTool.QueueAction<Void>("Selecting tab " + index + " by setting selectedIndex") {
-                @Override
-                public Void launch() {
-                    ((JTabbedPaneOperator) oper).setSelectedIndex(index);
-                    return null;
-                }
-            });
+            queueTool.invokeSmoothly(
+                    new QueueTool.QueueAction<Void>("Selecting tab " + index + " by setting selectedIndex") {
+                        @Override
+                        public Void launch() {
+                            ((JTabbedPaneOperator) oper).setSelectedIndex(index);
+                            return null;
+                        }
+                    });
         }
     }
 }

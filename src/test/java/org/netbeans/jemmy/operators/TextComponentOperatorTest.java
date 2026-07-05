@@ -24,22 +24,24 @@
  */
 package org.netbeans.jemmy.operators;
 
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.awt.TextComponent;
 import java.awt.TextField;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
 public class TextComponentOperatorTest {
     @Test
     public void selection() {
         TextComponent text = new TextField("0123456789");
         TextComponentOperator textOper = new TextComponentOperator(text);
-        assertThat(textOper.getDump().get(TextComponentOperator.SELECTED_TEXT_DPROP)).isEqualTo("");
-        text.select(1,1);
-        assertThat(textOper.getDump().get(TextComponentOperator.SELECTED_TEXT_DPROP)).isEqualTo("");
-        text.select(1,2);
-        assertThat(textOper.getDump().get(TextComponentOperator.SELECTED_TEXT_DPROP)).isEqualTo("1");
+        assertThat(textOper.getDump().get(TextComponentOperator.SELECTED_TEXT_DPROP))
+                .isEqualTo("");
+        text.select(1, 1);
+        assertThat(textOper.getDump().get(TextComponentOperator.SELECTED_TEXT_DPROP))
+                .isEqualTo("");
+        text.select(1, 2);
+        assertThat(textOper.getDump().get(TextComponentOperator.SELECTED_TEXT_DPROP))
+                .isEqualTo("1");
     }
 }

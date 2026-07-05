@@ -55,8 +55,7 @@ import org.netbeans.jemmy.drivers.scrolling.ScrollAdjuster;
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
-public class ScrollPaneOperator extends ContainerOperator<ScrollPane>
-        implements Timeoutable, Outputable {
+public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements Timeoutable, Outputable {
 
     private static int X_POINT_RECT_SIZE = 6;
     private static int Y_POINT_RECT_SIZE = 4;
@@ -82,9 +81,7 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane>
      * @param index an index between appropriate ones.
      */
     public ScrollPaneOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((ScrollPane) cont.
-                waitSubComponent(new ScrollPaneFinder(chooser),
-                        index));
+        this((ScrollPane) cont.waitSubComponent(new ScrollPaneFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -107,9 +104,7 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane>
      * @throws TimeoutExpiredException
      */
     public ScrollPaneOperator(ContainerOperator<?> cont, int index) {
-        this((ScrollPane) waitComponent(cont,
-                new ScrollPaneFinder(),
-                index));
+        this((ScrollPane) waitComponent(cont, new ScrollPaneFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -155,7 +150,8 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane>
      * @return ScrollPane instance or null if component was not found.
      */
     public static ScrollPane findScrollPane(Container cont, int index) {
-        return findScrollPane(cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th ScrollPane instance"), index);
+        return findScrollPane(
+                cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th ScrollPane instance"), index);
     }
 
     /**
@@ -223,7 +219,8 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane>
      * @throws TimeoutExpiredException
      */
     public static ScrollPane waitScrollPane(Container cont, int index) {
-        return waitScrollPane(cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th ScrollPane instance"), index);
+        return waitScrollPane(
+                cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th ScrollPane instance"), index);
     }
 
     /**
@@ -270,11 +267,8 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane>
     @Override
     public void copyEnvironment(Operator anotherOperator) {
         super.copyEnvironment(anotherOperator);
-        driver
-                = (ScrollDriver) DriverManager.
-                getDriver(DriverManager.SCROLL_DRIVER_ID,
-                        getClass(),
-                        anotherOperator.getProperties());
+        driver = (ScrollDriver)
+                DriverManager.getDriver(DriverManager.SCROLL_DRIVER_ID, getClass(), anotherOperator.getProperties());
     }
 
     /**
@@ -294,23 +288,25 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane>
      * @param adj specifies the position.
      */
     public void scrollTo(final ScrollAdjuster adj) {
-        produceTimeRestricted(new Action<Void, Void>() {
-            @Override
-            public Void launch(Void obj) {
-                driver.scroll(ScrollPaneOperator.this, adj);
-                return null;
-            }
+        produceTimeRestricted(
+                new Action<Void, Void>() {
+                    @Override
+                    public Void launch(Void obj) {
+                        driver.scroll(ScrollPaneOperator.this, adj);
+                        return null;
+                    }
 
-            @Override
-            public String getDescription() {
-                return "Scrolling";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "Scrolling";
+                    }
 
-            @Override
-            public String toString() {
-                return "ScrollPaneOperator.scrollTo.Action{description = " + getDescription() + '}';
-            }
-        }, "ScrollbarOperator.WholeScrollTimeout");
+                    @Override
+                    public String toString() {
+                        return "ScrollPaneOperator.scrollTo.Action{description = " + getDescription() + '}';
+                    }
+                },
+                "ScrollbarOperator.WholeScrollTimeout");
     }
 
     /**
@@ -320,12 +316,10 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane>
      * @throws TimeoutExpiredException
      */
     public void scrollToHorizontalValue(final int value) {
-        output.printTrace("Scroll ScrollPane to " + Integer.toString(value) + " horizontal value \n"
-                + toStringSource());
+        output.printTrace(
+                "Scroll ScrollPane to " + Integer.toString(value) + " horizontal value \n" + toStringSource());
         output.printGolden("Scroll ScrollPane to " + Integer.toString(value) + " horizontal value");
-        scrollTo(new ValueScrollAdjuster(value,
-                Adjustable.HORIZONTAL,
-                getHAdjustable()));
+        scrollTo(new ValueScrollAdjuster(value, Adjustable.HORIZONTAL, getHAdjustable()));
     }
 
     /**
@@ -336,14 +330,14 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane>
      * @throws TimeoutExpiredException
      */
     public void scrollToHorizontalValue(double proportionalValue) {
-        output.printTrace("Scroll ScrollPane to " + Double.toString(proportionalValue) + " proportional horizontal value \n"
-                + toStringSource());
-        output.printGolden("Scroll ScrollPane to " + Double.toString(proportionalValue) + " proportional horizontal value");
+        output.printTrace("Scroll ScrollPane to " + Double.toString(proportionalValue)
+                + " proportional horizontal value \n" + toStringSource());
+        output.printGolden(
+                "Scroll ScrollPane to " + Double.toString(proportionalValue) + " proportional horizontal value");
         Adjustable adj = getHAdjustable();
-        scrollTo(new ValueScrollAdjuster((int) (adj.getMinimum()
-                + (adj.getMaximum()
-                - adj.getVisibleAmount()
-                - adj.getMinimum()) * proportionalValue),
+        scrollTo(new ValueScrollAdjuster(
+                (int) (adj.getMinimum()
+                        + (adj.getMaximum() - adj.getVisibleAmount() - adj.getMinimum()) * proportionalValue),
                 Adjustable.VERTICAL,
                 getVAdjustable()));
     }
@@ -355,12 +349,9 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane>
      * @throws TimeoutExpiredException
      */
     public void scrollToVerticalValue(final int value) {
-        output.printTrace("Scroll ScrollPane to " + Integer.toString(value) + " vertical value \n"
-                + toStringSource());
+        output.printTrace("Scroll ScrollPane to " + Integer.toString(value) + " vertical value \n" + toStringSource());
         output.printGolden("Scroll ScrollPane to " + Integer.toString(value) + " vertical value");
-        scrollTo(new ValueScrollAdjuster(value,
-                Adjustable.VERTICAL,
-                getVAdjustable()));
+        scrollTo(new ValueScrollAdjuster(value, Adjustable.VERTICAL, getVAdjustable()));
     }
 
     /**
@@ -370,14 +361,14 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane>
      * @throws TimeoutExpiredException
      */
     public void scrollToVerticalValue(double proportionalValue) {
-        output.printTrace("Scroll ScrollPane to " + Double.toString(proportionalValue) + " proportional vertical value \n"
-                + toStringSource());
-        output.printGolden("Scroll ScrollPane to " + Double.toString(proportionalValue) + " proportional vertical value");
+        output.printTrace("Scroll ScrollPane to " + Double.toString(proportionalValue)
+                + " proportional vertical value \n" + toStringSource());
+        output.printGolden(
+                "Scroll ScrollPane to " + Double.toString(proportionalValue) + " proportional vertical value");
         Adjustable adj = getVAdjustable();
-        scrollTo(new ValueScrollAdjuster((int) (adj.getMinimum()
-                + (adj.getMaximum()
-                - adj.getVisibleAmount()
-                - adj.getMinimum()) * proportionalValue),
+        scrollTo(new ValueScrollAdjuster(
+                (int) (adj.getMinimum()
+                        + (adj.getMaximum() - adj.getVisibleAmount() - adj.getMinimum()) * proportionalValue),
                 Adjustable.VERTICAL,
                 getVAdjustable()));
     }
@@ -412,26 +403,27 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane>
      * @throws TimeoutExpiredException
      */
     public void scrollToTop() {
-        output.printTrace("Scroll ScrollPane to top\n"
-                + toStringSource());
+        output.printTrace("Scroll ScrollPane to top\n" + toStringSource());
         output.printGolden("Scroll ScrollPane to top");
-        produceTimeRestricted(new Action<Void, Void>() {
-            @Override
-            public Void launch(Void obj) {
-                driver.scrollToMinimum(ScrollPaneOperator.this, Adjustable.VERTICAL);
-                return null;
-            }
+        produceTimeRestricted(
+                new Action<Void, Void>() {
+                    @Override
+                    public Void launch(Void obj) {
+                        driver.scrollToMinimum(ScrollPaneOperator.this, Adjustable.VERTICAL);
+                        return null;
+                    }
 
-            @Override
-            public String getDescription() {
-                return "Scrolling";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "Scrolling";
+                    }
 
-            @Override
-            public String toString() {
-                return "ScrollPaneOperator.scrollToTop.Action{description = " + getDescription() + '}';
-            }
-        }, "ScrollbarOperator.WholeScrollTimeout");
+                    @Override
+                    public String toString() {
+                        return "ScrollPaneOperator.scrollToTop.Action{description = " + getDescription() + '}';
+                    }
+                },
+                "ScrollbarOperator.WholeScrollTimeout");
     }
 
     /**
@@ -440,26 +432,27 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane>
      * @throws TimeoutExpiredException
      */
     public void scrollToBottom() {
-        output.printTrace("Scroll ScrollPane to bottom\n"
-                + toStringSource());
+        output.printTrace("Scroll ScrollPane to bottom\n" + toStringSource());
         output.printGolden("Scroll ScrollPane to bottom");
-        produceTimeRestricted(new Action<Void, Void>() {
-            @Override
-            public Void launch(Void obj) {
-                driver.scrollToMaximum(ScrollPaneOperator.this, Adjustable.VERTICAL);
-                return null;
-            }
+        produceTimeRestricted(
+                new Action<Void, Void>() {
+                    @Override
+                    public Void launch(Void obj) {
+                        driver.scrollToMaximum(ScrollPaneOperator.this, Adjustable.VERTICAL);
+                        return null;
+                    }
 
-            @Override
-            public String getDescription() {
-                return "Scrolling";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "Scrolling";
+                    }
 
-            @Override
-            public String toString() {
-                return "ScrollPaneOperator.scrollToBottom.Action{description = " + getDescription() + '}';
-            }
-        }, "ScrollbarOperator.WholeScrollTimeout");
+                    @Override
+                    public String toString() {
+                        return "ScrollPaneOperator.scrollToBottom.Action{description = " + getDescription() + '}';
+                    }
+                },
+                "ScrollbarOperator.WholeScrollTimeout");
     }
 
     /**
@@ -468,26 +461,27 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane>
      * @throws TimeoutExpiredException
      */
     public void scrollToLeft() {
-        output.printTrace("Scroll ScrollPane to left\n"
-                + toStringSource());
+        output.printTrace("Scroll ScrollPane to left\n" + toStringSource());
         output.printGolden("Scroll ScrollPane to left");
-        produceTimeRestricted(new Action<Void, Void>() {
-            @Override
-            public Void launch(Void obj) {
-                driver.scrollToMinimum(ScrollPaneOperator.this, Adjustable.HORIZONTAL);
-                return null;
-            }
+        produceTimeRestricted(
+                new Action<Void, Void>() {
+                    @Override
+                    public Void launch(Void obj) {
+                        driver.scrollToMinimum(ScrollPaneOperator.this, Adjustable.HORIZONTAL);
+                        return null;
+                    }
 
-            @Override
-            public String getDescription() {
-                return "Scrolling";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "Scrolling";
+                    }
 
-            @Override
-            public String toString() {
-                return "ScrollPaneOperator.scrollToLeft.Action{description = " + getDescription() + '}';
-            }
-        }, "ScrollbarOperator.WholeScrollTimeout");
+                    @Override
+                    public String toString() {
+                        return "ScrollPaneOperator.scrollToLeft.Action{description = " + getDescription() + '}';
+                    }
+                },
+                "ScrollbarOperator.WholeScrollTimeout");
     }
 
     /**
@@ -496,26 +490,27 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane>
      * @throws TimeoutExpiredException
      */
     public void scrollToRight() {
-        output.printTrace("Scroll ScrollPane to right\n"
-                + toStringSource());
+        output.printTrace("Scroll ScrollPane to right\n" + toStringSource());
         output.printGolden("Scroll ScrollPane to right");
-        produceTimeRestricted(new Action<Void, Void>() {
-            @Override
-            public Void launch(Void obj) {
-                driver.scrollToMaximum(ScrollPaneOperator.this, Adjustable.HORIZONTAL);
-                return null;
-            }
+        produceTimeRestricted(
+                new Action<Void, Void>() {
+                    @Override
+                    public Void launch(Void obj) {
+                        driver.scrollToMaximum(ScrollPaneOperator.this, Adjustable.HORIZONTAL);
+                        return null;
+                    }
 
-            @Override
-            public String getDescription() {
-                return "Scrolling";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "Scrolling";
+                    }
 
-            @Override
-            public String toString() {
-                return "ScrollPaneOperator.scrollToRight.Action{description = " + getDescription() + '}';
-            }
-        }, "ScrollbarOperator.WholeScrollTimeout");
+                    @Override
+                    public String toString() {
+                        return "ScrollPaneOperator.scrollToRight.Action{description = " + getDescription() + '}';
+                    }
+                },
+                "ScrollbarOperator.WholeScrollTimeout");
     }
 
     /**
@@ -542,11 +537,8 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane>
      * @throws TimeoutExpiredException
      */
     public void scrollToComponentPoint(Component comp, int x, int y) {
-        scrollToComponentRectangle(comp,
-                x - X_POINT_RECT_SIZE,
-                y - Y_POINT_RECT_SIZE,
-                2 * X_POINT_RECT_SIZE,
-                2 * Y_POINT_RECT_SIZE);
+        scrollToComponentRectangle(
+                comp, x - X_POINT_RECT_SIZE, y - Y_POINT_RECT_SIZE, 2 * X_POINT_RECT_SIZE, 2 * Y_POINT_RECT_SIZE);
     }
 
     /**
@@ -557,16 +549,13 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane>
      * @throws TimeoutExpiredException
      */
     public void scrollToComponent(final Component comp) {
-        String componentToString = runMapping(
-                new Operator.MapAction<String>("comp.toString()") {
+        String componentToString = runMapping(new Operator.MapAction<String>("comp.toString()") {
             @Override
             public String map() {
                 return comp.toString();
             }
-        }
-        );
-        output.printTrace("Scroll ScrollPane " + toStringSource()
-                + "\nto component " + componentToString);
+        });
+        output.printTrace("Scroll ScrollPane " + toStringSource() + "\nto component " + componentToString);
         output.printGolden("Scroll ScrollPane to " + comp.getClass().getName() + " component.");
         scrollToComponentRectangle(comp, 0, 0, comp.getWidth(), comp.getHeight());
     }
@@ -584,8 +573,7 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane>
      * area.
      */
     public boolean checkInside(Component comp, int x, int y, int width, int height) {
-        Point toPoint = SwingUtilities.
-                convertPoint(comp, x, y, getSource());
+        Point toPoint = SwingUtilities.convertPoint(comp, x, y, getSource());
         if (toPoint.x < getHAdjustable().getValue()) {
             return false;
         }
@@ -639,7 +627,7 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane>
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code ScrollPane.getHAdjustable()} through queue
      */
@@ -760,7 +748,7 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane>
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     private static class ValueScrollAdjuster implements ScrollAdjuster {
 
@@ -825,19 +813,14 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane>
                     ? (int) getScrollPosition().getX()
                     : (int) getScrollPosition().getY();
             Point pnt = SwingUtilities.convertPoint(comp, x, y, ((Container) getSource()).getComponents()[0]);
-            int cp = (orientation == Adjustable.HORIZONTAL)
-                    ? pnt.x
-                    : pnt.y;
+            int cp = (orientation == Adjustable.HORIZONTAL) ? pnt.x : pnt.y;
             int sl = (orientation == Adjustable.HORIZONTAL)
                     ? (int) getViewportSize().getWidth()
                     : (int) getViewportSize().getHeight();
-            int cl = (orientation == Adjustable.HORIZONTAL)
-                    ? width
-                    : height;
+            int cl = (orientation == Adjustable.HORIZONTAL) ? width : height;
             if (cp <= sp) {
                 return ScrollAdjuster.DECREASE_SCROLL_DIRECTION;
-            } else if ((cp + cl) > (sp + sl)
-                    && cp > sp) {
+            } else if ((cp + cl) > (sp + sl) && cp > sp) {
                 return ScrollAdjuster.INCREASE_SCROLL_DIRECTION;
             } else {
                 return ScrollAdjuster.DO_NOT_TOUCH_SCROLL_DIRECTION;
@@ -856,7 +839,8 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane>
 
         @Override
         public String toString() {
-            return "ComponentRectChecker{" + "comp=" + comp + ", x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + ", orientation=" + orientation + '}';
+            return "ComponentRectChecker{" + "comp=" + comp + ", x=" + x + ", y=" + y + ", width=" + width + ", height="
+                    + height + ", orientation=" + orientation + '}';
         }
     }
 

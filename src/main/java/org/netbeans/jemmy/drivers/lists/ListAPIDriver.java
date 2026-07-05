@@ -40,7 +40,7 @@ public class ListAPIDriver extends LightSupportiveDriver implements MultiSelList
      * Constructs a ListAPIDriver.
      */
     public ListAPIDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.ListOperator"});
+        super(new String[] {"org.netbeans.jemmy.operators.ListOperator"});
     }
 
     @Override

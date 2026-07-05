@@ -24,29 +24,26 @@
  */
 package org.netbeans.jemmy.operators;
 
-import java.awt.Point;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.awt.Point;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
-import org.netbeans.jemmy.TimeoutExpiredException;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.netbeans.jemmy.TimeoutExpiredException;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ComponentOperatorTest {
-
 
     private JFrame frame = null;
 
     @BeforeAll
     protected void setUp() throws Exception {
         frame = new JFrame();
-        frame.setSize(400,400);
+        frame.setSize(400, 400);
         frame.setLocationRelativeTo(null);
     }
 
@@ -67,10 +64,9 @@ public class ComponentOperatorTest {
 
         Point currentLocation = labelOperator.getLocation();
         Point currentScreenLocation = labelOperator.getLocationOnScreen();
-        Point newScreenLocation = new Point(currentScreenLocation.x
-                + locationDelta, currentScreenLocation.y  + locationDelta);
-        labelOperator.setLocation(currentLocation.x + locationDelta,
-                currentLocation.y + locationDelta);
+        Point newScreenLocation =
+                new Point(currentScreenLocation.x + locationDelta, currentScreenLocation.y + locationDelta);
+        labelOperator.setLocation(currentLocation.x + locationDelta, currentLocation.y + locationDelta);
         labelOperator.waitComponentLocationOnScreen(newScreenLocation);
 
         // Negative scenario

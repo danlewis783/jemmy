@@ -29,7 +29,6 @@ import java.awt.Container;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.Hashtable;
-
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
@@ -40,7 +39,6 @@ import javax.swing.event.MenuDragMouseListener;
 import javax.swing.event.MenuKeyEvent;
 import javax.swing.event.MenuKeyListener;
 import javax.swing.plaf.MenuItemUI;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.Outputable;
@@ -64,10 +62,9 @@ import org.netbeans.jemmy.util.EmptyVisualizer;
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  *
  */
-public class JMenuItemOperator extends AbstractButtonOperator
-        implements Timeoutable, Outputable {
+public class JMenuItemOperator extends AbstractButtonOperator implements Timeoutable, Outputable {
 
-    private final static long PUSH_MENU_TIMEOUT = 0;
+    private static final long PUSH_MENU_TIMEOUT = 0;
 
     private Timeouts timeouts;
     private TestOut output;
@@ -91,9 +88,7 @@ public class JMenuItemOperator extends AbstractButtonOperator
      * @param index an index between appropriate ones.
      */
     public JMenuItemOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JMenuItem) cont.
-                waitSubComponent(new JMenuItemFinder(chooser),
-                        index));
+        this((JMenuItem) cont.waitSubComponent(new JMenuItemFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -118,10 +113,7 @@ public class JMenuItemOperator extends AbstractButtonOperator
      * @throws TimeoutExpiredException
      */
     public JMenuItemOperator(ContainerOperator<?> cont, String text, int index) {
-        this((JMenuItem) waitComponent(cont,
-                new JMenuItemByLabelFinder(text,
-                        cont.getComparator()),
-                index));
+        this((JMenuItem) waitComponent(cont, new JMenuItemByLabelFinder(text, cont.getComparator()), index));
         setTimeouts(cont.getTimeouts());
         setOutput(cont.getOutput());
     }
@@ -148,9 +140,7 @@ public class JMenuItemOperator extends AbstractButtonOperator
      * @throws TimeoutExpiredException
      */
     public JMenuItemOperator(ContainerOperator<?> cont, int index) {
-        this((JMenuItem) waitComponent(cont,
-                new JMenuItemFinder(),
-                index));
+        this((JMenuItem) waitComponent(cont, new JMenuItemFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -200,11 +190,7 @@ public class JMenuItemOperator extends AbstractButtonOperator
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public static JMenuItem findJMenuItem(Container menu, String text, boolean ce, boolean ccs, int index) {
-        return (findJMenuItem(menu,
-                new JMenuItemByLabelFinder(text,
-                        new DefaultStringComparator(ce,
-                                ccs)),
-                index));
+        return (findJMenuItem(menu, new JMenuItemByLabelFinder(text, new DefaultStringComparator(ce, ccs)), index));
     }
 
     /**
@@ -259,10 +245,7 @@ public class JMenuItemOperator extends AbstractButtonOperator
      * @throws TimeoutExpiredException
      */
     public static JMenuItem waitJMenuItem(Container menu, String text, boolean ce, boolean ccs, int index) {
-        return (waitJMenuItem(menu,
-                new JMenuItemByLabelFinder(text,
-                        new DefaultStringComparator(ce, ccs)),
-                index));
+        return (waitJMenuItem(menu, new JMenuItemByLabelFinder(text, new DefaultStringComparator(ce, ccs)), index));
     }
 
     /**
@@ -332,7 +315,7 @@ public class JMenuItemOperator extends AbstractButtonOperator
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps
      * {@code JMenuItem.addMenuDragMouseListener(MenuDragMouseListener)}
@@ -424,7 +407,8 @@ public class JMenuItemOperator extends AbstractButtonOperator
      * {@code JMenuItem.processKeyEvent(KeyEvent, MenuElement[], MenuSelectionManager)}
      * through queue
      */
-    public void processKeyEvent(final KeyEvent keyEvent, final MenuElement[] menuElement, final MenuSelectionManager menuSelectionManager) {
+    public void processKeyEvent(
+            final KeyEvent keyEvent, final MenuElement[] menuElement, final MenuSelectionManager menuSelectionManager) {
         runMapping(new MapVoidAction("processKeyEvent") {
             @Override
             public void map() {
@@ -463,7 +447,10 @@ public class JMenuItemOperator extends AbstractButtonOperator
      * {@code JMenuItem.processMouseEvent(MouseEvent, MenuElement[], MenuSelectionManager)}
      * through queue
      */
-    public void processMouseEvent(final MouseEvent mouseEvent, final MenuElement[] menuElement, final MenuSelectionManager menuSelectionManager) {
+    public void processMouseEvent(
+            final MouseEvent mouseEvent,
+            final MenuElement[] menuElement,
+            final MenuSelectionManager menuSelectionManager) {
         runMapping(new MapVoidAction("processMouseEvent") {
             @Override
             public void map() {
@@ -535,7 +522,7 @@ public class JMenuItemOperator extends AbstractButtonOperator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Prepares the button to click.
@@ -544,8 +531,8 @@ public class JMenuItemOperator extends AbstractButtonOperator
         output.printLine("Push menu item\n    :" + toStringSource());
         output.printGolden("Push menu item");
         Timeouts times = timeouts.cloneThis();
-        times.setTimeout("AbstractButtonOperator.PushButtonTimeout",
-                timeouts.getTimeout("JMenuItemOperator.PushMenuTimeout"));
+        times.setTimeout(
+                "AbstractButtonOperator.PushButtonTimeout", timeouts.getTimeout("JMenuItemOperator.PushMenuTimeout"));
         super.setTimeouts(times);
         super.setOutput(output.createErrorOutput());
     }
@@ -617,8 +604,7 @@ public class JMenuItemOperator extends AbstractButtonOperator
         public boolean checkComponent(Component comp) {
             if (comp instanceof JMenuItem) {
                 if (((JMenuItem) comp).getText() != null) {
-                    return (comparator.equals(((JMenuItem) comp).getText(),
-                            label));
+                    return (comparator.equals(((JMenuItem) comp).getText(), label));
                 }
             }
             return false;

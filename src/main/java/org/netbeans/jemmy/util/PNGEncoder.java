@@ -119,13 +119,13 @@ public class PNGEncoder extends Object {
         byte head[];
         switch (mode) {
             case BW_MODE:
-                head = new byte[]{1, 0, 0, 0, 0};
+                head = new byte[] {1, 0, 0, 0, 0};
                 break;
             case GREYSCALE_MODE:
-                head = new byte[]{8, 0, 0, 0, 0};
+                head = new byte[] {8, 0, 0, 0, 0};
                 break;
             case COLOR_MODE:
-                head = new byte[]{8, 2, 0, 0, 0};
+                head = new byte[] {8, 2, 0, 0, 0};
                 break;
             default:
                 throw new AssertionError("Unexpected mode: " + mode);
@@ -263,9 +263,7 @@ public class PNGEncoder extends Object {
      * @param mode image color mode
      */
     public static void captureScreen(Component comp, String fileName, byte mode) {
-        captureScreen(new Rectangle(comp.getLocationOnScreen(),
-                comp.getSize()),
-                fileName, mode);
+        captureScreen(new Rectangle(comp.getLocationOnScreen(), comp.getSize()), fileName, mode);
     }
 
     /**

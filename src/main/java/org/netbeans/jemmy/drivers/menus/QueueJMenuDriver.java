@@ -26,12 +26,10 @@ package org.netbeans.jemmy.drivers.menus;
 
 import java.awt.Component;
 import java.awt.Window;
-
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.MenuElement;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.QueueTool;
@@ -68,9 +66,11 @@ public class QueueJMenuDriver extends LightSupportiveDriver implements MenuDrive
     QueueTool queueTool;
 
     public QueueJMenuDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.JMenuOperator",
+        super(new String[] {
+            "org.netbeans.jemmy.operators.JMenuOperator",
             "org.netbeans.jemmy.operators.JMenuBarOperator",
-            "org.netbeans.jemmy.operators.JPopupMenuOperator"});
+            "org.netbeans.jemmy.operators.JPopupMenuOperator"
+        });
         queueTool = new QueueTool();
     }
 
@@ -84,8 +84,7 @@ public class QueueJMenuDriver extends LightSupportiveDriver implements MenuDrive
             action = new OneReleaseAction(chooser, 0, oper, false) {
                 @Override
                 protected void pushAlone(JMenuItemOperator subMenuOper) {
-                    if (subMenuOper.getSource() instanceof JMenu
-                            && isMenuBarSelected((JMenuBar) oper.getSource())) {
+                    if (subMenuOper.getSource() instanceof JMenu && isMenuBarSelected((JMenuBar) oper.getSource())) {
                         DriverManager.getMouseDriver(subMenuOper).enterMouse(subMenuOper);
                     } else {
                         DriverManager.getButtonDriver(subMenuOper).push(subMenuOper);
@@ -137,7 +136,9 @@ public class QueueJMenuDriver extends LightSupportiveDriver implements MenuDrive
         queueTool.waitEmpty(10);
         queueTool.waitEmpty(10);
         queueTool.waitEmpty(10);
-        result = runAction(action, oper,
+        result = runAction(
+                action,
+                oper,
                 oper.getTimeouts().getTimeout("ComponentOperator.WaitComponentTimeout"),
                 (chooser instanceof DescriptablePathChooser)
                         ? ((DescriptablePathChooser) chooser).getDescription()
@@ -157,7 +158,9 @@ public class QueueJMenuDriver extends LightSupportiveDriver implements MenuDrive
                         }
                     }
                 };
-                result = runAction(action, oper,
+                result = runAction(
+                        action,
+                        oper,
                         oper.getTimeouts().getTimeout("JMenuOperator.WaitPopupTimeout"),
                         (chooser instanceof DescriptablePathChooser)
                                 ? ((DescriptablePathChooser) chooser).getDescription()
@@ -167,7 +170,8 @@ public class QueueJMenuDriver extends LightSupportiveDriver implements MenuDrive
         return result;
     }
 
-    private JMenuItem runAction(final OneReleaseAction action, ComponentOperator env, long waitingTime, final String description) {
+    private JMenuItem runAction(
+            final OneReleaseAction action, ComponentOperator env, long waitingTime, final String description) {
         Waiter<MenuElement, Void> waiter = new Waiter<>(new Waitable<MenuElement, Void>() {
             @Override
             public MenuElement actionProduced(Void param) {
@@ -186,17 +190,16 @@ public class QueueJMenuDriver extends LightSupportiveDriver implements MenuDrive
         });
         waiter.setOutput(env.getOutput().createErrorOutput());
         waiter.setTimeouts(env.getTimeouts().cloneThis());
-        waiter.getTimeouts().setTimeout("Waiter.WaitingTime",
-                waitingTime);
+        waiter.getTimeouts().setTimeout("Waiter.WaitingTime", waitingTime);
         waiter.getTimeouts().setTimeout("Waiter.TimeDelta", 100);
-        //1.5 workaround
+        // 1.5 workaround
         if (System.getProperty("java.specification.version").compareTo("1.4") > 0) {
             queueTool.setOutput(env.getOutput().createErrorOutput());
             queueTool.waitEmpty(10);
             queueTool.waitEmpty(10);
             queueTool.waitEmpty(10);
         }
-        //end of 1.5 workaround
+        // end of 1.5 workaround
         try {
             return (JMenuItem) waiter.waitAction(null);
         } catch (InterruptedException e) {
@@ -208,8 +211,7 @@ public class QueueJMenuDriver extends LightSupportiveDriver implements MenuDrive
     private boolean isMenuBarSelected(JMenuBar bar) {
         MenuElement[] subElements = bar.getSubElements();
         for (MenuElement subElement : subElements) {
-            if (subElement instanceof JMenu
-                    && ((JMenu) subElement).isPopupMenuVisible()) {
+            if (subElement instanceof JMenu && ((JMenu) subElement).isPopupMenuVisible()) {
                 return true;
             }
         }
@@ -309,8 +311,7 @@ public class QueueJMenuDriver extends LightSupportiveDriver implements MenuDrive
 
         @Override
         public boolean checkComponent(Component comp) {
-            return (comp == menu.getPopupMenu()
-                    && comp.isShowing() && comp.isEnabled());
+            return (comp == menu.getPopupMenu() && comp.isShowing() && comp.isEnabled());
         }
 
         @Override
@@ -323,5 +324,4 @@ public class QueueJMenuDriver extends LightSupportiveDriver implements MenuDrive
             return "PopupMenuChooser{" + "menu=" + menu + '}';
         }
     }
-
 }

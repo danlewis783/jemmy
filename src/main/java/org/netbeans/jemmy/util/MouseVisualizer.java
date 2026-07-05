@@ -27,7 +27,6 @@ package org.netbeans.jemmy.util;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.Point;
-
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.drivers.input.MouseRobotDriver;
@@ -95,8 +94,7 @@ public class MouseVisualizer extends DefaultVisualizer {
     /**
      * Creates a visualizer which clicks on (0, 0) window coords.
      */
-    public MouseVisualizer() {
-    }
+    public MouseVisualizer() {}
 
     /**
      * Creates a visualizer which clicks on window border. In case if
@@ -122,20 +120,24 @@ public class MouseVisualizer extends DefaultVisualizer {
     @Override
     protected boolean isWindowActive(WindowOperator winOper) {
         return (super.isWindowActive(winOper)
-                && (winOper.getSource() instanceof Frame
-                || winOper.getSource() instanceof Dialog));
+                && (winOper.getSource() instanceof Frame || winOper.getSource() instanceof Dialog));
     }
 
     @Override
     protected void makeWindowActive(WindowOperator winOper) {
-        JemmyProperties.getCurrentTimeouts().
-                create("MouseVisualiser.BeforeClickTimeout").sleep();
+        JemmyProperties.getCurrentTimeouts()
+                .create("MouseVisualiser.BeforeClickTimeout")
+                .sleep();
         super.makeWindowActive(winOper);
         if (!System.getProperty("java.version").startsWith("1.2")) {
             Point p = getClickPoint(winOper);
-            new MouseRobotDriver(winOper.getTimeouts().create("EventDispatcher.RobotAutoDelay")).
-                    clickMouse(winOper, p.x, p.y,
-                            1, Operator.getDefaultMouseButton(),
+            new MouseRobotDriver(winOper.getTimeouts().create("EventDispatcher.RobotAutoDelay"))
+                    .clickMouse(
+                            winOper,
+                            p.x,
+                            p.y,
+                            1,
+                            Operator.getDefaultMouseButton(),
                             0,
                             winOper.getTimeouts().create("ComponentOperator.MouseClickTimeout"));
         }
@@ -143,8 +145,7 @@ public class MouseVisualizer extends DefaultVisualizer {
 
     private Point getClickPoint(WindowOperator win) {
         int x, y;
-        if (place == LEFT
-                || place == RIGHT) {
+        if (place == LEFT || place == RIGHT) {
             y = ((int) (win.getHeight() * pointLocation - 1));
             if (place == RIGHT) {
                 x = win.getWidth() - 1 - depth;

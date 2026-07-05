@@ -27,12 +27,10 @@ package org.netbeans.jemmy.operators;
 import java.awt.Component;
 import java.awt.Container;
 import java.util.Hashtable;
-
 import javax.swing.JButton;
 import javax.swing.JSplitPane;
 import javax.swing.plaf.SplitPaneUI;
 import javax.swing.plaf.basic.BasicSplitPaneDivider;
-
 import org.netbeans.jemmy.Action;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
@@ -62,8 +60,7 @@ import org.netbeans.jemmy.util.EmptyVisualizer;
  * Class to operate with javax.swing.JSplitPane component
  *
  */
-public class JSplitPaneOperator extends JComponentOperator
-        implements Timeoutable, Outputable {
+public class JSplitPaneOperator extends JComponentOperator implements Timeoutable, Outputable {
 
     /**
      * Identifier for a "minimum" property.
@@ -114,9 +111,9 @@ public class JSplitPaneOperator extends JComponentOperator
      */
     public static final String IS_ONE_TOUCH_EXPANDABLE_DPROP = "One touch expandable";
 
-    private final static long SCROLL_CLICK_TIMEOUT = 0;
-    private final static long BETWEEN_CLICK_TIMEOUT = 0;
-    private final static long WHOLE_SCROLL_TIMEOUT = 60000;
+    private static final long SCROLL_CLICK_TIMEOUT = 0;
+    private static final long BETWEEN_CLICK_TIMEOUT = 0;
+    private static final long WHOLE_SCROLL_TIMEOUT = 60000;
 
     private Timeouts timeouts;
     private TestOut output;
@@ -141,9 +138,7 @@ public class JSplitPaneOperator extends JComponentOperator
      * @param index an index between appropriate ones.
      */
     public JSplitPaneOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JSplitPane) cont.
-                waitSubComponent(new JSplitPaneFinder(chooser),
-                        index));
+        this((JSplitPane) cont.waitSubComponent(new JSplitPaneFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -166,9 +161,7 @@ public class JSplitPaneOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public JSplitPaneOperator(ContainerOperator<?> cont, int index) {
-        this((JSplitPane) waitComponent(cont,
-                new JSplitPaneFinder(),
-                index));
+        this((JSplitPane) waitComponent(cont, new JSplitPaneFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -214,7 +207,8 @@ public class JSplitPaneOperator extends JComponentOperator
      * @return JSplitPane instance or null if component was not found.
      */
     public static JSplitPane findJSplitPane(Container cont, int index) {
-        return findJSplitPane(cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th JSplitPane instance"), index);
+        return findJSplitPane(
+                cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th JSplitPane instance"), index);
     }
 
     /**
@@ -282,7 +276,8 @@ public class JSplitPaneOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public static JSplitPane waitJSplitPane(Container cont, int index) {
-        return waitJSplitPane(cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th JSplitPane instance"), index);
+        return waitJSplitPane(
+                cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th JSplitPane instance"), index);
     }
 
     /**
@@ -306,10 +301,9 @@ public class JSplitPaneOperator extends JComponentOperator
     public void setTimeouts(Timeouts timeouts) {
         this.timeouts = timeouts;
         Timeouts times = timeouts;
-        times.setTimeout("ComponentOperator.BeforeDragTimeout",
-                0);
-        times.setTimeout("ComponentOperator.AfterDragTimeout",
-                times.getTimeout("JSplitPaneOperator.ScrollClickTimeout"));
+        times.setTimeout("ComponentOperator.BeforeDragTimeout", 0);
+        times.setTimeout(
+                "ComponentOperator.AfterDragTimeout", times.getTimeout("JSplitPaneOperator.ScrollClickTimeout"));
         super.setTimeouts(times);
     }
 
@@ -332,11 +326,8 @@ public class JSplitPaneOperator extends JComponentOperator
     @Override
     public void copyEnvironment(Operator anotherOperator) {
         super.copyEnvironment(anotherOperator);
-        driver
-                = (ScrollDriver) DriverManager.
-                getDriver(DriverManager.SCROLL_DRIVER_ID,
-                        getClass(),
-                        anotherOperator.getProperties());
+        driver = (ScrollDriver)
+                DriverManager.getDriver(DriverManager.SCROLL_DRIVER_ID, getClass(), anotherOperator.getProperties());
     }
 
     /**
@@ -384,23 +375,25 @@ public class JSplitPaneOperator extends JComponentOperator
      * @throws TimeoutExpiredException
      */
     public void scrollTo(final ScrollAdjuster adj) {
-        produceTimeRestricted(new Action<Void, Void>() {
-            @Override
-            public Void launch(Void obj) {
-                driver.scroll(JSplitPaneOperator.this, adj);
-                return null;
-            }
+        produceTimeRestricted(
+                new Action<Void, Void>() {
+                    @Override
+                    public Void launch(Void obj) {
+                        driver.scroll(JSplitPaneOperator.this, adj);
+                        return null;
+                    }
 
-            @Override
-            public String getDescription() {
-                return "Moving a divider";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "Moving a divider";
+                    }
 
-            @Override
-            public String toString() {
-                return "JSplitPaneOperator.scrollTo.Action{description = " + getDescription() + '}';
-            }
-        }, "JSplitPaneOperator.WholeScrollTimeout");
+                    @Override
+                    public String toString() {
+                        return "JSplitPaneOperator.scrollTo.Action{description = " + getDescription() + '}';
+                    }
+                },
+                "JSplitPaneOperator.WholeScrollTimeout");
     }
 
     /**
@@ -411,8 +404,7 @@ public class JSplitPaneOperator extends JComponentOperator
     public void moveDivider(int dividerLocation) {
         output.printTrace("Move JSplitPane divider to " + Integer.toString(dividerLocation)
                 + " location. JSplitPane :    \n" + toStringSource());
-        output.printGolden("Move JSplitPane divider to " + Integer.toString(dividerLocation)
-                + " location");
+        output.printGolden("Move JSplitPane divider to " + Integer.toString(dividerLocation) + " location");
         scrollTo(new ValueScrollAdjuster(dividerLocation));
     }
 
@@ -425,11 +417,10 @@ public class JSplitPaneOperator extends JComponentOperator
     public void moveDivider(double proportionalLocation) {
         output.printTrace("Move JSplitPane divider to " + Double.toString(proportionalLocation)
                 + " proportional location. JSplitPane :    \n" + toStringSource());
-        output.printGolden("Move JSplitPane divider to " + Double.toString(proportionalLocation)
-                + " proportional location");
+        output.printGolden(
+                "Move JSplitPane divider to " + Double.toString(proportionalLocation) + " proportional location");
         scrollTo(new ValueScrollAdjuster(getMinimumDividerLocation()
-                + (int) (proportionalLocation
-                * (getMaximumDividerLocation() - getMinimumDividerLocation()))));
+                + (int) (proportionalLocation * (getMaximumDividerLocation() - getMinimumDividerLocation()))));
     }
 
     /**
@@ -438,23 +429,25 @@ public class JSplitPaneOperator extends JComponentOperator
     public void moveToMinimum() {
         output.printTrace("Scroll JSplitPane to minimum. JSplitPane :    \n" + toStringSource());
         output.printGolden("Scroll JSplitPane to minimum.");
-        produceTimeRestricted(new Action<Void, Void>() {
-            @Override
-            public Void launch(Void obj) {
-                driver.scrollToMinimum(JSplitPaneOperator.this, getOrientation());
-                return null;
-            }
+        produceTimeRestricted(
+                new Action<Void, Void>() {
+                    @Override
+                    public Void launch(Void obj) {
+                        driver.scrollToMinimum(JSplitPaneOperator.this, getOrientation());
+                        return null;
+                    }
 
-            @Override
-            public String getDescription() {
-                return "Scrolling";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "Scrolling";
+                    }
 
-            @Override
-            public String toString() {
-                return "JSplitPaneOperator.moveToMinimum.Action{description = " + getDescription() + '}';
-            }
-        }, "JSplitPaneOperator.WholeScrollTimeout");
+                    @Override
+                    public String toString() {
+                        return "JSplitPaneOperator.moveToMinimum.Action{description = " + getDescription() + '}';
+                    }
+                },
+                "JSplitPaneOperator.WholeScrollTimeout");
     }
 
     /**
@@ -463,23 +456,25 @@ public class JSplitPaneOperator extends JComponentOperator
     public void moveToMaximum() {
         output.printTrace("Scroll JSplitPane to maximum. JSplitPane :    \n" + toStringSource());
         output.printGolden("Scroll JSplitPane to maximum.");
-        produceTimeRestricted(new Action<Void, Void>() {
-            @Override
-            public Void launch(Void obj) {
-                driver.scrollToMaximum(JSplitPaneOperator.this, getOrientation());
-                return null;
-            }
+        produceTimeRestricted(
+                new Action<Void, Void>() {
+                    @Override
+                    public Void launch(Void obj) {
+                        driver.scrollToMaximum(JSplitPaneOperator.this, getOrientation());
+                        return null;
+                    }
 
-            @Override
-            public String getDescription() {
-                return "Scrolling";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "Scrolling";
+                    }
 
-            @Override
-            public String toString() {
-                return "JSplitPaneOperator.moveToMaximum.Action{description = " + getDescription() + '}';
-            }
-        }, "JSplitPaneOperator.WholeScrollTimeout");
+                    @Override
+                    public String toString() {
+                        return "JSplitPaneOperator.moveToMaximum.Action{description = " + getDescription() + '}';
+                    }
+                },
+                "JSplitPaneOperator.WholeScrollTimeout");
     }
 
     /**
@@ -521,16 +516,18 @@ public class JSplitPaneOperator extends JComponentOperator
         Hashtable<String, Object> result = super.getDump();
         result.put(MINIMUM_DPROP, Integer.toString(((JSplitPane) getSource()).getMinimumDividerLocation()));
         result.put(MAXIMUM_DPROP, Integer.toString(((JSplitPane) getSource()).getMaximumDividerLocation()));
-        result.put(ORIENTATION_DPROP, (((JSplitPane) getSource()).getOrientation() == JSplitPane.HORIZONTAL_SPLIT)
-                ? HORIZONTAL_ORIENTATION_DPROP_VALUE
-                : VERTICAL_ORIENTATION_DPROP_VALUE);
+        result.put(
+                ORIENTATION_DPROP,
+                (((JSplitPane) getSource()).getOrientation() == JSplitPane.HORIZONTAL_SPLIT)
+                        ? HORIZONTAL_ORIENTATION_DPROP_VALUE
+                        : VERTICAL_ORIENTATION_DPROP_VALUE);
         result.put(VALUE_DPROP, Integer.toString(((JSplitPane) getSource()).getDividerLocation()));
         result.put(IS_ONE_TOUCH_EXPANDABLE_DPROP, ((JSplitPane) getSource()).isOneTouchExpandable() ? "true" : "false");
         return result;
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code JSplitPane.getBottomComponent()} through queue
      */
@@ -843,15 +840,13 @@ public class JSplitPaneOperator extends JComponentOperator
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     private void expandTo(int index) {
         makeComponentVisible();
-        JButtonOperator bo
-                = new JButtonOperator((JButton) getDivider().
-                        waitSubComponent(new JButtonOperator.JButtonFinder(ComponentSearcher.
-                                getTrueChooser("JButton")),
-                                index));
+        JButtonOperator bo = new JButtonOperator((JButton) getDivider()
+                .waitSubComponent(
+                        new JButtonOperator.JButtonFinder(ComponentSearcher.getTrueChooser("JButton")), index));
         bo.copyEnvironment(getDivider());
         bo.setVisualizer(new EmptyVisualizer());
         bo.push();

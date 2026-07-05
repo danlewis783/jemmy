@@ -31,7 +31,6 @@ import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-
 import org.netbeans.jemmy.JemmyException;
 
 /**
@@ -62,8 +61,7 @@ public class ImageTool {
      * @return a captured image.
      */
     public static BufferedImage getImage(Component comp) {
-        return (getImage(new Rectangle(comp.getLocationOnScreen(),
-                comp.getSize())));
+        return (getImage(new Rectangle(comp.getLocationOnScreen(), comp.getSize())));
     }
 
     /**
@@ -85,18 +83,14 @@ public class ImageTool {
     public static BufferedImage enlargeImage(BufferedImage image, int zoom) {
         int wight = image.getWidth();
         int height = image.getHeight();
-        BufferedImage result = new BufferedImage(wight * zoom,
-                height * zoom,
-                image.getType());
+        BufferedImage result = new BufferedImage(wight * zoom, height * zoom, image.getType());
         int rgb;
         for (int x = 0; x < wight; x++) {
             for (int y = 0; y < height; y++) {
                 rgb = image.getRGB(x, y);
                 for (int i = 0; i < zoom; i++) {
                     for (int j = 0; j < zoom; j++) {
-                        result.setRGB(x * zoom + i,
-                                y * zoom + j,
-                                rgb);
+                        result.setRGB(x * zoom + i, y * zoom + j, rgb);
                     }
                 }
             }
@@ -135,7 +129,8 @@ public class ImageTool {
      * @return a result image.
      */
     @Deprecated
-    public static BufferedImage substractImage(BufferedImage minuend, BufferedImage deduction, int relativeX, int relativeY) {
+    public static BufferedImage substractImage(
+            BufferedImage minuend, BufferedImage deduction, int relativeX, int relativeY) {
         return subtractImage(minuend, deduction, relativeX, relativeY);
     }
 
@@ -149,7 +144,8 @@ public class ImageTool {
      * @param relativeY - deduction-in-minuend Y coordinate
      * @return a result image.
      */
-    public static BufferedImage subtractImage(BufferedImage minuend, BufferedImage deduction, int relativeX, int relativeY) {
+    public static BufferedImage subtractImage(
+            BufferedImage minuend, BufferedImage deduction, int relativeX, int relativeY) {
         int mWidth = minuend.getWidth();
         int mHeight = minuend.getHeight();
         int dWidth = deduction.getWidth();
@@ -162,16 +158,12 @@ public class ImageTool {
         int mColor, dColor;
         for (int x = 0; x < maxWidth; x++) {
             for (int y = 0; y < maxHeight; y++) {
-                if (x >= mWidth
-                        || y >= mHeight) {
+                if (x >= mWidth || y >= mHeight) {
                     mColor = 0;
                 } else {
                     mColor = minuend.getRGB(x, y);
                 }
-                if (x >= dWidth + relativeX
-                        || y >= dHeight + relativeY
-                        || x < relativeX
-                        || y < relativeY) {
+                if (x >= dWidth + relativeX || y >= dHeight + relativeY || x < relativeX || y < relativeY) {
                     dColor = 0;
                 } else {
                     dColor = deduction.getRGB(x - relativeX, y - relativeY);

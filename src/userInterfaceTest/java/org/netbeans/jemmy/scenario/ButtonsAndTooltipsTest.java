@@ -24,18 +24,19 @@
  */
 package org.netbeans.jemmy.scenario;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JToolTip;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.netbeans.jemmy.operators.AbstractButtonOperator;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
 import org.netbeans.jemmy.operators.JProgressBarOperator;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
-import javax.swing.*;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class ButtonsAndTooltipsTest {
     private static ButtonsAndTooltipsApp app;
@@ -63,12 +64,13 @@ public class ButtonsAndTooltipsTest {
 
     @Test
     public void testPush() {
-        for(int i = 1; i < 4; i++) {
-            for(int j = 1; j < 4; j++) {
+        for (int i = 1; i < 4; i++) {
+            for (int j = 1; j < 4; j++) {
                 String bText = Integer.toString(i) + "-" + Integer.toString(j);
-                JButtonOperator bo = new JButtonOperator((JButton)JButtonOperator.findJComponent(win, bText, false, true));
-                AbstractButtonOperator abo = new AbstractButtonOperator(wino, i*4 + j);
-                JButtonOperator bo2 = new JButtonOperator(wino, i*4 + j);
+                JButtonOperator bo =
+                        new JButtonOperator((JButton) JButtonOperator.findJComponent(win, bText, false, true));
+                AbstractButtonOperator abo = new AbstractButtonOperator(wino, i * 4 + j);
+                JButtonOperator bo2 = new JButtonOperator(wino, i * 4 + j);
                 assertThat(abo.getSource()).as("Wrong component found").isSameAs(bo.getSource());
                 assertThat(bo2.getSource()).as("Wrong component found").isSameAs(bo.getSource());
                 JToolTip tt = bo.showToolTip();
@@ -76,29 +78,28 @@ public class ButtonsAndTooltipsTest {
                 bo.push();
                 lbo.waitText("Button \"" + bText + "\" has been pushed");
                 progress.waitValue(bText);
-                progress.waitValue(i*4 + j + 1);
+                progress.waitValue(i * 4 + j + 1);
             }
         }
-
     }
 
     @Test
     public void testLookups() {
         final JButtonOperator bbo = new JButtonOperator(wino, "0-0");
         new Thread(new Runnable() {
-            public void run() {
-                try {
-                    Thread.sleep(1000);
-                        bbo.getAccessibleContext().
-                                setAccessibleDescription("A button to check different finding approaches");
-                    bbo.setText("New Text");
-                } catch(InterruptedException e) {
-                }
-            }
-        }).start();
+                    public void run() {
+                        try {
+                            Thread.sleep(1000);
+                            bbo.getAccessibleContext()
+                                    .setAccessibleDescription("A button to check different finding approaches");
+                            bbo.setText("New Text");
+                        } catch (InterruptedException e) {
+                        }
+                    }
+                })
+                .start();
         bbo.waitText("New Text");
-        assertThat(wino.findSubComponent(new AbstractButtonOperator.
-                        AbstractButtonByLabelFinder("New Text")))
+        assertThat(wino.findSubComponent(new AbstractButtonOperator.AbstractButtonByLabelFinder("New Text")))
                 .as("Wrong button found")
                 .isSameAs(bbo.getSource());
     }

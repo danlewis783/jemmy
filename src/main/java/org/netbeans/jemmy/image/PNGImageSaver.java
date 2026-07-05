@@ -28,7 +28,6 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import org.netbeans.jemmy.util.PNGEncoder;
 
 /**
@@ -43,8 +42,6 @@ public class PNGImageSaver implements ImageSaver {
      */
     @Override
     public void save(BufferedImage image, String fileName) throws IOException {
-        new PNGEncoder(new BufferedOutputStream(new FileOutputStream(fileName)),
-                PNGEncoder.COLOR_MODE).
-                encode(image);
+        new PNGEncoder(new BufferedOutputStream(new FileOutputStream(fileName)), PNGEncoder.COLOR_MODE).encode(image);
     }
 }

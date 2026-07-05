@@ -26,10 +26,8 @@ package org.netbeans.jemmy.operators;
 
 import java.awt.Container;
 import java.awt.event.ActionListener;
-
 import javax.swing.BoundedRangeModel;
 import javax.swing.JTextField;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.TimeoutExpiredException;
 
@@ -72,9 +70,7 @@ public class JTextFieldOperator extends JTextComponentOperator {
      * @param index an index between appropriate ones.
      */
     public JTextFieldOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JTextField) cont.
-                waitSubComponent(new JTextFieldFinder(chooser),
-                        index));
+        this((JTextField) cont.waitSubComponent(new JTextFieldFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -99,9 +95,9 @@ public class JTextFieldOperator extends JTextComponentOperator {
      * @throws TimeoutExpiredException
      */
     public JTextFieldOperator(ContainerOperator<?> cont, String text, int index) {
-        this((JTextField) waitComponent(cont,
-                new JTextFieldFinder(new JTextComponentOperator.JTextComponentByTextFinder(text,
-                        cont.getComparator())),
+        this((JTextField) waitComponent(
+                cont,
+                new JTextFieldFinder(new JTextComponentOperator.JTextComponentByTextFinder(text, cont.getComparator())),
                 index));
         copyEnvironment(cont);
     }
@@ -128,9 +124,7 @@ public class JTextFieldOperator extends JTextComponentOperator {
      * @throws TimeoutExpiredException
      */
     public JTextFieldOperator(ContainerOperator<?> cont, int index) {
-        this((JTextField) waitComponent(cont,
-                new JTextFieldFinder(),
-                index));
+        this((JTextField) waitComponent(cont, new JTextFieldFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -180,9 +174,10 @@ public class JTextFieldOperator extends JTextComponentOperator {
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public static JTextField findJTextField(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return (findJTextField(cont,
-                new JTextFieldFinder(new JTextComponentOperator.JTextComponentByTextFinder(text,
-                        new DefaultStringComparator(ce, ccs))),
+        return (findJTextField(
+                cont,
+                new JTextFieldFinder(new JTextComponentOperator.JTextComponentByTextFinder(
+                        text, new DefaultStringComparator(ce, ccs))),
                 index));
     }
 
@@ -238,9 +233,10 @@ public class JTextFieldOperator extends JTextComponentOperator {
      * @throws TimeoutExpiredException
      */
     public static JTextField waitJTextField(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return (waitJTextField(cont,
-                new JTextFieldFinder(new JTextComponentOperator.JTextComponentByTextFinder(text,
-                        new DefaultStringComparator(ce, ccs))),
+        return (waitJTextField(
+                cont,
+                new JTextFieldFinder(new JTextComponentOperator.JTextComponentByTextFinder(
+                        text, new DefaultStringComparator(ce, ccs))),
                 index));
     }
 
@@ -281,7 +277,7 @@ public class JTextFieldOperator extends JTextComponentOperator {
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code JTextField.addActionListener(ActionListener)} through queue
      */
@@ -414,7 +410,7 @@ public class JTextFieldOperator extends JTextComponentOperator {
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     private String removeNewLines(String text) {
         StringBuffer buff = new StringBuffer(text);

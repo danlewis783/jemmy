@@ -25,7 +25,6 @@
 package org.netbeans.jemmy.util;
 
 import java.awt.Color;
-
 import javax.swing.text.Element;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;

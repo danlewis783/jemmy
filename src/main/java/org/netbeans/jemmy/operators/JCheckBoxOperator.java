@@ -25,9 +25,7 @@
 package org.netbeans.jemmy.operators;
 
 import java.awt.Container;
-
 import javax.swing.JCheckBox;
-
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.TimeoutExpiredException;
 
@@ -64,9 +62,7 @@ public class JCheckBoxOperator extends JToggleButtonOperator {
      * @param index an index between appropriate ones.
      */
     public JCheckBoxOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JCheckBox) cont.
-                waitSubComponent(new JCheckBoxFinder(chooser),
-                        index));
+        this((JCheckBox) cont.waitSubComponent(new JCheckBoxFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -91,9 +87,9 @@ public class JCheckBoxOperator extends JToggleButtonOperator {
      * @throws TimeoutExpiredException
      */
     public JCheckBoxOperator(ContainerOperator<?> cont, String text, int index) {
-        this((JCheckBox) waitComponent(cont,
-                new JCheckBoxFinder(new AbstractButtonOperator.AbstractButtonByLabelFinder(text,
-                        cont.getComparator())),
+        this((JCheckBox) waitComponent(
+                cont,
+                new JCheckBoxFinder(new AbstractButtonOperator.AbstractButtonByLabelFinder(text, cont.getComparator())),
                 index));
         copyEnvironment(cont);
     }
@@ -120,9 +116,7 @@ public class JCheckBoxOperator extends JToggleButtonOperator {
      * @throws TimeoutExpiredException
      */
     public JCheckBoxOperator(ContainerOperator<?> cont, int index) {
-        this((JCheckBox) waitComponent(cont,
-                new JCheckBoxFinder(),
-                index));
+        this((JCheckBox) waitComponent(cont, new JCheckBoxFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -172,9 +166,10 @@ public class JCheckBoxOperator extends JToggleButtonOperator {
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
     public static JCheckBox findJCheckBox(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return (findJCheckBox(cont,
-                new JCheckBoxFinder(new AbstractButtonOperator.AbstractButtonByLabelFinder(text,
-                        new DefaultStringComparator(ce, ccs))),
+        return (findJCheckBox(
+                cont,
+                new JCheckBoxFinder(new AbstractButtonOperator.AbstractButtonByLabelFinder(
+                        text, new DefaultStringComparator(ce, ccs))),
                 index));
     }
 
@@ -230,9 +225,10 @@ public class JCheckBoxOperator extends JToggleButtonOperator {
      * @throws TimeoutExpiredException
      */
     public static JCheckBox waitJCheckBox(Container cont, String text, boolean ce, boolean ccs, int index) {
-        return (waitJCheckBox(cont,
-                new JCheckBoxFinder(new AbstractButtonOperator.AbstractButtonByLabelFinder(text,
-                        new DefaultStringComparator(ce, ccs))),
+        return (waitJCheckBox(
+                cont,
+                new JCheckBoxFinder(new AbstractButtonOperator.AbstractButtonByLabelFinder(
+                        text, new DefaultStringComparator(ce, ccs))),
                 index));
     }
 

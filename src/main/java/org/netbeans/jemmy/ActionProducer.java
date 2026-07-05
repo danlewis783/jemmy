@@ -38,10 +38,9 @@ import java.util.Optional;
  *
  * @author Alexandre Iline (alexandre.iline@oracle.com)
  */
-public class ActionProducer<R, P> extends Thread
-        implements Action<R, P>, Waitable<Optional<R>, P>, Timeoutable {
+public class ActionProducer<R, P> extends Thread implements Action<R, P>, Waitable<Optional<R>, P>, Timeoutable {
 
-    private final static long ACTION_TIMEOUT = 10000;
+    private static final long ACTION_TIMEOUT = 10000;
 
     private Action<R, P> action;
     private boolean needWait = true;
@@ -332,6 +331,7 @@ public class ActionProducer<R, P> extends Thread
 
     @Override
     public String toString() {
-        return "ActionProducer{" + "action=" + action + ", needWait=" + needWait + ", parameter=" + parameter + ", finished=" + finished + ", result=" + result + ", exception=" + exception + '}';
+        return "ActionProducer{" + "action=" + action + ", needWait=" + needWait + ", parameter=" + parameter
+                + ", finished=" + finished + ", result=" + result + ", exception=" + exception + '}';
     }
 }

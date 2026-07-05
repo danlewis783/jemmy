@@ -68,6 +68,7 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * Component to dispatch events to.
      */
     protected Component component;
+
     private TestOut output;
     private Timeouts timeouts;
     private final ClassReference reference;
@@ -104,10 +105,10 @@ public class EventDispatcher implements Outputable, Timeoutable {
     public static void waitQueueEmpty(TestOut output, Timeouts timeouts) {
         QueueTool qt = new QueueTool();
         qt.setTimeouts(timeouts.cloneThis());
-        qt.getTimeouts().
-                setTimeout("QueueTool.WaitQueueEmptyTimeout",
-                        JemmyProperties.
-                        getCurrentTimeout("EventDispatcher.WaitQueueEmptyTimeout"));
+        qt.getTimeouts()
+                .setTimeout(
+                        "QueueTool.WaitQueueEmptyTimeout",
+                        JemmyProperties.getCurrentTimeout("EventDispatcher.WaitQueueEmptyTimeout"));
         qt.setOutput(output);
         qt.waitEmpty();
     }
@@ -121,8 +122,7 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * @throws TimeoutExpiredException
      */
     public static void waitQueueEmpty() {
-        waitQueueEmpty(JemmyProperties.getCurrentOutput(),
-                JemmyProperties.getCurrentTimeouts());
+        waitQueueEmpty(JemmyProperties.getCurrentOutput(), JemmyProperties.getCurrentTimeouts());
     }
 
     /**
@@ -140,10 +140,10 @@ public class EventDispatcher implements Outputable, Timeoutable {
     public static void waitQueueEmpty(long emptyTime, TestOut output, Timeouts timeouts) {
         QueueTool qt = new QueueTool();
         qt.setTimeouts(timeouts.cloneThis());
-        qt.getTimeouts().
-                setTimeout("QueueTool.WaitQueueEmptyTimeout",
-                        JemmyProperties.
-                        getCurrentTimeout("EventDispatcher.WaitQueueEmptyTimeout"));
+        qt.getTimeouts()
+                .setTimeout(
+                        "QueueTool.WaitQueueEmptyTimeout",
+                        JemmyProperties.getCurrentTimeout("EventDispatcher.WaitQueueEmptyTimeout"));
         qt.setOutput(output);
         qt.waitEmpty(emptyTime);
     }
@@ -159,9 +159,7 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * @see org.netbeans.jemmy.QueueTool
      */
     public static void waitQueueEmpty(long emptyTime) {
-        waitQueueEmpty(emptyTime,
-                JemmyProperties.getCurrentOutput(),
-                JemmyProperties.getCurrentTimeouts());
+        waitQueueEmpty(emptyTime, JemmyProperties.getCurrentOutput(), JemmyProperties.getCurrentTimeouts());
     }
 
     /**
@@ -203,8 +201,7 @@ public class EventDispatcher implements Outputable, Timeoutable {
     public static String getKeyDescription(int keyCode) {
         for (Field keyField : keyFields) {
             try {
-                if (keyField.getName().startsWith("VK_")
-                        && keyField.getInt(null) == keyCode) {
+                if (keyField.getName().startsWith("VK_") && keyField.getInt(null) == keyCode) {
                     return keyField.getName();
                 }
             } catch (IllegalAccessException e) {
@@ -305,10 +302,11 @@ public class EventDispatcher implements Outputable, Timeoutable {
     public void setTimeouts(Timeouts timeouts) {
         this.timeouts = timeouts;
         queueTool.setTimeouts(timeouts);
-        queueTool.getTimeouts().
-                setTimeout("QueueTool.WaitQueueEmptyTimeout",
-                        timeouts.
-                        getTimeout("EventDispatcher.WaitQueueEmptyTimeout"));
+        queueTool
+                .getTimeouts()
+                .setTimeout(
+                        "QueueTool.WaitQueueEmptyTimeout",
+                        timeouts.getTimeout("EventDispatcher.WaitQueueEmptyTimeout"));
         if (robotReference != null) {
             try {
                 Object[] params = {(int) timeouts.getTimeout("EventDispatcher.RobotAutoDelay")};
@@ -395,14 +393,12 @@ public class EventDispatcher implements Outputable, Timeoutable {
      */
     public void dispatchEvent(final AWTEvent event) {
         // run in dispatch thread
-        String eventToString = queueTool.invokeSmoothly(
-                new QueueTool.QueueAction<String>("event.toString()") {
+        String eventToString = queueTool.invokeSmoothly(new QueueTool.QueueAction<String>("event.toString()") {
             @Override
             public String launch() {
                 return event.toString();
             }
-        }
-        );
+        });
         output.printLine("Dispatch event " + eventToString);
         output.printGolden("Dispatch event " + event.getClass().toString());
         Dispatcher<Void> disp = new Dispatcher<>(event);
@@ -420,10 +416,8 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * @param y vertical click point coordinate.
      * @param popup Defines if mouse event is a popup event.
      */
-    public void dispatchMouseEvent(int id, int mods, int clickCount, int x, int y,
-            boolean popup) {
-        MouseEvent event = new MouseEvent(component, id, System.currentTimeMillis(),
-                mods, x, y, clickCount, popup);
+    public void dispatchMouseEvent(int id, int mods, int clickCount, int x, int y, boolean popup) {
+        MouseEvent event = new MouseEvent(component, id, System.currentTimeMillis(), mods, x, y, clickCount, popup);
         dispatchEvent(event);
     }
 
@@ -436,8 +430,7 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * @param clickCount Click count
      * @param popup Difines if mouse event is popup event.
      */
-    public void dispatchMouseEvent(int id, int mods, int clickCount,
-            boolean popup) {
+    public void dispatchMouseEvent(int id, int mods, int clickCount, boolean popup) {
         int x = component.getWidth() / 2;
         int y = component.getHeight() / 2;
         dispatchMouseEvent(id, mods, clickCount, x, y, popup);
@@ -479,8 +472,7 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * @param keyChar Char to be tiped
      */
     public void dispatchKeyEvent(int id, int mods, int keyCode, char keyChar) {
-        KeyEvent event = new KeyEvent(component, id, System.currentTimeMillis(),
-                mods, keyCode, keyChar);
+        KeyEvent event = new KeyEvent(component, id, System.currentTimeMillis(), mods, keyCode, keyChar);
         dispatchEvent(event);
     }
 
@@ -533,8 +525,7 @@ public class EventDispatcher implements Outputable, Timeoutable {
         if (motionListener == null) {
             initMotionListener();
         }
-        output.printLine("Move mouse to (" + Integer.toString(x) + ","
-                + Integer.toString(y) + ")");
+        output.printLine("Move mouse to (" + Integer.toString(x) + "," + Integer.toString(y) + ")");
         Object[] params = {getAbsoluteX(x), getAbsoluteY(y)};
         Class<?>[] paramClasses = {Integer.TYPE, Integer.TYPE};
         makeRobotOperation("mouseMove", params, paramClasses);
@@ -797,14 +788,10 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * @see #invokeMethod(String, Object[], Class[])
      * @see org.netbeans.jemmy.ClassReference
      */
-    public Object invokeExistingMethod(String method_name, Object[] params, Class<?>[] params_classes,
-            TestOut out) {
+    public Object invokeExistingMethod(String method_name, Object[] params, Class<?>[] params_classes, TestOut out) {
         try {
             return invokeMethod(method_name, params, params_classes);
-        } catch (InvocationTargetException
-                | IllegalStateException
-                | NoSuchMethodException
-                | IllegalAccessException e) {
+        } catch (InvocationTargetException | IllegalStateException | NoSuchMethodException | IllegalAccessException e) {
             out.printStackTrace(e);
         }
         return null;
@@ -822,14 +809,10 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * @see #setExistingField(String, Object, TestOut)
      * @see org.netbeans.jemmy.ClassReference
      */
-    public Object getExistingField(String field_name,
-            TestOut out) {
+    public Object getExistingField(String field_name, TestOut out) {
         try {
             return getField(field_name);
-        } catch (InvocationTargetException
-                | IllegalStateException
-                | NoSuchFieldException
-                | IllegalAccessException e) {
+        } catch (InvocationTargetException | IllegalStateException | NoSuchFieldException | IllegalAccessException e) {
             out.printStackTrace(e);
         }
         return null;
@@ -847,14 +830,10 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * @see #getExistingField(String, TestOut)
      * @see org.netbeans.jemmy.ClassReference
      */
-    public void setExistingField(String field_name, Object newValue,
-            TestOut out) {
+    public void setExistingField(String field_name, Object newValue, TestOut out) {
         try {
             setField(field_name, newValue);
-        } catch (InvocationTargetException
-                | IllegalStateException
-                | NoSuchFieldException
-                | IllegalAccessException e) {
+        } catch (InvocationTargetException | IllegalStateException | NoSuchFieldException | IllegalAccessException e) {
             out.printStackTrace(e);
         }
     }
@@ -908,7 +887,7 @@ public class EventDispatcher implements Outputable, Timeoutable {
         setExistingField(field_name, newValue, output);
     }
 
-    //recursivelly releases all modifiers keys
+    // recursivelly releases all modifiers keys
     private void robotReleaseModifiers(int modifiers) {
         if ((modifiers & InputEvent.SHIFT_MASK) != 0) {
             robotReleaseKey(KeyEvent.VK_SHIFT, modifiers - (InputEvent.SHIFT_MASK & modifiers));
@@ -923,21 +902,21 @@ public class EventDispatcher implements Outputable, Timeoutable {
         }
     }
 
-    //throws ComponentIsNotVisibleException if component is not visible
+    // throws ComponentIsNotVisibleException if component is not visible
     private void checkVisibility() {
         if (!component.isVisible()) {
             throw (new ComponentIsNotVisibleException(component));
         }
     }
 
-    //throws ComponentIsNotFocusedException if component has not focus
+    // throws ComponentIsNotFocusedException if component has not focus
     private void checkFocus() {
         if (!component.hasFocus()) {
             throw (new ComponentIsNotFocusedException(component));
         }
     }
 
-    //creates java.awt.Robot instance
+    // creates java.awt.Robot instance
     private void createRobot() {
         try {
             ClassReference robotClassReverence = new ClassReference("java.awt.Robot");
@@ -984,14 +963,11 @@ public class EventDispatcher implements Outputable, Timeoutable {
         }
     }
 
-    //produce a robot operations through reflection
+    // produce a robot operations through reflection
     private void makeRobotOperation(String method, Object[] params, Class<?>[] paramClasses) {
         try {
             robotReference.invokeMethod(method, params, paramClasses);
-        } catch (InvocationTargetException
-                | IllegalStateException
-                | NoSuchMethodException
-                | IllegalAccessException e) {
+        } catch (InvocationTargetException | IllegalStateException | NoSuchMethodException | IllegalAccessException e) {
             output.printStackTrace(e);
         }
         if ((model & JemmyProperties.QUEUE_MODEL_MASK) != 0) {
@@ -1003,7 +979,7 @@ public class EventDispatcher implements Outputable, Timeoutable {
         }
     }
 
-    //recursivelly presses all modifiers keys
+    // recursivelly presses all modifiers keys
     private void robotPressModifiers(int modifiers) {
         if ((modifiers & InputEvent.SHIFT_MASK) != 0) {
             robotPressKey(KeyEvent.VK_SHIFT, modifiers & ~InputEvent.SHIFT_MASK);
@@ -1019,7 +995,7 @@ public class EventDispatcher implements Outputable, Timeoutable {
     }
 
     private void initMotionListener() {
-        synchronized(EventDispatcher.class) {
+        synchronized (EventDispatcher.class) {
             if (motionListener == null) {
                 motionListener = new MotionListener();
                 Toolkit.getDefaultToolkit().addAWTEventListener(motionListener, AWTEvent.MOUSE_EVENT_MASK);
@@ -1068,8 +1044,7 @@ public class EventDispatcher implements Outputable, Timeoutable {
         }
 
         @Override
-        public Object launch()
-                throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+        public Object launch() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
             checkVisibility();
             if (methodName.equals("keyPress") || methodName.equals("keyRelease")) {
                 checkFocus();
@@ -1088,8 +1063,7 @@ public class EventDispatcher implements Outputable, Timeoutable {
         }
 
         @Override
-        public Object launch()
-                throws InvocationTargetException, NoSuchFieldException, IllegalAccessException {
+        public Object launch() throws InvocationTargetException, NoSuchFieldException, IllegalAccessException {
             return reference.getField(fieldName);
         }
     }
@@ -1106,8 +1080,7 @@ public class EventDispatcher implements Outputable, Timeoutable {
         }
 
         @Override
-        public Object launch()
-                throws InvocationTargetException, NoSuchFieldException, IllegalAccessException {
+        public Object launch() throws InvocationTargetException, NoSuchFieldException, IllegalAccessException {
             reference.setField(fieldName, newValue);
             return null;
         }

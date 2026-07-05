@@ -24,20 +24,19 @@
  */
 package org.netbeans.jemmy.operators;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Hashtable;
+import javax.swing.JButton;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
-import javax.swing.JButton;
-
-import java.util.Hashtable;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AcessibleDumpPropertiesTest {
     private JButtonOperator accessible_button;
     private JButtonOperator a_button;
+
     @BeforeAll
     public void setup() {
         accessible_button = new JButtonOperator(new JButton("text"));
@@ -45,12 +44,14 @@ public class AcessibleDumpPropertiesTest {
         accessible_button.getSource().getAccessibleContext().setAccessibleDescription("description");
         a_button = new JButtonOperator(new JButton("text"));
     }
+
     @Test
     public void testPropeties() {
         Hashtable<String, Object> dump = accessible_button.getDump();
         assertThat(dump.get(ComponentOperator.ACCESSIBLE_NAME_DPROP)).isEqualTo("name");
         assertThat(dump.get(ComponentOperator.ACCESSIBLE_DESCRIPTION_DPROP)).isEqualTo("description");
     }
+
     @Test
     public void testNoPropeties() {
         Hashtable<String, Object> dump = a_button.getDump();

@@ -27,11 +27,9 @@ package org.netbeans.jemmy.operators;
 import java.awt.Component;
 import java.awt.Container;
 import java.util.Hashtable;
-
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.plaf.LabelUI;
-
 import org.netbeans.jemmy.ComponentChooser;
 
 /**
@@ -70,9 +68,7 @@ public class JLabelOperator extends JComponentOperator {
      * @param index an index between appropriate ones.
      */
     public JLabelOperator(ContainerOperator<?> cont, ComponentChooser chooser, int index) {
-        this((JLabel) cont.
-                waitSubComponent(new JLabelFinder(chooser),
-                        index));
+        this((JLabel) cont.waitSubComponent(new JLabelFinder(chooser), index));
         copyEnvironment(cont);
     }
 
@@ -97,10 +93,7 @@ public class JLabelOperator extends JComponentOperator {
      *
      */
     public JLabelOperator(ContainerOperator<?> cont, String text, int index) {
-        this((JLabel) waitComponent(cont,
-                new JLabelByLabelFinder(text,
-                        cont.getComparator()),
-                index));
+        this((JLabel) waitComponent(cont, new JLabelByLabelFinder(text, cont.getComparator()), index));
         copyEnvironment(cont);
     }
 
@@ -126,9 +119,7 @@ public class JLabelOperator extends JComponentOperator {
      *
      */
     public JLabelOperator(ContainerOperator<?> cont, int index) {
-        this((JLabel) waitComponent(cont,
-                new JLabelFinder(),
-                index));
+        this((JLabel) waitComponent(cont, new JLabelFinder(), index));
         copyEnvironment(cont);
     }
 
@@ -257,8 +248,7 @@ public class JLabelOperator extends JComponentOperator {
      * @param text Text to wait for.
      */
     public void waitText(String text) {
-        getOutput().printLine("Wait \"" + text + "\" text in component \n    : "
-                + toStringSource());
+        getOutput().printLine("Wait \"" + text + "\" text in component \n    : " + toStringSource());
         getOutput().printGolden("Wait \"" + text + "\" text");
         waitState(new JLabelByLabelFinder(text, getComparator()));
     }
@@ -278,7 +268,7 @@ public class JLabelOperator extends JComponentOperator {
     }
 
     ////////////////////////////////////////////////////////
-    //Mapping                                             //
+    // Mapping                                             //
     /**
      * Maps {@code JLabel.getDisabledIcon()} through queue
      */
@@ -555,7 +545,7 @@ public class JLabelOperator extends JComponentOperator {
         });
     }
 
-    //End of mapping                                      //
+    // End of mapping                                      //
     ////////////////////////////////////////////////////////
     /**
      * Allows to find component by text.
@@ -589,8 +579,7 @@ public class JLabelOperator extends JComponentOperator {
         public boolean checkComponent(Component comp) {
             if (comp instanceof JLabel) {
                 if (((JLabel) comp).getText() != null) {
-                    return (comparator.equals(((JLabel) comp).getText(),
-                            label));
+                    return (comparator.equals(((JLabel) comp).getText(), label));
                 }
             }
             return false;

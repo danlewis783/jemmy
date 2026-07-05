@@ -26,7 +26,6 @@ package org.netbeans.jemmy.drivers.text;
 
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-
 import org.netbeans.jemmy.Timeout;
 import org.netbeans.jemmy.drivers.DriverManager;
 import org.netbeans.jemmy.drivers.KeyDriver;
@@ -46,18 +45,16 @@ public class SwingTextKeyboardDriver extends TextKeyboardDriver {
      * Constructs a SwingTextKeyboardDriver.
      */
     public SwingTextKeyboardDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.JTextComponentOperator"});
+        super(new String[] {"org.netbeans.jemmy.operators.JTextComponentOperator"});
     }
 
     @Override
     public void clearText(ComponentOperator oper) {
-        if (oper instanceof JTextAreaOperator
-                || oper instanceof JEditorPaneOperator) {
+        if (oper instanceof JTextAreaOperator || oper instanceof JEditorPaneOperator) {
             DriverManager.getFocusDriver(oper).giveFocus(oper);
             KeyDriver kdriver = DriverManager.getKeyDriver(oper);
             selectText(oper, 0, getText(oper).length());
-            kdriver.pushKey(oper, KeyEvent.VK_DELETE, 0,
-                    oper.getTimeouts().create("ComponentOperator.PushKeyTimeout"));
+            kdriver.pushKey(oper, KeyEvent.VK_DELETE, 0, oper.getTimeouts().create("ComponentOperator.PushKeyTimeout"));
         } else {
             super.clearText(oper);
         }
@@ -85,9 +82,7 @@ public class SwingTextKeyboardDriver extends TextKeyboardDriver {
 
     @Override
     public NavigationKey[] getKeys(ComponentOperator oper) {
-        boolean multiString
-                = oper instanceof JTextAreaOperator
-                || oper instanceof JEditorPaneOperator;
+        boolean multiString = oper instanceof JTextAreaOperator || oper instanceof JEditorPaneOperator;
         NavigationKey[] result = new NavigationKey[multiString ? 8 : 4];
         result[0] = new UpKey(KeyEvent.VK_LEFT, 0);
         result[1] = new DownKey(KeyEvent.VK_RIGHT, 0);

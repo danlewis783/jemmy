@@ -129,15 +129,14 @@ public class ComponentSearcher implements Outputable {
      */
     private String containerToString() {
         if (containerToString == null) {
-            containerToString = container == null ? "null"
-                    : queueTool.invokeSmoothly(
-                            new QueueTool.QueueAction<String>("container.toString()") {
+            containerToString = container == null
+                    ? "null"
+                    : queueTool.invokeSmoothly(new QueueTool.QueueAction<String>("container.toString()") {
                         @Override
                         public String launch() {
                             return container.toString();
                         }
-                    }
-                    );
+                    });
         }
         return containerToString;
     }
@@ -162,21 +161,19 @@ public class ComponentSearcher implements Outputable {
         final Component result = findComponentInContainer(container, chooser, index, null);
         if (result != null) {
             // get result.toString() - run in dispatch thread
-            String resultToString = queueTool.invokeSmoothly(
-                    new QueueTool.QueueAction<String>("result.toString()") {
+            String resultToString = queueTool.invokeSmoothly(new QueueTool.QueueAction<String>("result.toString()") {
                 @Override
                 public String launch() {
                     return result.toString();
                 }
-            }
-            );
+            });
             out.printTrace("Component " + chooser.getDescription()
                     + "\n    was found in container " + containerToString()
                     + "\n    " + resultToString);
             out.printGolden("Component \"" + chooser.getDescription() + "\" was found");
         } else {
-            out.printTrace("Component " + chooser.getDescription()
-                    + "\n    was not found in container " + containerToString());
+            out.printTrace("Component " + chooser.getDescription() + "\n    was not found in container "
+                    + containerToString());
             out.printGolden("Component \"" + chooser.getDescription() + "\" was not found");
         }
         return result;
@@ -222,36 +219,37 @@ public class ComponentSearcher implements Outputable {
         return result;
     }
 
-    private Component findComponentInContainer(final Container cont, final ComponentChooser chooser, final int index,
-            final Vector<Component> allSeen) {
-        return queueTool.invokeSmoothly(new QueueTool.QueueAction<Component>("findComponentInContainer with " + chooser.getDescription()) {
+    private Component findComponentInContainer(
+            final Container cont, final ComponentChooser chooser, final int index, final Vector<Component> allSeen) {
+        return queueTool.invokeSmoothly(
+                new QueueTool.QueueAction<Component>("findComponentInContainer with " + chooser.getDescription()) {
 
-            @Override
-            public Component launch() throws Exception {
-                Component[] components = cont.getComponents();
-                Component target;
-                for (Component component : components) {
-                    if (component != null) {
-                        if (chooser.checkComponent(component)) {
-                            if (allSeen != null) {
-                                allSeen.add(component);
-                            } else if (ordinalIndex == index) {
-                                return component;
-                            } else {
-                                ordinalIndex++;
+                    @Override
+                    public Component launch() throws Exception {
+                        Component[] components = cont.getComponents();
+                        Component target;
+                        for (Component component : components) {
+                            if (component != null) {
+                                if (chooser.checkComponent(component)) {
+                                    if (allSeen != null) {
+                                        allSeen.add(component);
+                                    } else if (ordinalIndex == index) {
+                                        return component;
+                                    } else {
+                                        ordinalIndex++;
+                                    }
+                                }
+                                if (component instanceof Container) {
+                                    if ((target = findComponentInContainer(
+                                                    (Container) component, chooser, index, allSeen))
+                                            != null) {
+                                        return target;
+                                    }
+                                }
                             }
                         }
-                        if (component instanceof Container) {
-                            if ((target = findComponentInContainer((Container) component,
-                                    chooser, index, allSeen)) != null) {
-                                return target;
-                            }
-                        }
+                        return null;
                     }
-                }
-                return null;
-            }
-        });
+                });
     }
-
 }

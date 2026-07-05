@@ -39,27 +39,22 @@ import org.netbeans.jemmy.operators.Operator;
 public class ButtonMouseDriver extends LightSupportiveDriver implements ButtonDriver {
 
     public ButtonMouseDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.ComponentOperator"});
+        super(new String[] {"org.netbeans.jemmy.operators.ComponentOperator"});
     }
 
     @Override
     public void press(ComponentOperator oper) {
         MouseDriver mdriver = DriverManager.getMouseDriver(oper);
-        mdriver.moveMouse(oper,
-                oper.getCenterXForClick(),
-                oper.getCenterYForClick());
-        mdriver.pressMouse(oper,
-                oper.getCenterXForClick(),
-                oper.getCenterYForClick(),
-                Operator.getDefaultMouseButton(),
-                0);
+        mdriver.moveMouse(oper, oper.getCenterXForClick(), oper.getCenterYForClick());
+        mdriver.pressMouse(
+                oper, oper.getCenterXForClick(), oper.getCenterYForClick(), Operator.getDefaultMouseButton(), 0);
     }
 
     @Override
     public void release(ComponentOperator oper) {
-        DriverManager.
-                getMouseDriver(oper).
-                releaseMouse(oper,
+        DriverManager.getMouseDriver(oper)
+                .releaseMouse(
+                        oper,
                         oper.getCenterXForClick(),
                         oper.getCenterYForClick(),
                         Operator.getDefaultMouseButton(),
@@ -68,15 +63,14 @@ public class ButtonMouseDriver extends LightSupportiveDriver implements ButtonDr
 
     @Override
     public void push(ComponentOperator oper) {
-        DriverManager.
-                getMouseDriver(oper).
-                clickMouse(oper,
+        DriverManager.getMouseDriver(oper)
+                .clickMouse(
+                        oper,
                         oper.getCenterXForClick(),
                         oper.getCenterYForClick(),
                         1,
                         Operator.getDefaultMouseButton(),
                         0,
-                        oper.getTimeouts().
-                        create("ComponentOperator.MouseClickTimeout"));
+                        oper.getTimeouts().create("ComponentOperator.MouseClickTimeout"));
     }
 }

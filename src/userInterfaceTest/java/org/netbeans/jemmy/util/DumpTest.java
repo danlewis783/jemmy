@@ -24,20 +24,19 @@
  */
 package org.netbeans.jemmy.util;
 
-import org.netbeans.jemmy.UIStatus;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.scenario.ComboBoxesAndListApp;
-import org.netbeans.jemmy.scenario.Util;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.awt.Point;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.netbeans.jemmy.UIStatus;
+import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.scenario.ComboBoxesAndListApp;
+import org.netbeans.jemmy.scenario.Util;
 
 public class DumpTest {
     private static JFrameOperator fo;
@@ -56,7 +55,7 @@ public class DumpTest {
         UIStatus.mouseMoved(fo, point);
         Dumper.dumpAll(new PrintWriter(out));
         assertThat(out.toString())
-                .contains("<property name=\"" + UIStatus.LAST_MOUSE_MOVE_DPROP + "\" value=\""+point+"\"/>")
-                .contains("<property name=\"" + UIStatus.LAST_MOUSE_MOVE_OPERATOR_DPROP + "\" value=\""+fo+"\"/>");
+                .contains("<property name=\"" + UIStatus.LAST_MOUSE_MOVE_DPROP + "\" value=\"" + point + "\"/>")
+                .contains("<property name=\"" + UIStatus.LAST_MOUSE_MOVE_OPERATOR_DPROP + "\" value=\"" + fo + "\"/>");
     }
 }

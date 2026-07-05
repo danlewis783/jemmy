@@ -34,7 +34,6 @@ package org.netbeans.jemmy.demo;
  *
  *
  */
-
 public interface CommentWindow {
     /**
      * Defines either test(demo) has been stopped or not.

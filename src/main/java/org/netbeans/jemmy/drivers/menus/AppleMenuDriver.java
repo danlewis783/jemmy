@@ -25,12 +25,10 @@
 package org.netbeans.jemmy.drivers.menus;
 
 import java.awt.event.KeyEvent;
-
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.MenuElement;
-
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.Timeout;
 import org.netbeans.jemmy.TimeoutExpiredException;
@@ -52,8 +50,8 @@ public class AppleMenuDriver extends RobotDriver implements MenuDriver {
      * Creates a new instance of AppleMenuDriver
      */
     public AppleMenuDriver() {
-        super(new Timeout("apple.system.menu.delay", 100),
-                new String[]{"org.netbeans.jemmy.operators.JMenuBarOperator"});
+        super(new Timeout("apple.system.menu.delay", 100), new String[] {"org.netbeans.jemmy.operators.JMenuBarOperator"
+        });
     }
 
     @Override
@@ -74,7 +72,8 @@ public class AppleMenuDriver extends RobotDriver implements MenuDriver {
             // TODO - wait for menu item
             int elementIndex = getDesiredElementIndex(menuObject, chooser, depth);
             if (elementIndex == -1) {
-                throw (new JemmyException("Unable to find menu (menuitem): " + ((DescriptablePathChooser) chooser).getDescription()));
+                throw (new JemmyException(
+                        "Unable to find menu (menuitem): " + ((DescriptablePathChooser) chooser).getDescription()));
             }
             for (int i = ((depth == 1) ? 0 : 1); i <= elementIndex; i++) {
                 pressKey(KeyEvent.VK_DOWN, 0);
@@ -116,11 +115,9 @@ public class AppleMenuDriver extends RobotDriver implements MenuDriver {
     private static MenuElement getSelectedElement(MenuElement bar) {
         MenuElement[] subElements = bar.getSubElements();
         for (MenuElement subElement : subElements) {
-            if (subElement instanceof JMenu
-                    && ((JMenu) subElement).isSelected()) {
+            if (subElement instanceof JMenu && ((JMenu) subElement).isSelected()) {
                 return subElement;
-            } else if (subElement instanceof JMenuItem
-                    && ((JMenuItem) subElement).isSelected()) {
+            } else if (subElement instanceof JMenuItem && ((JMenuItem) subElement).isSelected()) {
                 return subElement;
             }
         }
@@ -132,7 +129,9 @@ public class AppleMenuDriver extends RobotDriver implements MenuDriver {
         int realIndex = 0;
         for (MenuElement subElement : subElements) {
             // do not count invisible and disabled menu items
-            if (subElement instanceof JMenuItem && ((JMenuItem) subElement).isVisible() && ((JMenuItem) subElement).isEnabled()) {
+            if (subElement instanceof JMenuItem
+                    && ((JMenuItem) subElement).isVisible()
+                    && ((JMenuItem) subElement).isEnabled()) {
                 if (chooser.checkPathComponent(depth, subElement)) {
                     return realIndex;
                 }

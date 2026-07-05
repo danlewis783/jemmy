@@ -42,9 +42,9 @@ import java.awt.Component;
  */
 public class Waiter<R, P> implements Waitable<R, P>, Timeoutable, Outputable {
 
-    private final static long TIME_DELTA = 10;
-    private final static long WAIT_TIME = 60000;
-    private final static long AFTER_WAIT_TIME = 0;
+    private static final long TIME_DELTA = 10;
+    private static final long WAIT_TIME = 60000;
+    private static final long AFTER_WAIT_TIME = 0;
 
     private final Waitable<R, P> waitable;
     private long startTime = 0;
@@ -59,6 +59,7 @@ public class Waiter<R, P> implements Waitable<R, P>, Timeoutable, Outputable {
      * for instance, by a separate thread when a global timeout runs out.
      */
     public static volatile boolean USE_GLOBAL_TIMEOUT = false;
+
     public static volatile boolean globalTimeoutExpired = false;
 
     /**
@@ -120,8 +121,7 @@ public class Waiter<R, P> implements Waitable<R, P>, Timeoutable, Outputable {
      * reporting if non-null.
      * @return the cloned timeouts.
      */
-    public Timeouts setTimeoutsToCloneOf(Timeouts timeouts,
-            String useAsWaitingTime, String waitingTimeOrigin) {
+    public Timeouts setTimeoutsToCloneOf(Timeouts timeouts, String useAsWaitingTime, String waitingTimeOrigin) {
         Timeouts t = timeouts.cloneThis();
         t.setTimeout("Waiter.WaitingTime", t.getTimeout(useAsWaitingTime));
         setTimeouts(t);
@@ -132,8 +132,7 @@ public class Waiter<R, P> implements Waitable<R, P>, Timeoutable, Outputable {
     /**
      * @see #setTimeoutsToCloneOf(Timeouts, String, String)
      */
-    public Timeouts setTimeoutsToCloneOf(Timeouts timeouts,
-            String useAsWaitingTime) {
+    public Timeouts setTimeoutsToCloneOf(Timeouts timeouts, String useAsWaitingTime) {
         return setTimeoutsToCloneOf(timeouts, useAsWaitingTime, null);
     }
 
@@ -196,8 +195,7 @@ public class Waiter<R, P> implements Waitable<R, P>, Timeoutable, Outputable {
      * @throws TimeoutExpiredException
      * @exception InterruptedException
      */
-    public R waitAction(P waitableObject)
-            throws InterruptedException {
+    public R waitAction(P waitableObject) throws InterruptedException {
         startTime = System.currentTimeMillis();
         out.printTrace(getWaitingStartedMessage());
         out.printGolden(getGoldenWaitingStartedMessage());
@@ -246,7 +244,8 @@ public class Waiter<R, P> implements Waitable<R, P>, Timeoutable, Outputable {
 
     @Override
     public String toString() {
-        return "Waiter{" + "description = " + getDescription() + ", waitable=" + waitable + ", startTime=" + startTime + ", endTime=" + endTime + ", result=" + result + ", waitingTimeOrigin=" + waitingTimeOrigin + '}';
+        return "Waiter{" + "description = " + getDescription() + ", waitable=" + waitable + ", startTime=" + startTime
+                + ", endTime=" + endTime + ", result=" + result + ", waitingTimeOrigin=" + waitingTimeOrigin + '}';
     }
 
     /**
@@ -265,8 +264,7 @@ public class Waiter<R, P> implements Waitable<R, P>, Timeoutable, Outputable {
      * @return a message.
      */
     protected String getTimeoutExpiredMessage(long timeSpent) {
-        return ("\"" + getActualDescription() + "\" action has not been produced in "
-                + timeSpent + " milliseconds");
+        return ("\"" + getActualDescription() + "\" action has not been produced in " + timeSpent + " milliseconds");
     }
 
     /**
@@ -281,14 +279,12 @@ public class Waiter<R, P> implements Waitable<R, P>, Timeoutable, Outputable {
         String resultToString;
         if (result instanceof Component) {
             // run toString in dispatch thread
-            resultToString = new QueueTool().invokeSmoothly(
-                    new QueueTool.QueueAction<String>("result.toString()") {
+            resultToString = new QueueTool().invokeSmoothly(new QueueTool.QueueAction<String>("result.toString()") {
                 @Override
                 public String launch() {
                     return result.toString();
                 }
-            }
-            );
+            });
         } else {
             resultToString = result.toString();
         }
@@ -350,5 +346,4 @@ public class Waiter<R, P> implements Waitable<R, P>, Timeoutable, Outputable {
         }
         return timeFromStart() > timeouts.getTimeout("Waiter.WaitingTime");
     }
-
 }

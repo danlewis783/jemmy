@@ -27,7 +27,6 @@ package org.netbeans.jemmy.drivers.scrolling;
 import java.awt.Adjustable;
 import java.awt.Point;
 import java.awt.Scrollbar;
-
 import org.netbeans.jemmy.operators.ComponentOperator;
 import org.netbeans.jemmy.operators.ScrollPaneOperator;
 
@@ -44,7 +43,7 @@ public class ScrollPaneDriver extends AWTScrollDriver {
      * Constructs a ScrollPaneDriver.
      */
     public ScrollPaneDriver() {
-        super(new String[]{"org.netbeans.jemmy.operators.ScrollPaneOperator"});
+        super(new String[] {"org.netbeans.jemmy.operators.ScrollPaneOperator"});
     }
 
     @Override
@@ -56,12 +55,10 @@ public class ScrollPaneDriver extends AWTScrollDriver {
 
     @Override
     public void scrollToMinimum(ComponentOperator oper, final int orientation) {
-        final Adjustable adj
-                = (orientation == Scrollbar.HORIZONTAL)
-                        ? ((ScrollPaneOperator) oper).getHAdjustable()
-                        : ((ScrollPaneOperator) oper).getVAdjustable();
-        scroll(oper,
-                new ScrollAdjuster() {
+        final Adjustable adj = (orientation == Scrollbar.HORIZONTAL)
+                ? ((ScrollPaneOperator) oper).getHAdjustable()
+                : ((ScrollPaneOperator) oper).getVAdjustable();
+        scroll(oper, new ScrollAdjuster() {
             @Override
             public int getScrollDirection() {
                 return ((adj.getMinimum() < adj.getValue())
@@ -88,12 +85,10 @@ public class ScrollPaneDriver extends AWTScrollDriver {
 
     @Override
     public void scrollToMaximum(ComponentOperator oper, final int orientation) {
-        final Adjustable adj
-                = (orientation == Scrollbar.HORIZONTAL)
-                        ? ((ScrollPaneOperator) oper).getHAdjustable()
-                        : ((ScrollPaneOperator) oper).getVAdjustable();
-        scroll(oper,
-                new ScrollAdjuster() {
+        final Adjustable adj = (orientation == Scrollbar.HORIZONTAL)
+                ? ((ScrollPaneOperator) oper).getHAdjustable()
+                : ((ScrollPaneOperator) oper).getVAdjustable();
+        scroll(oper, new ScrollAdjuster() {
             @Override
             public int getScrollDirection() {
                 return (((adj.getMaximum() - adj.getVisibleAmount()) > adj.getValue())
@@ -122,9 +117,9 @@ public class ScrollPaneDriver extends AWTScrollDriver {
     protected Point getClickPoint(ComponentOperator oper, int direction, int orientation) {
         int x, y;
         if (orientation == Scrollbar.HORIZONTAL) {
-            int offset = ((ScrollPaneOperator) oper).
-                    isScrollbarVisible(Scrollbar.VERTICAL)
-                    ? ((ScrollPaneOperator) oper).getVScrollbarWidth() : 0;
+            int offset = ((ScrollPaneOperator) oper).isScrollbarVisible(Scrollbar.VERTICAL)
+                    ? ((ScrollPaneOperator) oper).getVScrollbarWidth()
+                    : 0;
             if (direction == ScrollAdjuster.INCREASE_SCROLL_DIRECTION) {
                 x = oper.getWidth() - 1 - CLICK_OFFSET - offset;
             } else if (direction == ScrollAdjuster.DECREASE_SCROLL_DIRECTION) {
@@ -134,9 +129,9 @@ public class ScrollPaneDriver extends AWTScrollDriver {
             }
             y = oper.getHeight() - ((ScrollPaneOperator) oper).getHScrollbarHeight() / 2;
         } else if (orientation == Scrollbar.VERTICAL) {
-            int offset = ((ScrollPaneOperator) oper).
-                    isScrollbarVisible(Scrollbar.HORIZONTAL)
-                    ? ((ScrollPaneOperator) oper).getHScrollbarHeight() : 0;
+            int offset = ((ScrollPaneOperator) oper).isScrollbarVisible(Scrollbar.HORIZONTAL)
+                    ? ((ScrollPaneOperator) oper).getHScrollbarHeight()
+                    : 0;
             if (direction == ScrollAdjuster.INCREASE_SCROLL_DIRECTION) {
                 y = oper.getHeight() - 1 - CLICK_OFFSET - offset;
             } else if (direction == ScrollAdjuster.DECREASE_SCROLL_DIRECTION) {

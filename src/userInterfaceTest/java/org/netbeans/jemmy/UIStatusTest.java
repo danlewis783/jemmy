@@ -24,6 +24,14 @@
  */
 package org.netbeans.jemmy;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.awt.Point;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.netbeans.jemmy.drivers.DriverManager;
 import org.netbeans.jemmy.drivers.LightDriver;
 import org.netbeans.jemmy.drivers.input.MouseEventDriver;
@@ -33,15 +41,6 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JListOperator;
 import org.netbeans.jemmy.scenario.ComboBoxesAndListApp;
 import org.netbeans.jemmy.scenario.Util;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
-
-import java.awt.Point;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class UIStatusTest {
     private static JFrameOperator fo;
@@ -68,7 +67,8 @@ public class UIStatusTest {
         setDriver(driver);
         JComboBoxOperator combo = new JComboBoxOperator(fo);
         combo.clickMouse();
-        assertThat(UIStatus.lastMouseMove()).isEqualTo(new Point(combo.getCenterXForClick(), combo.getCenterYForClick()));
+        assertThat(UIStatus.lastMouseMove())
+                .isEqualTo(new Point(combo.getCenterXForClick(), combo.getCenterYForClick()));
     }
 
     @ParameterizedTest
@@ -97,5 +97,4 @@ public class UIStatusTest {
         list.dragNDrop(10, 10, 20, 20);
         assertThat(UIStatus.lastMouseMove()).isEqualTo(new Point(20, 20));
     }
-
 }

@@ -89,8 +89,7 @@ public class LookAndFeel {
      *         otherwise false
      */
     public static boolean isWindows() {
-        return UIManager.getLookAndFeel().getClass().
-                getSimpleName().equals("WindowsLookAndFeel");
+        return UIManager.getLookAndFeel().getClass().getSimpleName().equals("WindowsLookAndFeel");
     }
 
     /**
@@ -100,8 +99,7 @@ public class LookAndFeel {
      *         otherwise false
      */
     public static boolean isWindowsClassic() {
-        return UIManager.getLookAndFeel().getClass().
-                getSimpleName().equals("WindowsClassicLookAndFeel");
+        return UIManager.getLookAndFeel().getClass().getSimpleName().equals("WindowsClassicLookAndFeel");
     }
 
     private static boolean isLookAndFeel(String id) {

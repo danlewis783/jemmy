@@ -29,7 +29,7 @@ import org.netbeans.jemmy.operators.ComponentOperator;
 /**
  * Allows to declare supported operator classes.
  */
-abstract public class LightSupportiveDriver implements LightDriver {
+public abstract class LightSupportiveDriver implements LightDriver {
 
     private String[] supported;
 
