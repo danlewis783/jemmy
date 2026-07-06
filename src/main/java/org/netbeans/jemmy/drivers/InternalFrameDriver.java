@@ -25,6 +25,7 @@
 package org.netbeans.jemmy.drivers;
 
 import java.awt.Component;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.operators.ComponentOperator;
 
 /**
@@ -37,5 +38,5 @@ public interface InternalFrameDriver {
      *
      * @return a component - title pane.
      */
-    public Component getTitlePane(ComponentOperator oper);
+    public @Nullable Component getTitlePane(ComponentOperator oper);
 }

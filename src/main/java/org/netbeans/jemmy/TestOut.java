@@ -30,21 +30,26 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import org.jspecify.annotations.Nullable;
 
 public class TestOut {
 
-    private InputStream input;
-    private PrintWriter output;
-    private PrintWriter errput;
-    private PrintWriter golden_output;
-    private BufferedReader buffInput;
+    private @Nullable InputStream input;
+    private @Nullable PrintWriter output;
+    private @Nullable PrintWriter errput;
+    private @Nullable PrintWriter golden_output;
+    private @SuppressWarnings("NullAway.Init") @Nullable BufferedReader buffInput;
     private boolean autoFlushMode = true;
 
-    public TestOut(InputStream in, PrintStream out, PrintStream err) {
+    public TestOut(@Nullable InputStream in, @Nullable PrintStream out, @Nullable PrintStream err) {
         this(in, out, err, null);
     }
 
-    public TestOut(InputStream in, PrintStream out, PrintStream err, PrintStream golden) {
+    public TestOut(
+            @Nullable InputStream in,
+            @Nullable PrintStream out,
+            @Nullable PrintStream err,
+            @Nullable PrintStream golden) {
         super();
         PrintWriter tout = null;
         if (out != null) {
@@ -61,11 +66,15 @@ public class TestOut {
         initStreams(in, tout, terr, tgolden);
     }
 
-    public TestOut(InputStream in, PrintWriter out, PrintWriter err) {
+    public TestOut(@Nullable InputStream in, @Nullable PrintWriter out, @Nullable PrintWriter err) {
         this(in, out, err, null);
     }
 
-    public TestOut(InputStream in, PrintWriter out, PrintWriter err, PrintWriter golden) {
+    public TestOut(
+            @Nullable InputStream in,
+            @Nullable PrintWriter out,
+            @Nullable PrintWriter err,
+            @Nullable PrintWriter golden) {
         super();
         initStreams(in, out, err, golden);
         autoFlushMode = true;
@@ -129,7 +138,7 @@ public class TestOut {
      * @return a line from input stream.
      * @exception IOException
      */
-    public String readLine() throws IOException {
+    public @Nullable String readLine() throws IOException {
         if (buffInput != null) {
             return buffInput.readLine();
         } else {
@@ -218,7 +227,7 @@ public class TestOut {
      *
      * @return an input stream
      */
-    public InputStream getInput() {
+    public @Nullable InputStream getInput() {
         return input;
     }
 
@@ -227,7 +236,7 @@ public class TestOut {
      *
      * @return an output stream
      */
-    public PrintWriter getOutput() {
+    public @Nullable PrintWriter getOutput() {
         return output;
     }
 
@@ -236,7 +245,7 @@ public class TestOut {
      *
      * @return a error stream
      */
-    public PrintWriter getErrput() {
+    public @Nullable PrintWriter getErrput() {
         return errput;
     }
 
@@ -245,7 +254,7 @@ public class TestOut {
      *
      * @return a golden output stream
      */
-    public PrintWriter getGolden() {
+    public @Nullable PrintWriter getGolden() {
         return golden_output;
     }
 
@@ -273,7 +282,11 @@ public class TestOut {
         }
     }
 
-    private void initStreams(InputStream in, PrintWriter out, PrintWriter err, PrintWriter golden) {
+    private void initStreams(
+            @Nullable InputStream in,
+            @Nullable PrintWriter out,
+            @Nullable PrintWriter err,
+            @Nullable PrintWriter golden) {
         input = in;
         output = out;
         errput = err;

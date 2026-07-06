@@ -38,4 +38,7 @@
  * @since 04/17/2002
  * <hr>
  */
+@NullMarked
 package org.netbeans.jemmy.drivers;
+
+import org.jspecify.annotations.NullMarked;

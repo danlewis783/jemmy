@@ -29,4 +29,7 @@
  * @since 17 Apr 2002
  * <hr>
  */
+@NullMarked
 package org.netbeans.jemmy.drivers.trees;
+
+import org.jspecify.annotations.NullMarked;

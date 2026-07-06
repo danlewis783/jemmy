@@ -26,7 +26,7 @@ package org.netbeans.jemmy.drivers.text;
 
 class UpKey extends GoAndBackKey {
 
-    private DownKey backKey;
+    private @SuppressWarnings("NullAway.Init") DownKey backKey;
 
     public UpKey(int keyCode, int mods) {
         super(keyCode, mods);

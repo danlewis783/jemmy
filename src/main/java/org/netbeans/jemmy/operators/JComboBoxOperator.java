@@ -43,6 +43,7 @@ import javax.swing.ListCellRenderer;
 import javax.swing.event.ListDataEvent;
 import javax.swing.plaf.ComboBoxUI;
 import javax.swing.plaf.basic.ComboPopup;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.JemmyException;
@@ -94,11 +95,11 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
     private static final long BEFORE_SELECTING_TIMEOUT = 0;
     private static final long WAIT_LIST_TIMEOUT = 60000;
 
-    private TestOut output;
-    private Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
 
-    private JButtonOperator button;
-    private JTextFieldOperator text;
+    private @SuppressWarnings("NullAway.Init") JButtonOperator button;
+    private @SuppressWarnings("NullAway.Init") JTextFieldOperator text;
 
     ListDriver driver;
 
@@ -159,7 +160,7 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
      *
      * @return JComboBox instance or null if component was not found.
      */
-    public static JComboBox<?> findJComboBox(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable JComboBox<?> findJComboBox(Container cont, ComponentChooser chooser, int index) {
         return (JComboBox) findComponent(cont, new JComboBoxFinder(chooser), index);
     }
 
@@ -168,7 +169,7 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
      *
      * @return JComboBox instance or null if component was not found.
      */
-    public static JComboBox<?> findJComboBox(Container cont, ComponentChooser chooser) {
+    public static @Nullable JComboBox<?> findJComboBox(Container cont, ComponentChooser chooser) {
         return findJComboBox(cont, chooser, 0);
     }
 
@@ -180,7 +181,7 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
      * @return JComboBox instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JComboBox<?> findJComboBox(
+    public static @Nullable JComboBox<?> findJComboBox(
             Container cont, String text, boolean ce, boolean ccs, int itemIndex, int index) {
         return (findJComboBox(
                 cont, new JComboBoxByItemFinder(text, itemIndex, new DefaultStringComparator(ce, ccs)), index));
@@ -194,7 +195,8 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
      * @return JComboBox instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JComboBox<?> findJComboBox(Container cont, String text, boolean ce, boolean ccs, int itemIndex) {
+    public static @Nullable JComboBox<?> findJComboBox(
+            Container cont, String text, boolean ce, boolean ccs, int itemIndex) {
         return findJComboBox(cont, text, ce, ccs, itemIndex, 0);
     }
 
@@ -360,7 +362,7 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
      * @return JList object if it was displayed in
      * JComboBoxOperator.WaitListTimeout milliseconds, null otherwise.
      */
-    public JList<?> waitList() {
+    public @Nullable JList<?> waitList() {
         ListWater pw = new ListWater();
         pw.setOutput(output.createErrorOutput());
         pw.setTimeoutsToCloneOf(timeouts, "JComboBoxOperator.WaitListTimeout");
@@ -1150,12 +1152,13 @@ public class JComboBoxOperator extends JComponentOperator implements Timeoutable
         }
 
         @Override
-        public Component actionProduced(Void obj) {
-            Window popupWindow = null;
-            if (pChooser.checkComponent(getWindow())) {
-                popupWindow = getWindow();
+        public @Nullable Component actionProduced(Void obj) {
+            Window ownerWindow = getWindow();
+            Window popupWindow;
+            if (ownerWindow != null && pChooser.checkComponent(ownerWindow)) {
+                popupWindow = ownerWindow;
             } else {
-                popupWindow = WindowWaiter.getWindow(getWindow(), pChooser);
+                popupWindow = WindowWaiter.getWindow(ownerWindow, pChooser);
             }
             if (popupWindow != null) {
                 ComponentSearcher sc = new ComponentSearcher(popupWindow);

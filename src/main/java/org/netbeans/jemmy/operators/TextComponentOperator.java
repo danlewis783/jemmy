@@ -29,6 +29,7 @@ import java.awt.Container;
 import java.awt.TextComponent;
 import java.awt.event.TextListener;
 import java.util.Hashtable;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.Action;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.Outputable;
@@ -65,8 +66,8 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
     private static final long CHANGE_CARET_POSITION_TIMEOUT = 60000;
     private static final long TYPE_TEXT_TIMEOUT = 60000;
 
-    private Timeouts timeouts;
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
 
     private TextDriver driver;
 
@@ -155,7 +156,7 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
      * @param index Ordinal component index. The first {@code index} is 0.
      * @return TextComponent instance or null if component was not found.
      */
-    public static TextComponent findTextComponent(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable TextComponent findTextComponent(Container cont, ComponentChooser chooser, int index) {
         return (TextComponent) findComponent(cont, new TextComponentFinder(chooser), index);
     }
 
@@ -167,7 +168,7 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
      * containment need not be direct.
      * @return TextComponent instance or null if component was not found.
      */
-    public static TextComponent findTextComponent(Container cont, ComponentChooser chooser) {
+    public static @Nullable TextComponent findTextComponent(Container cont, ComponentChooser chooser) {
         return findTextComponent(cont, chooser, 0);
     }
 
@@ -177,7 +178,8 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
      * @return TextComponent instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static TextComponent findTextComponent(Container cont, String text, boolean ce, boolean ccs, int index) {
+    public static @Nullable TextComponent findTextComponent(
+            Container cont, String text, boolean ce, boolean ccs, int index) {
         return findTextComponent(
                 cont, new TextComponentByTextFinder(text, new DefaultStringComparator(ce, ccs)), index);
     }
@@ -188,7 +190,7 @@ public class TextComponentOperator extends ComponentOperator implements Timeouta
      * @return TextComponent instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static TextComponent findTextComponent(Container cont, String text, boolean ce, boolean ccs) {
+    public static @Nullable TextComponent findTextComponent(Container cont, String text, boolean ce, boolean ccs) {
         return findTextComponent(cont, text, ce, ccs, 0);
     }
 

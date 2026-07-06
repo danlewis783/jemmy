@@ -33,8 +33,10 @@ import javax.swing.JDialog;
 import javax.swing.JLayeredPane;
 import javax.swing.JMenuBar;
 import javax.swing.JRootPane;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.DialogWaiter;
+import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.TestOut;
 import org.netbeans.jemmy.Timeouts;
@@ -177,7 +179,7 @@ public class JDialogOperator extends DialogOperator {
      *
      * @return JDialog instance or null if component was not found.
      */
-    public static JDialog findJDialog(ComponentChooser chooser, int index) {
+    public static @Nullable JDialog findJDialog(ComponentChooser chooser, int index) {
         return (JDialog) DialogWaiter.getDialog(new JDialogFinder(chooser), index);
     }
 
@@ -186,7 +188,7 @@ public class JDialogOperator extends DialogOperator {
      *
      * @return JDialog instance or null if component was not found.
      */
-    public static JDialog findJDialog(ComponentChooser chooser) {
+    public static @Nullable JDialog findJDialog(ComponentChooser chooser) {
         return findJDialog(chooser, 0);
     }
 
@@ -197,7 +199,7 @@ public class JDialogOperator extends DialogOperator {
      * @param cc Compare case sensitively. If true, both text and caption are
      * @return JDialog instance or null if component was not found.
      */
-    public static JDialog findJDialog(String title, boolean ce, boolean cc, int index) {
+    public static @Nullable JDialog findJDialog(String title, boolean ce, boolean cc, int index) {
         return ((JDialog) DialogWaiter.getDialog(
                 new JDialogFinder(new DialogByTitleFinder(title, new DefaultStringComparator(ce, cc))), index));
     }
@@ -209,7 +211,7 @@ public class JDialogOperator extends DialogOperator {
      * @param cc Compare case sensitively. If true, both text and caption are
      * @return JDialog instance or null if component was not found.
      */
-    public static JDialog findJDialog(String title, boolean ce, boolean cc) {
+    public static @Nullable JDialog findJDialog(String title, boolean ce, boolean cc) {
         return findJDialog(title, ce, cc, 0);
     }
 
@@ -218,7 +220,7 @@ public class JDialogOperator extends DialogOperator {
      *
      * @return JDialog instance or null if component was not found.
      */
-    public static JDialog findJDialog(Window owner, ComponentChooser chooser, int index) {
+    public static @Nullable JDialog findJDialog(Window owner, ComponentChooser chooser, int index) {
         return (JDialog) DialogWaiter.getDialog(owner, new JDialogFinder(chooser), index);
     }
 
@@ -227,7 +229,7 @@ public class JDialogOperator extends DialogOperator {
      *
      * @return JDialog instance or null if component was not found.
      */
-    public static JDialog findJDialog(Window owner, ComponentChooser chooser) {
+    public static @Nullable JDialog findJDialog(Window owner, ComponentChooser chooser) {
         return findJDialog(owner, chooser, 0);
     }
 
@@ -238,7 +240,7 @@ public class JDialogOperator extends DialogOperator {
      * @param cc Compare case sensitively. If true, both text and caption are
      * @return JDialog instance or null if component was not found.
      */
-    public static JDialog findJDialog(Window owner, String title, boolean ce, boolean cc, int index) {
+    public static @Nullable JDialog findJDialog(Window owner, String title, boolean ce, boolean cc, int index) {
         return ((JDialog) DialogWaiter.getDialog(
                 owner, new JDialogFinder(new DialogByTitleFinder(title, new DefaultStringComparator(ce, cc))), index));
     }
@@ -250,7 +252,7 @@ public class JDialogOperator extends DialogOperator {
      * @param cc Compare case sensitively. If true, both text and caption are
      * @return JDialog instance or null if component was not found.
      */
-    public static JDialog findJDialog(Window owner, String title, boolean ce, boolean cc) {
+    public static @Nullable JDialog findJDialog(Window owner, String title, boolean ce, boolean cc) {
         return findJDialog(owner, title, ce, cc, 0);
     }
 
@@ -342,7 +344,7 @@ public class JDialogOperator extends DialogOperator {
      *
      * @return dialog or null if no modal dialog is currently displayed.
      */
-    public static Dialog getTopModalDialog() {
+    public static @Nullable Dialog getTopModalDialog() {
         return (DialogWaiter.getDialog(new ComponentChooser() {
             @Override
             public boolean checkComponent(Component comp) {
@@ -508,7 +510,7 @@ public class JDialogOperator extends DialogOperator {
             return ((JDialog) waiter.waitDialog(new JDialogFinder(chooser), index));
         } catch (InterruptedException e) {
             output.printStackTrace(e);
-            return null;
+            throw new JemmyException("Interrupted", e);
         }
     }
 
@@ -537,7 +539,7 @@ public class JDialogOperator extends DialogOperator {
             return ((JDialog) waiter.waitDialog(owner, new JDialogFinder(chooser), index));
         } catch (InterruptedException e) {
             JemmyProperties.getCurrentOutput().printStackTrace(e);
-            return null;
+            throw new JemmyException("Interrupted", e);
         }
     }
 

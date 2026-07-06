@@ -27,6 +27,7 @@ package org.netbeans.jemmy.util;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dialog;
+import java.util.Objects;
 import javax.swing.JInternalFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -176,7 +177,8 @@ public class DefaultVisualizer implements ComponentVisualizer, Cloneable {
                     throw (new JemmyInputException("Component is not on top modal dialog.", compOper.getSource()));
                 }
             }
-            WindowOperator winOper = new WindowOperator(compOper.getWindow());
+            WindowOperator winOper =
+                    new WindowOperator(Objects.requireNonNull(compOper.getWindow(), "component has no window"));
             if (window) {
                 winOper.copyEnvironment(compOper);
                 winOper.setVisualizer(new EmptyVisualizer());

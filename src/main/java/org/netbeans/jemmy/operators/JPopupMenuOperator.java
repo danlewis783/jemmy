@@ -40,6 +40,7 @@ import javax.swing.MenuSelectionManager;
 import javax.swing.SingleSelectionModel;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.plaf.PopupMenuUI;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.Action;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
@@ -76,8 +77,8 @@ public class JPopupMenuOperator extends JComponentOperator implements Outputable
      */
     public static final String LABEL_DPROP = "Label";
 
-    private TestOut output;
-    private Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
     private MenuDriver driver;
 
     public JPopupMenuOperator(JPopupMenu popup) {
@@ -129,7 +130,7 @@ public class JPopupMenuOperator extends JComponentOperator implements Outputable
      *
      * @return JPopupMenu instance or null if component was not found.
      */
-    public static JPopupMenu findJPopupMenu(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable JPopupMenu findJPopupMenu(Container cont, ComponentChooser chooser, int index) {
         return (JPopupMenu) findComponent(cont, new JPopupMenuFinder(chooser), index);
     }
 
@@ -138,7 +139,7 @@ public class JPopupMenuOperator extends JComponentOperator implements Outputable
      *
      * @return JPopupMenu instance or null if component was not found.
      */
-    public static JPopupMenu findJPopupMenu(Container cont, ComponentChooser chooser) {
+    public static @Nullable JPopupMenu findJPopupMenu(Container cont, ComponentChooser chooser) {
         return findJPopupMenu(cont, chooser, 0);
     }
 
@@ -165,7 +166,7 @@ public class JPopupMenuOperator extends JComponentOperator implements Outputable
      *
      * @return a window containing JPopupMenu.
      */
-    public static Window findJPopupWindow(ComponentChooser chooser) {
+    public static @Nullable Window findJPopupWindow(ComponentChooser chooser) {
         return WindowWaiter.getWindow(new JPopupWindowFinder(chooser));
     }
 
@@ -178,7 +179,7 @@ public class JPopupMenuOperator extends JComponentOperator implements Outputable
         try {
             return (new WindowWaiter()).waitWindow(new JPopupWindowFinder(chooser));
         } catch (InterruptedException e) {
-            return null;
+            throw new JemmyException("Interrupted", e);
         }
     }
 
@@ -332,7 +333,7 @@ public class JPopupMenuOperator extends JComponentOperator implements Outputable
      *
      * @return an opened JPopupMenu
      */
-    public static JPopupMenu callPopup(Component comp, int mouseButton) {
+    public static @Nullable JPopupMenu callPopup(Component comp, int mouseButton) {
         ComponentOperator co = new ComponentOperator(comp);
         co.makeComponentVisible();
         co.clickForPopup(mouseButton);
@@ -347,7 +348,7 @@ public class JPopupMenuOperator extends JComponentOperator implements Outputable
      * @return an opened JPopupMenu
      * @see ComponentOperator#getPopupMouseButton()
      */
-    public static JPopupMenu callPopup(Component comp) {
+    public static @Nullable JPopupMenu callPopup(Component comp) {
         return callPopup(comp, getPopupMouseButton());
     }
 
@@ -393,7 +394,7 @@ public class JPopupMenuOperator extends JComponentOperator implements Outputable
         return ((JMenuItem) produceTimeRestricted(
                 new Action<Object, Void>() {
                     @Override
-                    public Object launch(Void obj) {
+                    public @Nullable Object launch(Void obj) {
                         // TDB 1.5 menu workaround
                         getQueueTool().waitEmpty();
                         Object result =
@@ -423,7 +424,7 @@ public class JPopupMenuOperator extends JComponentOperator implements Outputable
     public void pushMenuNoBlock(final ComponentChooser[] choosers) {
         produceNoBlocking(new NoBlockingAction<Object, Void>("Menu pushing") {
             @Override
-            public Object doAction(Void param) {
+            public @Nullable Object doAction(Void param) {
                 // TDB 1.5 menu workaround
                 getQueueTool().waitEmpty();
                 Object result = driver.pushMenu(JPopupMenuOperator.this, JMenuOperator.converChoosers(choosers));

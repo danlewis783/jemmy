@@ -24,6 +24,8 @@
  */
 package org.netbeans.jemmy;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Defines an action to be executed by {@code ActionProducer} instance.
  *
@@ -39,7 +41,7 @@ public interface Action<R, P> {
      * in an invocation of {@code ActionProducer.produceAction(Object)}.
      * @return action result.
      */
-    public R launch(P obj);
+    public @Nullable R launch(P obj);
 
     /**
      * Returns the description value.

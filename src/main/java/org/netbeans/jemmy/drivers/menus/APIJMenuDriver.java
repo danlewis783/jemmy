@@ -28,6 +28,7 @@ import java.awt.Component;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.drivers.MenuDriver;
@@ -43,8 +44,8 @@ public class APIJMenuDriver extends DefaultJMenuDriver implements MenuDriver {
         super();
     }
 
-    protected Object push(
-            ComponentOperator oper, JMenuBar menuBar, PathChooser chooser, int depth, boolean pressMouse) {
+    protected @Nullable Object push(
+            ComponentOperator oper, @Nullable JMenuBar menuBar, PathChooser chooser, int depth, boolean pressMouse) {
         try {
             oper.waitComponentVisible(true);
             oper.waitComponentEnabled();

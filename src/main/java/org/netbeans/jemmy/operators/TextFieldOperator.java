@@ -30,6 +30,7 @@ import java.awt.Dimension;
 import java.awt.TextField;
 import java.awt.event.ActionListener;
 import java.util.Hashtable;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
@@ -56,8 +57,8 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
     private static final long CHANGE_CARET_POSITION_TIMEOUT = 60000;
     private static final long TYPE_TEXT_TIMEOUT = 60000;
 
-    private Timeouts timeouts;
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
 
     /**
      * @param b The {@code java.awt.TextField} managed by this instance.
@@ -142,7 +143,7 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
      * @param index Ordinal component index. The first {@code index} is 0.
      * @return TextField instance or null if component was not found.
      */
-    public static TextField findTextField(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable TextField findTextField(Container cont, ComponentChooser chooser, int index) {
         return (TextField) findComponent(cont, new TextFieldFinder(chooser), index);
     }
 
@@ -154,7 +155,7 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
      * containment need not be direct.
      * @return TextField instance or null if component was not found.
      */
-    public static TextField findTextField(Container cont, ComponentChooser chooser) {
+    public static @Nullable TextField findTextField(Container cont, ComponentChooser chooser) {
         return findTextField(cont, chooser, 0);
     }
 
@@ -164,7 +165,7 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
      * @return TextField instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static TextField findTextField(Container cont, String text, boolean ce, boolean ccs, int index) {
+    public static @Nullable TextField findTextField(Container cont, String text, boolean ce, boolean ccs, int index) {
         return findTextField(cont, new TextFieldByTextFinder(text, new DefaultStringComparator(ce, ccs)), index);
     }
 
@@ -174,7 +175,7 @@ public class TextFieldOperator extends TextComponentOperator implements Timeouta
      * @return TextField instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static TextField findTextField(Container cont, String text, boolean ce, boolean ccs) {
+    public static @Nullable TextField findTextField(Container cont, String text, boolean ce, boolean ccs) {
         return findTextField(cont, text, ce, ccs, 0);
     }
 

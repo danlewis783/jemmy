@@ -25,6 +25,7 @@
 package org.netbeans.jemmy.image;
 
 import java.awt.image.BufferedImage;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Compares two images with color mapping defined by {@code ColorModel}
@@ -33,6 +34,8 @@ import java.awt.image.BufferedImage;
 public class ColorImageComparator extends StrictImageComparator {
 
     ColorMap leftMap, rightMap;
+
+    @Nullable
     ImageComparator comparator = null;
 
     /**

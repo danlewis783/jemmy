@@ -39,6 +39,7 @@ import javax.swing.event.MenuDragMouseListener;
 import javax.swing.event.MenuKeyEvent;
 import javax.swing.event.MenuKeyListener;
 import javax.swing.plaf.MenuItemUI;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.Outputable;
@@ -62,8 +63,8 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
 
     private static final long PUSH_MENU_TIMEOUT = 0;
 
-    private Timeouts timeouts;
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
 
     public JMenuItemOperator(JMenuItem item) {
         super(item);
@@ -124,7 +125,7 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
      *
      * @return JMenuItem instance or null if component was not found.
      */
-    public static JMenuItem findJMenuItem(Container menu, ComponentChooser chooser, int index) {
+    public static @Nullable JMenuItem findJMenuItem(Container menu, ComponentChooser chooser, int index) {
         return (JMenuItem) findComponent(menu, new JMenuItemFinder(chooser), index);
     }
 
@@ -133,7 +134,7 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
      *
      * @return JMenuItem instance or null if component was not found.
      */
-    public static JMenuItem findJMenuItem(Container menu, ComponentChooser chooser) {
+    public static @Nullable JMenuItem findJMenuItem(Container menu, ComponentChooser chooser) {
         return findJMenuItem(menu, chooser, 0);
     }
 
@@ -143,7 +144,7 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
      * @return JMenuItem instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JMenuItem findJMenuItem(Container menu, String text, boolean ce, boolean ccs, int index) {
+    public static @Nullable JMenuItem findJMenuItem(Container menu, String text, boolean ce, boolean ccs, int index) {
         return (findJMenuItem(menu, new JMenuItemByLabelFinder(text, new DefaultStringComparator(ce, ccs)), index));
     }
 
@@ -153,7 +154,7 @@ public class JMenuItemOperator extends AbstractButtonOperator implements Timeout
      * @return JMenuItem instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JMenuItem findJMenuItem(Container menu, String text, boolean ce, boolean ccs) {
+    public static @Nullable JMenuItem findJMenuItem(Container menu, String text, boolean ce, boolean ccs) {
         return findJMenuItem(menu, text, ce, ccs, 0);
     }
 

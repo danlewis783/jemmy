@@ -27,6 +27,8 @@ package org.netbeans.jemmy.drivers.input;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Objects;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ClassReference;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.JemmyProperties;
@@ -46,7 +48,7 @@ public class RobotDriver extends LightSupportiveDriver {
     private double oldY;
     private static final double CONSTANT1 = 0.75;
     private static final double CONSTANT2 = 12.0;
-    protected ClassReference robotReference = null;
+    protected @Nullable ClassReference robotReference = null;
 
     protected QueueTool qtool;
 
@@ -183,12 +185,13 @@ public class RobotDriver extends LightSupportiveDriver {
      *
      * @param method a name of {@code java.awt.Robot} method.
      */
-    protected void makeAnOperation(final String method, final Object[] params, final Class<?>[] paramClasses) {
+    protected void makeAnOperation(
+            final String method, final @Nullable Object[] params, final Class<?> @Nullable [] paramClasses) {
         if (robotReference == null) {
             initRobot();
         }
         try {
-            robotReference.invokeMethod(method, params, paramClasses);
+            Objects.requireNonNull(robotReference, "robot not created").invokeMethod(method, params, paramClasses);
             synchronizeRobot();
         } catch (InvocationTargetException | IllegalStateException | NoSuchMethodException | IllegalAccessException e) {
             throw (new JemmyException("Exception during java.awt.Robot accessing", e));
@@ -205,7 +208,7 @@ public class RobotDriver extends LightSupportiveDriver {
                     initRobot();
                 }
                 try {
-                    robotReference.invokeMethod("waitForIdle", null, null);
+                    Objects.requireNonNull(robotReference, "robot not created").invokeMethod("waitForIdle", null, null);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

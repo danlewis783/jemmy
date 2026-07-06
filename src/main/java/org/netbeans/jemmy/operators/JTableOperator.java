@@ -47,6 +47,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.JemmyException;
@@ -120,8 +121,8 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
 
     private static final long WAIT_EDITING_TIMEOUT = 60000;
 
-    private TestOut output;
-    private Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
 
     TableDriver driver;
 
@@ -205,7 +206,7 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
      *
      * @return JTable instance or null if component was not found.
      */
-    public static JTable findJTable(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable JTable findJTable(Container cont, ComponentChooser chooser, int index) {
         return (JTable) findComponent(cont, new JTableFinder(chooser), index);
     }
 
@@ -214,7 +215,7 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
      *
      * @return JTable instance or null if component was not found.
      */
-    public static JTable findJTable(Container cont, ComponentChooser chooser) {
+    public static @Nullable JTable findJTable(Container cont, ComponentChooser chooser) {
         return findJTable(cont, chooser, 0);
     }
 
@@ -227,7 +228,7 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
      * @return JTable instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JTable findJTable(
+    public static @Nullable JTable findJTable(
             Container cont, String text, boolean ce, boolean ccs, int row, int column, int index) {
         return findJTable(cont, new JTableByCellFinder(text, row, column, new DefaultStringComparator(ce, ccs)), index);
     }
@@ -241,7 +242,8 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
      * @return JTable instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JTable findJTable(Container cont, String text, boolean ce, boolean ccs, int row, int column) {
+    public static @Nullable JTable findJTable(
+            Container cont, String text, boolean ce, boolean ccs, int row, int column) {
         return findJTable(cont, text, ce, ccs, row, column, 0);
     }
 
@@ -344,7 +346,8 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
      *
      * @return Point indicating coordinates (x - column, y - row)
      */
-    public Point findCell(String text, StringComparator comparator, int[] rows, int[] columns, int index) {
+    public Point findCell(
+            String text, StringComparator comparator, int @Nullable [] rows, int @Nullable [] columns, int index) {
         return findCell(new BySubStringTableCellChooser(text, comparator), rows, columns, index);
     }
 
@@ -511,7 +514,7 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
      *
      * @return Point indicating coordinates (x - column, y - row)
      */
-    public Point findCell(String text, int[] rows, int[] columns, int index) {
+    public Point findCell(String text, int @Nullable [] rows, int @Nullable [] columns, int index) {
         return findCell(new BySubStringTableCellChooser(text, getComparator()), rows, columns, index);
     }
 
@@ -587,7 +590,7 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
      *
      * @return Point indicating coordinates (x - column, y - row)
      */
-    public Point findCell(ComponentChooser chooser, int[] rows, int[] columns, int index) {
+    public Point findCell(ComponentChooser chooser, int @Nullable [] rows, int @Nullable [] columns, int index) {
         return findCell(new ByRenderedComponentTableCellChooser(chooser), rows, columns, index);
     }
 
@@ -672,7 +675,7 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
      *
      * @return Point indicating coordinates (x - column, y - row)
      */
-    public Point findCell(TableCellChooser chooser, int[] rows, int[] columns, int index) {
+    public Point findCell(TableCellChooser chooser, int @Nullable [] rows, int @Nullable [] columns, int index) {
         TableModel model = getModel();
         int[] realRows;
         if (rows != null) {
@@ -2153,7 +2156,7 @@ public class JTableOperator extends JComponentOperator implements Outputable, Ti
         }
 
         @Override
-        public Component actionProduced(Void obj) {
+        public @Nullable Component actionProduced(Void obj) {
             Point pnt = getPointToClick(row, column);
             Component comp = getComponentAt(pnt.x, pnt.y);
             if (comp != null && chooser.checkComponent(comp)) {

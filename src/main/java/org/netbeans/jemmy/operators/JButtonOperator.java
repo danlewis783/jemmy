@@ -27,6 +27,7 @@ package org.netbeans.jemmy.operators;
 import java.awt.Container;
 import java.util.Hashtable;
 import javax.swing.JButton;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 
 /**
@@ -108,7 +109,7 @@ public class JButtonOperator extends AbstractButtonOperator {
      *
      * @return JButton instance or null if component was not found.
      */
-    public static JButton findJButton(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable JButton findJButton(Container cont, ComponentChooser chooser, int index) {
         return (JButton) findAbstractButton(cont, new JButtonFinder(chooser), index);
     }
 
@@ -117,7 +118,7 @@ public class JButtonOperator extends AbstractButtonOperator {
      *
      * @return JButton instance or null if component was not found.
      */
-    public static JButton findJButton(Container cont, ComponentChooser chooser) {
+    public static @Nullable JButton findJButton(Container cont, ComponentChooser chooser) {
         return findJButton(cont, chooser, 0);
     }
 
@@ -127,7 +128,7 @@ public class JButtonOperator extends AbstractButtonOperator {
      * @return JButton instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JButton findJButton(Container cont, String text, boolean ce, boolean ccs, int index) {
+    public static @Nullable JButton findJButton(Container cont, String text, boolean ce, boolean ccs, int index) {
         return (findJButton(
                 cont,
                 new JButtonFinder(new AbstractButtonOperator.AbstractButtonByLabelFinder(
@@ -141,7 +142,7 @@ public class JButtonOperator extends AbstractButtonOperator {
      * @return JButton instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JButton findJButton(Container cont, String text, boolean ce, boolean ccs) {
+    public static @Nullable JButton findJButton(Container cont, String text, boolean ce, boolean ccs) {
         return findJButton(cont, text, ce, ccs, 0);
     }
 

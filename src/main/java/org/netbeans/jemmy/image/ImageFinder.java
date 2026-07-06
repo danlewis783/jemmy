@@ -26,6 +26,7 @@ package org.netbeans.jemmy.image;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Interface for all classes performing image lookup.
@@ -40,5 +41,5 @@ public interface ImageFinder {
      * second appropriate location will be found.
      * @return Image location coordinates if image was found, null otherwise.
      */
-    public Point findImage(BufferedImage image, int index);
+    public @Nullable Point findImage(BufferedImage image, int index);
 }

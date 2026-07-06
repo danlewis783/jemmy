@@ -26,6 +26,7 @@ package org.netbeans.jemmy.operators;
 
 import java.awt.Container;
 import javax.swing.JRadioButton;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 
 /**
@@ -101,7 +102,7 @@ public class JRadioButtonOperator extends JToggleButtonOperator {
      *
      * @return JRadioButton instance or null if component was not found.
      */
-    public static JRadioButton findJRadioButton(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable JRadioButton findJRadioButton(Container cont, ComponentChooser chooser, int index) {
         return (JRadioButton) findJToggleButton(cont, new JRadioButtonFinder(chooser), index);
     }
 
@@ -110,7 +111,7 @@ public class JRadioButtonOperator extends JToggleButtonOperator {
      *
      * @return JRadioButton instance or null if component was not found.
      */
-    public static JRadioButton findJRadioButton(Container cont, ComponentChooser chooser) {
+    public static @Nullable JRadioButton findJRadioButton(Container cont, ComponentChooser chooser) {
         return findJRadioButton(cont, chooser, 0);
     }
 
@@ -120,7 +121,8 @@ public class JRadioButtonOperator extends JToggleButtonOperator {
      * @return JRadioButton instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JRadioButton findJRadioButton(Container cont, String text, boolean ce, boolean ccs, int index) {
+    public static @Nullable JRadioButton findJRadioButton(
+            Container cont, String text, boolean ce, boolean ccs, int index) {
         return (findJRadioButton(
                 cont,
                 new JRadioButtonFinder(new AbstractButtonOperator.AbstractButtonByLabelFinder(
@@ -134,7 +136,7 @@ public class JRadioButtonOperator extends JToggleButtonOperator {
      * @return JRadioButton instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JRadioButton findJRadioButton(Container cont, String text, boolean ce, boolean ccs) {
+    public static @Nullable JRadioButton findJRadioButton(Container cont, String text, boolean ce, boolean ccs) {
         return findJRadioButton(cont, text, ce, ccs, 0);
     }
 

@@ -27,6 +27,7 @@ package org.netbeans.jemmy.drivers.windows;
 import java.awt.Component;
 import java.awt.Container;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.drivers.FrameDriver;
@@ -120,7 +121,7 @@ public class DefaultInternalFrameDriver extends LightSupportiveDriver
     }
 
     @Override
-    public Component getTitlePane(ComponentOperator operator) {
+    public @Nullable Component getTitlePane(ComponentOperator operator) {
         ComponentSearcher cs = new ComponentSearcher((Container) operator.getSource());
         cs.setOutput(operator.getOutput().createErrorOutput());
         return (cs.findComponent(new ComponentChooser() {

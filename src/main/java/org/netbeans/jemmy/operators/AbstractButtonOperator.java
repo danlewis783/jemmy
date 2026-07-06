@@ -35,6 +35,7 @@ import javax.swing.ButtonModel;
 import javax.swing.Icon;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.ButtonUI;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.Outputable;
@@ -77,8 +78,8 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
      */
     private static final long PUSH_BUTTON_TIMEOUT = 0;
 
-    private Timeouts timeouts;
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
 
     ButtonDriver driver;
 
@@ -168,7 +169,7 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
      * @param index Ordinal component index. The first {@code index} is 0.
      * @return AbstractButton instance or null if component was not found.
      */
-    public static AbstractButton findAbstractButton(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable AbstractButton findAbstractButton(Container cont, ComponentChooser chooser, int index) {
         return (AbstractButton) findComponent(cont, new AbstractButtonFinder(chooser), index);
     }
 
@@ -180,7 +181,7 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
      * containment need not be direct.
      * @return AbstractButton instance or null if component was not found.
      */
-    public static AbstractButton findAbstractButton(Container cont, ComponentChooser chooser) {
+    public static @Nullable AbstractButton findAbstractButton(Container cont, ComponentChooser chooser) {
         return findAbstractButton(cont, chooser, 0);
     }
 
@@ -190,7 +191,8 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
      * @return AbstractButton instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static AbstractButton findAbstractButton(Container cont, String text, boolean ce, boolean ccs, int index) {
+    public static @Nullable AbstractButton findAbstractButton(
+            Container cont, String text, boolean ce, boolean ccs, int index) {
         return findAbstractButton(
                 cont, new AbstractButtonByLabelFinder(text, new DefaultStringComparator(ce, ccs)), index);
     }
@@ -201,7 +203,7 @@ public class AbstractButtonOperator extends JComponentOperator implements Timeou
      * @return AbstractButton instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static AbstractButton findAbstractButton(Container cont, String text, boolean ce, boolean ccs) {
+    public static @Nullable AbstractButton findAbstractButton(Container cont, String text, boolean ce, boolean ccs) {
         return findAbstractButton(cont, text, ce, ccs, 0);
     }
 

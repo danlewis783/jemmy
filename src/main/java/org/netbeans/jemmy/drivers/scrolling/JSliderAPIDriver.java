@@ -25,6 +25,7 @@
 package org.netbeans.jemmy.drivers.scrolling;
 
 import java.awt.Point;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.Timeout;
 import org.netbeans.jemmy.operators.ComponentOperator;
 import org.netbeans.jemmy.operators.JSliderOperator;
@@ -101,7 +102,7 @@ public class JSliderAPIDriver extends AbstractScrollDriver {
     protected void stopPushAndWait(ComponentOperator oper, int direction, int orientation) {}
 
     @Override
-    protected Point startDragging(ComponentOperator oper) {
+    protected @Nullable Point startDragging(ComponentOperator oper) {
         return null;
     }
 

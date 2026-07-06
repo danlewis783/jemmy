@@ -25,10 +25,12 @@
 package org.netbeans.jemmy.drivers.menus;
 
 import java.awt.event.KeyEvent;
+import java.util.Objects;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.MenuElement;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.Timeout;
 import org.netbeans.jemmy.TimeoutExpiredException;
@@ -48,7 +50,7 @@ public class AppleMenuDriver extends RobotDriver implements MenuDriver {
     }
 
     @Override
-    public Object pushMenu(ComponentOperator oper, PathChooser chooser) {
+    public @Nullable Object pushMenu(ComponentOperator oper, PathChooser chooser) {
         Timeout maxTime = oper.getTimeouts().create("ComponentOperator.WaitComponentTimeout");
         JMenuBar bar = (JMenuBar) (oper.getSource());
         activateMenu(oper, bar);
@@ -61,9 +63,11 @@ public class AppleMenuDriver extends RobotDriver implements MenuDriver {
                 throw (new TimeoutExpiredException("AppleMenuDriver: can not find an appropriate menu!"));
             }
         }
+        // the while loop above only exits once the chooser accepted the selected element
+        MenuElement selected = Objects.requireNonNull(menuObject, "no menu selected");
         for (int depth = 1; depth < chooser.getDepth(); depth++) {
             // TODO - wait for menu item
-            int elementIndex = getDesiredElementIndex(menuObject, chooser, depth);
+            int elementIndex = getDesiredElementIndex(selected, chooser, depth);
             if (elementIndex == -1) {
                 throw (new JemmyException(
                         "Unable to find menu (menuitem): " + ((DescriptablePathChooser) chooser).getDescription()));
@@ -79,10 +83,10 @@ public class AppleMenuDriver extends RobotDriver implements MenuDriver {
             } else {
                 pressKey(KeyEvent.VK_RIGHT, 0);
                 releaseKey(KeyEvent.VK_RIGHT, 0);
-                menuObject = menuObject.getSubElements()[0].getSubElements()[elementIndex];
+                selected = selected.getSubElements()[0].getSubElements()[elementIndex];
             }
         }
-        return menuObject;
+        return selected;
     }
 
     private void activateMenu(Operator oper, JMenuBar bar) {
@@ -105,7 +109,7 @@ public class AppleMenuDriver extends RobotDriver implements MenuDriver {
         releaseKey(KeyEvent.VK_RIGHT, 0);
     }
 
-    private static MenuElement getSelectedElement(MenuElement bar) {
+    private static @Nullable MenuElement getSelectedElement(MenuElement bar) {
         MenuElement[] subElements = bar.getSubElements();
         for (MenuElement subElement : subElements) {
             if (subElement instanceof JMenu && ((JMenu) subElement).isSelected()) {

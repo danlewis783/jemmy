@@ -27,6 +27,7 @@ package org.netbeans.jemmy.operators;
 import java.awt.Container;
 import java.awt.Scrollbar;
 import java.awt.event.AdjustmentListener;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.Action;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
@@ -56,8 +57,8 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
     private static final long BEFORE_DROP_TIMEOUT = 0;
     private static final long DRAG_AND_DROP_SCROLLING_DELTA = 0;
 
-    private Timeouts timeouts;
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
 
     private ScrollDriver driver;
 
@@ -89,7 +90,7 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
      *
      * @return the scrollbar fitting searching criteria
      */
-    public static Scrollbar findScrollbar(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable Scrollbar findScrollbar(Container cont, ComponentChooser chooser, int index) {
         return (Scrollbar) findComponent(cont, new ScrollbarFinder(chooser), index);
     }
 
@@ -98,7 +99,7 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
      *
      * @return the scrollbar fitting searching criteria
      */
-    public static Scrollbar findScrollbar(Container cont, ComponentChooser chooser) {
+    public static @Nullable Scrollbar findScrollbar(Container cont, ComponentChooser chooser) {
         return findScrollbar(cont, chooser, 0);
     }
 
@@ -107,7 +108,7 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
      *
      * @return the scrollbar fitting searching criteria
      */
-    public static Scrollbar findScrollbar(Container cont, int index) {
+    public static @Nullable Scrollbar findScrollbar(Container cont, int index) {
         return findScrollbar(
                 cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th Scrollbar instance"), index);
     }
@@ -117,7 +118,7 @@ public class ScrollbarOperator extends ComponentOperator implements Timeoutable,
      *
      * @return the scrollbar fitting searching criteria
      */
-    public static Scrollbar findScrollbar(Container cont) {
+    public static @Nullable Scrollbar findScrollbar(Container cont) {
         return findScrollbar(cont, 0);
     }
 

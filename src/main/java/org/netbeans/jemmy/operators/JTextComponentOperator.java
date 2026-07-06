@@ -44,6 +44,7 @@ import javax.swing.text.Document;
 import javax.swing.text.Highlighter;
 import javax.swing.text.JTextComponent;
 import javax.swing.text.Keymap;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.Action;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
@@ -104,8 +105,8 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
     private static final long CHANGE_CARET_POSITION_TIMEOUT = 60000;
     private static final long TYPE_TEXT_TIMEOUT = 60000;
 
-    private Timeouts timeouts;
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
 
     /**
      * Notifies what modifiers are pressed.
@@ -182,7 +183,7 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
      *
      * @return JTextComponent instance or null if component was not found.
      */
-    public static JTextComponent findJTextComponent(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable JTextComponent findJTextComponent(Container cont, ComponentChooser chooser, int index) {
         return (JTextComponent) findComponent(cont, new JTextComponentFinder(chooser), index);
     }
 
@@ -191,7 +192,7 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
      *
      * @return JTextComponent instance or null if component was not found.
      */
-    public static JTextComponent findJTextComponent(Container cont, ComponentChooser chooser) {
+    public static @Nullable JTextComponent findJTextComponent(Container cont, ComponentChooser chooser) {
         return findJTextComponent(cont, chooser, 0);
     }
 
@@ -201,7 +202,8 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
      * @return JTextComponent instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JTextComponent findJTextComponent(Container cont, String text, boolean ce, boolean ccs, int index) {
+    public static @Nullable JTextComponent findJTextComponent(
+            Container cont, String text, boolean ce, boolean ccs, int index) {
         return findJTextComponent(
                 cont, new JTextComponentByTextFinder(text, new DefaultStringComparator(ce, ccs)), index);
     }
@@ -212,7 +214,7 @@ public class JTextComponentOperator extends JComponentOperator implements Timeou
      * @return JTextComponent instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JTextComponent findJTextComponent(Container cont, String text, boolean ce, boolean ccs) {
+    public static @Nullable JTextComponent findJTextComponent(Container cont, String text, boolean ce, boolean ccs) {
         return findJTextComponent(cont, text, ce, ccs, 0);
     }
 

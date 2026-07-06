@@ -26,6 +26,7 @@ package org.netbeans.jemmy.drivers.scrolling;
 
 import java.awt.Adjustable;
 import java.awt.Point;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.Timeout;
@@ -102,7 +103,7 @@ public abstract class AbstractScrollDriver extends LightSupportiveDriver impleme
      *
      * @return start drugging point.
      */
-    protected abstract Point startDragging(ComponentOperator oper);
+    protected abstract @Nullable Point startDragging(ComponentOperator oper);
 
     protected abstract void drop(ComponentOperator oper, Point pnt);
 
@@ -152,6 +153,10 @@ public abstract class AbstractScrollDriver extends LightSupportiveDriver impleme
         int direction = adj.getScrollDirection();
         if (direction != ScrollAdjuster.DO_NOT_TOUCH_SCROLL_DIRECTION) {
             Point pnt = startDragging(oper);
+            if (pnt == null) {
+                return;
+            }
+
             while (adj.getScrollDirection() == direction) {
                 drag(oper, pnt = increasePoint(oper, pnt, adj, direction));
             }

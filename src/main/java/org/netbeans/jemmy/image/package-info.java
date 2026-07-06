@@ -30,4 +30,7 @@
  * @since 9 Nov 2002
  * <hr>
  */
+@NullMarked
 package org.netbeans.jemmy.image;
+
+import org.jspecify.annotations.NullMarked;

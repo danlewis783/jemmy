@@ -29,6 +29,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ItemListener;
 import java.util.Hashtable;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.Outputable;
@@ -63,7 +64,7 @@ public class ChoiceOperator extends ComponentOperator implements Outputable {
      */
     public static final String ITEM_PREFIX_DPROP = "Item";
 
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
     private ListDriver driver;
 
     public ChoiceOperator(Choice b) {
@@ -123,7 +124,7 @@ public class ChoiceOperator extends ComponentOperator implements Outputable {
      *
      * @return Choice instance or null if component was not found.
      */
-    public static Choice findChoice(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable Choice findChoice(Container cont, ComponentChooser chooser, int index) {
         return (Choice) findComponent(cont, new ChoiceFinder(chooser), index);
     }
 
@@ -132,7 +133,7 @@ public class ChoiceOperator extends ComponentOperator implements Outputable {
      *
      * @return Choice instance or null if component was not found.
      */
-    public static Choice findChoice(Container cont, ComponentChooser chooser) {
+    public static @Nullable Choice findChoice(Container cont, ComponentChooser chooser) {
         return findChoice(cont, chooser, 0);
     }
 
@@ -142,7 +143,7 @@ public class ChoiceOperator extends ComponentOperator implements Outputable {
      * @return Choice instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static Choice findChoice(Container cont, String text, boolean ce, boolean ccs, int index) {
+    public static @Nullable Choice findChoice(Container cont, String text, boolean ce, boolean ccs, int index) {
         return (findChoice(cont, new ChoiceBySelectedItemFinder(text, new DefaultStringComparator(ce, ccs)), index));
     }
 
@@ -152,7 +153,7 @@ public class ChoiceOperator extends ComponentOperator implements Outputable {
      * @return Choice instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static Choice findChoice(Container cont, String text, boolean ce, boolean ccs) {
+    public static @Nullable Choice findChoice(Container cont, String text, boolean ce, boolean ccs) {
         return findChoice(cont, text, ce, ccs, 0);
     }
 

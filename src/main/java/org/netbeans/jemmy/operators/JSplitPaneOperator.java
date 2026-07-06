@@ -31,6 +31,7 @@ import javax.swing.JButton;
 import javax.swing.JSplitPane;
 import javax.swing.plaf.SplitPaneUI;
 import javax.swing.plaf.basic.BasicSplitPaneDivider;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.Action;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
@@ -110,9 +111,9 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
     private static final long BETWEEN_CLICK_TIMEOUT = 0;
     private static final long WHOLE_SCROLL_TIMEOUT = 60000;
 
-    private Timeouts timeouts;
-    private TestOut output;
-    private ContainerOperator<?> divider;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
+    private @SuppressWarnings("NullAway.Init") ContainerOperator<?> divider;
     private ScrollDriver driver;
 
     public JSplitPaneOperator(JSplitPane b) {
@@ -151,7 +152,7 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
      *
      * @return JSplitPane instance or null if component was not found.
      */
-    public static JSplitPane findJSplitPane(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable JSplitPane findJSplitPane(Container cont, ComponentChooser chooser, int index) {
         return (JSplitPane) findComponent(cont, new JSplitPaneFinder(chooser), index);
     }
 
@@ -160,7 +161,7 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
      *
      * @return JSplitPane instance or null if component was not found.
      */
-    public static JSplitPane findJSplitPane(Container cont, ComponentChooser chooser) {
+    public static @Nullable JSplitPane findJSplitPane(Container cont, ComponentChooser chooser) {
         return findJSplitPane(cont, chooser, 0);
     }
 
@@ -169,7 +170,7 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
      *
      * @return JSplitPane instance or null if component was not found.
      */
-    public static JSplitPane findJSplitPane(Container cont, int index) {
+    public static @Nullable JSplitPane findJSplitPane(Container cont, int index) {
         return findJSplitPane(
                 cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th JSplitPane instance"), index);
     }
@@ -179,7 +180,7 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
      *
      * @return JSplitPane instance or null if component was not found.
      */
-    public static JSplitPane findJSplitPane(Container cont) {
+    public static @Nullable JSplitPane findJSplitPane(Container cont) {
         return findJSplitPane(cont, 0);
     }
 
@@ -188,7 +189,7 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
      *
      * @return JSplitPane instance or null if component was not found.
      */
-    public static JSplitPane findJSplitPaneUnder(Component comp, ComponentChooser chooser) {
+    public static @Nullable JSplitPane findJSplitPaneUnder(Component comp, ComponentChooser chooser) {
         return (JSplitPane) findContainerUnder(comp, new JSplitPaneFinder(chooser));
     }
 
@@ -197,7 +198,7 @@ public class JSplitPaneOperator extends JComponentOperator implements Timeoutabl
      *
      * @return JSplitPane instance or null if component was not found.
      */
-    public static JSplitPane findJSplitPaneUnder(Component comp) {
+    public static @Nullable JSplitPane findJSplitPaneUnder(Component comp) {
         return findJSplitPaneUnder(comp, new JSplitPaneFinder());
     }
 

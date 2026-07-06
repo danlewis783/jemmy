@@ -51,8 +51,8 @@ public class WindowManager implements Timeoutable, Outputable {
     private static WindowManager manager;
 
     private Vector<JobThread> jobs;
-    private Timeouts timeouts;
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
 
     private WindowManager() {
         super();

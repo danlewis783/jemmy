@@ -28,6 +28,7 @@ import java.awt.Color;
 import javax.swing.text.Element;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Defines searching criteria for {@code javax.swing.text.StyledDocument}
@@ -36,14 +37,31 @@ import javax.swing.text.StyledDocument;
  */
 public class TextStyleChooser extends AbstractTextStyleChooser {
 
+    @Nullable
     Boolean bold = null;
+
+    @Nullable
     Boolean italic = null;
+
+    @Nullable
     Boolean strike = null;
+
+    @Nullable
     Boolean understrike = null;
+
+    @Nullable
     Integer fontSize = null;
+
+    @Nullable
     String fontFamily = null;
+
+    @Nullable
     Integer alignment = null;
+
+    @Nullable
     Color background = null;
+
+    @Nullable
     Color foreground = null;
 
     public TextStyleChooser() {

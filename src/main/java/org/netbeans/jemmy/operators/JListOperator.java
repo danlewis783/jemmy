@@ -39,6 +39,7 @@ import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.ListUI;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.JemmyInputException;
@@ -78,7 +79,7 @@ public class JListOperator extends JComponentOperator implements Outputable {
      */
     public static final String SELECTED_ITEM_PREFIX_DPROP = "SelectedItem";
 
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
     private MultiSelListDriver driver;
 
     public JListOperator(JList<?> b) {
@@ -146,7 +147,7 @@ public class JListOperator extends JComponentOperator implements Outputable {
      *
      * @return JList instance or null if component was not found.
      */
-    public static JList<?> findJList(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable JList<?> findJList(Container cont, ComponentChooser chooser, int index) {
         return (JList) findComponent(cont, new JListFinder(chooser), index);
     }
 
@@ -155,7 +156,7 @@ public class JListOperator extends JComponentOperator implements Outputable {
      *
      * @return JList instance or null if component was not found.
      */
-    public static JList<?> findJList(Container cont, ComponentChooser chooser) {
+    public static @Nullable JList<?> findJList(Container cont, ComponentChooser chooser) {
         return findJList(cont, chooser, 0);
     }
 
@@ -167,7 +168,8 @@ public class JListOperator extends JComponentOperator implements Outputable {
      * @return JList instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JList<?> findJList(Container cont, String text, boolean ce, boolean ccs, int itemIndex, int index) {
+    public static @Nullable JList<?> findJList(
+            Container cont, String text, boolean ce, boolean ccs, int itemIndex, int index) {
         return findJList(cont, new JListByItemFinder(text, itemIndex, new DefaultStringComparator(ce, ccs)), index);
     }
 
@@ -179,7 +181,7 @@ public class JListOperator extends JComponentOperator implements Outputable {
      * @return JList instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JList<?> findJList(Container cont, String text, boolean ce, boolean ccs, int itemIndex) {
+    public static @Nullable JList<?> findJList(Container cont, String text, boolean ce, boolean ccs, int itemIndex) {
         return findJList(cont, text, ce, ccs, itemIndex, 0);
     }
 
@@ -406,7 +408,7 @@ public class JListOperator extends JComponentOperator implements Outputable {
      * @return Click point or null if list does not contains itemIndex'th item.
      * @throws NoSuchItemException
      */
-    public Object clickOnItem(final int itemIndex, final int clickCount) {
+    public @Nullable Object clickOnItem(final int itemIndex, final int clickCount) {
         output.printLine("Click " + Integer.toString(clickCount) + " times on JList\n    : " + toStringSource());
         output.printGolden("Click " + Integer.toString(clickCount) + " times on JList");
         checkIndex(itemIndex);
@@ -425,7 +427,7 @@ public class JListOperator extends JComponentOperator implements Outputable {
         }
         return (getQueueTool().invokeSmoothly(new QueueTool.QueueAction<Object>("Path selecting") {
             @Override
-            public Object launch() {
+            public @Nullable Object launch() {
                 Rectangle rect = getCellBounds(itemIndex, itemIndex);
                 if (rect == null) {
                     output.printErrLine(
@@ -451,7 +453,7 @@ public class JListOperator extends JComponentOperator implements Outputable {
         scrollToItem(findItemIndex(item, comparator, 0));
         return (getQueueTool().invokeSmoothly(new QueueTool.QueueAction<Object>("Path selecting") {
             @Override
-            public Object launch() {
+            public @Nullable Object launch() {
                 int index = findItemIndex(item, comparator, 0);
                 if (index != -1) {
                     return clickOnItem(index, clickCount);

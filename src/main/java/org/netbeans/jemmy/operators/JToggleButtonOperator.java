@@ -26,6 +26,7 @@ package org.netbeans.jemmy.operators;
 
 import java.awt.Container;
 import javax.swing.JToggleButton;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 
 /**
@@ -101,7 +102,7 @@ public class JToggleButtonOperator extends AbstractButtonOperator {
      *
      * @return JToggleButton instance or null if component was not found.
      */
-    public static JToggleButton findJToggleButton(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable JToggleButton findJToggleButton(Container cont, ComponentChooser chooser, int index) {
         return (JToggleButton) findAbstractButton(cont, new JToggleButtonFinder(chooser), index);
     }
 
@@ -110,7 +111,7 @@ public class JToggleButtonOperator extends AbstractButtonOperator {
      *
      * @return JToggleButton instance or null if component was not found.
      */
-    public static JToggleButton findJToggleButton(Container cont, ComponentChooser chooser) {
+    public static @Nullable JToggleButton findJToggleButton(Container cont, ComponentChooser chooser) {
         return findJToggleButton(cont, chooser, 0);
     }
 
@@ -120,7 +121,8 @@ public class JToggleButtonOperator extends AbstractButtonOperator {
      * @return JToggleButton instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JToggleButton findJToggleButton(Container cont, String text, boolean ce, boolean ccs, int index) {
+    public static @Nullable JToggleButton findJToggleButton(
+            Container cont, String text, boolean ce, boolean ccs, int index) {
         return (findJToggleButton(
                 cont,
                 new JToggleButtonFinder(new AbstractButtonOperator.AbstractButtonByLabelFinder(
@@ -134,7 +136,7 @@ public class JToggleButtonOperator extends AbstractButtonOperator {
      * @return JToggleButton instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JToggleButton findJToggleButton(Container cont, String text, boolean ce, boolean ccs) {
+    public static @Nullable JToggleButton findJToggleButton(Container cont, String text, boolean ce, boolean ccs) {
         return findJToggleButton(cont, text, ce, ccs, 0);
     }
 

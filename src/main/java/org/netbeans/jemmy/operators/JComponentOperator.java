@@ -35,6 +35,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.beans.VetoableChangeListener;
 import java.util.Hashtable;
+import java.util.Objects;
 import javax.accessibility.AccessibleContext;
 import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
@@ -43,6 +44,7 @@ import javax.swing.JToolTip;
 import javax.swing.KeyStroke;
 import javax.swing.border.Border;
 import javax.swing.event.AncestorListener;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.Outputable;
@@ -77,8 +79,8 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
     private static final long WAIT_TOOL_TIP_TIMEOUT = 10000;
     private static final long SHOW_TOOL_TIP_TIMEOUT = 0;
 
-    private Timeouts timeouts;
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
 
     public JComponentOperator(JComponent b) {
         super(b);
@@ -116,7 +118,7 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
      *
      * @return JComponent instance or null if component was not found.
      */
-    public static JComponent findJComponent(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable JComponent findJComponent(Container cont, ComponentChooser chooser, int index) {
         return (JComponent) findComponent(cont, new JComponentFinder(chooser), index);
     }
 
@@ -125,7 +127,7 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
      *
      * @return JComponent instance or null if component was not found.
      */
-    public static JComponent findJComponent(Container cont, ComponentChooser chooser) {
+    public static @Nullable JComponent findJComponent(Container cont, ComponentChooser chooser) {
         return findJComponent(cont, chooser, 0);
     }
 
@@ -135,7 +137,8 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
      * @return JComponent instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JComponent findJComponent(Container cont, String toolTipText, boolean ce, boolean ccs, int index) {
+    public static @Nullable JComponent findJComponent(
+            Container cont, String toolTipText, boolean ce, boolean ccs, int index) {
         return findJComponent(
                 cont, new JComponentByTipFinder(toolTipText, new DefaultStringComparator(ce, ccs)), index);
     }
@@ -146,7 +149,7 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
      * @return JComponent instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JComponent findJComponent(Container cont, String toolTipText, boolean ce, boolean ccs) {
+    public static @Nullable JComponent findJComponent(Container cont, String toolTipText, boolean ce, boolean ccs) {
         return findJComponent(cont, toolTipText, ce, ccs, 0);
     }
 
@@ -269,7 +272,7 @@ public class JComponentOperator extends ContainerOperator<Container> implements 
         if (resultComp instanceof Window) {
             result = new WindowOperator((Window) resultComp);
         } else {
-            result = new ContainerOperator<>((Container) resultComp);
+            result = new ContainerOperator<>((Container) Objects.requireNonNull(resultComp, "container not found"));
         }
         result.copyEnvironment(this);
         return result;

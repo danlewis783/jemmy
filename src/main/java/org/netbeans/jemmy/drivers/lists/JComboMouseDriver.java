@@ -24,6 +24,7 @@
  */
 package org.netbeans.jemmy.drivers.lists;
 
+import java.util.Objects;
 import javax.swing.UIManager;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.drivers.DriverManager;
@@ -67,7 +68,8 @@ public class JComboMouseDriver extends LightSupportiveDriver implements ListDriv
                 DriverManager.getButtonDriver(coper.getButton()).push(coper.getButton());
             }
         }
-        JListOperator list = new JListOperator(coper.waitList());
+        JListOperator list =
+                new JListOperator(Objects.requireNonNull(coper.waitList(), "combo box list did not appear"));
         list.copyEnvironment(coper);
         list.setVisualizer(new EmptyVisualizer());
         coper.getTimeouts().sleep("JComboBoxOperator.BeforeSelectingTimeout");

@@ -31,4 +31,7 @@
  * <hr>
  * <address><a href="mailto:alexandre.iline@oracle.com"></a></address>
  */
+@NullMarked
 package org.netbeans.jemmy.util;
+
+import org.jspecify.annotations.NullMarked;

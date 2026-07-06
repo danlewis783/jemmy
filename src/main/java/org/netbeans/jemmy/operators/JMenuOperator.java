@@ -31,6 +31,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.event.MenuListener;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.Action;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.Outputable;
@@ -68,8 +69,8 @@ public class JMenuOperator extends JMenuItemOperator implements Outputable, Time
     private static final long WAIT_BEFORE_POPUP_TIMEOUT = 0;
     private static final long PUSH_MENU_TIMEOUT = 60000;
 
-    private Timeouts timeouts;
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
     private MenuDriver driver;
 
     public JMenuOperator(JMenu menu) {
@@ -129,7 +130,7 @@ public class JMenuOperator extends JMenuItemOperator implements Outputable, Time
      *
      * @return JMenu instance or null if component was not found.
      */
-    public static JMenu findJMenu(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable JMenu findJMenu(Container cont, ComponentChooser chooser, int index) {
         return (JMenu) findComponent(cont, new JMenuFinder(chooser), index);
     }
 
@@ -138,7 +139,7 @@ public class JMenuOperator extends JMenuItemOperator implements Outputable, Time
      *
      * @return JMenu instance or null if component was not found.
      */
-    public static JMenu findJMenu(Container cont, ComponentChooser chooser) {
+    public static @Nullable JMenu findJMenu(Container cont, ComponentChooser chooser) {
         return findJMenu(cont, chooser, 0);
     }
 
@@ -148,7 +149,7 @@ public class JMenuOperator extends JMenuItemOperator implements Outputable, Time
      * @return JMenu instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JMenu findJMenu(Container cont, String text, boolean ce, boolean ccs, int index) {
+    public static @Nullable JMenu findJMenu(Container cont, String text, boolean ce, boolean ccs, int index) {
         return (findJMenu(cont, new JMenuByLabelFinder(text, new DefaultStringComparator(ce, ccs)), index));
     }
 
@@ -158,7 +159,7 @@ public class JMenuOperator extends JMenuItemOperator implements Outputable, Time
      * @return JMenu instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JMenu findJMenu(Container cont, String text, boolean ce, boolean ccs) {
+    public static @Nullable JMenu findJMenu(Container cont, String text, boolean ce, boolean ccs) {
         return findJMenu(cont, text, ce, ccs, 0);
     }
 
@@ -247,7 +248,7 @@ public class JMenuOperator extends JMenuItemOperator implements Outputable, Time
         return ((JMenuItem) produceTimeRestricted(
                 new Action<Object, Void>() {
                     @Override
-                    public Object launch(Void obj) {
+                    public @Nullable Object launch(Void obj) {
                         // TDB 1.5 menu workaround
                         getQueueTool().waitEmpty();
                         Object result = driver.pushMenu(JMenuOperator.this, converChoosers(choosers));
@@ -276,7 +277,7 @@ public class JMenuOperator extends JMenuItemOperator implements Outputable, Time
     public void pushMenuNoBlock(final ComponentChooser[] choosers) {
         produceNoBlocking(new NoBlockingAction<Object, Void>("Menu pushing") {
             @Override
-            public Object doAction(Void param) {
+            public @Nullable Object doAction(Void param) {
                 // TDB 1.5 menu workaround
                 getQueueTool().waitEmpty();
                 Object result = driver.pushMenu(JMenuOperator.this, converChoosers(choosers));
@@ -866,8 +867,8 @@ public class JMenuOperator extends JMenuItemOperator implements Outputable, Time
     static DescriptablePathChooser converChoosers(final ComponentChooser[] choosers) {
         return (new DescriptablePathChooser() {
             @Override
-            public boolean checkPathComponent(int depth, Object component) {
-                return choosers[depth].checkComponent((Component) component);
+            public boolean checkPathComponent(int depth, @Nullable Object component) {
+                return component != null && choosers[depth].checkComponent((Component) component);
             }
 
             @Override

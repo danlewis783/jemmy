@@ -25,6 +25,7 @@
 package org.netbeans.jemmy;
 
 import java.util.Optional;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Runs actions with or without waiting.
@@ -42,15 +43,15 @@ public class ActionProducer<R, P> extends Thread implements Action<R, P>, Waitab
 
     private static final long ACTION_TIMEOUT = 10000;
 
-    private Action<R, P> action;
+    private @SuppressWarnings("NullAway.Init") Action<R, P> action;
     private boolean needWait = true;
-    private P parameter;
+    private @SuppressWarnings("NullAway.Init") P parameter;
     private boolean finished;
-    private R result = null;
-    private Timeouts timeouts;
+    private @Nullable R result = null;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
     private Waiter<Optional<R>, P> waiter;
-    private TestOut output;
-    private Throwable exception;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
+    private @SuppressWarnings("NullAway.Init") @Nullable Throwable exception;
 
     public ActionProducer(Action<R, P> a) {
         super();
@@ -156,7 +157,7 @@ public class ActionProducer<R, P> extends Thread implements Action<R, P>, Waitab
      *
      * @return a Throwable object representing the exception value
      */
-    public Throwable getException() {
+    public @Nullable Throwable getException() {
         return exception;
     }
 
@@ -188,7 +189,7 @@ public class ActionProducer<R, P> extends Thread implements Action<R, P>, Waitab
      * {@code getFinished()}
      * @see #getFinished()
      */
-    public R getResult() {
+    public @Nullable R getResult() {
         return result;
     }
 
@@ -214,7 +215,7 @@ public class ActionProducer<R, P> extends Thread implements Action<R, P>, Waitab
      * @see org.netbeans.jemmy.Action
      */
     @Override
-    public R launch(P obj) {
+    public @Nullable R launch(P obj) {
         return null;
     }
 
@@ -241,7 +242,10 @@ public class ActionProducer<R, P> extends Thread implements Action<R, P>, Waitab
      * @return        {@code launch(Object)} result.
      * @exception InterruptedException
      */
-    public R produceAction(P obj, String actionTimeOrigin) throws InterruptedException {
+    // the result's nullness follows the action's type argument, which pre-generics
+    // NullAway cannot express
+    @SuppressWarnings("NullAway")
+    public R produceAction(@Nullable P obj, @Nullable String actionTimeOrigin) throws InterruptedException {
         parameter = obj;
         synchronized (this) {
             finished = false;
@@ -291,7 +295,7 @@ public class ActionProducer<R, P> extends Thread implements Action<R, P>, Waitab
      * @see org.netbeans.jemmy.Waitable
      */
     @Override
-    public final Optional<R> actionProduced(P obj) {
+    public final @Nullable Optional<R> actionProduced(P obj) {
         synchronized (this) {
             if (finished) {
                 return Optional.ofNullable(result);
@@ -309,7 +313,7 @@ public class ActionProducer<R, P> extends Thread implements Action<R, P>, Waitab
      * {@code ActionProducer} puts into execution.
      * @return the return value of the action.
      */
-    private R launchAction(P obj) {
+    private @Nullable R launchAction(P obj) {
         if (action != null) {
             return action.launch(obj);
         } else {

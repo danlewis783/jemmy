@@ -25,6 +25,7 @@
 package org.netbeans.jemmy.util;
 
 import java.util.StringTokenizer;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.operators.Operator.DefaultStringComparator;
 import org.netbeans.jemmy.operators.Operator.StringComparator;
 
@@ -46,8 +47,8 @@ public class StringPropChooser extends PropChooser {
      */
     public StringPropChooser(
             String[] propNames,
-            Object[][] params,
-            Class<?>[][] classes,
+            Object @Nullable [][] params,
+            Class<?> @Nullable [][] classes,
             String[] results,
             StringComparator comparator) {
         super(propNames, params, classes, results);
@@ -67,7 +68,12 @@ public class StringPropChooser extends PropChooser {
      * comparison.
      */
     public StringPropChooser(
-            String[] propNames, Object[][] params, Class<?>[][] classes, String[] results, boolean ce, boolean ccs) {
+            String[] propNames,
+            Object @Nullable [][] params,
+            Class<?> @Nullable [][] classes,
+            String[] results,
+            boolean ce,
+            boolean ccs) {
         this(propNames, params, classes, results, new DefaultStringComparator(ce, ccs));
     }
 
@@ -98,8 +104,8 @@ public class StringPropChooser extends PropChooser {
             String props,
             String semicolonChar,
             String equalChar,
-            Object[][] params,
-            Class<?>[][] classes,
+            Object @Nullable [][] params,
+            Class<?> @Nullable [][] classes,
             StringComparator comparator) {
         this(
                 cutToArray(props, semicolonChar, equalChar, true),
@@ -120,8 +126,8 @@ public class StringPropChooser extends PropChooser {
             String props,
             String semicolonChar,
             String equalChar,
-            Object[][] params,
-            Class<?>[][] classes,
+            Object @Nullable [][] params,
+            Class<?> @Nullable [][] classes,
             boolean ce,
             boolean ccs) {
         this(
@@ -151,7 +157,8 @@ public class StringPropChooser extends PropChooser {
      * ";" is used as a method(field) names separator.
      * "=" is used as a method(field) name - expected value separator.
      */
-    public StringPropChooser(String props, Object[][] params, Class<?>[][] classes, StringComparator comparator) {
+    public StringPropChooser(
+            String props, Object @Nullable [][] params, Class<?> @Nullable [][] classes, StringComparator comparator) {
         this(props, ";", "=", params, classes, comparator);
     }
 
@@ -163,7 +170,8 @@ public class StringPropChooser extends PropChooser {
      * parameters.
      */
     @Deprecated
-    public StringPropChooser(String props, Object[][] params, Class<?>[][] classes, boolean ce, boolean ccs) {
+    public StringPropChooser(
+            String props, Object @Nullable [][] params, Class<?> @Nullable [][] classes, boolean ce, boolean ccs) {
         this(props, ";", "=", params, classes, ce, ccs);
     }
 

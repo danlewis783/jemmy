@@ -25,6 +25,7 @@
 package org.netbeans.jemmy;
 
 import java.awt.Component;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Waits for something defined by Waitable interface to be happened.
@@ -46,13 +47,13 @@ public class Waiter<R, P> implements Waitable<R, P>, Timeoutable, Outputable {
     private static final long WAIT_TIME = 60000;
     private static final long AFTER_WAIT_TIME = 0;
 
-    private final Waitable<R, P> waitable;
+    private final @Nullable Waitable<R, P> waitable;
     private long startTime = 0;
     private long endTime = -1;
-    private R result;
-    private Timeouts timeouts;
-    private String waitingTimeOrigin;
-    private TestOut out;
+    private @SuppressWarnings("NullAway.Init") @Nullable R result;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") String waitingTimeOrigin;
+    private @SuppressWarnings("NullAway.Init") TestOut out;
 
     /**
      * Replace the fine-grained timeouts with a global flag which can be set,
@@ -115,7 +116,8 @@ public class Waiter<R, P> implements Waitable<R, P>, Timeoutable, Outputable {
      * reporting if non-null.
      * @return the cloned timeouts.
      */
-    public Timeouts setTimeoutsToCloneOf(Timeouts timeouts, String useAsWaitingTime, String waitingTimeOrigin) {
+    public Timeouts setTimeoutsToCloneOf(
+            Timeouts timeouts, String useAsWaitingTime, @Nullable String waitingTimeOrigin) {
         Timeouts t = timeouts.cloneThis();
         t.setTimeout("Waiter.WaitingTime", t.getTimeout(useAsWaitingTime));
         setTimeouts(t);
@@ -185,7 +187,10 @@ public class Waiter<R, P> implements Waitable<R, P>, Timeoutable, Outputable {
      * @return non null result of action.
      * @exception InterruptedException
      */
-    public R waitAction(P waitableObject) throws InterruptedException {
+    // the parameter's nullness is the waitable's contract (most waitables ignore it), and the
+    // loop guarantees a non-null result; pre-generics NullAway cannot express either
+    @SuppressWarnings("NullAway")
+    public R waitAction(@Nullable P waitableObject) throws InterruptedException {
         startTime = System.currentTimeMillis();
         out.printTrace(getWaitingStartedMessage());
         out.printGolden(getGoldenWaitingStartedMessage());
@@ -214,7 +219,7 @@ public class Waiter<R, P> implements Waitable<R, P>, Timeoutable, Outputable {
      * @see Waitable
      */
     @Override
-    public R actionProduced(P obj) {
+    public @Nullable R actionProduced(P obj) {
         if (waitable != null) {
             return waitable.actionProduced(obj);
         } else {

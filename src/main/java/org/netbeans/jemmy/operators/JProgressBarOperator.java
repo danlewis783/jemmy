@@ -31,6 +31,7 @@ import javax.swing.BoundedRangeModel;
 import javax.swing.JProgressBar;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.ProgressBarUI;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.JemmyException;
@@ -77,8 +78,8 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
 
     private static long WAIT_VALUE_TIMEOUT = 60000;
 
-    private Timeouts timeouts;
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
 
     public JProgressBarOperator(JProgressBar b) {
         super(b);
@@ -115,7 +116,7 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
      *
      * @return JProgressBar instance or null if component was not found.
      */
-    public static JProgressBar findJProgressBar(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable JProgressBar findJProgressBar(Container cont, ComponentChooser chooser, int index) {
         return (JProgressBar) findComponent(cont, new JProgressBarFinder(chooser), index);
     }
 
@@ -124,7 +125,7 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
      *
      * @return JProgressBar instance or null if component was not found.
      */
-    public static JProgressBar findJProgressBar(Container cont, ComponentChooser chooser) {
+    public static @Nullable JProgressBar findJProgressBar(Container cont, ComponentChooser chooser) {
         return findJProgressBar(cont, chooser, 0);
     }
 
@@ -133,7 +134,7 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
      *
      * @return JProgressBar instance or null if component was not found.
      */
-    public static JProgressBar findJProgressBar(Container cont, int index) {
+    public static @Nullable JProgressBar findJProgressBar(Container cont, int index) {
         return findJProgressBar(
                 cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th JProgressBar instance"), index);
     }
@@ -143,7 +144,7 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
      *
      * @return JProgressBar instance or null if component was not found.
      */
-    public static JProgressBar findJProgressBar(Container cont) {
+    public static @Nullable JProgressBar findJProgressBar(Container cont) {
         return findJProgressBar(cont, 0);
     }
 
@@ -222,7 +223,7 @@ public class JProgressBarOperator extends JComponentOperator implements Timeouta
         output.printGolden("Wait \"" + chooser.getDescription() + "\" value in progressbar");
         Waiter<String, Void> wt = new Waiter<>(new Waitable<String, Void>() {
             @Override
-            public String actionProduced(Void obj) {
+            public @Nullable String actionProduced(Void obj) {
                 return (chooser.checkValue(((JProgressBar) getSource()).getValue()) ? "" : null);
             }
 

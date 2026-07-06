@@ -31,7 +31,9 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Objects;
 import java.util.zip.ZipException;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Provides functionality to work with a bunch of resource files.
@@ -57,7 +59,7 @@ public class BundleManager {
      * @return First parameter or null if bundle with ID already exists.
      * @see org.netbeans.jemmy.Bundle
      */
-    public Bundle addBundle(Bundle bundle, String ID) {
+    public @Nullable Bundle addBundle(Bundle bundle, String ID) {
         if (getBundle(ID) != null) {
             return null;
         } else {
@@ -71,7 +73,7 @@ public class BundleManager {
      *
      * @return Removed bundle or null if no bundle ID is.
      */
-    public Bundle removeBundle(String ID) {
+    public @Nullable Bundle removeBundle(String ID) {
         Bundle value = getBundle(ID);
         bundles.remove(ID);
         return value;
@@ -83,7 +85,7 @@ public class BundleManager {
      * @return the Bundle. A null reference is returned if no bundle with the
      * symbolic ID was found.
      */
-    public Bundle getBundle(String ID) {
+    public @Nullable Bundle getBundle(String ID) {
         return bundles.get(ID);
     }
 
@@ -99,7 +101,7 @@ public class BundleManager {
      * @exception IOException
      * @exception FileNotFoundException
      */
-    public Bundle loadBundleFromFile(String fileName, String ID) throws IOException, FileNotFoundException {
+    public @Nullable Bundle loadBundleFromFile(String fileName, String ID) throws IOException, FileNotFoundException {
         if (getBundle(ID) != null) {
             return null;
         }
@@ -108,7 +110,8 @@ public class BundleManager {
         return addBundle(bundle, ID);
     }
 
-    public Bundle loadBundleFromStream(InputStream stream, String ID) throws IOException, FileNotFoundException {
+    public @Nullable Bundle loadBundleFromStream(InputStream stream, String ID)
+            throws IOException, FileNotFoundException {
         if (getBundle(ID) != null) {
             return null;
         }
@@ -117,7 +120,7 @@ public class BundleManager {
         return addBundle(bundle, ID);
     }
 
-    public Bundle loadBundleFromResource(ClassLoader cl, String resource, String ID)
+    public @Nullable Bundle loadBundleFromResource(ClassLoader cl, String resource, String ID)
             throws IOException, FileNotFoundException {
         return loadBundleFromStream(cl.getResourceAsStream(resource), ID);
     }
@@ -131,7 +134,7 @@ public class BundleManager {
      * @exception IOException
      * @exception FileNotFoundException
      */
-    public Bundle load() throws IOException, FileNotFoundException {
+    public @Nullable Bundle load() throws IOException, FileNotFoundException {
         if (System.getProperty("jemmy.resources") != null
                 && !System.getProperty("jemmy.resources").equals("")) {
             return loadBundleFromFile(System.getProperty("jemmy.resources"), "");
@@ -147,7 +150,7 @@ public class BundleManager {
      * @exception IOException
      * @exception FileNotFoundException
      */
-    public Bundle loadBundleFromJar(String fileName, String entryName, String ID)
+    public @Nullable Bundle loadBundleFromJar(String fileName, String entryName, String ID)
             throws IOException, FileNotFoundException {
         if (getBundle(ID) != null) {
             return null;
@@ -166,7 +169,7 @@ public class BundleManager {
      * @exception IOException
      * @exception FileNotFoundException
      */
-    public Bundle loadBundleFromZip(String fileName, String entryName, String ID)
+    public @Nullable Bundle loadBundleFromZip(String fileName, String entryName, String ID)
             throws IOException, FileNotFoundException, ZipException {
         if (getBundle(ID) != null) {
             return null;
@@ -183,7 +186,7 @@ public class BundleManager {
         while (keys.hasMoreElements()) {
             key = keys.nextElement();
             writer.println("\"" + key + "\" bundle contents");
-            bundle = getBundle(key);
+            bundle = Objects.requireNonNull(getBundle(key), key);
             bundle.print(writer);
         }
     }
@@ -199,7 +202,7 @@ public class BundleManager {
      * resource with the given key cannot be found, a null reference is
      * returned.
      */
-    public String getResource(String bundleID, String key) {
+    public @Nullable String getResource(String bundleID, String key) {
         Bundle bundle = getBundle(bundleID);
         if (bundle != null) {
             return bundle.getResource(key);
@@ -213,7 +216,7 @@ public class BundleManager {
      * @return first resource value found that is indexed by the given key. If
      * no resource is found, return a null reference.
      */
-    public String getResource(String key) {
+    public @Nullable String getResource(String key) {
         Enumeration<Bundle> data = bundles.elements();
         String value;
         while (data.hasMoreElements()) {

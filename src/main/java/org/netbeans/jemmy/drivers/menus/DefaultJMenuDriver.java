@@ -30,6 +30,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.MenuElement;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.Waitable;
@@ -56,7 +57,7 @@ public class DefaultJMenuDriver extends LightSupportiveDriver implements MenuDri
     }
 
     @Override
-    public Object pushMenu(ComponentOperator oper, PathChooser chooser) {
+    public @Nullable Object pushMenu(ComponentOperator oper, PathChooser chooser) {
         checkSupported(oper);
         if (oper instanceof JMenuBarOperator || oper instanceof JPopupMenuOperator) {
             JMenuItem item;
@@ -84,10 +85,10 @@ public class DefaultJMenuDriver extends LightSupportiveDriver implements MenuDri
         }
     }
 
-    protected Object push(
+    protected @Nullable Object push(
             ComponentOperator oper,
-            ComponentOperator lastItem,
-            JMenuBar menuBar,
+            @Nullable ComponentOperator lastItem,
+            @Nullable JMenuBar menuBar,
             PathChooser chooser,
             int depth,
             boolean pressMouse) {
@@ -136,7 +137,7 @@ public class DefaultJMenuDriver extends LightSupportiveDriver implements MenuDri
         }
     }
 
-    private void smartMove(ComponentOperator last, ComponentOperator oper) {
+    private void smartMove(@Nullable ComponentOperator last, ComponentOperator oper) {
         if (last == null) {
             oper.enterMouse();
             return;
@@ -216,7 +217,7 @@ public class DefaultJMenuDriver extends LightSupportiveDriver implements MenuDri
         }
     }
 
-    public static Object getSelectedElement(JMenuBar bar) {
+    public static @Nullable Object getSelectedElement(JMenuBar bar) {
         MenuElement[] subElements = bar.getSubElements();
         for (MenuElement subElement : subElements) {
             if (subElement instanceof JMenu && ((JMenu) subElement).isPopupMenuVisible()) {
@@ -239,7 +240,7 @@ public class DefaultJMenuDriver extends LightSupportiveDriver implements MenuDri
         }
 
         @Override
-        public MenuElement actionProduced(Void obj) {
+        public @Nullable MenuElement actionProduced(Void obj) {
             if (!((Component) cont).isShowing()) {
                 return null;
             }

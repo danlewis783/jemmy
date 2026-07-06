@@ -26,6 +26,7 @@ package org.netbeans.jemmy.image;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Performs "rough" image search.
@@ -59,7 +60,7 @@ public class RoughImageFinder implements ImageFinder {
      * image1.getHeight() * roughness<code>
      */
     @Override
-    public Point findImage(BufferedImage image, int index) {
+    public @Nullable Point findImage(BufferedImage image, int index) {
         int smallWidth = image.getWidth();
         int smallHeight = image.getHeight();
         int[][] smallPixels = new int[smallWidth][smallHeight];

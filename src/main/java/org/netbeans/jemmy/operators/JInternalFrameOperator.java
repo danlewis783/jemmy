@@ -31,6 +31,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.beans.PropertyVetoException;
 import java.util.Hashtable;
+import java.util.Objects;
 import javax.swing.Icon;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
@@ -41,6 +42,7 @@ import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.plaf.InternalFrameUI;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.JemmyInputException;
@@ -146,19 +148,19 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
      */
     public static final String MINIMIZE_BUTTON_TOOLTIP = UIManager.getString("InternalFrame.iconButtonToolTip");
 
-    protected JButtonOperator minOper = null;
+    protected @Nullable JButtonOperator minOper = null;
 
-    protected JButtonOperator maxOper = null;
+    protected @Nullable JButtonOperator maxOper = null;
 
-    protected JButtonOperator closeOper = null;
+    protected @Nullable JButtonOperator closeOper = null;
 
-    protected JButtonOperator popupButtonOper = null;
+    protected @Nullable JButtonOperator popupButtonOper = null;
 
-    protected ContainerOperator<?> titleOperator = null;
+    protected @Nullable ContainerOperator<?> titleOperator = null;
 
-    private TestOut output;
-    private Timeouts timeouts;
-    private JDesktopIconOperator iconOperator;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") JDesktopIconOperator iconOperator;
 
     WindowDriver wDriver;
     FrameDriver fDriver;
@@ -223,7 +225,7 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
      *
      * @return JInternalframe instance or null if component was not found.
      */
-    public static JInternalFrame findJInternalFrame(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable JInternalFrame findJInternalFrame(Container cont, ComponentChooser chooser, int index) {
         Component res = findComponent(cont, new JInternalFrameFinder(chooser), index);
         if (res instanceof JInternalFrame) {
             return (JInternalFrame) res;
@@ -239,7 +241,7 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
      *
      * @return JInternalframe instance or null if component was not found.
      */
-    public static JInternalFrame findJInternalFrame(Container cont, ComponentChooser chooser) {
+    public static @Nullable JInternalFrame findJInternalFrame(Container cont, ComponentChooser chooser) {
         return findJInternalFrame(cont, chooser, 0);
     }
 
@@ -249,7 +251,8 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
      * @return JInternalframe instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JInternalFrame findJInternalFrame(Container cont, String text, boolean ce, boolean ccs, int index) {
+    public static @Nullable JInternalFrame findJInternalFrame(
+            Container cont, String text, boolean ce, boolean ccs, int index) {
         return (findJInternalFrame(
                 cont, new JInternalFrameByTitleFinder(text, new DefaultStringComparator(ce, ccs)), index));
     }
@@ -260,7 +263,7 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
      * @return JInternalframe instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JInternalFrame findJInternalFrame(Container cont, String text, boolean ce, boolean ccs) {
+    public static @Nullable JInternalFrame findJInternalFrame(Container cont, String text, boolean ce, boolean ccs) {
         return findJInternalFrame(cont, text, ce, ccs, 0);
     }
 
@@ -269,7 +272,7 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
      *
      * @return JInternalFrame instance or null if component was not found.
      */
-    public static JInternalFrame findJInternalFrameUnder(Component comp, ComponentChooser chooser) {
+    public static @Nullable JInternalFrame findJInternalFrameUnder(Component comp, ComponentChooser chooser) {
         return (JInternalFrame) findContainerUnder(comp, new JInternalFrameFinder(chooser));
     }
 
@@ -278,7 +281,7 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
      *
      * @return JInternalFrame instance or null if component was not found.
      */
-    public static JInternalFrame findJInternalFrameUnder(Component comp) {
+    public static @Nullable JInternalFrame findJInternalFrameUnder(Component comp) {
         return findJInternalFrameUnder(comp, new JInternalFrameFinder());
     }
 
@@ -528,7 +531,7 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
      */
     public JButtonOperator getMinimizeButton() {
         initOperators();
-        return minOper;
+        return Objects.requireNonNull(minOper, "internal frame has no minimize button");
     }
 
     /**
@@ -538,7 +541,7 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
      */
     public JButtonOperator getMaximizeButton() {
         initOperators();
-        return maxOper;
+        return Objects.requireNonNull(maxOper, "internal frame has no maximize button");
     }
 
     /**
@@ -548,12 +551,12 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
      */
     public JButtonOperator getCloseButton() {
         initOperators();
-        return closeOper;
+        return Objects.requireNonNull(closeOper, "internal frame has no close button");
     }
 
     public JButtonOperator getPopupButton() {
         initOperators();
-        return popupButtonOper;
+        return Objects.requireNonNull(popupButtonOper, "internal frame has no popup button");
     }
 
     /**
@@ -563,7 +566,7 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
      */
     public ContainerOperator<?> getTitleOperator() {
         initOperators();
-        return titleOperator;
+        return Objects.requireNonNull(titleOperator, "internal frame has no title pane");
     }
 
     /**
@@ -1115,7 +1118,7 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
      *
      * @return a title pane.
      */
-    protected Container findTitlePane() {
+    protected @Nullable Container findTitlePane() {
         return (Container) iDriver.getTitlePane(this);
     }
 
@@ -1286,8 +1289,8 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
      */
     public static class JDesktopIconOperator extends JComponentOperator implements Outputable, Timeoutable {
 
-        private TestOut output;
-        private Timeouts timeouts;
+        private @SuppressWarnings("NullAway.Init") TestOut output;
+        private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
 
         /**
          * Constructs JDesktopIconOperator.
@@ -1347,7 +1350,7 @@ public class JInternalFrameOperator extends JComponentOperator implements Output
      */
     public static class JInternalFrameFinder implements ComponentChooser {
 
-        ComponentChooser sf = null;
+        ComponentChooser sf;
 
         /**
          * Constructs JInternalFrameFinder.

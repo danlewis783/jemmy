@@ -24,6 +24,8 @@
  */
 package org.netbeans.jemmy.drivers;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Specifies an interface for objects defining path searching criteria.
  */
@@ -34,7 +36,7 @@ public interface PathChooser {
      *
      * @return true if the component fits the requirements.
      */
-    public boolean checkPathComponent(int depth, Object component);
+    public boolean checkPathComponent(int depth, @Nullable Object component);
 
     /**
      * Return requiered depth of the path.

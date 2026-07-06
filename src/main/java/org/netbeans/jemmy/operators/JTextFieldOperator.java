@@ -28,6 +28,7 @@ import java.awt.Container;
 import java.awt.event.ActionListener;
 import javax.swing.BoundedRangeModel;
 import javax.swing.JTextField;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 
 /**
@@ -107,7 +108,7 @@ public class JTextFieldOperator extends JTextComponentOperator {
      *
      * @return JTextField instance or null if component was not found.
      */
-    public static JTextField findJTextField(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable JTextField findJTextField(Container cont, ComponentChooser chooser, int index) {
         return (JTextField) findJTextComponent(cont, new JTextFieldFinder(chooser), index);
     }
 
@@ -116,7 +117,7 @@ public class JTextFieldOperator extends JTextComponentOperator {
      *
      * @return JTextField instance or null if component was not found.
      */
-    public static JTextField findJTextField(Container cont, ComponentChooser chooser) {
+    public static @Nullable JTextField findJTextField(Container cont, ComponentChooser chooser) {
         return findJTextField(cont, chooser, 0);
     }
 
@@ -126,7 +127,7 @@ public class JTextFieldOperator extends JTextComponentOperator {
      * @return JTextField instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JTextField findJTextField(Container cont, String text, boolean ce, boolean ccs, int index) {
+    public static @Nullable JTextField findJTextField(Container cont, String text, boolean ce, boolean ccs, int index) {
         return (findJTextField(
                 cont,
                 new JTextFieldFinder(new JTextComponentOperator.JTextComponentByTextFinder(
@@ -140,7 +141,7 @@ public class JTextFieldOperator extends JTextComponentOperator {
      * @return JTextField instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JTextField findJTextField(Container cont, String text, boolean ce, boolean ccs) {
+    public static @Nullable JTextField findJTextField(Container cont, String text, boolean ce, boolean ccs) {
         return findJTextField(cont, text, ce, ccs, 0);
     }
 

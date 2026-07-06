@@ -27,6 +27,8 @@ package org.netbeans.jemmy;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Objects;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Jemmy itself provides a way to create tests. Test should implement org.netbeans.jemmy.Scenario interface. Test can be
@@ -62,11 +64,11 @@ public class Test extends ActionProducer<Object, Object> implements Timeoutable,
      */
     public static int TEST_PASSED_STATUS = 0;
 
-    protected Timeouts timeouts;
+    protected @SuppressWarnings("NullAway.Init") Timeouts timeouts;
 
-    protected TestOut output;
+    protected @SuppressWarnings("NullAway.Init") TestOut output;
 
-    private Scenario scenario;
+    private @SuppressWarnings("NullAway.Init") Scenario scenario;
 
     /**
      * Constructor for tests requiring only a class instance. Creates a subclass
@@ -78,7 +80,7 @@ public class Test extends ActionProducer<Object, Object> implements Timeoutable,
         super(true);
         setOutput(JemmyProperties.getCurrentOutput());
         setTimeouts(JemmyProperties.getCurrentTimeouts());
-        scenario = testForName(testClassName);
+        scenario = Objects.requireNonNull(testForName(testClassName), "no test scenario " + testClassName);
     }
 
     /**
@@ -224,7 +226,7 @@ public class Test extends ActionProducer<Object, Object> implements Timeoutable,
      * @return an instance of the test {@code Scenario} to launch.
      * @see org.netbeans.jemmy.Scenario
      */
-    public Scenario testForName(String testName) {
+    public @Nullable Scenario testForName(String testName) {
         try {
             return ((Scenario)
                     (Class.forName(testName).getConstructor(new Class<?>[0]).newInstance()));

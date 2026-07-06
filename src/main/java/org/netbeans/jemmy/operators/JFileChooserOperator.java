@@ -30,6 +30,7 @@ import java.awt.Rectangle;
 import java.awt.Window;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.Objects;
 import javax.swing.ComboBoxModel;
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -48,6 +49,7 @@ import javax.swing.filechooser.FileSystemView;
 import javax.swing.filechooser.FileView;
 import javax.swing.plaf.FileChooserUI;
 import javax.swing.table.TableModel;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.JemmyException;
@@ -68,8 +70,8 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
 
     private static final long WAIT_LIST_PAINTED_TIMEOUT = 60000;
 
-    private Timeouts timeouts;
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
     private ComponentSearcher innerSearcher;
 
     public JFileChooserOperator(JFileChooser comp) {
@@ -106,7 +108,7 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
      *
      * @return a component instance
      */
-    public static JDialog findJFileChooserDialog() {
+    public static @Nullable JDialog findJFileChooserDialog() {
         return (JDialogOperator.findJDialog(new JFileChooserJDialogFinder(JemmyProperties.getCurrentOutput())));
     }
 
@@ -124,7 +126,7 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
      *
      * @return a component instance
      */
-    public static JFileChooser findJFileChooser(Container cont) {
+    public static @Nullable JFileChooser findJFileChooser(Container cont) {
         return (JFileChooser) findComponent(cont, new JFileChooserFinder());
     }
 
@@ -142,8 +144,9 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
      *
      * @return a component instance
      */
-    public static JFileChooser findJFileChooser() {
-        return findJFileChooser(findJFileChooserDialog());
+    public static @Nullable JFileChooser findJFileChooser() {
+        JDialog dialog = findJFileChooserDialog();
+        return (dialog == null) ? null : findJFileChooser(dialog);
     }
 
     /**
@@ -213,7 +216,8 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
             aText = getUI().getApproveButtonText((JFileChooser) getSource());
         }
         if (aText != null) {
-            return ((JButton) innerSearcher.findComponent(new ButtonFinder(aText)));
+            return ((JButton) Objects.requireNonNull(
+                    innerSearcher.findComponent(new ButtonFinder(aText)), "approve button not found"));
         } else {
             throw (new JemmyException(
                     "JFileChooser.getApproveButtonText() " + "and getUI().getApproveButtonText " + "return null"));
@@ -226,30 +230,32 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
      * @return a cancel button.
      */
     public JButton getCancelButton() {
-        return ((JButton) innerSearcher.findComponent(
-                new ComponentChooser() {
-                    @Override
-                    public boolean checkComponent(Component comp) {
-                        return (comp != null
-                                && comp instanceof JButton
-                                && comp.getParent() != null
-                                && !(comp.getParent() instanceof JComboBox)
-                                && ((JButton) comp).getText() != null
-                                && ((JButton) comp).getText().length() != 0);
-                    }
+        return ((JButton) Objects.requireNonNull(
+                innerSearcher.findComponent(
+                        new ComponentChooser() {
+                            @Override
+                            public boolean checkComponent(Component comp) {
+                                return (comp != null
+                                        && comp instanceof JButton
+                                        && comp.getParent() != null
+                                        && !(comp.getParent() instanceof JComboBox)
+                                        && ((JButton) comp).getText() != null
+                                        && ((JButton) comp).getText().length() != 0);
+                            }
 
-                    @Override
-                    public String getDescription() {
-                        return "JButton";
-                    }
+                            @Override
+                            public String getDescription() {
+                                return "JButton";
+                            }
 
-                    @Override
-                    public String toString() {
-                        return "JFileChooserOperator.getCancelButton.ComponentChooser{description = " + getDescription()
-                                + '}';
-                    }
-                },
-                1));
+                            @Override
+                            public String toString() {
+                                return "JFileChooserOperator.getCancelButton.ComponentChooser{description = "
+                                        + getDescription() + '}';
+                            }
+                        },
+                        1),
+                "cancel button not found"));
     }
 
     /**
@@ -294,22 +300,25 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
      * @return a text field being used for path typing.
      */
     public JTextField getPathField() {
-        return ((JTextField) innerSearcher.findComponent(new ComponentChooser() {
-            @Override
-            public boolean checkComponent(Component comp) {
-                return (comp != null && comp instanceof JTextField);
-            }
+        return ((JTextField) Objects.requireNonNull(
+                innerSearcher.findComponent(new ComponentChooser() {
+                    @Override
+                    public boolean checkComponent(Component comp) {
+                        return (comp != null && comp instanceof JTextField);
+                    }
 
-            @Override
-            public String getDescription() {
-                return "JTextField";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "JTextField";
+                    }
 
-            @Override
-            public String toString() {
-                return "JFileChooserOperator.getPathField.ComponentChooser{description = " + getDescription() + '}';
-            }
-        }));
+                    @Override
+                    public String toString() {
+                        return "JFileChooserOperator.getPathField.ComponentChooser{description = " + getDescription()
+                                + '}';
+                    }
+                }),
+                "path field not found"));
     }
 
     /**
@@ -324,25 +333,28 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
         } else {
             fileListName = UIManager.getString("FileChooser.filesListAccessibleName", getLocale());
         }
-        return innerSearcher.findComponent(new ComponentChooser() {
-            @Override
-            public boolean checkComponent(Component comp) {
-                return ((comp instanceof JList
-                                && fileListName.equals(
-                                        comp.getAccessibleContext().getAccessibleName()))
-                        || comp instanceof JTable);
-            }
+        return Objects.requireNonNull(
+                innerSearcher.findComponent(new ComponentChooser() {
+                    @Override
+                    public boolean checkComponent(Component comp) {
+                        return ((comp instanceof JList
+                                        && fileListName.equals(
+                                                comp.getAccessibleContext().getAccessibleName()))
+                                || comp instanceof JTable);
+                    }
 
-            @Override
-            public String getDescription() {
-                return "JList or JTable used to show list of files";
-            }
+                    @Override
+                    public String getDescription() {
+                        return "JList or JTable used to show list of files";
+                    }
 
-            @Override
-            public String toString() {
-                return "JFileChooserOperator.getFileList.ComponentChooser{description = " + getDescription() + '}';
-            }
-        });
+                    @Override
+                    public String toString() {
+                        return "JFileChooserOperator.getFileList.ComponentChooser{description = " + getDescription()
+                                + '}';
+                    }
+                }),
+                "file list not found");
     }
 
     /**
@@ -1312,7 +1324,7 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
     private void waitPainted(int index) {
         Waiter<Rectangle, Integer> drawingWaiter = new Waiter<>(new Waitable<Rectangle, Integer>() {
             @Override
-            public Rectangle actionProduced(Integer param) {
+            public @Nullable Rectangle actionProduced(Integer param) {
                 Component list = getFileList();
                 int size;
                 if (list instanceof JList) size = ((JList) list).getModel().getSize();
@@ -1359,78 +1371,85 @@ public class JFileChooserOperator extends JComponentOperator implements Timeouta
     }
 
     private JComboBox<?> getCombo(int index) {
-        return ((JComboBox) innerSearcher.findComponent(
-                new ComponentChooser() {
-                    @Override
-                    public boolean checkComponent(Component comp) {
-                        return (comp != null && comp instanceof JComboBox);
-                    }
+        return ((JComboBox) Objects.requireNonNull(
+                innerSearcher.findComponent(
+                        new ComponentChooser() {
+                            @Override
+                            public boolean checkComponent(Component comp) {
+                                return (comp != null && comp instanceof JComboBox);
+                            }
 
-                    @Override
-                    public String getDescription() {
-                        return "JComboBox";
-                    }
+                            @Override
+                            public String getDescription() {
+                                return "JComboBox";
+                            }
 
-                    @Override
-                    public String toString() {
-                        return "JFileChooserOperator.getCombo.ComponentChooser{description = " + getDescription() + '}';
-                    }
-                },
-                index));
+                            @Override
+                            public String toString() {
+                                return "JFileChooserOperator.getCombo.ComponentChooser{description = "
+                                        + getDescription() + '}';
+                            }
+                        },
+                        index),
+                "combo box not found"));
     }
 
     private JButton getNoTextButton(int index) {
-        return ((JButton) innerSearcher.findComponent(
-                new ComponentChooser() {
-                    @Override
-                    public boolean checkComponent(Component comp) {
-                        return (comp != null
-                                && comp instanceof JButton
-                                && !(comp.getParent() instanceof JComboBox)
-                                && (((JButton) comp).getText() == null
-                                        || ((JButton) comp).getText().length() == 0));
-                    }
+        return ((JButton) Objects.requireNonNull(
+                innerSearcher.findComponent(
+                        new ComponentChooser() {
+                            @Override
+                            public boolean checkComponent(Component comp) {
+                                return (comp != null
+                                        && comp instanceof JButton
+                                        && !(comp.getParent() instanceof JComboBox)
+                                        && (((JButton) comp).getText() == null
+                                                || ((JButton) comp).getText().length() == 0));
+                            }
 
-                    @Override
-                    public String getDescription() {
-                        return "JButton";
-                    }
+                            @Override
+                            public String getDescription() {
+                                return "JButton";
+                            }
 
-                    @Override
-                    public String toString() {
-                        return "JFileChooserOperator.getNoTextButton.ComponentChooser{description = " + getDescription()
-                                + '}';
-                    }
-                },
-                index));
+                            @Override
+                            public String toString() {
+                                return "JFileChooserOperator.getNoTextButton.ComponentChooser{description = "
+                                        + getDescription() + '}';
+                            }
+                        },
+                        index),
+                "button not found"));
     }
 
     private JToggleButton getToggleButton(int index) {
-        return ((JToggleButton) innerSearcher.findComponent(
-                new ComponentChooser() {
-                    @Override
-                    public boolean checkComponent(Component comp) {
-                        return (comp != null && comp instanceof JToggleButton);
-                    }
+        return ((JToggleButton) Objects.requireNonNull(
+                innerSearcher.findComponent(
+                        new ComponentChooser() {
+                            @Override
+                            public boolean checkComponent(Component comp) {
+                                return (comp != null && comp instanceof JToggleButton);
+                            }
 
-                    @Override
-                    public String getDescription() {
-                        return "JToggleButton";
-                    }
+                            @Override
+                            public String getDescription() {
+                                return "JToggleButton";
+                            }
 
-                    @Override
-                    public String toString() {
-                        return "JFileChooserOperator.getToggleButton.ComponentChooser{description = " + getDescription()
-                                + '}';
-                    }
-                },
-                index));
+                            @Override
+                            public String toString() {
+                                return "JFileChooserOperator.getToggleButton.ComponentChooser{description = "
+                                        + getDescription() + '}';
+                            }
+                        },
+                        index),
+                "toggle button not found"));
     }
 
     private int findFileIndex(final String file, final StringComparator comparator) {
         Waiter<Integer, Void> fileWaiter = new Waiter<>(new Waitable<Integer, Void>() {
             @Override
-            public Integer actionProduced(Void obj) {
+            public @Nullable Integer actionProduced(Void obj) {
                 File[] files = getFiles();
                 for (int i = 0; i < files.length; i++) {
                     if (comparator.equals(files[i].getName(), file)) {

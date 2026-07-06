@@ -25,6 +25,7 @@
 package org.netbeans.jemmy.drivers.scrolling;
 
 import java.awt.Point;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.Timeout;
 import org.netbeans.jemmy.drivers.DriverManager;
@@ -103,7 +104,7 @@ public abstract class AWTScrollDriver extends AbstractScrollDriver {
     }
 
     @Override
-    protected Point startDragging(ComponentOperator oper) {
+    protected @Nullable Point startDragging(ComponentOperator oper) {
         return null;
     }
 
@@ -144,5 +145,5 @@ public abstract class AWTScrollDriver extends AbstractScrollDriver {
      *
      * @return a point to click.
      */
-    protected abstract Point getClickPoint(ComponentOperator oper, int direction, int orientation);
+    protected abstract @Nullable Point getClickPoint(ComponentOperator oper, int direction, int orientation);
 }

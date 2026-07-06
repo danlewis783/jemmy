@@ -31,6 +31,7 @@ import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.awt.Point;
 import java.awt.event.ContainerListener;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.JemmyException;
@@ -55,8 +56,8 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
     private static final long WAIT_SUBCOMPONENT_TIMEOUT = 60000;
 
     private ComponentSearcher searcher;
-    private Timeouts timeouts;
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
 
     public ContainerOperator(Container b) {
         super(b);
@@ -95,7 +96,7 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
      *
      * @return Container instance or null if component was not found.
      */
-    public static Container findContainer(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable Container findContainer(Container cont, ComponentChooser chooser, int index) {
         return (Container) findComponent(cont, new ContainerFinder(chooser), index);
     }
 
@@ -104,7 +105,7 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
      *
      * @return Container instance or null if component was not found.
      */
-    public static Container findContainer(Container cont, ComponentChooser chooser) {
+    public static @Nullable Container findContainer(Container cont, ComponentChooser chooser) {
         return findContainer(cont, chooser, 0);
     }
 
@@ -113,7 +114,7 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
      *
      * @return Container instance or null if component was not found.
      */
-    public static Container findContainer(Container cont, int index) {
+    public static @Nullable Container findContainer(Container cont, int index) {
         return findContainer(
                 cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th Container instance"), index);
     }
@@ -123,7 +124,7 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
      *
      * @return Container instance or null if component was not found.
      */
-    public static Container findContainer(Container cont) {
+    public static @Nullable Container findContainer(Container cont) {
         return findContainer(cont, 0);
     }
 
@@ -132,7 +133,7 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
      *
      * @return Container instance or null if component was not found.
      */
-    public static Container findContainerUnder(Component comp, ComponentChooser chooser) {
+    public static @Nullable Container findContainerUnder(Component comp, ComponentChooser chooser) {
         return (new ComponentOperator(comp).getContainer(new ContainerFinder(chooser)));
     }
 
@@ -141,7 +142,7 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
      *
      * @return Container instance or null if component was not found.
      */
-    public static Container findContainerUnder(Component comp) {
+    public static @Nullable Container findContainerUnder(Component comp) {
         return findContainerUnder(comp, ComponentSearcher.getTrueChooser("Container"));
     }
 
@@ -213,7 +214,7 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
      *
      * @return Component instance.
      */
-    public Component findSubComponent(ComponentChooser chooser, int index) {
+    public @Nullable Component findSubComponent(ComponentChooser chooser, int index) {
         getOutput().printLine("Looking for \"" + chooser.getDescription() + "\" subcomponent");
         return searcher.findComponent(chooser, index);
     }
@@ -223,7 +224,7 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
      *
      * @return Component instance.
      */
-    public Component findSubComponent(ComponentChooser chooser) {
+    public @Nullable Component findSubComponent(ComponentChooser chooser) {
         return findSubComponent(chooser, 0);
     }
 
@@ -238,7 +239,7 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
         searcher.setOutput(getOutput().createErrorOutput());
         Waiter<Component, Void> waiter = new Waiter<>(new Waitable<Component, Void>() {
             @Override
-            public Component actionProduced(Void obj) {
+            public @Nullable Component actionProduced(Void obj) {
                 return searcher.findComponent(chooser, index);
             }
 
@@ -276,7 +277,7 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
      *
      * @return Component instance.
      */
-    public ComponentOperator createSubOperator(ComponentChooser chooser, int index) {
+    public @Nullable ComponentOperator createSubOperator(ComponentChooser chooser, int index) {
         return createOperator(waitSubComponent(chooser, index));
     }
 
@@ -285,7 +286,7 @@ public class ContainerOperator<T extends Container> extends ComponentOperator im
      *
      * @return Component instance.
      */
-    public ComponentOperator createSubOperator(ComponentChooser chooser) {
+    public @Nullable ComponentOperator createSubOperator(ComponentChooser chooser) {
         return createSubOperator(chooser, 0);
     }
 

@@ -28,6 +28,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Allows access to classes by reflection.
@@ -35,7 +36,7 @@ import java.util.Arrays;
 public class ClassReference {
 
     private Class<?> cl;
-    private Object instance;
+    private @SuppressWarnings("NullAway.Init") @Nullable Object instance;
 
     public ClassReference(Object o) {
         super();
@@ -110,7 +111,7 @@ public class ClassReference {
      * @exception NoSuchMethodException
      * @exception InvocationTargetException
      */
-    public Object invokeMethod(String method_name, Object[] params, Class<?>[] params_classes)
+    public Object invokeMethod(String method_name, @Nullable Object[] params, Class<?> @Nullable [] params_classes)
             throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         if (params == null) {
             params = new Object[0];
@@ -140,7 +141,7 @@ public class ClassReference {
      * @exception InstantiationException
      * @exception InvocationTargetException
      */
-    public Object newInstance(Object[] params, Class<?>[] params_classes)
+    public Object newInstance(@Nullable Object[] params, Class<?> @Nullable [] params_classes)
             throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
         if (params == null) {
             params = new Object[0];

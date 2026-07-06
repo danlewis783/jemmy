@@ -31,6 +31,7 @@ import java.awt.List;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.util.Hashtable;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
@@ -63,7 +64,7 @@ public class ListOperator extends ComponentOperator implements Outputable {
      */
     public static final String SELECTED_ITEM_PREFIX_DPROP = "SelectedItem";
 
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
     private MultiSelListDriver driver;
 
     public ListOperator(List b) {
@@ -131,7 +132,7 @@ public class ListOperator extends ComponentOperator implements Outputable {
      *
      * @return List instance or null if component was not found.
      */
-    public static List findList(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable List findList(Container cont, ComponentChooser chooser, int index) {
         return (List) findComponent(cont, new ListFinder(chooser), index);
     }
 
@@ -140,7 +141,7 @@ public class ListOperator extends ComponentOperator implements Outputable {
      *
      * @return List instance or null if component was not found.
      */
-    public static List findList(Container cont, ComponentChooser chooser) {
+    public static @Nullable List findList(Container cont, ComponentChooser chooser) {
         return findList(cont, chooser, 0);
     }
 

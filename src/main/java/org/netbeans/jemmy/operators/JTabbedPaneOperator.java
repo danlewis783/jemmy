@@ -34,6 +34,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.SingleSelectionModel;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.TabbedPaneUI;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyInputException;
 import org.netbeans.jemmy.Outputable;
@@ -66,7 +67,7 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
      */
     public static final String PAGE_PREFIX_DPROP = "Page";
 
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
     private ListDriver driver;
 
     public JTabbedPaneOperator(JTabbedPane b) {
@@ -139,7 +140,7 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
      *
      * @return JTabbedPane instance or null if component was not found.
      */
-    public static JTabbedPane findJTabbedPane(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable JTabbedPane findJTabbedPane(Container cont, ComponentChooser chooser, int index) {
         return (JTabbedPane) findComponent(cont, new JTabbedPaneFinder(chooser), index);
     }
 
@@ -148,7 +149,7 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
      *
      * @return JTabbedPane instance or null if component was not found.
      */
-    public static JTabbedPane findJTabbedPane(Container cont, ComponentChooser chooser) {
+    public static @Nullable JTabbedPane findJTabbedPane(Container cont, ComponentChooser chooser) {
         return findJTabbedPane(cont, chooser, 0);
     }
 
@@ -158,7 +159,7 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
      * @return JTabbedPane instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JTabbedPane findJTabbedPane(
+    public static @Nullable JTabbedPane findJTabbedPane(
             Container cont, String text, boolean ce, boolean ccs, int itemIndex, int index) {
         return findJTabbedPane(
                 cont, new JTabbedPaneByItemFinder(text, itemIndex, new DefaultStringComparator(ce, ccs)), index);
@@ -170,7 +171,8 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
      * @return JTabbedPane instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JTabbedPane findJTabbedPane(Container cont, String text, boolean ce, boolean ccs, int itemIndex) {
+    public static @Nullable JTabbedPane findJTabbedPane(
+            Container cont, String text, boolean ce, boolean ccs, int itemIndex) {
         return findJTabbedPane(cont, text, ce, ccs, itemIndex, 0);
     }
 
@@ -179,7 +181,7 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
      *
      * @return JTabbedPane instance or null if component was not found.
      */
-    public static JTabbedPane findJTabbedPaneUnder(Component comp, ComponentChooser chooser) {
+    public static @Nullable JTabbedPane findJTabbedPaneUnder(Component comp, ComponentChooser chooser) {
         return (JTabbedPane) findContainerUnder(comp, new JTabbedPaneFinder(chooser));
     }
 
@@ -188,7 +190,7 @@ public class JTabbedPaneOperator extends JComponentOperator implements Outputabl
      *
      * @return JTabbedPane instance or null if component was not found.
      */
-    public static JTabbedPane findJTabbedPaneUnder(Component comp) {
+    public static @Nullable JTabbedPane findJTabbedPaneUnder(Component comp) {
         return findJTabbedPaneUnder(comp, new JTabbedPaneFinder());
     }
 

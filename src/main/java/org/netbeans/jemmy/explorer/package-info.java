@@ -29,4 +29,7 @@
  * @since 23 Feb 2002
  * <hr>
  */
+@NullMarked
 package org.netbeans.jemmy.explorer;
+
+import org.jspecify.annotations.NullMarked;

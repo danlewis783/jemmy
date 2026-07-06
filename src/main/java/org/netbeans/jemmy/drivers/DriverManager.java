@@ -24,6 +24,7 @@
  */
 package org.netbeans.jemmy.drivers;
 
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.operators.ComponentOperator;
@@ -645,7 +646,7 @@ public class DriverManager {
     }
 
     // returns a driver
-    private static Object getADriver(String id, Class<?> operatorClass, JemmyProperties props) {
+    private static @Nullable Object getADriver(String id, Class<?> operatorClass, JemmyProperties props) {
         Class<?> superClass = operatorClass;
         Object drvr;
         do {

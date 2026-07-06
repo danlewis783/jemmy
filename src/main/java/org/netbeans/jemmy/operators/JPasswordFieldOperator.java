@@ -27,6 +27,7 @@ package org.netbeans.jemmy.operators;
 import java.awt.Container;
 import java.util.Hashtable;
 import javax.swing.JPasswordField;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 
 /**
@@ -114,7 +115,7 @@ public class JPasswordFieldOperator extends JTextFieldOperator {
      *
      * @return JPasswordField instance or null if component was not found.
      */
-    public static JPasswordField findJPasswordField(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable JPasswordField findJPasswordField(Container cont, ComponentChooser chooser, int index) {
         return (JPasswordField) findJTextComponent(cont, new JPasswordFieldFinder(chooser), index);
     }
 
@@ -123,7 +124,7 @@ public class JPasswordFieldOperator extends JTextFieldOperator {
      *
      * @return JPasswordField instance or null if component was not found.
      */
-    public static JPasswordField findJPasswordField(Container cont, ComponentChooser chooser) {
+    public static @Nullable JPasswordField findJPasswordField(Container cont, ComponentChooser chooser) {
         return findJPasswordField(cont, chooser, 0);
     }
 
@@ -133,7 +134,8 @@ public class JPasswordFieldOperator extends JTextFieldOperator {
      * @return JPasswordField instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JPasswordField findJPasswordField(Container cont, String text, boolean ce, boolean ccs, int index) {
+    public static @Nullable JPasswordField findJPasswordField(
+            Container cont, String text, boolean ce, boolean ccs, int index) {
         return (findJPasswordField(
                 cont,
                 new JPasswordFieldFinder(new JTextComponentOperator.JTextComponentByTextFinder(
@@ -147,7 +149,7 @@ public class JPasswordFieldOperator extends JTextFieldOperator {
      * @return JPasswordField instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JPasswordField findJPasswordField(Container cont, String text, boolean ce, boolean ccs) {
+    public static @Nullable JPasswordField findJPasswordField(Container cont, String text, boolean ce, boolean ccs) {
         return findJPasswordField(cont, text, ce, ccs, 0);
     }
 

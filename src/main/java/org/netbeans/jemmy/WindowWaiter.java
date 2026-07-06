@@ -28,6 +28,7 @@ import java.awt.Component;
 import java.awt.Frame;
 import java.awt.Window;
 import java.util.stream.Stream;
+import org.jspecify.annotations.Nullable;
 
 /**
  * A WindowWaiter is a utility class used to look or wait for Windows. It contains methods to search for a Window among
@@ -51,10 +52,10 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
     private static final long WAIT_TIME = 60000;
     private static final long AFTER_WAIT_TIME = 0;
 
-    private ComponentChooser chooser;
-    private Window owner = null;
+    private @SuppressWarnings("NullAway.Init") ComponentChooser chooser;
+    private @Nullable Window owner = null;
     private int index = 0;
-    private Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
 
     public WindowWaiter() {
         super();
@@ -79,7 +80,7 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
      * criteria. If there are fewer than {@code index+1} windows, a
      * {@code null} reference is returned.
      */
-    public static Window getWindow(Window owner, ComponentChooser cc, int index) {
+    public static @Nullable Window getWindow(@Nullable Window owner, ComponentChooser cc, int index) {
         return getAWindow(owner, new IndexChooser(cc, index));
     }
 
@@ -96,7 +97,7 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
      * owner window, and that meets the search criteria. If no such window can
      * be found, a {@code null} reference is returned.
      */
-    public static Window getWindow(Window owner, ComponentChooser cc) {
+    public static @Nullable Window getWindow(@Nullable Window owner, ComponentChooser cc) {
         return getWindow(owner, cc, 0);
     }
 
@@ -113,7 +114,7 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
      * and that meets the search criteria. If there are fewer than
      * {@code index+1} windows, a {@code null} reference is returned.
      */
-    public static Window getWindow(ComponentChooser cc, int index) {
+    public static @Nullable Window getWindow(ComponentChooser cc, int index) {
         return getAWindow(new IndexChooser(cc, index));
     }
 
@@ -128,7 +129,7 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
      * the search criteria. If no such window can be found, a {@code null}
      * reference is returned.
      */
-    public static Window getWindow(ComponentChooser cc) {
+    public static @Nullable Window getWindow(ComponentChooser cc) {
         return getWindow(cc, 0);
     }
 
@@ -177,7 +178,7 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
      * @see org.netbeans.jemmy.Action
      */
     @Override
-    public Window actionProduced(Void obj) {
+    public @Nullable Window actionProduced(Void obj) {
         return WindowWaiter.getWindow(owner, chooser, index);
     }
 
@@ -289,10 +290,11 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
      * @param count the number of expected windows meeting the search criteria.
      * @throws InterruptedException
      */
-    public static void waitWindowCount(Window owner, ComponentChooser ch, int count) throws InterruptedException {
+    public static void waitWindowCount(@Nullable Window owner, ComponentChooser ch, int count)
+            throws InterruptedException {
         Waiter<String, Void> stateWaiter = new Waiter<>(new Waitable<String, Void>() {
             @Override
-            public String actionProduced(Void obj) {
+            public @Nullable String actionProduced(Void obj) {
                 return countWindows(owner, ch) == count ? "" : null;
             }
 
@@ -319,8 +321,8 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
      * criteria
      * @return the number of matched windows
      */
-    public static int countWindows(Window owner, ComponentChooser ch) {
-        return new QueueTool().invokeAndWait(new QueueTool.QueueAction<Integer>(null) {
+    public static int countWindows(@Nullable Window owner, ComponentChooser ch) {
+        return new QueueTool().invokeAndWait(new QueueTool.QueueAction<Integer>("countWindows") {
 
             @Override
             public Integer launch() {
@@ -392,7 +394,7 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
      * @return Window-owner of the set of windows.
      * @see #setOwner
      */
-    protected Window getOwner() {
+    protected @Nullable Window getOwner() {
         return owner;
     }
 
@@ -467,7 +469,7 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
         return "Window \"" + chooser.getDescription() + "\" has been opened";
     }
 
-    private static Window getAWindow(Window owner, ComponentChooser cc) {
+    private static @Nullable Window getAWindow(@Nullable Window owner, ComponentChooser cc) {
         if (owner == null) {
             return WindowWaiter.getAWindow(cc);
         } else {
@@ -485,7 +487,7 @@ public class WindowWaiter extends Waiter<Window, Void> implements Timeoutable {
         }
     }
 
-    private static Window getAWindow(ComponentChooser cc) {
+    private static @Nullable Window getAWindow(ComponentChooser cc) {
         Window result = null;
         Frame[] frames = Frame.getFrames();
         for (Frame frame : frames) {

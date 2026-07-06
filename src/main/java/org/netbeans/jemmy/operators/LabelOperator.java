@@ -28,6 +28,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Label;
 import java.util.Hashtable;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 
 /**
@@ -103,7 +104,7 @@ public class LabelOperator extends ComponentOperator {
      *
      * @return Label instance or null if component was not found.
      */
-    public static Label findLabel(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable Label findLabel(Container cont, ComponentChooser chooser, int index) {
         return (Label) findComponent(cont, new LabelFinder(chooser), index);
     }
 
@@ -112,7 +113,7 @@ public class LabelOperator extends ComponentOperator {
      *
      * @return Label instance or null if component was not found.
      */
-    public static Label findLabel(Container cont, ComponentChooser chooser) {
+    public static @Nullable Label findLabel(Container cont, ComponentChooser chooser) {
         return findLabel(cont, chooser, 0);
     }
 
@@ -122,7 +123,7 @@ public class LabelOperator extends ComponentOperator {
      * @return Label instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static Label findLabel(Container cont, String text, boolean ce, boolean ccs, int index) {
+    public static @Nullable Label findLabel(Container cont, String text, boolean ce, boolean ccs, int index) {
         return findLabel(cont, new LabelByLabelFinder(text, new DefaultStringComparator(ce, ccs)), index);
     }
 
@@ -132,7 +133,7 @@ public class LabelOperator extends ComponentOperator {
      * @return Label instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static Label findLabel(Container cont, String text, boolean ce, boolean ccs) {
+    public static @Nullable Label findLabel(Container cont, String text, boolean ce, boolean ccs) {
         return findLabel(cont, text, ce, ccs, 0);
     }
 

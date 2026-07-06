@@ -35,7 +35,7 @@ import org.netbeans.jemmy.TimeoutExpiredException;
  */
 public class Demonstrator {
 
-    private static CommentWindow displayer;
+    private static @SuppressWarnings("NullAway.Init") CommentWindow displayer;
     private static CommentWindow nonDisplayer;
 
     /**

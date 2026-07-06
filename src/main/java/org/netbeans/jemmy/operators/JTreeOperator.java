@@ -44,6 +44,7 @@ import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.JemmyException;
@@ -117,8 +118,8 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
     private static final long BEFORE_EDIT_TIMEOUT = 1000;
     private static final long WAIT_EDITING_TIMEOUT = 60000;
 
-    private TestOut output;
-    private Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
     private TreeDriver driver;
 
     public JTreeOperator(JTree b) {
@@ -190,7 +191,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      *
      * @return JTree instance or null if component was not found.
      */
-    public static JTree findJTree(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable JTree findJTree(Container cont, ComponentChooser chooser, int index) {
         return (JTree) findComponent(cont, new JTreeFinder(chooser), index);
     }
 
@@ -199,7 +200,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      *
      * @return JTree instance or null if component was not found.
      */
-    public static JTree findJTree(Container cont, ComponentChooser chooser) {
+    public static @Nullable JTree findJTree(Container cont, ComponentChooser chooser) {
         return findJTree(cont, chooser, 0);
     }
 
@@ -211,7 +212,8 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * @return JTree instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JTree findJTree(Container cont, String text, boolean ce, boolean ccs, int rowIndex, int index) {
+    public static @Nullable JTree findJTree(
+            Container cont, String text, boolean ce, boolean ccs, int rowIndex, int index) {
         return findJTree(cont, new JTreeByItemFinder(text, rowIndex, new DefaultStringComparator(ce, ccs)), index);
     }
 
@@ -223,7 +225,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * @return JTree instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JTree findJTree(Container cont, String text, boolean ce, boolean ccs, int rowIndex) {
+    public static @Nullable JTree findJTree(Container cont, String text, boolean ce, boolean ccs, int rowIndex) {
         return findJTree(cont, text, ce, ccs, rowIndex, 0);
     }
 
@@ -441,10 +443,10 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      *
      * @return tree root.
      */
-    public Object getRoot() {
+    public @Nullable Object getRoot() {
         Waiter<Object, Void> rootWaiter = new Waiter<>(new Waitable<Object, Void>() {
             @Override
-            public Object actionProduced(Void obj) {
+            public @Nullable Object actionProduced(Void obj) {
                 Object root = getModel().getRoot();
                 if (root == null || root.toString().equals("null")) {
                     return null;
@@ -469,7 +471,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
             return rootWaiter.waitAction(null);
         } catch (InterruptedException e) {
             output.printStackTrace(e);
-            return null;
+            throw new JemmyException("Interrupted", e);
         }
     }
 
@@ -480,7 +482,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * @see TreePathChooser
      * @see #findPath
      */
-    public TreePath findPath(TreePathChooser chooser) {
+    public @Nullable TreePath findPath(TreePathChooser chooser) {
         output.printLine("Search for a tree path " + chooser.getDescription());
         output.printGolden("Search for a tree path");
         TreePath rootPath = new TreePath(getRoot());
@@ -489,11 +491,14 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         }
         Waiter<Object[], Object[]> loadedWaiter = new Waiter<>(new Waitable<Object[], Object[]>() {
             // fields used in getDescription() method
+            @SuppressWarnings("NullAway.Init")
             TreePath currentPath;
+
+            @SuppressWarnings("NullAway.Init")
             String requestedPath;
 
             @Override
-            public Object[] actionProduced(Object[] obj) {
+            public Object @Nullable [] actionProduced(Object[] obj) {
                 TreePathChooser chsr = (TreePathChooser) obj[0];
                 requestedPath = chsr.getDescription();
                 TreePath path = (TreePath) obj[1];
@@ -657,7 +662,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @see #findPath
      */
-    public TreePath findPath(String[] names, int[] indexes, StringComparator comparator) {
+    public @Nullable TreePath findPath(String[] names, int[] indexes, StringComparator comparator) {
         return findPath(new StringArrayPathChooser(names, indexes, comparator));
     }
 
@@ -679,7 +684,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * StringComparator)
      */
     @Deprecated
-    public TreePath findPath(String[] names, int[] indexes, boolean ce, boolean ccs) {
+    public @Nullable TreePath findPath(String[] names, int[] indexes, boolean ce, boolean ccs) {
         return findPath(names, indexes, new DefaultStringComparator(ce, ccs));
     }
 
@@ -689,7 +694,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * @return a tree path matching the criteria
      * @see #findPath
      */
-    public TreePath findPath(String[] names, int[] indexes) {
+    public @Nullable TreePath findPath(String[] names, int[] indexes) {
         return findPath(names, indexes, getComparator());
     }
 
@@ -700,7 +705,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @see #findPath
      */
-    public TreePath findPath(String[] names, StringComparator comparator) {
+    public @Nullable TreePath findPath(String[] names, StringComparator comparator) {
         int[] indexes = new int[0];
         return findPath(names, indexes, comparator);
     }
@@ -715,7 +720,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * StringComparator)
      */
     @Deprecated
-    public TreePath findPath(String[] names, boolean ce, boolean ccs) {
+    public @Nullable TreePath findPath(String[] names, boolean ce, boolean ccs) {
         int[] indexes = new int[0];
         return findPath(names, indexes, ce, ccs);
     }
@@ -727,7 +732,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @see #findPath
      */
-    public TreePath findPath(String[] names) {
+    public @Nullable TreePath findPath(String[] names) {
         int[] indexes = new int[0];
         return findPath(names, indexes, getComparator());
     }
@@ -743,7 +748,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @see #findPath
      */
-    public TreePath findPath(String path, String indexes, String delim, StringComparator comparator) {
+    public @Nullable TreePath findPath(String path, String indexes, String delim, StringComparator comparator) {
         String[] indexStrings = parseString(indexes, delim);
         int[] indInts = new int[indexStrings.length];
         for (int i = 0; i < indexStrings.length; i++) {
@@ -766,7 +771,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * String, String, StringComparator)
      */
     @Deprecated
-    public TreePath findPath(String path, String indexes, String delim, boolean ce, boolean ccs) {
+    public @Nullable TreePath findPath(String path, String indexes, String delim, boolean ce, boolean ccs) {
         return findPath(path, indexes, delim, new DefaultStringComparator(ce, ccs));
     }
 
@@ -780,7 +785,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * @return a tree path matching the criteria
      * @see #findPath
      */
-    public TreePath findPath(String path, String indexes, String delim) {
+    public @Nullable TreePath findPath(String path, String indexes, String delim) {
         return findPath(path, indexes, delim, getComparator());
     }
 
@@ -793,7 +798,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @see #findPath
      */
-    public TreePath findPath(String path, String delim, StringComparator comparator) {
+    public @Nullable TreePath findPath(String path, String delim, StringComparator comparator) {
         return findPath(parseString(path, delim), comparator);
     }
 
@@ -804,7 +809,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      * @see #findPath
      */
-    public TreePath findPath(String path, StringComparator comparator) {
+    public @Nullable TreePath findPath(String path, StringComparator comparator) {
         return findPath(parseString(path), comparator);
     }
 
@@ -820,7 +825,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * StringComparator)
      */
     @Deprecated
-    public TreePath findPath(String path, String delim, boolean ce, boolean ccs) {
+    public @Nullable TreePath findPath(String path, String delim, boolean ce, boolean ccs) {
         return findPath(parseString(path, delim), ce, ccs);
     }
 
@@ -832,7 +837,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * @return a tree path matching the criteria
      * @see #findPath
      */
-    public TreePath findPath(String path, String delim) {
+    public @Nullable TreePath findPath(String path, String delim) {
         return findPath(parseString(path, delim));
     }
 
@@ -843,7 +848,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
      * @return a tree path matching the criteria
      * @see #findPath
      */
-    public TreePath findPath(String path) {
+    public @Nullable TreePath findPath(String path) {
         return findPath(parseString(path));
     }
 
@@ -1354,7 +1359,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         waitState(new JTreeByItemFinder(rowText, row, getComparator()));
     }
 
-    public Object chooseSubnode(Object parent, String text, int index, StringComparator comparator) {
+    public @Nullable Object chooseSubnode(Object parent, String text, int index, StringComparator comparator) {
         int count = -1;
         Object node;
         for (int i = 0; i < getChildCount(parent); i++) {
@@ -1378,15 +1383,15 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         return null;
     }
 
-    public Object chooseSubnode(Object parent, String text, StringComparator comparator) {
+    public @Nullable Object chooseSubnode(Object parent, String text, StringComparator comparator) {
         return chooseSubnode(parent, text, 0, comparator);
     }
 
-    public Object chooseSubnode(Object parent, String text, int index) {
+    public @Nullable Object chooseSubnode(Object parent, String text, int index) {
         return chooseSubnode(parent, text, index, getComparator());
     }
 
-    public Object chooseSubnode(Object parent, String text) {
+    public @Nullable Object chooseSubnode(Object parent, String text) {
         return chooseSubnode(parent, text, 0, getComparator());
     }
 
@@ -2348,7 +2353,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
         public String getDescription();
     }
 
-    private TreePath findPathPrimitive(
+    private @Nullable TreePath findPathPrimitive(
             TreePath path, TreePathChooser chooser, Waiter<Object[], Object[]> loadedWaiter) {
         if (!isExpanded(path)) {
             if (!isPathSelected(path)) {
@@ -2362,7 +2367,7 @@ public class JTreeOperator extends JComponentOperator implements Timeoutable, Ou
             waitResult = loadedWaiter.waitAction(waitParam);
         } catch (InterruptedException e) {
             output.printStackTrace(e);
-            return null;
+            throw new JemmyException("Interrupted", e);
         }
         TreePath nextPath = (TreePath) waitResult[0];
         boolean found = (Boolean) waitResult[1];

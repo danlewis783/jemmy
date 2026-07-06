@@ -30,6 +30,7 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Objects;
 import javax.swing.JComponent;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
@@ -39,6 +40,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.SpinnerUI;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.Action;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
@@ -70,13 +72,13 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
 
     private static final long WHOLE_SCROLL_TIMEOUT = 60000;
 
-    private Timeouts timeouts;
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
 
     private ScrollDriver driver;
 
-    private JButtonOperator increaseOperator = null;
-    private JButtonOperator decreaseOperator = null;
+    private @Nullable JButtonOperator increaseOperator = null;
+    private @Nullable JButtonOperator decreaseOperator = null;
 
     public JSpinnerOperator(JSpinner b) {
         super(b);
@@ -133,7 +135,7 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
      *
      * @return JSpinner instance or null if component was not found.
      */
-    public static JSpinner findJSpinner(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable JSpinner findJSpinner(Container cont, ComponentChooser chooser, int index) {
         return (JSpinner) findComponent(cont, new JSpinnerFinder(chooser), index);
     }
 
@@ -142,7 +144,7 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
      *
      * @return JSpinner instance or null if component was not found.
      */
-    public static JSpinner findJSpinner(Container cont, ComponentChooser chooser) {
+    public static @Nullable JSpinner findJSpinner(Container cont, ComponentChooser chooser) {
         return findJSpinner(cont, chooser, 0);
     }
 
@@ -151,7 +153,7 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
      *
      * @return JSpinner instance or null if component was not found.
      */
-    public static JSpinner findJSpinner(Container cont, int index) {
+    public static @Nullable JSpinner findJSpinner(Container cont, int index) {
         return findJSpinner(
                 cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th JSpinner instance"), index);
     }
@@ -161,7 +163,7 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
      *
      * @return JSpinner instance or null if component was not found.
      */
-    public static JSpinner findJSpinner(Container cont) {
+    public static @Nullable JSpinner findJSpinner(Container cont) {
         return findJSpinner(cont, 0);
     }
 
@@ -402,7 +404,7 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
     public JButtonOperator getIncreaseOperator() {
         if (increaseOperator == null) {
             increaseOperator = (JButtonOperator) createSubOperator(new JButtonOperator.JButtonFinder(), 0);
-            increaseOperator.copyEnvironment(this);
+            Objects.requireNonNull(increaseOperator, "no increase button").copyEnvironment(this);
             increaseOperator.setOutput(getOutput().createErrorOutput());
         }
         return increaseOperator;
@@ -416,7 +418,7 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
     public JButtonOperator getDecreaseOperator() {
         if (decreaseOperator == null) {
             decreaseOperator = (JButtonOperator) createSubOperator(new JButtonOperator.JButtonFinder(), 1);
-            decreaseOperator.copyEnvironment(this);
+            Objects.requireNonNull(decreaseOperator, "no decrease button").copyEnvironment(this);
             decreaseOperator.setOutput(getOutput().createErrorOutput());
         }
         return decreaseOperator;
@@ -431,7 +433,7 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
      *
      * @return a minimal value.
      */
-    public Object getMinimum() {
+    public @Nullable Object getMinimum() {
         SpinnerModel model = getModel();
         if (model instanceof SpinnerNumberModel) {
             return ((SpinnerNumberModel) model).getMinimum();
@@ -454,7 +456,7 @@ public class JSpinnerOperator extends JComponentOperator implements Timeoutable,
      *
      * @return a maximal value.
      */
-    public Object getMaximum() {
+    public @Nullable Object getMaximum() {
         SpinnerModel model = getModel();
         if (model instanceof SpinnerNumberModel) {
             return ((SpinnerNumberModel) model).getMaximum();

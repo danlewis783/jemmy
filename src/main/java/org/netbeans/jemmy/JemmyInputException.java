@@ -25,6 +25,7 @@
 package org.netbeans.jemmy;
 
 import java.awt.Component;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Exception can be thrown as a result of incorrect input operations.
@@ -37,7 +38,7 @@ public class JemmyInputException extends JemmyException {
         super("Input exception", comp);
     }
 
-    public JemmyInputException(String message, Component comp) {
+    public JemmyInputException(String message, @Nullable Component comp) {
         super(message, comp);
     }
 
@@ -46,7 +47,7 @@ public class JemmyInputException extends JemmyException {
      *
      * @return the Component associated with the exception.
      */
-    public Component getComponent() {
+    public @Nullable Component getComponent() {
         return (Component) getObject();
     }
 }

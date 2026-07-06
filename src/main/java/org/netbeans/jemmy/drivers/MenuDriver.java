@@ -24,6 +24,7 @@
  */
 package org.netbeans.jemmy.drivers;
 
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.operators.ComponentOperator;
 
 /**
@@ -37,5 +38,5 @@ public interface MenuDriver {
      * @return a result of menu pushing. It could be last pushed menuitem or
      * anything else.
      */
-    public Object pushMenu(ComponentOperator oper, PathChooser chooser);
+    public @Nullable Object pushMenu(ComponentOperator oper, PathChooser chooser);
 }

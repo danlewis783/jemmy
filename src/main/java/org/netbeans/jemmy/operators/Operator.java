@@ -28,8 +28,10 @@ import java.awt.Component;
 import java.awt.event.InputEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Hashtable;
+import java.util.Objects;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.Action;
 import org.netbeans.jemmy.ActionProducer;
 import org.netbeans.jemmy.CharBindingMap;
@@ -71,15 +73,15 @@ public abstract class Operator implements Timeoutable, Outputable {
 
     private static Vector<String> operatorPkgs;
 
-    private Timeouts timeouts;
-    private TestOut output;
-    private CharBindingMap map;
-    private ComponentVisualizer visualizer;
-    private StringComparator comparator;
-    private PathParser parser;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
+    private @SuppressWarnings("NullAway.Init") CharBindingMap map;
+    private @SuppressWarnings("NullAway.Init") ComponentVisualizer visualizer;
+    private @SuppressWarnings("NullAway.Init") StringComparator comparator;
+    private @SuppressWarnings("NullAway.Init") PathParser parser;
     private QueueTool queueTool;
     private boolean verification = false;
-    private JemmyProperties properties;
+    private @SuppressWarnings("NullAway.Init") JemmyProperties properties;
 
     /**
      * Inits environment.
@@ -100,7 +102,7 @@ public abstract class Operator implements Timeoutable, Outputable {
      * @see #getDefaultComponentVisualizer()
      * @see org.netbeans.jemmy.util.DefaultVisualizer
      */
-    public static ComponentVisualizer setDefaultComponentVisualizer(ComponentVisualizer visualizer) {
+    public static @Nullable ComponentVisualizer setDefaultComponentVisualizer(ComponentVisualizer visualizer) {
         return ((ComponentVisualizer)
                 JemmyProperties.setCurrentProperty("ComponentOperator.ComponentVisualizer", visualizer));
     }
@@ -113,7 +115,9 @@ public abstract class Operator implements Timeoutable, Outputable {
      * @see #setDefaultComponentVisualizer(Operator.ComponentVisualizer)
      */
     public static ComponentVisualizer getDefaultComponentVisualizer() {
-        return ((ComponentVisualizer) JemmyProperties.getCurrentProperty("ComponentOperator.ComponentVisualizer"));
+        return ((ComponentVisualizer) Objects.requireNonNull(
+                JemmyProperties.getCurrentProperty("ComponentOperator.ComponentVisualizer"),
+                "ComponentOperator.ComponentVisualizer property not set"));
     }
 
     /**
@@ -123,7 +127,7 @@ public abstract class Operator implements Timeoutable, Outputable {
      * @see #getDefaultStringComparator()
      * @see Operator.StringComparator
      */
-    public static StringComparator setDefaultStringComparator(StringComparator comparator) {
+    public static @Nullable StringComparator setDefaultStringComparator(StringComparator comparator) {
         return ((StringComparator)
                 JemmyProperties.setCurrentProperty("ComponentOperator.StringComparator", comparator));
     }
@@ -136,7 +140,9 @@ public abstract class Operator implements Timeoutable, Outputable {
      * @see Operator.StringComparator
      */
     public static StringComparator getDefaultStringComparator() {
-        return ((StringComparator) JemmyProperties.getCurrentProperty("ComponentOperator.StringComparator"));
+        return ((StringComparator) Objects.requireNonNull(
+                JemmyProperties.getCurrentProperty("ComponentOperator.StringComparator"),
+                "ComponentOperator.StringComparator property not set"));
     }
 
     /**
@@ -146,7 +152,7 @@ public abstract class Operator implements Timeoutable, Outputable {
      * @see Operator.PathParser
      * @see #getDefaultPathParser
      */
-    public static PathParser setDefaultPathParser(PathParser parser) {
+    public static @Nullable PathParser setDefaultPathParser(PathParser parser) {
         return ((PathParser) JemmyProperties.setCurrentProperty("ComponentOperator.PathParser", parser));
     }
 
@@ -158,7 +164,9 @@ public abstract class Operator implements Timeoutable, Outputable {
      * @see #setDefaultPathParser
      */
     public static PathParser getDefaultPathParser() {
-        return ((PathParser) JemmyProperties.getCurrentProperty("ComponentOperator.PathParser"));
+        return ((PathParser) Objects.requireNonNull(
+                JemmyProperties.getCurrentProperty("ComponentOperator.PathParser"),
+                "ComponentOperator.PathParser property not set"));
     }
 
     /**
@@ -184,7 +192,8 @@ public abstract class Operator implements Timeoutable, Outputable {
      * @see #getVerification()
      */
     public static boolean getDefaultVerification() {
-        return ((Boolean) (JemmyProperties.getCurrentProperty("Operator.Verification")));
+        return ((Boolean) Objects.requireNonNull(
+                JemmyProperties.getCurrentProperty("Operator.Verification"), "Operator.Verification property not set"));
     }
 
     /**
@@ -244,7 +253,7 @@ public abstract class Operator implements Timeoutable, Outputable {
      * @return a new operator with default environment.
      * @see #addOperatorPackage(String)
      */
-    public static ComponentOperator createOperator(Component comp) {
+    public static @Nullable ComponentOperator createOperator(Component comp) {
         // hack!
         try {
             Class<?> cclass = Class.forName("java.awt.Component");
@@ -654,7 +663,7 @@ public abstract class Operator implements Timeoutable, Outputable {
     public void waitState(final ComponentChooser state) {
         waitState(new Waitable<String, Void>() {
             @Override
-            public String actionProduced(Void obj) {
+            public @Nullable String actionProduced(Void obj) {
                 return state.checkComponent(getSource()) ? "" : null;
             }
 
@@ -716,7 +725,10 @@ public abstract class Operator implements Timeoutable, Outputable {
      * action to be finished.
      * @return an action result.
      */
-    protected <R, P> R produceTimeRestricted(Action<R, P> action, final P param, String actionTimeOrigin) {
+    // the result's nullness follows the action's type argument, which pre-generics
+    // NullAway cannot express
+    @SuppressWarnings("NullAway")
+    protected <R, P> R produceTimeRestricted(Action<R, P> action, final @Nullable P param, String actionTimeOrigin) {
         ActionProducer<R, P> producer = new ActionProducer<>(action);
         producer.setOutput(getOutput().createErrorOutput());
         producer.setTimeouts(getTimeouts().cloneThis());
@@ -752,7 +764,7 @@ public abstract class Operator implements Timeoutable, Outputable {
     /**
      * Performs an operation without time control.
      */
-    protected <R, P> void produceNoBlocking(NoBlockingAction<R, P> action, P param) {
+    protected <R, P> void produceNoBlocking(NoBlockingAction<R, P> action, @Nullable P param) {
         try {
             ActionProducer<R, P> noBlockingProducer = new ActionProducer<>(action, false);
             noBlockingProducer.setOutput(output.createErrorOutput());
@@ -949,7 +961,7 @@ public abstract class Operator implements Timeoutable, Outputable {
         return result;
     }
 
-    private static ComponentOperator createOperator(Component comp, Class<?> compClass) {
+    private static @Nullable ComponentOperator createOperator(Component comp, Class<?> compClass) {
         StringTokenizer token = new StringTokenizer(compClass.getName(), ".");
         String className = "";
         while (token.hasMoreTokens()) {
@@ -1023,7 +1035,7 @@ public abstract class Operator implements Timeoutable, Outputable {
          *
          * @return true if text and pattern matches.
          */
-        public boolean equals(String caption, String match);
+        public boolean equals(@Nullable String caption, String match);
     }
 
     public static class DefaultStringComparator implements StringComparator {
@@ -1051,7 +1063,7 @@ public abstract class Operator implements Timeoutable, Outputable {
          * @return true if text and pattern matches.
          */
         @Override
-        public boolean equals(String caption, String match) {
+        public boolean equals(@Nullable String caption, String match) {
             if (match == null) {
                 return true;
             }
@@ -1175,6 +1187,9 @@ public abstract class Operator implements Timeoutable, Outputable {
     protected abstract class NoBlockingAction<R, P> implements Action<R, P> {
 
         String description;
+
+        @SuppressWarnings("NullAway.Init")
+        @Nullable
         Exception exception;
 
         public NoBlockingAction(String description) {
@@ -1183,7 +1198,7 @@ public abstract class Operator implements Timeoutable, Outputable {
         }
 
         @Override
-        public final R launch(P param) {
+        public final @Nullable R launch(P param) {
             R result = null;
             try {
                 result = doAction(param);
@@ -1198,7 +1213,7 @@ public abstract class Operator implements Timeoutable, Outputable {
          *
          * @return an action result.
          */
-        public abstract R doAction(P param);
+        public abstract @Nullable R doAction(P param);
 
         @Override
         public String getDescription() {
@@ -1225,7 +1240,7 @@ public abstract class Operator implements Timeoutable, Outputable {
          * @return an exception.
          * @see #setException
          */
-        public Exception getException() {
+        public @Nullable Exception getException() {
             return exception;
         }
     }
@@ -1456,7 +1471,7 @@ public abstract class Operator implements Timeoutable, Outputable {
         }
 
         @Override
-        public final Object launch() throws Exception {
+        public final @Nullable Object launch() throws Exception {
             map();
             return null;
         }
@@ -1477,7 +1492,7 @@ public abstract class Operator implements Timeoutable, Outputable {
 
         @Override
         public Component getSource() {
-            return null;
+            throw new UnsupportedOperationException("NullOperator has no source");
         }
     }
 }

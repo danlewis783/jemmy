@@ -30,6 +30,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.MenuElement;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.QueueTool;
@@ -126,7 +127,7 @@ public class QueueJMenuDriver extends LightSupportiveDriver implements MenuDrive
                 }
 
                 @Override
-                public MenuElement getMenuElement() {
+                public @Nullable MenuElement getMenuElement() {
                     return null;
                 }
             };
@@ -147,7 +148,7 @@ public class QueueJMenuDriver extends LightSupportiveDriver implements MenuDrive
                 final ComponentChooser popupChooser = new PopupMenuChooser(menu);
                 action = new OneReleaseAction(chooser, i, oper, action.mousePressed) {
                     @Override
-                    public MenuElement getMenuElement() {
+                    public @Nullable MenuElement getMenuElement() {
                         Window win = JPopupMenuOperator.findJPopupWindow(popupChooser);
                         if (win != null && win.isShowing()) {
                             return JPopupMenuOperator.findJPopupMenu(win, popupChooser);
@@ -273,7 +274,7 @@ public class QueueJMenuDriver extends LightSupportiveDriver implements MenuDrive
         }
 
         @Override
-        public MenuElement launch() {
+        public @Nullable MenuElement launch() {
             MenuElement element = getMenuElement();
             if (element != null) {
                 MenuElement[] subElements = element.getSubElements();
@@ -292,7 +293,7 @@ public class QueueJMenuDriver extends LightSupportiveDriver implements MenuDrive
             return null;
         }
 
-        public abstract MenuElement getMenuElement();
+        public abstract @Nullable MenuElement getMenuElement();
 
         private void stop() {
             stopped = true;

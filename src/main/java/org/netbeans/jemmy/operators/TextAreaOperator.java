@@ -29,6 +29,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.TextArea;
 import java.util.Hashtable;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
@@ -55,8 +56,8 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
     private static final long CHANGE_CARET_POSITION_TIMEOUT = 60000;
     private static final long TYPE_TEXT_TIMEOUT = 60000;
 
-    private Timeouts timeouts;
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
 
     /**
      * @param b The {@code java.awt.TextArea} managed by this instance.
@@ -141,7 +142,7 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
      * @param index Ordinal component index. The first {@code index} is 0.
      * @return TextArea instance or null if component was not found.
      */
-    public static TextArea findTextArea(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable TextArea findTextArea(Container cont, ComponentChooser chooser, int index) {
         return (TextArea) findComponent(cont, new TextAreaFinder(chooser), index);
     }
 
@@ -153,7 +154,7 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
      * containment need not be direct.
      * @return TextArea instance or null if component was not found.
      */
-    public static TextArea findTextArea(Container cont, ComponentChooser chooser) {
+    public static @Nullable TextArea findTextArea(Container cont, ComponentChooser chooser) {
         return findTextArea(cont, chooser, 0);
     }
 
@@ -163,7 +164,7 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
      * @return TextArea instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static TextArea findTextArea(Container cont, String text, boolean ce, boolean ccs, int index) {
+    public static @Nullable TextArea findTextArea(Container cont, String text, boolean ce, boolean ccs, int index) {
         return findTextArea(cont, new TextAreaByTextFinder(text, new DefaultStringComparator(ce, ccs)), index);
     }
 
@@ -173,7 +174,7 @@ public class TextAreaOperator extends TextComponentOperator implements Timeoutab
      * @return TextArea instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static TextArea findTextArea(Container cont, String text, boolean ce, boolean ccs) {
+    public static @Nullable TextArea findTextArea(Container cont, String text, boolean ce, boolean ccs) {
         return findTextArea(cont, text, ce, ccs, 0);
     }
 

@@ -32,9 +32,11 @@ import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Stack;
 import java.util.StringTokenizer;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.drivers.APIDriverInstaller;
 import org.netbeans.jemmy.drivers.DefaultDriverInstaller;
 import org.netbeans.jemmy.drivers.DriverInstaller;
@@ -178,7 +180,7 @@ public class JemmyProperties {
      * @see #setCurrentProperty
      * @see #setCurrentTimeout
      */
-    public static Object getCurrentProperty(String propertyName) {
+    public static @Nullable Object getCurrentProperty(String propertyName) {
         return getProperties().getProperty(propertyName);
     }
 
@@ -189,7 +191,7 @@ public class JemmyProperties {
      * @see #getCurrentProperty
      * @see #getCurrentTimeout
      */
-    public static Object setCurrentProperty(String propertyName, Object propertyValue) {
+    public static @Nullable Object setCurrentProperty(String propertyName, Object propertyValue) {
         return getProperties().setProperty(propertyName, propertyValue);
     }
 
@@ -198,7 +200,7 @@ public class JemmyProperties {
      *
      * @return previous property value
      */
-    public static Object removeCurrentProperty(String propertyName) {
+    public static @Nullable Object removeCurrentProperty(String propertyName) {
         return getProperties().removeProperty(propertyName);
     }
 
@@ -227,7 +229,7 @@ public class JemmyProperties {
      * @return old timeouts.
      * @see #getCurrentTimeouts
      */
-    public static Timeouts setCurrentTimeouts(Timeouts to) {
+    public static @Nullable Timeouts setCurrentTimeouts(Timeouts to) {
         return getProperties().setTimeouts(to);
     }
 
@@ -277,7 +279,7 @@ public class JemmyProperties {
      * @return a TestOut object representing the current output.
      * @see #getCurrentOutput
      */
-    public static TestOut setCurrentOutput(TestOut out) {
+    public static @Nullable TestOut setCurrentOutput(TestOut out) {
         return getProperties().setOutput(out);
     }
 
@@ -297,7 +299,7 @@ public class JemmyProperties {
      * @return a BundleManager object representing the current bundle manager.
      * @see #getCurrentBundleManager
      */
-    public static BundleManager setCurrentBundleManager(BundleManager resources) {
+    public static @Nullable BundleManager setCurrentBundleManager(BundleManager resources) {
         return getProperties().setBundleManager(resources);
     }
 
@@ -306,7 +308,7 @@ public class JemmyProperties {
      *
      * @return a resource value
      */
-    public static String getCurrentResource(String key) {
+    public static @Nullable String getCurrentResource(String key) {
         return getProperties().getBundleManager().getResource(key);
     }
 
@@ -315,7 +317,7 @@ public class JemmyProperties {
      *
      * @return a resource value
      */
-    public static String getCurrentResource(String bundleID, String key) {
+    public static @Nullable String getCurrentResource(String bundleID, String key) {
         return getProperties().getBundleManager().getResource(bundleID, key);
     }
 
@@ -336,7 +338,7 @@ public class JemmyProperties {
      * @return old CharBindingMap object.
      * @see #getCurrentCharBindingMap
      */
-    public static CharBindingMap setCurrentCharBindingMap(CharBindingMap map) {
+    public static @Nullable CharBindingMap setCurrentCharBindingMap(CharBindingMap map) {
         return getProperties().setCharBindingMap(map);
     }
 
@@ -599,7 +601,7 @@ public class JemmyProperties {
      * @see #setTimeouts
      */
     public Timeouts getTimeouts() {
-        return (Timeouts) getProperty("timeouts");
+        return (Timeouts) Objects.requireNonNull(getProperty("timeouts"), "timeouts property not set");
     }
 
     /**
@@ -608,7 +610,7 @@ public class JemmyProperties {
      * @return old timeouts.
      * @see #getTimeouts
      */
-    public Timeouts setTimeouts(Timeouts to) {
+    public @Nullable Timeouts setTimeouts(Timeouts to) {
         return (Timeouts) setProperty("timeouts", to);
     }
 
@@ -648,7 +650,7 @@ public class JemmyProperties {
      * @see #setOutput
      */
     public TestOut getOutput() {
-        return (TestOut) getProperty("output");
+        return (TestOut) Objects.requireNonNull(getProperty("output"), "output property not set");
     }
 
     /**
@@ -657,7 +659,7 @@ public class JemmyProperties {
      * @return old output.
      * @see #getOutput
      */
-    public TestOut setOutput(TestOut out) {
+    public @Nullable TestOut setOutput(TestOut out) {
         return (TestOut) setProperty("output", out);
     }
 
@@ -668,7 +670,7 @@ public class JemmyProperties {
      * @see #setBundleManager
      */
     public BundleManager getBundleManager() {
-        return (BundleManager) getProperty("resources");
+        return (BundleManager) Objects.requireNonNull(getProperty("resources"), "resources property not set");
     }
 
     /**
@@ -677,7 +679,7 @@ public class JemmyProperties {
      * @return old bundle manager
      * @see #getBundleManager
      */
-    public BundleManager setBundleManager(BundleManager resources) {
+    public @Nullable BundleManager setBundleManager(BundleManager resources) {
         return (BundleManager) setProperty("resources", resources);
     }
 
@@ -686,7 +688,7 @@ public class JemmyProperties {
      *
      * @return resource value
      */
-    public String getResource(String key) {
+    public @Nullable String getResource(String key) {
         return getBundleManager().getResource(key);
     }
 
@@ -695,7 +697,7 @@ public class JemmyProperties {
      *
      * @return resource value
      */
-    public String getResource(String bundleID, String key) {
+    public @Nullable String getResource(String bundleID, String key) {
         return getBundleManager().getResource(bundleID, key);
     }
 
@@ -706,7 +708,7 @@ public class JemmyProperties {
      * @see #setCharBindingMap
      */
     public CharBindingMap getCharBindingMap() {
-        return (CharBindingMap) getProperty("binding.map");
+        return (CharBindingMap) Objects.requireNonNull(getProperty("binding.map"), "binding.map property not set");
     }
 
     /**
@@ -715,7 +717,7 @@ public class JemmyProperties {
      * @return old char binding map.
      * @see #getCharBindingMap
      */
-    public CharBindingMap setCharBindingMap(CharBindingMap map) {
+    public @Nullable CharBindingMap setCharBindingMap(CharBindingMap map) {
         return (CharBindingMap) setProperty("binding.map", map);
     }
 
@@ -729,7 +731,7 @@ public class JemmyProperties {
      * @see #ROBOT_MODEL_MASK
      */
     public int getDispatchingModel() {
-        return (Integer) getProperty("dispatching.model");
+        return (Integer) Objects.requireNonNull(getProperty("dispatching.model"), "dispatching.model property not set");
     }
 
     private static DriverInstaller getDriverInstaller(int model) {
@@ -770,7 +772,8 @@ public class JemmyProperties {
     public int setDispatchingModel(int model) {
         new InputDriverInstaller((model & ROBOT_MODEL_MASK) == 0, (model & SMOOTH_ROBOT_MODEL_MASK) != 0).install();
         getDriverInstaller(model).install();
-        return (Integer) setProperty("dispatching.model", model);
+        return (Integer)
+                Objects.requireNonNull(setProperty("dispatching.model", model), "dispatching.model was not set");
     }
 
     /**
@@ -781,7 +784,8 @@ public class JemmyProperties {
      * @see #setDragAndDropStepLength(int)
      */
     public int getDragAndDropStepLength() {
-        return (Integer) getProperty("drag_and_drop.step_length");
+        return (Integer)
+                Objects.requireNonNull(getProperty("drag_and_drop.step_length"), "drag_and_drop.step_length not set");
     }
 
     /**
@@ -793,7 +797,8 @@ public class JemmyProperties {
      * @see #getDragAndDropStepLength()
      */
     public int setDragAndDropStepLength(int length) {
-        return (Integer) setProperty("drag_and_drop.step_length", length);
+        return (Integer)
+                Objects.requireNonNull(setProperty("drag_and_drop.step_length", length), "step_length was not set");
     }
 
     /**
@@ -815,7 +820,7 @@ public class JemmyProperties {
      * @see #getProperty(String)
      * @see #contains(String)
      */
-    public Object setProperty(String name, Object newValue) {
+    public @Nullable Object setProperty(String name, Object newValue) {
         Object oldValue = null;
         if (contains(name)) {
             oldValue = properties.get(name);
@@ -833,7 +838,7 @@ public class JemmyProperties {
      * @see #setProperty(String, Object)
      * @see #contains(String)
      */
-    public Object getProperty(String name) {
+    public @Nullable Object getProperty(String name) {
         if (contains(name)) {
             return properties.get(name);
         } else {
@@ -846,7 +851,7 @@ public class JemmyProperties {
      *
      * @return previous property value
      */
-    public Object removeProperty(String name) {
+    public @Nullable Object removeProperty(String name) {
         if (contains(name)) {
             return properties.remove(name);
         } else {
@@ -876,7 +881,7 @@ public class JemmyProperties {
     public void copyTo(JemmyProperties properties) {
         String[] keys = getKeys();
         for (String key : keys) {
-            properties.setProperty(key, getProperty(key));
+            properties.setProperty(key, Objects.requireNonNull(getProperty(key), key));
         }
         // some should be cloned
         properties.setTimeouts(getTimeouts().cloneThis());

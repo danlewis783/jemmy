@@ -31,6 +31,7 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.ScrollPane;
 import javax.swing.SwingUtilities;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.Action;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
@@ -57,8 +58,8 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
 
     private static int X_POINT_RECT_SIZE = 6;
     private static int Y_POINT_RECT_SIZE = 4;
-    private Timeouts timeouts;
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
     private ScrollDriver driver;
 
     /**
@@ -100,7 +101,7 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
      *
      * @return ScrollPane instance or null if component was not found.
      */
-    public static ScrollPane findScrollPane(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable ScrollPane findScrollPane(Container cont, ComponentChooser chooser, int index) {
         return (ScrollPane) findComponent(cont, new ScrollPaneFinder(chooser), index);
     }
 
@@ -109,7 +110,7 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
      *
      * @return ScrollPane instance or null if component was not found.
      */
-    public static ScrollPane findScrollPane(Container cont, ComponentChooser chooser) {
+    public static @Nullable ScrollPane findScrollPane(Container cont, ComponentChooser chooser) {
         return findScrollPane(cont, chooser, 0);
     }
 
@@ -118,7 +119,7 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
      *
      * @return ScrollPane instance or null if component was not found.
      */
-    public static ScrollPane findScrollPane(Container cont, int index) {
+    public static @Nullable ScrollPane findScrollPane(Container cont, int index) {
         return findScrollPane(
                 cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th ScrollPane instance"), index);
     }
@@ -128,7 +129,7 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
      *
      * @return ScrollPane instance or null if component was not found.
      */
-    public static ScrollPane findScrollPane(Container cont) {
+    public static @Nullable ScrollPane findScrollPane(Container cont) {
         return findScrollPane(cont, 0);
     }
 
@@ -137,7 +138,7 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
      *
      * @return ScrollPane instance or null if component was not found.
      */
-    public static ScrollPane findScrollPaneUnder(Component comp, ComponentChooser chooser) {
+    public static @Nullable ScrollPane findScrollPaneUnder(Component comp, ComponentChooser chooser) {
         return (ScrollPane) findContainerUnder(comp, new ScrollPaneFinder(chooser));
     }
 
@@ -146,7 +147,7 @@ public class ScrollPaneOperator extends ContainerOperator<ScrollPane> implements
      *
      * @return ScrollPane instance or null if component was not found.
      */
-    public static ScrollPane findScrollPaneUnder(Component comp) {
+    public static @Nullable ScrollPane findScrollPaneUnder(Component comp) {
         return findScrollPaneUnder(comp, new ScrollPaneFinder());
     }
 

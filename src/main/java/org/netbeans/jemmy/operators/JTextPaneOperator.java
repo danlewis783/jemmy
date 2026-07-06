@@ -32,6 +32,7 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.Style;
 import javax.swing.text.StyledDocument;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 
 /**
@@ -111,7 +112,7 @@ public class JTextPaneOperator extends JEditorPaneOperator {
      *
      * @return JTextPane instance or null if component was not found.
      */
-    public static JTextPane findJTextPane(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable JTextPane findJTextPane(Container cont, ComponentChooser chooser, int index) {
         return (JTextPane) findJTextComponent(cont, new JTextPaneFinder(chooser), index);
     }
 
@@ -120,7 +121,7 @@ public class JTextPaneOperator extends JEditorPaneOperator {
      *
      * @return JTextPane instance or null if component was not found.
      */
-    public static JTextPane findJTextPane(Container cont, ComponentChooser chooser) {
+    public static @Nullable JTextPane findJTextPane(Container cont, ComponentChooser chooser) {
         return findJTextPane(cont, chooser, 0);
     }
 
@@ -130,7 +131,7 @@ public class JTextPaneOperator extends JEditorPaneOperator {
      * @return JTextPane instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JTextPane findJTextPane(Container cont, String text, boolean ce, boolean ccs, int index) {
+    public static @Nullable JTextPane findJTextPane(Container cont, String text, boolean ce, boolean ccs, int index) {
         return (findJTextPane(
                 cont,
                 new JTextPaneFinder(new JTextComponentOperator.JTextComponentByTextFinder(
@@ -144,7 +145,7 @@ public class JTextPaneOperator extends JEditorPaneOperator {
      * @return JTextPane instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JTextPane findJTextPane(Container cont, String text, boolean ce, boolean ccs) {
+    public static @Nullable JTextPane findJTextPane(Container cont, String text, boolean ce, boolean ccs) {
         return findJTextPane(cont, text, ce, ccs, 0);
     }
 

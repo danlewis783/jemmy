@@ -27,6 +27,7 @@ package org.netbeans.jemmy;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Window;
+import org.jspecify.annotations.Nullable;
 
 /**
  * A DialogWaiter is a utility class used to look or wait for Dialogs. It contains methods to search for a Dialog among
@@ -48,8 +49,8 @@ public class DialogWaiter extends WindowWaiter implements Timeoutable, Outputabl
     private static final long WAIT_TIME = 60000;
     private static final long AFTER_WAIT_TIME = 0;
 
-    private Timeouts timeouts;
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
 
     public DialogWaiter() {
         super();
@@ -67,7 +68,7 @@ public class DialogWaiter extends WindowWaiter implements Timeoutable, Outputabl
      * the search criteria. If no such dialog can be found, a {@code null}
      * reference is returned.
      */
-    public static Dialog getDialog(ComponentChooser cc) {
+    public static @Nullable Dialog getDialog(ComponentChooser cc) {
         return (Dialog) WindowWaiter.getWindow(new DialogSubChooser(cc));
     }
 
@@ -84,7 +85,7 @@ public class DialogWaiter extends WindowWaiter implements Timeoutable, Outputabl
      * and that meets the search criteria. If there are fewer than
      * {@code index+1} dialogs, a {@code null} reference is returned.
      */
-    public static Dialog getDialog(ComponentChooser cc, int index) {
+    public static @Nullable Dialog getDialog(ComponentChooser cc, int index) {
         return (Dialog) WindowWaiter.getWindow(new DialogSubChooser(cc), index);
     }
 
@@ -108,7 +109,7 @@ public class DialogWaiter extends WindowWaiter implements Timeoutable, Outputabl
      * suitable title. If no such dialog can be found, a {@code null}
      * reference is returned.
      */
-    public static Dialog getDialog(String title, boolean ce, boolean cc) {
+    public static @Nullable Dialog getDialog(String title, boolean ce, boolean cc) {
         return (Dialog) WindowWaiter.getWindow(new DialogByTitleChooser(title, ce, cc));
     }
 
@@ -133,7 +134,7 @@ public class DialogWaiter extends WindowWaiter implements Timeoutable, Outputabl
      * and that has a suitable title. If there are fewer than
      * {@code index+1} dialogs, a {@code null} reference is returned.
      */
-    public static Dialog getDialog(String title, boolean ce, boolean cc, int index) {
+    public static @Nullable Dialog getDialog(String title, boolean ce, boolean cc, int index) {
         return getDialog(new DialogByTitleChooser(title, ce, cc), index);
     }
 
@@ -150,7 +151,7 @@ public class DialogWaiter extends WindowWaiter implements Timeoutable, Outputabl
      * owner window, and that meets the search criteria. If no such dialog can
      * be found, a {@code null} reference is returned.
      */
-    public static Dialog getDialog(Window owner, ComponentChooser cc) {
+    public static @Nullable Dialog getDialog(Window owner, ComponentChooser cc) {
         return (Dialog) WindowWaiter.getWindow(owner, new DialogSubChooser(cc));
     }
 
@@ -169,7 +170,7 @@ public class DialogWaiter extends WindowWaiter implements Timeoutable, Outputabl
      * criteria. If there are fewer than {@code index+1} dialogs, a
      * {@code null} reference is returned.
      */
-    public static Dialog getDialog(Window owner, ComponentChooser cc, int index) {
+    public static @Nullable Dialog getDialog(Window owner, ComponentChooser cc, int index) {
         return (Dialog) WindowWaiter.getWindow(owner, new DialogSubChooser(cc), index);
     }
 
@@ -195,7 +196,7 @@ public class DialogWaiter extends WindowWaiter implements Timeoutable, Outputabl
      * window ownership, and a suitable title. If no such dialog can be found, a
      * {@code null} reference is returned.
      */
-    public static Dialog getDialog(Window owner, String title, boolean ce, boolean cc) {
+    public static @Nullable Dialog getDialog(Window owner, String title, boolean ce, boolean cc) {
         return (Dialog) WindowWaiter.getWindow(owner, new DialogByTitleChooser(title, ce, cc));
     }
 
@@ -225,7 +226,7 @@ public class DialogWaiter extends WindowWaiter implements Timeoutable, Outputabl
      * are fewer than {@code index+1} dialogs, a {@code null}
      * reference is returned.
      */
-    public static Dialog getDialog(Window owner, String title, boolean ce, boolean cc, int index) {
+    public static @Nullable Dialog getDialog(Window owner, String title, boolean ce, boolean cc, int index) {
         return getDialog(owner, new DialogByTitleChooser(title, ce, cc), index);
     }
 

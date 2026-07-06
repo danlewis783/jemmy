@@ -30,6 +30,7 @@ import java.awt.Window;
 import java.util.Hashtable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.DialogWaiter;
+import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.TestOut;
 import org.netbeans.jemmy.Timeouts;
@@ -291,7 +292,7 @@ public class DialogOperator extends WindowOperator {
             return waiter.waitDialog(new DialogFinder(chooser), index);
         } catch (InterruptedException e) {
             output.printStackTrace(e);
-            return null;
+            throw new JemmyException("Interrupted", e);
         }
     }
 
@@ -320,7 +321,7 @@ public class DialogOperator extends WindowOperator {
             return (waiter.waitDialog(owner, new DialogFinder(chooser), index));
         } catch (InterruptedException e) {
             JemmyProperties.getCurrentOutput().printStackTrace(e);
-            return null;
+            throw new JemmyException("Interrupted", e);
         }
     }
 

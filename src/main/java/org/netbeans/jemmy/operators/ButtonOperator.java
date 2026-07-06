@@ -29,6 +29,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionListener;
 import java.util.Hashtable;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.Outputable;
 import org.netbeans.jemmy.TestOut;
@@ -59,8 +60,8 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
 
     private static final long PUSH_BUTTON_TIMEOUT = 0;
 
-    private Timeouts timeouts;
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
 
     ButtonDriver driver;
 
@@ -148,7 +149,7 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
      * @param index Ordinal component index. The first {@code index} is 0.
      * @return Button instance or null if component was not found.
      */
-    public static Button findButton(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable Button findButton(Container cont, ComponentChooser chooser, int index) {
         return (Button) findComponent(cont, new ButtonFinder(chooser), index);
     }
 
@@ -160,7 +161,7 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
      * containment need not be direct.
      * @return Button instance or null if component was not found.
      */
-    public static Button findButton(Container cont, ComponentChooser chooser) {
+    public static @Nullable Button findButton(Container cont, ComponentChooser chooser) {
         return findButton(cont, chooser, 0);
     }
 
@@ -170,7 +171,7 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
      * @return Button instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static Button findButton(Container cont, String text, boolean ce, boolean ccs, int index) {
+    public static @Nullable Button findButton(Container cont, String text, boolean ce, boolean ccs, int index) {
         return findButton(cont, new ButtonByLabelFinder(text, new DefaultStringComparator(ce, ccs)), index);
     }
 
@@ -180,7 +181,7 @@ public class ButtonOperator extends ComponentOperator implements Timeoutable, Ou
      * @return Button instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static Button findButton(Container cont, String text, boolean ce, boolean ccs) {
+    public static @Nullable Button findButton(Container cont, String text, boolean ce, boolean ccs) {
         return findButton(cont, text, ce, ccs, 0);
     }
 

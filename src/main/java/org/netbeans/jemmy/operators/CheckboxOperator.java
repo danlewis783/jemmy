@@ -30,6 +30,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ItemListener;
 import java.util.Hashtable;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.Outputable;
@@ -57,7 +58,7 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
      */
     public static final String TEXT_DPROP = "Label";
 
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
     ButtonDriver driver;
 
     public CheckboxOperator(Checkbox b) {
@@ -117,7 +118,7 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
      *
      * @return Checkbox instance or null if component was not found.
      */
-    public static Checkbox findCheckbox(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable Checkbox findCheckbox(Container cont, ComponentChooser chooser, int index) {
         return (Checkbox) findComponent(cont, new CheckboxFinder(chooser), index);
     }
 
@@ -126,7 +127,7 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
      *
      * @return Checkbox instance or null if component was not found.
      */
-    public static Checkbox findCheckbox(Container cont, ComponentChooser chooser) {
+    public static @Nullable Checkbox findCheckbox(Container cont, ComponentChooser chooser) {
         return findCheckbox(cont, chooser, 0);
     }
 
@@ -136,7 +137,7 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
      * @return Checkbox instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static Checkbox findCheckbox(Container cont, String text, boolean ce, boolean ccs, int index) {
+    public static @Nullable Checkbox findCheckbox(Container cont, String text, boolean ce, boolean ccs, int index) {
         return (findCheckbox(cont, new CheckboxByLabelFinder(text, new DefaultStringComparator(ce, ccs)), index));
     }
 
@@ -146,7 +147,7 @@ public class CheckboxOperator extends ComponentOperator implements Outputable {
      * @return Checkbox instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static Checkbox findCheckbox(Container cont, String text, boolean ce, boolean ccs) {
+    public static @Nullable Checkbox findCheckbox(Container cont, String text, boolean ce, boolean ccs) {
         return findCheckbox(cont, text, ce, ccs, 0);
     }
 

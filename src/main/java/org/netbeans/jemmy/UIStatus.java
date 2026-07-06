@@ -39,8 +39,8 @@ public class UIStatus {
 
     public static final String LAST_MOUSE_MOVE_OPERATOR_DPROP = "Last operator moved the mouse";
 
-    private static volatile Point lastMouseMove;
-    private static volatile Operator lastMouseMoveOperator;
+    private static volatile @SuppressWarnings("NullAway.Init") Point lastMouseMove;
+    private static volatile @SuppressWarnings("NullAway.Init") Operator lastMouseMoveOperator;
 
     public static void mouseMoved(Operator oper, Point location) {
         Arrays.stream(Thread.currentThread().getStackTrace()).forEach(System.out::println);

@@ -29,6 +29,8 @@ import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.InvocationEvent;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Objects;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Provides functionality to work with java.awt.EventQueue empty.
@@ -53,10 +55,10 @@ public class QueueTool implements Outputable, Timeoutable {
     private static final long MAXIMUM_LOCKING_TIME = 180000;
     private static final long INVOCATION_TIMEOUT = 180000;
 
-    private static JemmyQueue jemmyQueue = null;
+    private static @Nullable JemmyQueue jemmyQueue = null;
 
-    private TestOut output;
-    private Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
     private Locker locker;
     private Waiter<String, Void> lockWaiter;
 
@@ -64,7 +66,7 @@ public class QueueTool implements Outputable, Timeoutable {
         locker = new Locker();
         lockWaiter = new Waiter<String, Void>(new Waitable<String, Void>() {
             @Override
-            public String actionProduced(Void obj) {
+            public @Nullable String actionProduced(Void obj) {
                 return locker.isLocked() ? "" : null;
             }
 
@@ -138,7 +140,7 @@ public class QueueTool implements Outputable, Timeoutable {
      */
     public static void shortcutEvent(AWTEvent event) {
         installQueue();
-        jemmyQueue.shortcutEvent(event);
+        Objects.requireNonNull(jemmyQueue, "jemmy queue not installed").shortcutEvent(event);
     }
 
     /**
@@ -234,7 +236,7 @@ public class QueueTool implements Outputable, Timeoutable {
     public void waitEmpty() {
         Waiter<String, Void> waiter = new Waiter<>(new Waitable<String, Void>() {
             @Override
-            public String actionProduced(Void obj) {
+            public @Nullable String actionProduced(Void obj) {
                 if (checkEmpty()) {
                     return "Empty";
                 }
@@ -342,6 +344,9 @@ public class QueueTool implements Outputable, Timeoutable {
      *
      * @return Action result.
      */
+    // the result's nullness follows the action's type argument, which pre-generics
+    // NullAway cannot express
+    @SuppressWarnings("NullAway")
     public <R> R invokeSmoothly(QueueAction<R> action) {
         if (!EventQueue.isDispatchThread()) {
             return invokeAndWait(action);
@@ -374,6 +379,7 @@ public class QueueTool implements Outputable, Timeoutable {
      *
      * @return Action result.
      */
+    @SuppressWarnings("NullAway")
     public <R, P> R invokeSmoothly(Action<R, P> action, P param) {
         if (!EventQueue.isDispatchThread()) {
             return invokeAndWait(action, param);
@@ -389,6 +395,7 @@ public class QueueTool implements Outputable, Timeoutable {
      * @throws TimeoutExpiredException if action was not executed in
      * "QueueTool.InvocationTimeout" milliseconds.
      */
+    @SuppressWarnings("NullAway")
     public <R> R invokeAndWait(QueueAction<R> action) {
 
         class JemmyInvocationLock {}
@@ -441,6 +448,7 @@ public class QueueTool implements Outputable, Timeoutable {
      * @throws TimeoutExpiredException if action was not executed in
      * "QueueTool.InvocationTimeout" milliseconds.
      */
+    @SuppressWarnings("NullAway")
     public <R, P> R invokeAndWait(Action<R, P> action, P param) {
         return invokeAndWait(new ActionRunnable<>(action, param));
     }
@@ -503,8 +511,8 @@ public class QueueTool implements Outputable, Timeoutable {
     public abstract static class QueueAction<R> implements Runnable {
 
         private volatile boolean finished;
-        private Exception exception;
-        private R result;
+        private @SuppressWarnings("NullAway.Init") @Nullable Exception exception;
+        private @SuppressWarnings("NullAway.Init") @Nullable R result;
         private String description;
 
         public QueueAction(String description) {
@@ -520,7 +528,7 @@ public class QueueTool implements Outputable, Timeoutable {
          * @return an Object - action result
          * @throws Exception
          */
-        public abstract R launch() throws Exception;
+        public abstract @Nullable R launch() throws Exception;
 
         @Override
         public final void run() {
@@ -551,7 +559,7 @@ public class QueueTool implements Outputable, Timeoutable {
          *
          * @return an action result.
          */
-        public R getResult() {
+        public @Nullable R getResult() {
             return result;
         }
 
@@ -560,7 +568,7 @@ public class QueueTool implements Outputable, Timeoutable {
          *
          * @return the Exception happened inside {@code launch()} method.
          */
-        public Exception getException() {
+        public @Nullable Exception getException() {
             return exception;
         }
 
@@ -644,7 +652,7 @@ public class QueueTool implements Outputable, Timeoutable {
         }
 
         @Override
-        public String actionProduced(Void obj) {
+        public @Nullable String actionProduced(Void obj) {
             try {
                 EventWaiter eventWaiter = new EventWaiter(emptyTime);
                 EventQueue.invokeAndWait(eventWaiter);
@@ -680,7 +688,7 @@ public class QueueTool implements Outputable, Timeoutable {
         }
 
         @Override
-        public R launch() throws Exception {
+        public @Nullable R launch() throws Exception {
             return action.launch(param);
         }
     }

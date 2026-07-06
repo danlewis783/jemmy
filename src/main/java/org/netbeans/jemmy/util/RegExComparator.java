@@ -25,6 +25,7 @@
 package org.netbeans.jemmy.util;
 
 import java.lang.reflect.InvocationTargetException;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ClassReference;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.operators.Operator.StringComparator;
@@ -40,7 +41,7 @@ public class RegExComparator implements StringComparator {
     private static final int IGNORE_SIMBOL = -999;
 
     @Override
-    public boolean equals(String caption, String match) {
+    public boolean equals(@Nullable String caption, String match) {
         if (match == null) {
             return true;
         }

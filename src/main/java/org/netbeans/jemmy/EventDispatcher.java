@@ -35,6 +35,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Objects;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Provides low level functions for reproducing user actions. One dispatch model uses the managed component's event
@@ -56,16 +58,16 @@ public class EventDispatcher implements Outputable, Timeoutable {
     private static final long ROBOT_AUTO_DELAY = 10;
     private static final long WAIT_COMPONENT_UNDER_MOUSE_TIMEOUT = 60000;
 
-    private static Field[] keyFields;
-    private static volatile MotionListener motionListener = null;
+    private static @SuppressWarnings("NullAway.Init") Field[] keyFields;
+    private static volatile @Nullable MotionListener motionListener = null;
 
     protected Component component;
 
-    private TestOut output;
-    private Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
     private final ClassReference reference;
     private int model;
-    private ClassReference robotReference = null;
+    private @Nullable ClassReference robotReference = null;
     private boolean outsider = false;
     private final QueueTool queueTool;
 
@@ -326,11 +328,11 @@ public class EventDispatcher implements Outputable, Timeoutable {
     public void setDispatchingModel(int m) {
         model = m;
         if ((model & JemmyProperties.ROBOT_MODEL_MASK) != 0) {
-            createRobot();
+            ClassReference robot = createRobot();
             try {
                 Object[] params = {(model & JemmyProperties.QUEUE_MODEL_MASK) != 0 ? Boolean.TRUE : Boolean.FALSE};
                 Class<?>[] paramClasses = {Boolean.TYPE};
-                robotReference.invokeMethod("setAutoWaitForIdle", params, paramClasses);
+                robot.invokeMethod("setAutoWaitForIdle", params, paramClasses);
             } catch (InvocationTargetException
                     | IllegalStateException
                     | NoSuchMethodException
@@ -728,7 +730,8 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * @see #invokeMethod(String, Object[], Class[])
      * @see org.netbeans.jemmy.ClassReference
      */
-    public Object invokeExistingMethod(String method_name, Object[] params, Class<?>[] params_classes, TestOut out) {
+    public @Nullable Object invokeExistingMethod(
+            String method_name, Object[] params, Class<?>[] params_classes, TestOut out) {
         try {
             return invokeMethod(method_name, params, params_classes);
         } catch (InvocationTargetException | IllegalStateException | NoSuchMethodException | IllegalAccessException e) {
@@ -747,7 +750,7 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * @see #setExistingField(String, Object, TestOut)
      * @see org.netbeans.jemmy.ClassReference
      */
-    public Object getExistingField(String field_name, TestOut out) {
+    public @Nullable Object getExistingField(String field_name, TestOut out) {
         try {
             return getField(field_name);
         } catch (InvocationTargetException | IllegalStateException | NoSuchFieldException | IllegalAccessException e) {
@@ -783,7 +786,7 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * @see #invokeExistingMethod(String, Object[], Class[], TestOut)
      * @see org.netbeans.jemmy.ClassReference
      */
-    public Object invokeExistingMethod(String method_name, Object[] params, Class<?>[] params_classes) {
+    public @Nullable Object invokeExistingMethod(String method_name, Object[] params, Class<?>[] params_classes) {
         return invokeExistingMethod(method_name, params, params_classes, output);
     }
 
@@ -798,7 +801,7 @@ public class EventDispatcher implements Outputable, Timeoutable {
      * @see #setExistingField(String, Object)
      * @see org.netbeans.jemmy.ClassReference
      */
-    public Object getExistingField(String field_name) {
+    public @Nullable Object getExistingField(String field_name) {
         return getExistingField(field_name, output);
     }
 
@@ -846,10 +849,12 @@ public class EventDispatcher implements Outputable, Timeoutable {
     }
 
     // creates java.awt.Robot instance
-    private void createRobot() {
+    private ClassReference createRobot() {
         try {
             ClassReference robotClassReverence = new ClassReference("java.awt.Robot");
-            robotReference = new ClassReference(robotClassReverence.newInstance(null, null));
+            ClassReference created = new ClassReference(robotClassReverence.newInstance(null, null));
+            robotReference = created;
+            return created;
         } catch (ClassNotFoundException
                 | InstantiationException
                 | InvocationTargetException
@@ -857,6 +862,7 @@ public class EventDispatcher implements Outputable, Timeoutable {
                 | NoSuchMethodException
                 | IllegalAccessException e) {
             output.printStackTrace(e);
+            throw new JemmyException("Unable to create java.awt.Robot", e);
         }
     }
 
@@ -864,8 +870,9 @@ public class EventDispatcher implements Outputable, Timeoutable {
         try {
             Waiter<String, Component> wt = new Waiter<>(new Waitable<String, Component>() {
                 @Override
-                public String actionProduced(Component obj) {
-                    if (motionListener.getComponent() != null) {
+                public @Nullable String actionProduced(Component obj) {
+                    MotionListener listener = Objects.requireNonNull(motionListener, "motion listener not set");
+                    if (listener.getComponent() != null) {
                         return "";
                     } else {
                         return null;
@@ -893,9 +900,9 @@ public class EventDispatcher implements Outputable, Timeoutable {
     }
 
     // produce a robot operations through reflection
-    private void makeRobotOperation(String method, Object[] params, Class<?>[] paramClasses) {
+    private void makeRobotOperation(String method, @Nullable Object[] params, Class<?> @Nullable [] paramClasses) {
         try {
-            robotReference.invokeMethod(method, params, paramClasses);
+            Objects.requireNonNull(robotReference, "robot not created").invokeMethod(method, params, paramClasses);
         } catch (InvocationTargetException | IllegalStateException | NoSuchMethodException | IllegalAccessException e) {
             output.printStackTrace(e);
         }
@@ -950,7 +957,7 @@ public class EventDispatcher implements Outputable, Timeoutable {
         }
 
         @Override
-        public R launch() {
+        public @Nullable R launch() {
             if (event instanceof MouseEvent || event instanceof KeyEvent) {
                 checkVisibility();
             }
@@ -1009,7 +1016,8 @@ public class EventDispatcher implements Outputable, Timeoutable {
         }
 
         @Override
-        public Object launch() throws InvocationTargetException, NoSuchFieldException, IllegalAccessException {
+        public @Nullable Object launch()
+                throws InvocationTargetException, NoSuchFieldException, IllegalAccessException {
             reference.setField(fieldName, newValue);
             return null;
         }
@@ -1017,7 +1025,7 @@ public class EventDispatcher implements Outputable, Timeoutable {
 
     private static class MotionListener implements AWTEventListener {
 
-        private volatile Component mouseComponent;
+        private volatile @Nullable Component mouseComponent;
 
         @Override
         public void eventDispatched(AWTEvent event) {
@@ -1031,7 +1039,7 @@ public class EventDispatcher implements Outputable, Timeoutable {
             }
         }
 
-        public Component getComponent() {
+        public @Nullable Component getComponent() {
             return mouseComponent;
         }
     }

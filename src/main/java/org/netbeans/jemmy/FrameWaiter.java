@@ -26,6 +26,7 @@ package org.netbeans.jemmy;
 
 import java.awt.Component;
 import java.awt.Frame;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Contains methods to search and wait Frame. A FrameWaiter is a utility class used to look or wait for Frames. It
@@ -46,8 +47,8 @@ public class FrameWaiter extends WindowWaiter implements Timeoutable, Outputable
     private static final long WAIT_TIME = 60000;
     private static final long AFTER_WAIT_TIME = 0;
 
-    private Timeouts timeouts;
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
 
     public FrameWaiter() {
         super();
@@ -66,7 +67,7 @@ public class FrameWaiter extends WindowWaiter implements Timeoutable, Outputable
      * search criteria. If no such Frame can be found, a {@code null}
      * reference is returned.
      */
-    public static Frame getFrame(ComponentChooser cc) {
+    public static @Nullable Frame getFrame(ComponentChooser cc) {
         return (Frame) WindowWaiter.getWindow(new FrameSubChooser(cc));
     }
 
@@ -83,7 +84,7 @@ public class FrameWaiter extends WindowWaiter implements Timeoutable, Outputable
      * and that meets the search criteria. If there are fewer than
      * {@code index+1} Frames, a {@code null} reference is returned.
      */
-    public static Frame getFrame(ComponentChooser cc, int index) {
+    public static @Nullable Frame getFrame(ComponentChooser cc, int index) {
         return (Frame) WindowWaiter.getWindow(new FrameSubChooser(cc), index);
     }
 
@@ -107,7 +108,7 @@ public class FrameWaiter extends WindowWaiter implements Timeoutable, Outputable
      * suitable title. If no such Frame can be found, a {@code null}
      * reference is returned.
      */
-    public static Frame getFrame(String title, boolean ce, boolean cc) {
+    public static @Nullable Frame getFrame(String title, boolean ce, boolean cc) {
         return (Frame) WindowWaiter.getWindow(new FrameByTitleChooser(title, ce, cc));
     }
 
@@ -134,7 +135,7 @@ public class FrameWaiter extends WindowWaiter implements Timeoutable, Outputable
      * and that has a suitable title. If there are fewer than
      * {@code index+1} Frames, a {@code null} reference is returned.
      */
-    public static Frame getFrame(String title, boolean ce, boolean cc, int index) {
+    public static @Nullable Frame getFrame(String title, boolean ce, boolean cc, int index) {
         return (Frame) WindowWaiter.getWindow(new FrameByTitleChooser(title, ce, cc), index);
     }
 

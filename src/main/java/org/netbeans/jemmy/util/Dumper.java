@@ -35,6 +35,7 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Objects;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.QueueTool.QueueAction;
@@ -74,7 +75,8 @@ public class Dumper {
      * Prints component hierarchy (GUI dump) starting from {@code comp}
      * component.
      */
-    public static void dumpComponent(Component comp, final PrintWriter writer, final DumpController listener) {
+    public static void dumpComponent(
+            @Nullable Component comp, final PrintWriter writer, final DumpController listener) {
         QueueTool qt = new QueueTool();
         Component[] comps;
         if (comp != null) {
@@ -95,7 +97,7 @@ public class Dumper {
         });
     }
 
-    public static void dumpComponent(Component comp, PrintWriter writer) {
+    public static void dumpComponent(@Nullable Component comp, PrintWriter writer) {
         dumpComponent(comp, writer, new DumpController() {
             @Override
             public boolean onComponentDump(Component comp) {
@@ -113,11 +115,11 @@ public class Dumper {
      * Prints component hierarchy (GUI dump). starting from {@code comp}
      * component.
      */
-    public static void dumpComponent(Component comp, PrintStream writer) {
+    public static void dumpComponent(@Nullable Component comp, PrintStream writer) {
         dumpComponent(comp, new PrintWriter(writer));
     }
 
-    public static void dumpComponent(Component comp, PrintStream writer, DumpController listener) {
+    public static void dumpComponent(@Nullable Component comp, PrintStream writer, DumpController listener) {
         dumpComponent(comp, new PrintWriter(writer), listener);
     }
 
@@ -126,11 +128,11 @@ public class Dumper {
      *
      * @throws FileNotFoundException
      */
-    public static void dumpComponent(Component comp, String fileName) throws FileNotFoundException {
+    public static void dumpComponent(@Nullable Component comp, String fileName) throws FileNotFoundException {
         dumpComponent(comp, new PrintWriter(new FileOutputStream(fileName)));
     }
 
-    public static void dumpComponent(Component comp, String fileName, DumpController listener)
+    public static void dumpComponent(@Nullable Component comp, String fileName, DumpController listener)
             throws FileNotFoundException {
         dumpComponent(comp, new PrintWriter(new FileOutputStream(fileName)), listener);
     }
@@ -230,7 +232,7 @@ public class Dumper {
         boolean toDump = listener.onComponentDump(component);
         if (toDump) {
             try {
-                Operator oper = Operator.createOperator(component);
+                Operator oper = Objects.requireNonNull(Operator.createOperator(component), "no operator for component");
                 Hashtable<String, Object> componentDump = oper.getDump();
                 printTagOpening(writer, "component", tab);
                 writer.print(" operator=\"" + oper.getClass().getName() + "\"");
@@ -240,7 +242,7 @@ public class Dumper {
                 String name, value;
                 for (Object key : keys) {
                     name = (String) key;
-                    value = ((String) componentDump.get(key));
+                    value = Objects.requireNonNull((String) componentDump.get(key), name);
                     if (listener.onPropertyDump(component, name, value)) {
                         printEmptyTagOpening(writer, "property", tab + tabIncrease);
                         writer.print(" name=\"" + escape(name) + "\" value=\"" + escape(value) + "\"");

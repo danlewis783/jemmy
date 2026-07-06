@@ -42,4 +42,7 @@
  * @since 23 Feb 2002
  * <hr>
  */
+@NullMarked
 package org.netbeans.jemmy.operators;
+
+import org.jspecify.annotations.NullMarked;

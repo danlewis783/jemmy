@@ -28,10 +28,12 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.AdjustmentListener;
 import java.util.Hashtable;
+import java.util.Objects;
 import javax.swing.BoundedRangeModel;
 import javax.swing.JButton;
 import javax.swing.JScrollBar;
 import javax.swing.plaf.ScrollBarUI;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.Action;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
@@ -108,10 +110,10 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
     private static final long BEFORE_DROP_TIMEOUT = 0;
     private static final long DRAG_AND_DROP_SCROLLING_DELTA = 0;
 
-    private Timeouts timeouts;
-    private TestOut output;
-    private JButtonOperator minButtOperator;
-    private JButtonOperator maxButtOperator;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
+    private @SuppressWarnings("NullAway.Init") @Nullable JButtonOperator minButtOperator;
+    private @SuppressWarnings("NullAway.Init") @Nullable JButtonOperator maxButtOperator;
 
     private ScrollDriver driver;
 
@@ -151,7 +153,7 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
      *
      * @return JScrollBar instance or null if component was not found.
      */
-    public static JScrollBar findJScrollBar(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable JScrollBar findJScrollBar(Container cont, ComponentChooser chooser, int index) {
         return (JScrollBar) findComponent(cont, new JScrollBarFinder(chooser), index);
     }
 
@@ -160,7 +162,7 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
      *
      * @return JScrollBar instance or null if component was not found.
      */
-    public static JScrollBar findJScrollBar(Container cont, ComponentChooser chooser) {
+    public static @Nullable JScrollBar findJScrollBar(Container cont, ComponentChooser chooser) {
         return findJScrollBar(cont, chooser, 0);
     }
 
@@ -169,7 +171,7 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
      *
      * @return JScrollBar instance or null if component was not found.
      */
-    public static JScrollBar findJScrollBar(Container cont, int index) {
+    public static @Nullable JScrollBar findJScrollBar(Container cont, int index) {
         return findJScrollBar(
                 cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th JScrollBar instance"), index);
     }
@@ -179,7 +181,7 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
      *
      * @return JScrollBar instance or null if component was not found.
      */
-    public static JScrollBar findJScrollBar(Container cont) {
+    public static @Nullable JScrollBar findJScrollBar(Container cont) {
         return findJScrollBar(cont, 0);
     }
 
@@ -393,7 +395,7 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
      */
     public JButtonOperator getDecreaseButton() {
         initOperators();
-        return minButtOperator;
+        return Objects.requireNonNull(minButtOperator, "scroll bar has no decrease button");
     }
 
     /**
@@ -403,7 +405,7 @@ public class JScrollBarOperator extends JComponentOperator implements Timeoutabl
      */
     public JButtonOperator getIncreaseButton() {
         initOperators();
-        return maxButtOperator;
+        return Objects.requireNonNull(maxButtOperator, "scroll bar has no increase button");
     }
 
     @Override

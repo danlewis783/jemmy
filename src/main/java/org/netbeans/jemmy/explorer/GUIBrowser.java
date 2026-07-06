@@ -59,6 +59,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Hashtable;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Vector;
 import javax.swing.DefaultListModel;
@@ -92,6 +93,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ClassReference;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.TestOut;
@@ -377,6 +379,8 @@ public class GUIBrowser extends JFrame {
 
     private class ClassNode {
 
+        @SuppressWarnings("NullAway.Init")
+        @Nullable
         Class<?> clzz;
 
         protected ClassNode() {
@@ -389,18 +393,20 @@ public class GUIBrowser extends JFrame {
 
         public ClassNode[] getSuperClasses() {
             int count = 0;
-            Class<?> parent = clzz;
+            Class<?> base = Objects.requireNonNull(clzz, "no class");
+            Class<?> parent = base;
             while ((parent = parent.getSuperclass()) != null) {
                 count++;
             }
-            Class<?>[] interfaces = clzz.getInterfaces();
+            Class<?>[] interfaces = base.getInterfaces();
             ClassNode[] result = new ClassNode[count + interfaces.length + 1];
-            result[0] = new SuperClassNode(clzz);
+            result[0] = new SuperClassNode(base);
             count = 1;
-            parent = clzz;
-            while ((parent = parent.getSuperclass()) != null) {
+            parent = base.getSuperclass();
+            while (parent != null) {
                 result[count] = new SuperClassNode(parent);
                 count++;
+                parent = parent.getSuperclass();
             }
             for (int i = count; i < count + interfaces.length; i++) {
                 result[i] = new InterfaceNode(interfaces[i - count]);
@@ -409,10 +415,11 @@ public class GUIBrowser extends JFrame {
         }
 
         public String toString() {
-            if (clzz.isArray()) {
-                return clzz.getComponentType().getName() + "[]";
+            Class<?> base = Objects.requireNonNull(clzz, "no class");
+            if (base.isArray()) {
+                return base.getComponentType().getName() + "[]";
             } else {
-                return clzz.getName();
+                return base.getName();
             }
         }
 
@@ -422,7 +429,7 @@ public class GUIBrowser extends JFrame {
 
         public ClassNode[] getSubNodes() {
             Vector<ClassNode> res = new Vector<>();
-            Field[] fields = clzz.getFields();
+            Field[] fields = Objects.requireNonNull(clzz, "no class").getFields();
             Arrays.sort(fields, new Comparator<Field>() {
                 @Override
                 public int compare(Field f1, Field f2) {
@@ -524,8 +531,13 @@ public class GUIBrowser extends JFrame {
         protected Hashtable<String, Object> props;
         protected String clss = "";
         protected String compToString = "";
+
+        @SuppressWarnings("NullAway.Init")
         Component comp;
+
+        @SuppressWarnings("NullAway.Init")
         ComponentImageProvider image;
+
         protected int x, y, w, h;
 
         protected ComponentNode() {
@@ -535,7 +547,8 @@ public class GUIBrowser extends JFrame {
         public ComponentNode(Component comp) {
             super(comp.getClass());
             try {
-                props = Operator.createOperator(comp).getDump();
+                props = Objects.requireNonNull(Operator.createOperator(comp), "no operator")
+                        .getDump();
             } catch (Exception e) {
                 props = new Hashtable<>();
             }
@@ -564,7 +577,7 @@ public class GUIBrowser extends JFrame {
             image = provider;
         }
 
-        public BufferedImage getImage() {
+        public @Nullable BufferedImage getImage() {
             if (image != null) {
                 return image.getImage(x, y, w, h);
             } else {
@@ -660,7 +673,9 @@ public class GUIBrowser extends JFrame {
             } catch (AWTException e) {
                 e.printStackTrace();
             }
-            setComponentImageProvider(new ComponentImageProvider(image, x, y));
+            if (image != null) {
+                setComponentImageProvider(new ComponentImageProvider(image, x, y));
+            }
         }
 
         public WindowNode[] getWindows() {
@@ -720,7 +735,7 @@ public class GUIBrowser extends JFrame {
         public void addTreeModelListener(TreeModelListener l) {}
 
         @Override
-        public Object getChild(Object parent, int index) {
+        public @Nullable Object getChild(Object parent, int index) {
             if (parent == clsn) {
                 return clsn.getSuperClasses()[index];
             } else if (parent instanceof SuperClassNode || parent instanceof InterfaceNode) {
@@ -1125,22 +1140,45 @@ public class GUIBrowser extends JFrame {
 
     private class ComponentBrowser extends JFrame {
 
+        @SuppressWarnings("NullAway.Init")
         JTree winTree;
+
+        @SuppressWarnings("NullAway.Init")
         JTree componentTree;
+
+        @SuppressWarnings("NullAway.Init")
         JTree methodTree;
+
         ClassNode compNode;
         JTabbedPane tbd;
         JButton viewButton;
         JButton expandButton;
+
+        @Nullable
         JSplitPane winSplit = null;
+
+        @Nullable
         JSplitPane componentSplit = null;
+
         WindowRenderer renderer;
         SelectionManager selManager;
+
+        @SuppressWarnings("NullAway.Init")
         JList<AWTEvent> eventList;
+
+        @SuppressWarnings("NullAway.Init")
         ListListener listListener;
+
+        @SuppressWarnings("NullAway.Init")
         DefaultListModel<AWTEvent> eventModel;
+
+        @SuppressWarnings("NullAway.Init")
         JCheckBox mouseEvents;
+
+        @SuppressWarnings("NullAway.Init")
         JCheckBox mouseMotionEvents;
+
+        @SuppressWarnings("NullAway.Init")
         JCheckBox keyEvents;
 
         public ComponentBrowser(JFrame owner, ClassNode componentNode) {
@@ -1156,7 +1194,8 @@ public class GUIBrowser extends JFrame {
             viewButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    new ComponentBrowser(getOwnr(), getSelectedNode()).setVisible(true);
+                    new ComponentBrowser(getOwnr(), Objects.requireNonNull(getSelectedNode(), "no selection"))
+                            .setVisible(true);
                 }
             });
 
@@ -1165,7 +1204,9 @@ public class GUIBrowser extends JFrame {
             expandButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    expandAll(getSelectedTree(), getSelectionPath());
+                    expandAll(
+                            Objects.requireNonNull(getSelectedTree(), "no selection"),
+                            Objects.requireNonNull(getSelectionPath(), "no selection"));
                 }
             });
 
@@ -1364,7 +1405,7 @@ public class GUIBrowser extends JFrame {
             return this;
         }
 
-        private JTree getSelectedTree() {
+        private @Nullable JTree getSelectedTree() {
             String title = tbd.getTitleAt(tbd.getSelectedIndex());
             if (title.equals(WINDOWS_TAB)) {
                 return winTree;
@@ -1376,7 +1417,7 @@ public class GUIBrowser extends JFrame {
             return null;
         }
 
-        private TreePath getSelectionPath() {
+        private @Nullable TreePath getSelectionPath() {
             JTree tree = getSelectedTree();
             if (tree != null) {
                 return tree.getSelectionPath();
@@ -1385,7 +1426,7 @@ public class GUIBrowser extends JFrame {
             }
         }
 
-        private ClassNode getSelectedNode() {
+        private @Nullable ClassNode getSelectedNode() {
             TreePath path = getSelectionPath();
             if (path != null) {
                 return (ClassNode) path.getLastPathComponent();
@@ -1472,7 +1513,11 @@ public class GUIBrowser extends JFrame {
                 setNumRows(keys.length);
                 for (int i = 0; i < keys.length; i++) {
                     setValueAt(keys[i].toString(), i, 0);
-                    setValueAt(props.get(keys[i]).toString(), i, 1);
+                    setValueAt(
+                            Objects.requireNonNull(props.get(keys[i]), "no property")
+                                    .toString(),
+                            i,
+                            1);
                 }
                 Collections.sort((Vector<Vector<?>>) (Vector<?>) getDataVector(), new Comparator<Vector<?>>() {
                     @Override

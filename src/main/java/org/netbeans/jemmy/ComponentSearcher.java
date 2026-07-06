@@ -27,6 +27,7 @@ package org.netbeans.jemmy;
 import java.awt.Component;
 import java.awt.Container;
 import java.util.Vector;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Contains methods to search for components below a a given
@@ -40,9 +41,9 @@ public class ComponentSearcher implements Outputable {
 
     private int ordinalIndex;
     private Container container;
-    private TestOut out;
+    private @SuppressWarnings("NullAway.Init") TestOut out;
     private QueueTool queueTool;
-    private String containerToString;
+    private @SuppressWarnings("NullAway.Init") String containerToString;
 
     /**
      * Contructor. The search is constrained so that only components that lie
@@ -148,7 +149,7 @@ public class ComponentSearcher implements Outputable {
      * criteria exist in the component hierarchy rooted in this
      * {@code ComponentChooser}'s container.
      */
-    public Component findComponent(ComponentChooser chooser, int index) {
+    public @Nullable Component findComponent(ComponentChooser chooser, int index) {
         ordinalIndex = 0;
         final Component result = findComponentInContainer(container, chooser, index, null);
         if (result != null) {
@@ -182,7 +183,7 @@ public class ComponentSearcher implements Outputable {
      * search criteria exist in the component hierarchy rooted in this
      * {@code ComponentChooser}'s container.
      */
-    public Component findComponent(ComponentChooser chooser) {
+    public @Nullable Component findComponent(ComponentChooser chooser) {
         return findComponent(chooser, 0);
     }
 
@@ -207,13 +208,16 @@ public class ComponentSearcher implements Outputable {
         return result;
     }
 
-    private Component findComponentInContainer(
-            final Container cont, final ComponentChooser chooser, final int index, final Vector<Component> allSeen) {
+    private @Nullable Component findComponentInContainer(
+            final Container cont,
+            final ComponentChooser chooser,
+            final int index,
+            final @Nullable Vector<Component> allSeen) {
         return queueTool.invokeSmoothly(
                 new QueueTool.QueueAction<Component>("findComponentInContainer with " + chooser.getDescription()) {
 
                     @Override
-                    public Component launch() throws Exception {
+                    public @Nullable Component launch() throws Exception {
                         Component[] components = cont.getComponents();
                         Component target;
                         for (Component component : components) {

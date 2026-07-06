@@ -31,8 +31,10 @@ import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JMenuBar;
 import javax.swing.JRootPane;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.FrameWaiter;
+import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.JemmyProperties;
 
 /**
@@ -125,7 +127,7 @@ public class JFrameOperator extends FrameOperator {
      *
      * @return JFrame instance or null if component was not found.
      */
-    public static JFrame findJFrame(ComponentChooser chooser, int index) {
+    public static @Nullable JFrame findJFrame(ComponentChooser chooser, int index) {
         return (JFrame) FrameWaiter.getFrame(new JFrameFinder(chooser), index);
     }
 
@@ -134,7 +136,7 @@ public class JFrameOperator extends FrameOperator {
      *
      * @return JFrame instance or null if component was not found.
      */
-    public static JFrame findJFrame(ComponentChooser chooser) {
+    public static @Nullable JFrame findJFrame(ComponentChooser chooser) {
         return findJFrame(chooser, 0);
     }
 
@@ -145,7 +147,7 @@ public class JFrameOperator extends FrameOperator {
      * @param cc Compare case sensitively. If true, both text and caption are
      * @return JFrame instance or null if component was not found.
      */
-    public static JFrame findJFrame(String title, boolean ce, boolean cc, int index) {
+    public static @Nullable JFrame findJFrame(String title, boolean ce, boolean cc, int index) {
         return ((JFrame) FrameWaiter.getFrame(
                 new JFrameFinder(new FrameByTitleFinder(title, new DefaultStringComparator(ce, cc))), index));
     }
@@ -157,7 +159,7 @@ public class JFrameOperator extends FrameOperator {
      * @param cc Compare case sensitively. If true, both text and caption are
      * @return JFrame instance or null if component was not found.
      */
-    public static JFrame findJFrame(String title, boolean ce, boolean cc) {
+    public static @Nullable JFrame findJFrame(String title, boolean ce, boolean cc) {
         return findJFrame(title, ce, cc, 0);
     }
 
@@ -198,7 +200,7 @@ public class JFrameOperator extends FrameOperator {
                             index));
         } catch (InterruptedException e) {
             JemmyProperties.getCurrentOutput().printStackTrace(e);
-            return null;
+            throw new JemmyException("Interrupted", e);
         }
     }
 

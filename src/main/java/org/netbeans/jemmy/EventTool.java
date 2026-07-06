@@ -32,6 +32,7 @@ import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Vector;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Provides methods to check last dispatched events, to wait for events of specific types, or to guarantee that events
@@ -54,8 +55,8 @@ public class EventTool implements Timeoutable, Outputable {
     private static ListenerSet listenerSet;
     private static long currentEventMask = 0;
 
-    private TestOut output;
-    private Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
 
     public EventTool() {
         setOutput(JemmyProperties.getProperties().getOutput());
@@ -82,7 +83,7 @@ public class EventTool implements Timeoutable, Outputable {
      * @return AWTEvent
      * @see #addListeners(long)
      */
-    public static AWTEvent getLastEvent(long eventMask) {
+    public static @Nullable AWTEvent getLastEvent(long eventMask) {
         return listenerSet.getLastEvent(eventMask);
     }
 
@@ -102,7 +103,7 @@ public class EventTool implements Timeoutable, Outputable {
      * @return AWTEvent
      * @see #addListeners(long)
      */
-    public static AWTEvent getLastEvent() {
+    public static @Nullable AWTEvent getLastEvent() {
         return getLastEvent(listenerSet.getTheWholeMask());
     }
 
@@ -323,7 +324,7 @@ public class EventTool implements Timeoutable, Outputable {
             return waiter.waitAction(null);
         } catch (InterruptedException e) {
             output.printStackTrace(e);
-            return null;
+            throw new JemmyException("Interrupted", e);
         }
     }
 
@@ -357,7 +358,7 @@ public class EventTool implements Timeoutable, Outputable {
             eventTime = System.currentTimeMillis();
         }
 
-        public AWTEvent getEvent() {
+        public @Nullable AWTEvent getEvent() {
             return eventRef.get();
         }
 
@@ -425,12 +426,12 @@ public class EventTool implements Timeoutable, Outputable {
             return (et == null) ? -1 : et.getTime();
         }
 
-        public AWTEvent getLastEvent(long eventMask) {
+        public @Nullable AWTEvent getLastEvent(long eventMask) {
             EventType et = getLastEventType(eventMask);
             return (et == null) ? null : et.getEvent();
         }
 
-        private EventType getLastEventType(long eventMask) {
+        private @Nullable EventType getLastEventType(long eventMask) {
             long maxTime = -1;
             EventType maxType = null;
             for (EventType et : eventTypes) {
@@ -454,7 +455,7 @@ public class EventTool implements Timeoutable, Outputable {
         }
 
         @Override
-        public AWTEvent actionProduced(Void obj) {
+        public @Nullable AWTEvent actionProduced(Void obj) {
             EventType et = listenerSet.getLastEventType(eventMask);
             if (et != null && et.getTime() > startTime) {
                 return et.getEvent();
@@ -485,7 +486,7 @@ public class EventTool implements Timeoutable, Outputable {
         }
 
         @Override
-        public String actionProduced(Void obj) {
+        public @Nullable String actionProduced(Void obj) {
             return (checkNoEvent(eventMask, waitTime, TestOut.getNullOutput()) ? "Reached!" : null);
         }
 

@@ -26,6 +26,7 @@ package org.netbeans.jemmy.drivers.scrolling;
 
 import java.awt.Point;
 import javax.swing.JSlider;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.Timeout;
 import org.netbeans.jemmy.drivers.DriverManager;
@@ -168,7 +169,7 @@ public class JSliderDriver extends AbstractScrollDriver {
     }
 
     @Override
-    protected Point startDragging(ComponentOperator oper) {
+    protected @Nullable Point startDragging(ComponentOperator oper) {
         // cannot
         return null;
     }
@@ -208,7 +209,7 @@ public class JSliderDriver extends AbstractScrollDriver {
         return 0;
     }
 
-    private Point getClickPoint(ComponentOperator oper, int direction, int orientation) {
+    private @Nullable Point getClickPoint(ComponentOperator oper, int direction, int orientation) {
         int x, y;
         boolean inverted = ((JSliderOperator) oper).getInverted();
         int realDirection = ScrollAdjuster.DO_NOT_TOUCH_SCROLL_DIRECTION;

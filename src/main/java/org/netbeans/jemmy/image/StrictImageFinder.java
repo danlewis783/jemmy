@@ -26,6 +26,7 @@ package org.netbeans.jemmy.image;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Performs "strict" (i.e. based on all pixels matching) image search.
@@ -57,7 +58,7 @@ public class StrictImageFinder implements ImageFinder {
      * @return Left-up corner coordinates of image location.
      */
     @Override
-    public Point findImage(BufferedImage image, int index) {
+    public @Nullable Point findImage(BufferedImage image, int index) {
         int smallWidth = image.getWidth();
         int smallHeight = image.getHeight();
         int[][] smallPixels = new int[smallWidth][smallHeight];

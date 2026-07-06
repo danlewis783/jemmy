@@ -54,8 +54,8 @@ import org.netbeans.jemmy.drivers.OrderedListDriver;
  */
 public class JTableHeaderOperator extends JComponentOperator implements Outputable, Timeoutable {
 
-    private TestOut output;
-    private Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
 
     private OrderedListDriver driver;
 

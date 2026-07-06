@@ -29,6 +29,7 @@ import java.awt.Window;
 import java.awt.event.WindowListener;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ResourceBundle;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ClassReference;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
@@ -54,7 +55,9 @@ import org.netbeans.jemmy.drivers.WindowDriver;
  */
 public class WindowOperator extends ContainerOperator<Window> implements Outputable {
 
+    @SuppressWarnings("NullAway.Init")
     TestOut output;
+
     WindowDriver driver;
 
     public WindowOperator(Window w) {
@@ -125,7 +128,7 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
      *
      * @return a window
      */
-    public static Window findWindow(ComponentChooser chooser, int index) {
+    public static @Nullable Window findWindow(ComponentChooser chooser, int index) {
         return WindowWaiter.getWindow(chooser, index);
     }
 
@@ -134,7 +137,7 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
      *
      * @return a window
      */
-    public static Window findWindow(ComponentChooser chooser) {
+    public static @Nullable Window findWindow(ComponentChooser chooser) {
         return findWindow(chooser, 0);
     }
 
@@ -143,7 +146,7 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
      *
      * @return a window
      */
-    public static Window findWindow(Window owner, ComponentChooser chooser, int index) {
+    public static @Nullable Window findWindow(Window owner, ComponentChooser chooser, int index) {
         return WindowWaiter.getWindow(owner, chooser, index);
     }
 
@@ -152,7 +155,7 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
      *
      * @return a window
      */
-    public static Window findWindow(Window owner, ComponentChooser chooser) {
+    public static @Nullable Window findWindow(Window owner, ComponentChooser chooser) {
         return findWindow(owner, chooser, 0);
     }
 
@@ -290,7 +293,7 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
      *
      * @return a subwindow
      */
-    public Window findSubWindow(ComponentChooser chooser, int index) {
+    public @Nullable Window findSubWindow(ComponentChooser chooser, int index) {
         getOutput().printLine("Looking for \"" + chooser.getDescription() + "\" subwindow");
         return findWindow((Window) getSource(), chooser, index);
     }
@@ -300,7 +303,7 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
      *
      * @return a subwindow
      */
-    public Window findSubWindow(ComponentChooser chooser) {
+    public @Nullable Window findSubWindow(ComponentChooser chooser) {
         return findSubWindow(chooser, 0);
     }
 
@@ -552,7 +555,7 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
             return waiter.waitWindow(chooser, index);
         } catch (InterruptedException e) {
             output.printStackTrace(e);
-            return null;
+            throw new JemmyException("Interrupted", e);
         }
     }
 
@@ -581,7 +584,7 @@ public class WindowOperator extends ContainerOperator<Window> implements Outputa
             return waiter.waitWindow(owner, chooser, index);
         } catch (InterruptedException e) {
             JemmyProperties.getCurrentOutput().printStackTrace(e);
-            return null;
+            throw new JemmyException("Interrupted", e);
         }
     }
 }

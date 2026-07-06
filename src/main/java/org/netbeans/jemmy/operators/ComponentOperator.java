@@ -59,6 +59,7 @@ import java.io.PrintWriter;
 import java.util.Hashtable;
 import java.util.Locale;
 import javax.accessibility.AccessibleContext;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.CharBindingMap;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
@@ -185,8 +186,8 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
     private static final long WAIT_STATE_TIMEOUT = 60000;
 
     private final Component source;
-    private volatile Timeouts timeouts; // used in invokeSmoothly in clickMouse
-    private volatile TestOut output; // used in QueueTool.Locker
+    private volatile @SuppressWarnings("NullAway.Init") Timeouts timeouts; // used in invokeSmoothly in clickMouse
+    private volatile @SuppressWarnings("NullAway.Init") TestOut output; // used in QueueTool.Locker
     private volatile EventDispatcher dispatcher; // used in JInternalFrameByTitleFinder.checkComponent
     private KeyDriver kDriver;
     private MouseDriver mDriver;
@@ -236,7 +237,7 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
      *
      * @return Component instance or null if component was not found.
      */
-    public static Component findComponent(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable Component findComponent(Container cont, ComponentChooser chooser, int index) {
         return findComponent(cont, chooser, index, false);
     }
 
@@ -245,7 +246,7 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
      *
      * @return Component instance or null if component was not found.
      */
-    public static Component findComponent(Container cont, ComponentChooser chooser) {
+    public static @Nullable Component findComponent(Container cont, ComponentChooser chooser) {
         return findComponent(cont, chooser, 0);
     }
 
@@ -294,7 +295,7 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         try {
             Waiter<Component, Void> waiter = new Waiter<>(new Waitable<Component, Void>() {
                 @Override
-                public Component actionProduced(Void obj) {
+                public @Nullable Component actionProduced(Void obj) {
                     return findComponent(cont, new VisibleComponentFinder(chooser), index, output.createErrorOutput());
                 }
 
@@ -312,7 +313,7 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
             waiter.setOutput(output);
             return waiter.waitAction(null);
         } catch (InterruptedException e) {
-            return null;
+            throw new JemmyException("Interrupted", e);
         }
     }
 
@@ -326,13 +327,15 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
         return searcher.findComponents(new VisibleComponentFinder(chooser));
     }
 
-    private static Component findComponent(Container cont, ComponentChooser chooser, int index, TestOut output) {
+    private static @Nullable Component findComponent(
+            Container cont, ComponentChooser chooser, int index, TestOut output) {
         ComponentSearcher searcher = new ComponentSearcher(cont);
         searcher.setOutput(output);
         return searcher.findComponent(new VisibleComponentFinder(chooser), index);
     }
 
-    private static Component findComponent(Container cont, ComponentChooser chooser, int index, boolean supressOutout) {
+    private static @Nullable Component findComponent(
+            Container cont, ComponentChooser chooser, int index, boolean supressOutout) {
         return findComponent(
                 cont, chooser, index, JemmyProperties.getCurrentOutput().createErrorOutput());
     }
@@ -797,7 +800,7 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
     public void waitComponentEnabled() throws InterruptedException {
         Waiter<Component, Component> waiter = new Waiter<>(new Waitable<Component, Component>() {
             @Override
-            public Component actionProduced(Component obj) {
+            public @Nullable Component actionProduced(Component obj) {
                 if (obj.isEnabled()) {
                     return obj;
                 } else {
@@ -860,7 +863,7 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
      *
      * @return a containers specified by searching criteria.
      */
-    public Container getContainer(ComponentChooser chooser) {
+    public @Nullable Container getContainer(ComponentChooser chooser) {
         int counter = 0;
         Container cont = getSource().getParent();
         if (cont == null) {
@@ -880,7 +883,7 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
      *
      * @return the component window.
      */
-    public Window getWindow() {
+    public @Nullable Window getWindow() {
         if (getSource() instanceof Window) {
             return (Window) getSource();
         }
@@ -913,7 +916,7 @@ public class ComponentOperator extends Operator implements Timeoutable, Outputab
     public void waitHasFocus() {
         Waiter<String, Void> focusWaiter = new Waiter<>(new Waitable<String, Void>() {
             @Override
-            public String actionProduced(Void obj) {
+            public @Nullable String actionProduced(Void obj) {
                 return hasFocus() ? "" : null;
             }
 

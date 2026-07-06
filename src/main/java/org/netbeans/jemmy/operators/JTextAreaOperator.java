@@ -28,6 +28,7 @@ import java.awt.Container;
 import java.util.Hashtable;
 import javax.swing.JTextArea;
 import javax.swing.text.BadLocationException;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.Outputable;
@@ -69,8 +70,8 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
      */
     public static final String ROW_COUNT_DPROP = "Row count";
 
-    private Timeouts timeouts;
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
 
     public JTextAreaOperator(JTextArea b) {
         super(b);
@@ -131,7 +132,7 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
      *
      * @return JTextArea instance or null if component was not found.
      */
-    public static JTextArea findJTextArea(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable JTextArea findJTextArea(Container cont, ComponentChooser chooser, int index) {
         return (JTextArea) findJTextComponent(cont, new JTextAreaFinder(chooser), index);
     }
 
@@ -140,7 +141,7 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
      *
      * @return JTextArea instance or null if component was not found.
      */
-    public static JTextArea findJTextArea(Container cont, ComponentChooser chooser) {
+    public static @Nullable JTextArea findJTextArea(Container cont, ComponentChooser chooser) {
         return findJTextArea(cont, chooser, 0);
     }
 
@@ -150,7 +151,7 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
      * @return JTextArea instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JTextArea findJTextArea(Container cont, String text, boolean ce, boolean ccs, int index) {
+    public static @Nullable JTextArea findJTextArea(Container cont, String text, boolean ce, boolean ccs, int index) {
         return (findJTextArea(
                 cont,
                 new JTextAreaFinder(new JTextComponentOperator.JTextComponentByTextFinder(
@@ -164,7 +165,7 @@ public class JTextAreaOperator extends JTextComponentOperator implements Timeout
      * @return JTextArea instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JTextArea findJTextArea(Container cont, String text, boolean ce, boolean ccs) {
+    public static @Nullable JTextArea findJTextArea(Container cont, String text, boolean ce, boolean ccs) {
         return findJTextArea(cont, text, ce, ccs, 0);
     }
 

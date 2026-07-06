@@ -26,6 +26,7 @@ package org.netbeans.jemmy;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Parent of all Jemmy exceptions. Exception can be throught from inside jemmy
@@ -34,8 +35,8 @@ import java.io.PrintWriter;
 public class JemmyException extends RuntimeException {
 
     private static final long serialVersionUID = 42L;
-    private Throwable innerException = null;
-    private Object object = null;
+    private @Nullable Throwable innerException = null;
+    private @Nullable Object object = null;
 
     public JemmyException(String description) {
         super(description);
@@ -46,12 +47,12 @@ public class JemmyException extends RuntimeException {
         this.innerException = innerException;
     }
 
-    public JemmyException(String description, Object object) {
+    public JemmyException(String description, @Nullable Object object) {
         this(description);
         this.object = object;
     }
 
-    public JemmyException(String description, Throwable innerException, Object object) {
+    public JemmyException(String description, Throwable innerException, @Nullable Object object) {
         this(description, innerException);
         this.object = object;
     }
@@ -61,7 +62,7 @@ public class JemmyException extends RuntimeException {
      *
      * @return the Object value associated with the exception.
      */
-    public Object getObject() {
+    public @Nullable Object getObject() {
         return object;
     }
 
@@ -72,7 +73,7 @@ public class JemmyException extends RuntimeException {
      * @deprecated Use getInnerThrowable()
      */
     @Deprecated
-    public Exception getInnerException() {
+    public @Nullable Exception getInnerException() {
         if (innerException instanceof Exception) {
             return (Exception) innerException;
         } else {
@@ -85,7 +86,7 @@ public class JemmyException extends RuntimeException {
      *
      * @return An inner throwable.
      */
-    public Throwable getInnerThrowable() {
+    public @Nullable Throwable getInnerThrowable() {
         return innerException;
     }
 

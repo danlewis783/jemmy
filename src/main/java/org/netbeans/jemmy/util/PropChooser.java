@@ -26,6 +26,7 @@ package org.netbeans.jemmy.util;
 
 import java.awt.Component;
 import java.lang.reflect.InvocationTargetException;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ClassReference;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyProperties;
@@ -64,7 +65,7 @@ public class PropChooser implements ComponentChooser, Outputable {
      */
     protected Object[] results;
 
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
 
     /**
      * @param params Parameters values for methods.
@@ -74,7 +75,8 @@ public class PropChooser implements ComponentChooser, Outputable {
      * A value of propNames[0] method/field should be equal to results[0]
      * object.
      */
-    public PropChooser(String[] propNames, Object[][] params, Class<?>[][] classes, Object[] results) {
+    public PropChooser(
+            String[] propNames, Object @Nullable [][] params, Class<?> @Nullable [][] classes, Object[] results) {
         this.propNames = propNames;
         this.results = results;
         if (params != null) {

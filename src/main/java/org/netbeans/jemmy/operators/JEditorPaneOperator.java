@@ -40,6 +40,7 @@ import javax.swing.text.Document;
 import javax.swing.text.EditorKit;
 import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLDocument;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.util.EmptyVisualizer;
@@ -131,7 +132,7 @@ public class JEditorPaneOperator extends JTextComponentOperator {
      *
      * @return JEditorPane instance or null if component was not found.
      */
-    public static JEditorPane findJEditorPane(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable JEditorPane findJEditorPane(Container cont, ComponentChooser chooser, int index) {
         return (JEditorPane) findJTextComponent(cont, new JEditorPaneFinder(chooser), index);
     }
 
@@ -140,7 +141,7 @@ public class JEditorPaneOperator extends JTextComponentOperator {
      *
      * @return JEditorPane instance or null if component was not found.
      */
-    public static JEditorPane findJEditorPane(Container cont, ComponentChooser chooser) {
+    public static @Nullable JEditorPane findJEditorPane(Container cont, ComponentChooser chooser) {
         return findJEditorPane(cont, chooser, 0);
     }
 
@@ -150,7 +151,8 @@ public class JEditorPaneOperator extends JTextComponentOperator {
      * @return JEditorPane instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JEditorPane findJEditorPane(Container cont, String text, boolean ce, boolean ccs, int index) {
+    public static @Nullable JEditorPane findJEditorPane(
+            Container cont, String text, boolean ce, boolean ccs, int index) {
         return (findJEditorPane(
                 cont,
                 new JEditorPaneFinder(new JTextComponentOperator.JTextComponentByTextFinder(
@@ -164,7 +166,7 @@ public class JEditorPaneOperator extends JTextComponentOperator {
      * @return JEditorPane instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JEditorPane findJEditorPane(Container cont, String text, boolean ce, boolean ccs) {
+    public static @Nullable JEditorPane findJEditorPane(Container cont, String text, boolean ce, boolean ccs) {
         return findJEditorPane(cont, text, ce, ccs, 0);
     }
 

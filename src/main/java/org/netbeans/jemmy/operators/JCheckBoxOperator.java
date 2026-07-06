@@ -26,6 +26,7 @@ package org.netbeans.jemmy.operators;
 
 import java.awt.Container;
 import javax.swing.JCheckBox;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 
 /**
@@ -100,7 +101,7 @@ public class JCheckBoxOperator extends JToggleButtonOperator {
      *
      * @return JCheckBox instance or null if component was not found.
      */
-    public static JCheckBox findJCheckBox(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable JCheckBox findJCheckBox(Container cont, ComponentChooser chooser, int index) {
         return (JCheckBox) findJToggleButton(cont, new JCheckBoxFinder(chooser), index);
     }
 
@@ -109,7 +110,7 @@ public class JCheckBoxOperator extends JToggleButtonOperator {
      *
      * @return JCheckBox instance or null if component was not found.
      */
-    public static JCheckBox findJCheckBox(Container cont, ComponentChooser chooser) {
+    public static @Nullable JCheckBox findJCheckBox(Container cont, ComponentChooser chooser) {
         return findJCheckBox(cont, chooser, 0);
     }
 
@@ -119,7 +120,7 @@ public class JCheckBoxOperator extends JToggleButtonOperator {
      * @return JCheckBox instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JCheckBox findJCheckBox(Container cont, String text, boolean ce, boolean ccs, int index) {
+    public static @Nullable JCheckBox findJCheckBox(Container cont, String text, boolean ce, boolean ccs, int index) {
         return (findJCheckBox(
                 cont,
                 new JCheckBoxFinder(new AbstractButtonOperator.AbstractButtonByLabelFinder(
@@ -133,7 +134,7 @@ public class JCheckBoxOperator extends JToggleButtonOperator {
      * @return JCheckBox instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JCheckBox findJCheckBox(Container cont, String text, boolean ce, boolean ccs) {
+    public static @Nullable JCheckBox findJCheckBox(Container cont, String text, boolean ce, boolean ccs) {
         return findJCheckBox(cont, text, ce, ccs, 0);
     }
 

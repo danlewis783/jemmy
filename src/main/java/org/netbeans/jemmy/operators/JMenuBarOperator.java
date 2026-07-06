@@ -39,6 +39,7 @@ import javax.swing.MenuElement;
 import javax.swing.MenuSelectionManager;
 import javax.swing.SingleSelectionModel;
 import javax.swing.plaf.MenuBarUI;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.Action;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.Outputable;
@@ -67,8 +68,8 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
      */
     public static final String SUBMENU_PREFIX_DPROP = "Submenu";
 
-    private TestOut output;
-    private Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
     private MenuDriver driver;
 
     public JMenuBarOperator(JMenuBar b) {
@@ -99,7 +100,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
      *
      * @return found JMenuBar
      */
-    public static JMenuBar findJMenuBar(JFrame frame) {
+    public static @Nullable JMenuBar findJMenuBar(JFrame frame) {
         return findJMenuBar((Container) frame);
     }
 
@@ -108,7 +109,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
      *
      * @return found JMenuBar
      */
-    public static JMenuBar findJMenuBar(JDialog dialog) {
+    public static @Nullable JMenuBar findJMenuBar(JDialog dialog) {
         return findJMenuBar((Container) dialog);
     }
 
@@ -144,7 +145,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
      *
      * @return found JMenuBar
      */
-    public static JMenuBar findJMenuBar(Container cont) {
+    public static @Nullable JMenuBar findJMenuBar(Container cont) {
         return (JMenuBar) findComponent(cont, new JMenuBarFinder());
     }
 
@@ -191,7 +192,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
         return ((JMenuItem) produceTimeRestricted(
                 new Action<Object, Void>() {
                     @Override
-                    public Object launch(Void obj) {
+                    public @Nullable Object launch(Void obj) {
                         // TDB 1.5 menu workaround
                         getQueueTool().waitEmpty();
                         Object result = driver.pushMenu(JMenuBarOperator.this, JMenuOperator.converChoosers(choosers));
@@ -221,7 +222,7 @@ public class JMenuBarOperator extends JComponentOperator implements Outputable, 
         makeComponentVisible();
         produceNoBlocking(new NoBlockingAction<Object, Void>("Menu pushing") {
             @Override
-            public Object doAction(Void param) {
+            public @Nullable Object doAction(Void param) {
                 // TDB 1.5 menu workaround
                 getQueueTool().waitEmpty();
                 Object result = driver.pushMenu(JMenuBarOperator.this, JMenuOperator.converChoosers(choosers));

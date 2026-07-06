@@ -24,6 +24,8 @@
  */
 package org.netbeans.jemmy;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Defines criteria for waiting.
  *
@@ -37,7 +39,7 @@ public interface Waitable<R, P> {
      *
      * @return null is criteria have not been met.
      */
-    public R actionProduced(P obj);
+    public @Nullable R actionProduced(P obj);
 
     /**
      * Returns description.

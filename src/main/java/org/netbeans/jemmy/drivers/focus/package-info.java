@@ -27,4 +27,7 @@
  * <p>
  * <hr>
  */
+@NullMarked
 package org.netbeans.jemmy.drivers.focus;
+
+import org.jspecify.annotations.NullMarked;

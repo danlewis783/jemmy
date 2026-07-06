@@ -87,7 +87,9 @@ public class FrameOperator extends WindowOperator implements Outputable {
      */
     public static final String IS_RESIZABLE_DPROP = "Resizable";
 
+    @SuppressWarnings("NullAway.Init")
     TestOut output;
+
     FrameDriver driver;
 
     public FrameOperator(Frame w) {

@@ -34,9 +34,9 @@ import java.lang.reflect.Modifier;
  */
 public class ObjectBrowser implements Outputable {
 
-    private Object object;
+    private @SuppressWarnings("NullAway.Init") Object object;
 
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
 
     public ObjectBrowser() {}
 

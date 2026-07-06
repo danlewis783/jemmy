@@ -33,6 +33,7 @@ import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JToolTip;
 import javax.swing.plaf.ToolTipUI;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.JemmyException;
@@ -116,7 +117,7 @@ public class JToolTipOperator extends JComponentOperator {
      *
      * @see #copyEnvironment(org.netbeans.jemmy.operators.Operator)
      */
-    public JToolTipOperator(ComponentOperator comp, ComponentChooser chooser) {
+    public JToolTipOperator(@Nullable ComponentOperator comp, ComponentChooser chooser) {
         this(waitJToolTip(comp, chooser));
         if (comp != null) {
             copyEnvironment(comp);
@@ -144,7 +145,7 @@ public class JToolTipOperator extends JComponentOperator {
      *
      * @return JToolTip instance or null if component was not found.
      */
-    public static JToolTip findJToolTip(ComponentOperator comp, ComponentChooser chooser) {
+    public static @Nullable JToolTip findJToolTip(@Nullable ComponentOperator comp, ComponentChooser chooser) {
         List<Window> windowList;
         if (comp != null && comp.getWindow() != null) {
             windowList = new ArrayList<>(Arrays.asList(comp.getWindow().getOwnedWindows()));
@@ -174,7 +175,7 @@ public class JToolTipOperator extends JComponentOperator {
      *
      * @return JToolTip instance or null if component was not found.
      */
-    public static JToolTip findJToolTip() {
+    public static @Nullable JToolTip findJToolTip() {
         return findJToolTip(null);
     }
 
@@ -184,7 +185,7 @@ public class JToolTipOperator extends JComponentOperator {
      *
      * @return JToolTip instance or null if component was not found.
      */
-    public static JToolTip findJToolTip(ComponentOperator comp) {
+    public static @Nullable JToolTip findJToolTip(@Nullable ComponentOperator comp) {
         return findJToolTip(comp, TRUE_CHOOSER);
     }
 
@@ -197,7 +198,7 @@ public class JToolTipOperator extends JComponentOperator {
      * @see DefaultStringComparator
      * @see JToolTipByTipTextFinder
      */
-    public static JToolTip findJToolTip(ComponentOperator comp, String tipText, boolean ce, boolean ccs) {
+    public static @Nullable JToolTip findJToolTip(ComponentOperator comp, String tipText, boolean ce, boolean ccs) {
         return findJToolTip(comp, new JToolTipByTipTextFinder(tipText, new DefaultStringComparator(ce, ccs)));
     }
 
@@ -239,10 +240,10 @@ public class JToolTipOperator extends JComponentOperator {
      * @return JToolTip instance.
      * @see TimeoutExpiredException
      */
-    public static JToolTip waitJToolTip(ComponentOperator comp, ComponentChooser chooser) {
+    public static JToolTip waitJToolTip(@Nullable ComponentOperator comp, ComponentChooser chooser) {
         Waitable<JToolTip, Void> waitable = new Waitable<JToolTip, Void>() {
             @Override
-            public JToolTip actionProduced(Void obj) {
+            public @Nullable JToolTip actionProduced(Void obj) {
                 return findJToolTip(comp, chooser);
             }
 

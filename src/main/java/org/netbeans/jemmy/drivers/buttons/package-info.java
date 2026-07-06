@@ -29,4 +29,7 @@
  * @since 4/17/2002
  * <hr>
  */
+@NullMarked
 package org.netbeans.jemmy.drivers.buttons;
+
+import org.jspecify.annotations.NullMarked;

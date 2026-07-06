@@ -28,12 +28,14 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.Objects;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.plaf.ScrollPaneUI;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
 import org.netbeans.jemmy.Outputable;
@@ -59,10 +61,10 @@ public class JScrollPaneOperator extends JComponentOperator implements Timeoutab
     private static int X_POINT_RECT_SIZE = 6;
     private static int Y_POINT_RECT_SIZE = 4;
 
-    private Timeouts timeouts;
-    private TestOut output;
-    private JScrollBarOperator hScrollBarOper = null;
-    private JScrollBarOperator vScrollBarOper = null;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
+    private @Nullable JScrollBarOperator hScrollBarOper = null;
+    private @Nullable JScrollBarOperator vScrollBarOper = null;
 
     public JScrollPaneOperator(JScrollPane b) {
         super(b);
@@ -99,7 +101,7 @@ public class JScrollPaneOperator extends JComponentOperator implements Timeoutab
      *
      * @return JScrollPane instance or null if component was not found.
      */
-    public static JScrollPane findJScrollPane(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable JScrollPane findJScrollPane(Container cont, ComponentChooser chooser, int index) {
         return (JScrollPane) findComponent(cont, new JScrollPaneFinder(chooser), index);
     }
 
@@ -108,7 +110,7 @@ public class JScrollPaneOperator extends JComponentOperator implements Timeoutab
      *
      * @return JScrollPane instance or null if component was not found.
      */
-    public static JScrollPane findJScrollPane(Container cont, ComponentChooser chooser) {
+    public static @Nullable JScrollPane findJScrollPane(Container cont, ComponentChooser chooser) {
         return findJScrollPane(cont, chooser, 0);
     }
 
@@ -117,7 +119,7 @@ public class JScrollPaneOperator extends JComponentOperator implements Timeoutab
      *
      * @return JScrollPane instance or null if component was not found.
      */
-    public static JScrollPane findJScrollPane(Container cont, int index) {
+    public static @Nullable JScrollPane findJScrollPane(Container cont, int index) {
         return findJScrollPane(
                 cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th JScrollPane instance"), index);
     }
@@ -127,7 +129,7 @@ public class JScrollPaneOperator extends JComponentOperator implements Timeoutab
      *
      * @return JScrollPane instance or null if component was not found.
      */
-    public static JScrollPane findJScrollPane(Container cont) {
+    public static @Nullable JScrollPane findJScrollPane(Container cont) {
         return findJScrollPane(cont, 0);
     }
 
@@ -136,7 +138,7 @@ public class JScrollPaneOperator extends JComponentOperator implements Timeoutab
      *
      * @return JScrollPane instance or null if component was not found.
      */
-    public static JScrollPane findJScrollPaneUnder(Component comp, ComponentChooser chooser) {
+    public static @Nullable JScrollPane findJScrollPaneUnder(Component comp, ComponentChooser chooser) {
         return (JScrollPane) findContainerUnder(comp, new JScrollPaneFinder(chooser));
     }
 
@@ -145,7 +147,7 @@ public class JScrollPaneOperator extends JComponentOperator implements Timeoutab
      *
      * @return JScrollPane instance or null if component was not found.
      */
-    public static JScrollPane findJScrollPaneUnder(Component comp) {
+    public static @Nullable JScrollPane findJScrollPaneUnder(Component comp) {
         return findJScrollPaneUnder(comp, new JScrollPaneFinder());
     }
 
@@ -191,8 +193,13 @@ public class JScrollPaneOperator extends JComponentOperator implements Timeoutab
      */
     public void setValues(int hValue, int vValue) {
         initOperators();
-        hScrollBarOper.setValue(hValue);
-        vScrollBarOper.setValue(vValue);
+        if (hScrollBarOper != null) {
+            hScrollBarOper.setValue(hValue);
+        }
+
+        if (vScrollBarOper != null) {
+            vScrollBarOper.setValue(vValue);
+        }
     }
 
     @Override
@@ -369,7 +376,7 @@ public class JScrollPaneOperator extends JComponentOperator implements Timeoutab
      */
     public JScrollBarOperator getHScrollBarOperator() {
         initOperators();
-        return hScrollBarOper;
+        return Objects.requireNonNull(hScrollBarOper, "scroll pane has no horizontal scroll bar");
     }
 
     /**
@@ -379,7 +386,7 @@ public class JScrollPaneOperator extends JComponentOperator implements Timeoutab
      */
     public JScrollBarOperator getVScrollBarOperator() {
         initOperators();
-        return vScrollBarOper;
+        return Objects.requireNonNull(vScrollBarOper, "scroll pane has no vertical scroll bar");
     }
 
     /**

@@ -30,6 +30,7 @@ import java.util.Hashtable;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.plaf.LabelUI;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.ComponentChooser;
 
 /**
@@ -106,7 +107,7 @@ public class JLabelOperator extends JComponentOperator {
      *
      * @return JLabel instance or null if component was not found.
      */
-    public static JLabel findJLabel(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable JLabel findJLabel(Container cont, ComponentChooser chooser, int index) {
         return (JLabel) findComponent(cont, new JLabelFinder(chooser), index);
     }
 
@@ -115,7 +116,7 @@ public class JLabelOperator extends JComponentOperator {
      *
      * @return JLabel instance or null if component was not found.
      */
-    public static JLabel findJLabel(Container cont, ComponentChooser chooser) {
+    public static @Nullable JLabel findJLabel(Container cont, ComponentChooser chooser) {
         return findJLabel(cont, chooser, 0);
     }
 
@@ -125,7 +126,7 @@ public class JLabelOperator extends JComponentOperator {
      * @return JLabel instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JLabel findJLabel(Container cont, String text, boolean ce, boolean ccs, int index) {
+    public static @Nullable JLabel findJLabel(Container cont, String text, boolean ce, boolean ccs, int index) {
         return findJLabel(cont, new JLabelByLabelFinder(text, new DefaultStringComparator(ce, ccs)), index);
     }
 
@@ -135,7 +136,7 @@ public class JLabelOperator extends JComponentOperator {
      * @return JLabel instance or null if component was not found.
      * @see ComponentOperator#isCaptionEqual(String, String, boolean, boolean)
      */
-    public static JLabel findJLabel(Container cont, String text, boolean ce, boolean ccs) {
+    public static @Nullable JLabel findJLabel(Container cont, String text, boolean ce, boolean ccs) {
         return findJLabel(cont, text, ce, ccs, 0);
     }
 

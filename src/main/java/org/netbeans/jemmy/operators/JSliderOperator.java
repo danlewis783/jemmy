@@ -31,6 +31,7 @@ import javax.swing.BoundedRangeModel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.SliderUI;
+import org.jspecify.annotations.Nullable;
 import org.netbeans.jemmy.Action;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.ComponentSearcher;
@@ -124,8 +125,8 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
     @Deprecated
     public static final int PUSH_AND_WAIT_SCROLL_MODEL = 2;
 
-    private Timeouts timeouts;
-    private TestOut output;
+    private @SuppressWarnings("NullAway.Init") Timeouts timeouts;
+    private @SuppressWarnings("NullAway.Init") TestOut output;
     private int scrollModel = CLICK_SCROLL_MODEL;
 
     public JSliderOperator(JSlider b) {
@@ -164,7 +165,7 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
      *
      * @return JSlider instance or null if component was not found.
      */
-    public static JSlider findJSlider(Container cont, ComponentChooser chooser, int index) {
+    public static @Nullable JSlider findJSlider(Container cont, ComponentChooser chooser, int index) {
         return (JSlider) findComponent(cont, new JSliderFinder(chooser), index);
     }
 
@@ -173,7 +174,7 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
      *
      * @return JSlider instance or null if component was not found.
      */
-    public static JSlider findJSlider(Container cont, ComponentChooser chooser) {
+    public static @Nullable JSlider findJSlider(Container cont, ComponentChooser chooser) {
         return findJSlider(cont, chooser, 0);
     }
 
@@ -182,7 +183,7 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
      *
      * @return JSlider instance or null if component was not found.
      */
-    public static JSlider findJSlider(Container cont, int index) {
+    public static @Nullable JSlider findJSlider(Container cont, int index) {
         return findJSlider(
                 cont, ComponentSearcher.getTrueChooser(Integer.toString(index) + "'th JSlider instance"), index);
     }
@@ -192,7 +193,7 @@ public class JSliderOperator extends JComponentOperator implements Timeoutable, 
      *
      * @return JSlider instance or null if component was not found.
      */
-    public static JSlider findJSlider(Container cont) {
+    public static @Nullable JSlider findJSlider(Container cont) {
         return findJSlider(cont, 0);
     }
 
